@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Download, Mail, Github, Linkedin, Code, Palette, Zap, Users } from "lucide-react"
+import { Download, Mail, Github, Linkedin, Code, Palette, Zap, Users, Apple} from "lucide-react"
 import Link from "next/link"
 
 export default function AboutPage() {
@@ -9,24 +9,30 @@ export default function AboutPage() {
     {
       category: "Frontend",
       icon: <Code className="h-5 w-5" />,
-      technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vue.js", "Svelte"],
+      technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML", "CSS"],
     },
     {
       category: "Backend",
       icon: <Zap className="h-5 w-5" />,
-      technologies: ["Node.js", "Python", "PostgreSQL", "MongoDB", "Redis", "Docker"],
-    },
-    {
-      category: "Design",
-      icon: <Palette className="h-5 w-5" />,
-      technologies: ["Figma", "Adobe XD", "Photoshop", "UI/UX Design", "Prototyping"],
+      technologies: ["Node.js","MongoDB",],
     },
     {
       category: "Tools",
       icon: <Users className="h-5 w-5" />,
-      technologies: ["Git", "AWS", "Vercel", "Supabase", "Stripe", "Analytics"],
+      technologies: ["Git & Github","Vercel", "Supabase", "Stripe",]
     },
+    {
+      category: "Learning (Backend)",
+      icon: <Apple className="h-5 w-5" />,
+      technologies: ["Python", "Redis", "Docker"],
+    },
+    {
+      category: "Learning (Cloud)",
+      icon: <Apple className="h-5 w-5" />,
+      technologies: ["AWS", "Analytics", "Testing Libraries"],
+    }
   ]
+
 
   const experience = [
     {
@@ -52,6 +58,7 @@ export default function AboutPage() {
     },
   ]
 
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -64,19 +71,19 @@ export default function AboutPage() {
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">About Me</h1>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  I'm a passionate full-stack developer with over 5 years of experience creating digital experiences
-                  that combine beautiful design with robust functionality. My journey in web development started with a
-                  curiosity about how things work on the internet, and it has evolved into a career dedicated to
-                  crafting solutions that make a real impact.
+                Hi, I’m Anthony Shead — a passionate developer on the journey to becoming a polyglot full-stack engineer.
+                I love creating clean, functional, and user-centered digital experiences that bring ideas to life.
+                Right now, I’m sharpening my skills through the IBM Full-Stack JavaScript Developer Certification and following
+                the full-stack roadmap to broaden my foundation. I’ve also been building out Soren Tech, where I’m designing APIs and web solutions that reflect my vision of blending technology, business, and creativity.
+                My current focus is mastering Next.js, TypeScript, Tailwind CSS, and MongoDB, while expanding into backend systems,
+                Python, and cloud tooling. Long-term, I’m working toward returning to school for Software Engineering, combining my 
+                self-taught journey with formal education.
                 </p>
                 <p>
-                  I specialize in modern web technologies like React, Next.js, and TypeScript, with a strong focus on
-                  user experience and performance optimization. When I'm not coding, you can find me exploring new
-                  technologies, contributing to open-source projects, or sharing knowledge with the developer community.
-                </p>
-                <p>
-                  I believe in the power of collaboration and continuous learning. Every project is an opportunity to
-                  push boundaries and create something meaningful that serves both users and business objectives.
+                Outside of code, you’ll usually find me swimming, hitting the gym, or playing video games. These passions help me
+                stay balanced, focused, and creative — whether I’m in the water, at the weights, or in front of a screen.
+                If you’d like to connect, let’s talk — I’m excited to bring energy, creativity, and dedication to every
+                project I touch.
                 </p>
               </div>
 
