@@ -82,7 +82,7 @@ export default function AboutPage() {
 
               <div className="flex items-center gap-4 mt-8">
                 <Button asChild>
-                  <Link href="mailto:hello@example.com">
+                  <Link href="mailto:asheadworking@gmail.com">
                     <Mail className="mr-2 h-4 w-4" />
                     Get In Touch
                   </Link>
@@ -97,12 +97,12 @@ export default function AboutPage() {
 
               <div className="flex items-center gap-3 mt-6">
                 <Button variant="ghost" size="icon" asChild>
-                  <Link href="https://github.com" target="_blank">
+                  <Link href="https://github.com/Drakeze" target="_blank">
                     <Github className="h-5 w-5" />
                   </Link>
                 </Button>
                 <Button variant="ghost" size="icon" asChild>
-                  <Link href="https://linkedin.com" target="_blank">
+                  <Link href="https://www.linkedin.com/in/anthonyshead/" target="_blank">
                     <Linkedin className="h-5 w-5" />
                   </Link>
                 </Button>

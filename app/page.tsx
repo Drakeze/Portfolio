@@ -122,12 +122,12 @@ export default function HomePage() {
             </Button>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="icon" asChild>
-                <Link href="https://github.com" target="_blank">
+                <Link href="https://github.com/Drakeze" target="_blank">
                   <Github className="h-5 w-5" />
                 </Link>
               </Button>
               <Button variant="ghost" size="icon" asChild>
-                <Link href="https://linkedin.com" target="_blank">
+                <Link href="https://www.linkedin.com/in/anthonyshead/" target="_blank">
                   <Linkedin className="h-5 w-5" />
                 </Link>
               </Button>

@@ -18,7 +18,7 @@ export function Navigation() {
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-xl font-bold text-foreground hover:text-primary transition-colors">
-            Portfolio
+            Anthony Shead
           </Link>
 
           <div className="flex items-center gap-8">
