@@ -36,25 +36,41 @@ export default function AboutPage() {
 
   const experience = [
     {
-      role: "Senior Frontend Developer",
-      company: "Tech Innovations Inc.",
-      period: "2022 - Present",
-      description:
-        "Leading frontend development for enterprise applications, mentoring junior developers, and implementing modern web technologies.",
+      role: "Founder & Full-Stack Developer",
+      company: "Soren Tech",
+      period: "2025 - Present",
+      description: (
+        <>
+          <p> •	Founded a startup focused on building professional websites for clients.</p>
+          <p> •	Developing and maintaining a growing suite of custom Full-Stack Websites and APIs for sale, while also building custom client APIs on demand.</p>
+          <p>•	Leading all aspects of development, from front-end design (Next.js, Tailwind CSS) to backend systems (Node.js, MongoDB).</p>
+          <p>•	Managing deployments, hosting, and integration using Vercel, Supabase, and Stripe.</p>
+        </>
+      ),
     },
     {
-      role: "Full Stack Developer",
-      company: "Digital Solutions Co.",
-      period: "2020 - 2022",
+      role: "Freelance Web Developer",
+      company: "Client Projects",
+      period: "2023 - 2024",
       description:
-        "Developed and maintained web applications using React, Node.js, and cloud technologies. Collaborated with design teams to create user-friendly interfaces.",
+      <>
+        <p> •	Delivered custom web solutions for small businesses and entrepreneurs, focusing on responsive design and user experience.</p>
+        <p> •	Utilized modern web technologies including React, Next.js, and Tailwind CSS to create dynamic and engaging websites.</p>
+        <p>•	Handled all aspects of project management, from initial consultation to final deployment and maintenance.</p>
+      </>
     },
     {
-      role: "Frontend Developer",
-      company: "Creative Agency",
-      period: "2018 - 2020",
+      role: "Junior Full-Stack Developer (Contributor)",
+      company: "D-Sports Ecosystem (Startup Project)",
+      period: "2024 - 2025",
       description:
-        "Built responsive websites and web applications for various clients, focusing on performance optimization and user experience.",
+      <>
+      	<p>•	Contributed to a sports and technology platform during its early development phase.</p>
+	      <p>•	Focused on junior-level full-stack tasks while building core skills in React, Node.js, and databases.</p>
+	      <p>•	Completed my first GitHub project as part of this collaboration.</p>
+	      <p>•	Earned my first 3 certifications in web development during this period.</p>
+	      <p>•	Gained practical experience with team workflows, Git/GitHub collaboration, and agile development practices.</p>
+      </>
     },
   ]
 
