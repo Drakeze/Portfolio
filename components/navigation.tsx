@@ -17,10 +17,14 @@ export function Navigation() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-foreground hover:text-primary transition-colors">
-            Anthony Shead
+          <Link href="/" className="flex flex-col group transition-colors">
+            <span className="text-xl font-bold text-foreground group-hover:text-primary">
+              Anthony Shead
+            </span>
+            <span className="text-sm text-muted-foreground group-hover:text-primary">
+              Aspiring Full-Stack Developer
+            </span>
           </Link>
-
           <div className="flex items-center gap-8">
             {links.map((link) => (
               <Link
