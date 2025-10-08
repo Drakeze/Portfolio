@@ -101,6 +101,9 @@ export default function AboutPage() {
                 If you’d like to connect, let’s talk — I’m excited to bring energy, creativity, and dedication to every
                 project I touch.
                 </p>
+                <p>
+                Thanks for stopping by, and I look forward to connecting!(P.S. I have two GitHub accounts, my main account and then my Windows account, check them out!)
+                </p>
               </div>
 
               <div className="flex items-center gap-4 mt-8">
@@ -121,6 +124,11 @@ export default function AboutPage() {
               <div className="flex items-center gap-3 mt-6">
                 <Button variant="ghost" size="icon" asChild>
                   <Link href="https://github.com/Drakeze" target="_blank">
+                    <Github className="h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild>
+                  <Link href="https://github.com/DrakezeWinds" target="_blank">
                     <Github className="h-5 w-5" />
                   </Link>
                 </Button>

@@ -7,59 +7,50 @@ import Link from "next/link"
 export default function ProjectsPage() {
   const projects = [
     {
-      title: "E-Commerce Platform",
+      title: "Cryptocurrency Tracker",
       description:
-        "A comprehensive e-commerce solution featuring user authentication, payment processing, inventory management, and admin dashboard. Built with modern technologies for optimal performance and user experience.",
+        "A comprehensive cryptocurrency tracking application that provides real-time price updates, market analysis, favorite button, and calculator for all transfers and calculations.",
       image: "/modern-ecommerce-interface.png",
-      tags: ["Next.js", "TypeScript", "Stripe", "Prisma", "PostgreSQL"],
-      liveUrl: "https://example.com",
+      tags: ["Next.js", "TypeScript","Tailwind", "CoinGecko API", "Vercel"],
+      liveUrl: "",
       githubUrl: "https://github.com/example/ecommerce",
     },
     {
-      title: "Task Management App",
+      title: "Dashboard App",
       description:
-        "Collaborative task management tool with real-time updates, team collaboration features, project tracking, and intuitive drag-and-drop interface for enhanced productivity.",
+        "A clean and intuitive task management dashboard with real-time collaboration, drag-and-drop functionality, and customizable workflows for enhanced productivity.",
       image: "/clean-task-management-dashboard.jpg",
-      tags: ["React", "Node.js", "Socket.io", "MongoDB", "Express"],
+      tags: ["React", "Node.js", "Typescript", "MongoDB"],
       liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example/taskmanager",
+      githubUrl: "https://github.com/Drakeze/Dashboard",
     },
     {
-      title: "Portfolio Website",
+      title: "Blogging Platform",
       description:
         "Responsive portfolio website showcasing creative work and projects with smooth animations, optimized performance, and modern design principles.",
       image: "/minimal-portfolio-website.png",
-      tags: ["Next.js", "Tailwind CSS", "Framer Motion", "MDX"],
+      tags: ["Next.js", "Tailwind CSS", "Typescripts", "React", "Vercel"],
       liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example/portfolio",
+      githubUrl: "https://github.com/Drakeze/Blog",
     },
     {
-      title: "Weather Dashboard",
+      title: "Church Website",
       description:
-        "Interactive weather dashboard with location-based forecasts, historical data visualization, and customizable widgets for weather enthusiasts.",
+        "A modern church website with event management, sermon archives, and community engagement features to connect members and visitors.",
       image: "/weather-dashboard-interface.png",
-      tags: ["Vue.js", "Chart.js", "OpenWeather API", "Vuex"],
+      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
       liveUrl: "https://example.com",
       githubUrl: "https://github.com/example/weather",
     },
     {
-      title: "Social Media Analytics",
+      title: "Study Repository",
       description:
-        "Comprehensive analytics platform for social media management with engagement tracking, content scheduling, and performance insights.",
+        "A collaborative study repository with small projects and code snippets, seeing what I learn and build.",
       image: "/social-media-analytics-dashboard.png",
-      tags: ["React", "D3.js", "Node.js", "Redis", "Docker"],
+      tags: ["React", "Javascript", "C++", "Ruby", "Docker", "C#", "Python", "Java", "PHP", "Go"],
       liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example/analytics",
-    },
-    {
-      title: "Learning Management System",
-      description:
-        "Educational platform with course management, progress tracking, interactive quizzes, and video streaming capabilities for online learning.",
-      image: "/lms-interface.png",
-      tags: ["Next.js", "Supabase", "Stripe", "Video.js", "Tailwind CSS"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example/lms",
-    },
+      githubUrl: "https://github.com/Drakeze/Notes-Study",
+    }
   ]
 
   return (
