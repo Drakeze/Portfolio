@@ -1,27 +1,29 @@
+import Image from "next/image"
 import Link from "next/link"
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
+
+import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Navigation } from "@/components/navigation"
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
 
 export default function HomePage() {
   const featuredProjects = [
     {
       title: "E-Commerce Platform",
       description: "A modern e-commerce solution built with Next.js and Stripe integration.",
-      image: "/modern-ecommerce-interface.png",
+      image: "/projects/ecommerce-case-study.svg",
       tags: ["Next.js", "TypeScript", "Stripe"],
     },
     {
       title: "Task Management App",
       description: "Collaborative task management tool with real-time updates and team features.",
-      image: "/clean-task-management-dashboard.jpg",
+      image: "/projects/task-manager-showcase.svg",
       tags: ["React", "Node.js", "Socket.io"],
     },
     {
       title: "Portfolio Website",
       description: "Responsive portfolio website showcasing creative work and projects.",
-      image: "/minimal-portfolio-website.png",
+      image: "/projects/portfolio-site-preview.svg",
       tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
     },
   ]
@@ -66,17 +68,19 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProjects.map((project, index) => (
+            {featuredProjects.map((project) => (
               <Card
-                key={index}
+                key={project.title}
                 className="group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/20"
               >
                 <CardContent className="p-0">
-                  <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
-                    <img
-                      src={project.image || "/placeholder.svg"}
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg">
+                    <Image
+                      src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      fill
+                      sizes="(min-width: 1280px) 360px, (min-width: 768px) 45vw, 90vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-6">
@@ -115,7 +119,7 @@ export default function HomePage() {
           </p>
           <div className="flex items-center justify-center gap-4">
             <Button asChild size="lg">
-              <Link href="mailto:hello@example.com">
+              <Link href="mailto:asheadworking@gmail.com">
                 <Mail className="mr-2 h-4 w-4" />
                 Get In Touch
               </Link>
@@ -123,6 +127,11 @@ export default function HomePage() {
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="icon" asChild>
                 <Link href="https://github.com/Drakeze" target="_blank">
+                  <Github className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="https://github.com/DrakezeWind" target="_blank">
                   <Github className="h-5 w-5" />
                 </Link>
               </Button>

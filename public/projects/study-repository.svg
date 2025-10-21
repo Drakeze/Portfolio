@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Study repository illustration</title>
+  <desc id="desc">Notes, code snippets, and graphs in a layered notebook interface.</desc>
+  <defs>
+    <linearGradient id="sr-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#14b8a6" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="40" fill="url(#sr-bg)" />
+  <rect x="150" y="150" width="900" height="500" rx="32" fill="#022c22" opacity="0.25" />
+  <g transform="translate(210 200)">
+    <rect width="360" height="280" rx="28" fill="#ecfeff" />
+    <rect x="32" y="40" width="296" height="28" rx="12" fill="#14b8a6" opacity="0.35" />
+    <rect x="32" y="92" width="296" height="96" rx="16" fill="#14b8a6" opacity="0.18" />
+    <rect x="32" y="204" width="296" height="48" rx="14" fill="#14b8a6" opacity="0.18" />
+  </g>
+  <g transform="translate(610 220)">
+    <rect width="360" height="300" rx="28" fill="#f0fdfa" />
+    <rect x="40" y="60" width="280" height="80" rx="18" fill="#0ea5e9" opacity="0.2" />
+    <path d="M70 220 C120 180 160 240 210 200 C260 160 300 230 320 200" stroke="#0ea5e9" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.45" />
+  </g>
+  <rect x="280" y="520" width="280" height="96" rx="24" fill="#0f172a" opacity="0.35" />
+  <rect x="620" y="548" width="280" height="96" rx="24" fill="#0f172a" opacity="0.35" />
+</svg>

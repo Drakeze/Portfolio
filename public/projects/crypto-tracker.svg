@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Crypto analytics interface illustration</title>
+  <desc id="desc">Charts and currency tickers in a dark interface with neon gradients.</desc>
+  <defs>
+    <linearGradient id="ct-bg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="40" fill="#020617" />
+  <rect x="120" y="140" width="960" height="520" rx="32" fill="#111827" opacity="0.85" />
+  <rect x="180" y="200" width="840" height="400" rx="28" fill="#0f172a" opacity="0.7" />
+  <rect x="220" y="240" width="760" height="80" rx="20" fill="#1f2937" />
+  <rect x="240" y="260" width="160" height="40" rx="12" fill="url(#ct-bg)" opacity="0.35" />
+  <rect x="420" y="260" width="160" height="40" rx="12" fill="url(#ct-bg)" opacity="0.25" />
+  <rect x="600" y="260" width="160" height="40" rx="12" fill="url(#ct-bg)" opacity="0.25" />
+  <path d="M260 520 C340 420 420 520 500 420 C580 320 660 500 740 420 C820 340 900 480 940 420" stroke="url(#ct-bg)" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.6" />
+  <circle cx="420" cy="440" r="22" fill="#06b6d4" opacity="0.6" />
+  <circle cx="660" cy="380" r="26" fill="#7c3aed" opacity="0.5" />
+  <rect x="220" y="360" width="220" height="96" rx="18" fill="#1f2937" opacity="0.9" />
+  <rect x="720" y="360" width="220" height="140" rx="18" fill="#1f2937" opacity="0.9" />
+</svg>

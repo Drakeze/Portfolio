@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Productivity dashboard illustration</title>
+  <desc id="desc">Kanban style board with colorful cards and progress charts.</desc>
+  <defs>
+    <linearGradient id="pd-bg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22c55e" />
+      <stop offset="100%" stop-color="#0ea5e9" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="40" fill="url(#pd-bg)" />
+  <rect x="150" y="150" width="900" height="500" rx="32" fill="#0f172a" opacity="0.18" />
+  <g transform="translate(200 200)">
+    <rect width="820" height="420" rx="28" fill="#ffffff" opacity="0.92" />
+    <rect x="40" y="40" width="200" height="44" rx="14" fill="#0ea5e9" opacity="0.2" />
+    <g transform="translate(40 110)">
+      <rect width="220" height="260" rx="24" fill="#dcfce7" />
+      <rect x="24" y="28" width="172" height="40" rx="12" fill="#22c55e" opacity="0.3" />
+      <rect x="24" y="88" width="172" height="56" rx="16" fill="#22c55e" opacity="0.2" />
+      <rect x="24" y="160" width="172" height="56" rx="16" fill="#22c55e" opacity="0.2" />
+    </g>
+    <g transform="translate(300 110)">
+      <rect width="220" height="260" rx="24" fill="#e0f2fe" />
+      <rect x="24" y="28" width="172" height="40" rx="12" fill="#0ea5e9" opacity="0.3" />
+      <rect x="24" y="88" width="172" height="96" rx="20" fill="#0ea5e9" opacity="0.2" />
+    </g>
+    <g transform="translate(560 110)">
+      <rect width="220" height="260" rx="24" fill="#fef3c7" />
+      <rect x="24" y="28" width="172" height="40" rx="12" fill="#f97316" opacity="0.25" />
+      <rect x="24" y="88" width="172" height="96" rx="20" fill="#f97316" opacity="0.2" />
+    </g>
+  </g>
+</svg>

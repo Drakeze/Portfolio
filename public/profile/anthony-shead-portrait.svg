@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" role="img" aria-labelledby="title desc">
+  <title id="title">Stylized portrait of Anthony Shead</title>
+  <desc id="desc">Minimal illustration of a developer profile in green and navy.</desc>
+  <defs>
+    <linearGradient id="portrait-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#22c55e" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" rx="48" fill="url(#portrait-bg)" />
+  <circle cx="300" cy="220" r="120" fill="#1f2937" opacity="0.9" />
+  <circle cx="300" cy="220" r="96" fill="#d1fae5" opacity="0.9" />
+  <rect x="180" y="360" width="240" height="260" rx="120" fill="#d1fae5" opacity="0.92" />
+  <rect x="160" y="420" width="280" height="220" rx="140" fill="#10b981" opacity="0.45" />
+  <rect x="180" y="560" width="240" height="160" rx="120" fill="#0f172a" opacity="0.35" />
+  <path d="M240 220 Q260 260 300 260 Q340 260 360 220" stroke="#0f172a" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.4" />
+  <circle cx="260" cy="200" r="12" fill="#0f172a" opacity="0.6" />
+  <circle cx="340" cy="200" r="12" fill="#0f172a" opacity="0.6" />
+  <rect x="220" y="640" width="160" height="40" rx="20" fill="#22c55e" opacity="0.6" />
+</svg>
