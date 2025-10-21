@@ -1,56 +1,58 @@
-import { Navigation } from "@/components/navigation"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Github } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
+import { ExternalLink, Github } from "lucide-react"
+
+import { Navigation } from "@/components/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function ProjectsPage() {
   const projects = [
     {
       title: "Cryptocurrency Tracker",
       description:
-        "A comprehensive cryptocurrency tracking application that provides real-time price updates, market analysis, favorite button, and calculator for all transfers and calculations.",
-      image: "/modern-ecommerce-interface.png",
-      tags: ["Next.js", "TypeScript","Tailwind", "CoinGecko API", "Vercel"],
-      liveUrl: "",
-      githubUrl: "https://github.com/example/ecommerce",
+        "A comprehensive cryptocurrency dashboard with real-time market data, curated watchlists, and conversion tools for fast portfolio insights.",
+      image: "/projects/crypto-tracker.svg",
+      tags: ["Next.js", "TypeScript", "Tailwind CSS", "CoinGecko API", "Vercel"],
+      liveUrl: null,
+      githubUrl: null,
     },
     {
       title: "Dashboard App",
       description:
         "A clean and intuitive task management dashboard with real-time collaboration, drag-and-drop functionality, and customizable workflows for enhanced productivity.",
-      image: "/clean-task-management-dashboard.jpg",
-      tags: ["React", "Node.js", "Typescript", "MongoDB"],
-      liveUrl: "https://example.com",
+      image: "/projects/productivity-dashboard.svg",
+      tags: ["React", "Node.js", "TypeScript", "MongoDB"],
+      liveUrl: "https://dashboard-drakeze.vercel.app",
       githubUrl: "https://github.com/Drakeze/Dashboard",
     },
     {
       title: "Blogging Platform",
       description:
         "Responsive portfolio website showcasing creative work and projects with smooth animations, optimized performance, and modern design principles.",
-      image: "/minimal-portfolio-website.png",
-      tags: ["Next.js", "Tailwind CSS", "Typescripts", "React", "Vercel"],
-      liveUrl: "https://example.com",
+      image: "/projects/blogging-platform.svg",
+      tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Vercel"],
+      liveUrl: "https://drakeze.dev",
       githubUrl: "https://github.com/Drakeze/Blog",
     },
     {
       title: "Church Website",
       description:
         "A modern church website with event management, sermon archives, and community engagement features to connect members and visitors.",
-      image: "/weather-dashboard-interface.png",
+      image: "/projects/community-site.svg",
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example/weather",
+      liveUrl: null,
+      githubUrl: null,
     },
     {
       title: "Study Repository",
       description:
-        "A collaborative study repository with small projects and code snippets, seeing what I learn and build.",
-      image: "/social-media-analytics-dashboard.png",
-      tags: ["React", "Javascript", "C++", "Ruby", "Docker", "C#", "Python", "Java", "PHP", "Go"],
-      liveUrl: "https://example.com",
+        "A collaborative study repository with bite-sized projects and code snippets that document my learning journey.",
+      image: "/projects/study-repository.svg",
+      tags: ["React", "JavaScript", "Python", "Go", "Docker"],
+      liveUrl: "https://drakeze.notion.site/study-repository",
       githubUrl: "https://github.com/Drakeze/Notes-Study",
-    }
+    },
   ]
 
   return (
@@ -69,18 +71,20 @@ export default function ProjectsPage() {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
+          <div className="grid gap-8 md:grid-cols-2">
+            {projects.map((project) => (
               <Card
-                key={index}
-                className="group hover:shadow-xl transition-all duration-300 border-border hover:border-primary/20"
+                key={project.title}
+                className="group border-border transition-all duration-300 hover:border-primary/20 hover:shadow-xl"
               >
                 <CardContent className="p-0">
-                  <div className="aspect-[5/3] overflow-hidden rounded-t-lg">
-                    <img
-                      src={project.image || "/placeholder.svg"}
+                  <div className="relative aspect-[5/3] overflow-hidden rounded-t-lg">
+                    <Image
+                      src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      fill
+                      sizes="(min-width: 1024px) 520px, 90vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-6">
@@ -88,7 +92,7 @@ export default function ProjectsPage() {
                     <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{project.description}</p>
 
                     {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    <div className="mb-6 flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
                         <span key={tag} className="px-3 py-1 bg-accent/10 text-accent-foreground text-xs rounded-full">
                           {tag}
@@ -98,18 +102,26 @@ export default function ProjectsPage() {
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-3">
-                      <Button size="sm" asChild>
-                        <Link href={project.liveUrl} target="_blank">
-                          <ExternalLink className="mr-2 h-4 w-4" />
-                          Live Demo
-                        </Link>
-                      </Button>
-                      <Button variant="outline" size="sm" asChild>
-                        <Link href={project.githubUrl} target="_blank">
-                          <Github className="mr-2 h-4 w-4" />
-                          Code
-                        </Link>
-                      </Button>
+                      {project.liveUrl ? (
+                        <Button size="sm" asChild>
+                          <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="mr-2 h-4 w-4" />
+                            Live Demo
+                          </Link>
+                        </Button>
+                      ) : (
+                        <Button size="sm" variant="outline" disabled className="cursor-not-allowed opacity-70">
+                          Coming Soon
+                        </Button>
+                      )}
+                      {project.githubUrl ? (
+                        <Button variant="outline" size="sm" asChild>
+                          <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                            <Github className="mr-2 h-4 w-4" />
+                            Code
+                          </Link>
+                        </Button>
+                      ) : null}
                     </div>
                   </div>
                 </CardContent>

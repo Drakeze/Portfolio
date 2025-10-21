@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Creative portfolio layout illustration</title>
+  <desc id="desc">Minimal layout with hero text, image gallery, and feature cards in warm gradients.</desc>
+  <defs>
+    <linearGradient id="pf-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#facc15" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="40" fill="url(#pf-bg)" />
+  <rect x="160" y="160" width="880" height="480" rx="32" fill="#0f172a" opacity="0.15" />
+  <rect x="200" y="200" width="800" height="420" rx="28" fill="#ffffff" opacity="0.92" />
+  <rect x="240" y="240" width="320" height="80" rx="20" fill="#f97316" opacity="0.18" />
+  <rect x="240" y="340" width="320" height="48" rx="14" fill="#f97316" opacity="0.12" />
+  <rect x="600" y="240" width="320" height="200" rx="24" fill="#facc15" opacity="0.25" />
+  <rect x="600" y="460" width="320" height="120" rx="24" fill="#fde68a" opacity="0.8" />
+  <rect x="240" y="412" width="320" height="120" rx="24" fill="#fef3c7" opacity="0.9" />
+  <path d="M620 320 Q760 200 880 320" stroke="#f97316" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.35" />
+  <circle cx="760" cy="520" r="36" fill="#f97316" opacity="0.45" />
+</svg>

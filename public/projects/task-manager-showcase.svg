@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Team task management illustration</title>
+  <desc id="desc">Abstract interface with task columns and progress rings in teal and navy.</desc>
+  <defs>
+    <linearGradient id="tm-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="40" fill="url(#tm-bg)" />
+  <rect x="140" y="140" width="920" height="520" rx="32" fill="#0f172a" opacity="0.2" />
+  <rect x="180" y="180" width="840" height="440" rx="28" fill="#0b1120" opacity="0.25" />
+  <g transform="translate(220 210)">
+    <rect width="200" height="360" rx="24" fill="#f8fafc" opacity="0.9" />
+    <rect x="24" y="28" width="152" height="24" rx="8" fill="#2563eb" opacity="0.2" />
+    <rect x="24" y="76" width="152" height="56" rx="14" fill="#2563eb" opacity="0.12" />
+    <rect x="24" y="148" width="152" height="56" rx="14" fill="#2563eb" opacity="0.12" />
+    <rect x="24" y="220" width="152" height="56" rx="14" fill="#2563eb" opacity="0.12" />
+  </g>
+  <g transform="translate(460 210)">
+    <rect width="220" height="360" rx="24" fill="#f8fafc" opacity="0.92" />
+    <rect x="28" y="32" width="164" height="28" rx="10" fill="#34d399" opacity="0.2" />
+    <rect x="28" y="92" width="164" height="72" rx="16" fill="#34d399" opacity="0.12" />
+    <rect x="28" y="176" width="164" height="72" rx="16" fill="#34d399" opacity="0.12" />
+  </g>
+  <g transform="translate(720 210)">
+    <rect width="240" height="360" rx="24" fill="#f8fafc" opacity="0.95" />
+    <circle cx="120" cy="120" r="72" fill="none" stroke="#2563eb" stroke-width="16" opacity="0.35" />
+    <circle cx="120" cy="120" r="48" fill="#2563eb" opacity="0.15" />
+    <rect x="40" y="228" width="160" height="56" rx="16" fill="#2563eb" opacity="0.12" />
+    <rect x="40" y="296" width="160" height="36" rx="12" fill="#2563eb" opacity="0.15" />
+  </g>
+</svg>
