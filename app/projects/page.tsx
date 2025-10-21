@@ -45,12 +45,11 @@ export default function ProjectsPage() {
       githubUrl: "https://github.com/DrakezeWind/Church-Web",
     },
     {
-      title: "Study Repository",
+      title: "GrowthVault",
       description:
         "A collaborative study repository with bite-sized projects and code snippets that document my learning journey.",
       image: "/projects/study-repository.svg",
       tags: ["React", "JavaScript", "Python", "C++", "Ruby", "C#", "Java", "PHP", "Go", "Docker"],
-      liveUrl: null,
       githubUrl: "https://github.com/DrakezeWind/NotesStudy",
     },
   ]
