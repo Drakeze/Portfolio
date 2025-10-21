@@ -1,112 +1,97 @@
-import { Navigation } from "@/components/navigation"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Download, Mail, Github, Linkedin, Code, Palette, Zap, Users, Apple} from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
+import { Download, Mail, Github, Linkedin, Code, Zap, Users, Apple } from "lucide-react"
+
+import { Navigation } from "@/components/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+
+const aboutParagraphs = [
+  "Hi, I’m Anthony Shead — a full-stack developer who loves turning ideas into intuitive products. I’m steadily working toward polyglot-level proficiency while completing the IBM Full-Stack JavaScript Developer certification and expanding the service catalog for my studio, Soren Tech.",
+  "Right now my toolkit leans on Next.js, TypeScript, Tailwind CSS, and MongoDB, and I’m actively leveling up my backend automation and cloud workflows with Python, Redis, Docker, and AWS. Every engagement is an opportunity to blend user-centered thinking with reliable engineering.",
+  "Outside of code you’ll find me in the pool, at the gym, or exploring new games — all outlets that keep me creative and balanced. If you’d like to collaborate, let’s connect! I run two GitHub accounts (Drakeze and DrakezeWinds) so feel free to explore both.",
+]
+
+const skills = [
+  {
+    category: "Frontend",
+    icon: <Code className="h-5 w-5" />,
+    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML", "CSS"],
+  },
+  {
+    category: "Backend",
+    icon: <Zap className="h-5 w-5" />,
+    technologies: ["Node.js", "MongoDB"],
+  },
+  {
+    category: "Tools",
+    icon: <Users className="h-5 w-5" />,
+    technologies: ["Git & GitHub", "Vercel", "Supabase", "Stripe"],
+  },
+  {
+    category: "Learning (Backend)",
+    icon: <Apple className="h-5 w-5" />,
+    technologies: ["Python", "Redis", "Docker"],
+  },
+  {
+    category: "Learning (Cloud)",
+    icon: <Apple className="h-5 w-5" />,
+    technologies: ["AWS", "Analytics", "Testing Libraries"],
+  },
+]
+
+const experience = [
+  {
+    role: "Founder & Full-Stack Developer",
+    company: "Soren Tech",
+    period: "2025 - Present",
+    points: [
+      "Launched a studio focused on building professional websites and APIs that align with client goals.",
+      "Design and maintain a growing suite of turnkey full-stack products that can be customized per engagement.",
+      "Lead every project phase, from UX strategy in Next.js and Tailwind CSS to backend architecture with Node.js and MongoDB.",
+      "Own deployment, hosting, and integrations via platforms such as Vercel, Supabase, and Stripe.",
+    ],
+  },
+  {
+    role: "Freelance Web Developer",
+    company: "Client Projects",
+    period: "2023 - 2024",
+    points: [
+      "Delivered responsive web experiences for entrepreneurs and small businesses across multiple industries.",
+      "Built bespoke interfaces with React, Next.js, and Tailwind CSS to reflect each brand’s voice and goals.",
+      "Managed projects end-to-end — discovery, roadmaps, launch, and ongoing support — while keeping communication clear.",
+    ],
+  },
+  {
+    role: "Junior Full-Stack Developer (Contributor)",
+    company: "D-Sports Ecosystem (Startup Project)",
+    period: "2024 - 2025",
+    points: [
+      "Collaborated with the founding team on early prototypes for a sports and technology platform.",
+      "Tackled junior-level full-stack tickets that strengthened fundamentals in React, Node.js, and data modeling.",
+      "Completed initial GitHub projects, certifications, and agile sprints while learning professional team workflows.",
+    ],
+  },
+]
 
 export default function AboutPage() {
-  const skills = [
-    {
-      category: "Frontend",
-      icon: <Code className="h-5 w-5" />,
-      technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML", "CSS"],
-    },
-    {
-      category: "Backend",
-      icon: <Zap className="h-5 w-5" />,
-      technologies: ["Node.js","MongoDB",],
-    },
-    {
-      category: "Tools",
-      icon: <Users className="h-5 w-5" />,
-      technologies: ["Git & Github","Vercel", "Supabase", "Stripe",]
-    },
-    {
-      category: "Learning (Backend)",
-      icon: <Apple className="h-5 w-5" />,
-      technologies: ["Python", "Redis", "Docker"],
-    },
-    {
-      category: "Learning (Cloud)",
-      icon: <Apple className="h-5 w-5" />,
-      technologies: ["AWS", "Analytics", "Testing Libraries"],
-    }
-  ]
-
-
-  const experience = [
-    {
-      role: "Founder & Full-Stack Developer",
-      company: "Soren Tech",
-      period: "2025 - Present",
-      description: (
-        <>
-          <p> •	Founded a startup focused on building professional websites for clients.</p>
-          <p> •	Developing and maintaining a growing suite of custom Full-Stack Websites and APIs for sale, while also building custom client APIs on demand.</p>
-          <p>•	Leading all aspects of development, from front-end design (Next.js, Tailwind CSS) to backend systems (Node.js, MongoDB).</p>
-          <p>•	Managing deployments, hosting, and integration using Vercel, Supabase, and Stripe.</p>
-        </>
-      ),
-    },
-    {
-      role: "Freelance Web Developer",
-      company: "Client Projects",
-      period: "2023 - 2024",
-      description:
-      <>
-        <p> •	Delivered custom web solutions for small businesses and entrepreneurs, focusing on responsive design and user experience.</p>
-        <p> •	Utilized modern web technologies including React, Next.js, and Tailwind CSS to create dynamic and engaging websites.</p>
-        <p>•	Handled all aspects of project management, from initial consultation to final deployment and maintenance.</p>
-      </>
-    },
-    {
-      role: "Junior Full-Stack Developer (Contributor)",
-      company: "D-Sports Ecosystem (Startup Project)",
-      period: "2024 - 2025",
-      description:
-      <>
-      	<p>•	Contributed to a sports and technology platform during its early development phase.</p>
-	      <p>•	Focused on junior-level full-stack tasks while building core skills in React, Node.js, and databases.</p>
-	      <p>•	Completed my first GitHub project as part of this collaboration.</p>
-	      <p>•	Earned my first 3 certifications in web development during this period.</p>
-	      <p>•	Gained practical experience with team workflows, Git/GitHub collaboration, and agile development practices.</p>
-      </>
-    },
-  ]
-
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <div className="pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
+      <div className="px-6 pb-20 pt-32">
+        <div className="mx-auto max-w-6xl">
           {/* Hero Section */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+          <div className="mb-20 grid items-center gap-12 lg:grid-cols-2">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">About Me</h1>
+              <h1 className="mb-6 text-4xl font-bold text-foreground md:text-5xl">About Me</h1>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>
-                Hi, I’m Anthony Shead — a passionate developer on the journey to becoming a polyglot full-stack engineer.
-                I love creating clean, functional, and user-centered digital experiences that bring ideas to life.
-                Right now, I’m sharpening my skills through the IBM Full-Stack JavaScript Developer Certification and following
-                the full-stack roadmap to broaden my foundation. I’ve also been building out Soren Tech, where I’m designing APIs and web solutions that reflect my vision of blending technology, business, and creativity.
-                My current focus is mastering Next.js, TypeScript, Tailwind CSS, and MongoDB, while expanding into backend systems,
-                Python, and cloud tooling. Long-term, I’m working toward returning to school for Software Engineering, combining my 
-                self-taught journey with formal education.
-                </p>
-                <p>
-                Outside of code, you’ll usually find me swimming, hitting the gym, or playing video games. These passions help me
-                stay balanced, focused, and creative — whether I’m in the water, at the weights, or in front of a screen.
-                If you’d like to connect, let’s talk — I’m excited to bring energy, creativity, and dedication to every
-                project I touch.
-                </p>
-                <p>
-                Thanks for stopping by, and I look forward to connecting!(P.S. I have two GitHub accounts, my main account and then my Windows account, check them out!)
-                </p>
+                {aboutParagraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
               </div>
 
-              <div className="flex items-center gap-4 mt-8">
+              <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Button asChild>
                   <Link href="mailto:asheadworking@gmail.com">
                     <Mail className="mr-2 h-4 w-4" />
@@ -114,27 +99,30 @@ export default function AboutPage() {
                   </Link>
                 </Button>
                 <Button variant="outline" asChild>
-                  <Link href="/Resume.pdf" target="_blank">
+                  <Link href="/Resume.pdf" target="_blank" rel="noopener noreferrer">
                     <Download className="mr-2 h-4 w-4" />
-                    Download Resume
+                    Download Résumé
                   </Link>
                 </Button>
               </div>
 
-              <div className="flex items-center gap-3 mt-6">
+              <div className="mt-6 flex flex-wrap items-center gap-3">
                 <Button variant="ghost" size="icon" asChild>
-                  <Link href="https://github.com/Drakeze" target="_blank">
+                  <Link href="https://github.com/Drakeze" target="_blank" rel="noopener noreferrer">
                     <Github className="h-5 w-5" />
+                    <span className="sr-only">GitHub (Drakeze)</span>
                   </Link>
                 </Button>
                 <Button variant="ghost" size="icon" asChild>
-                  <Link href="https://github.com/DrakezeWinds" target="_blank">
+                  <Link href="https://github.com/DrakezeWinds" target="_blank" rel="noopener noreferrer">
                     <Github className="h-5 w-5" />
+                    <span className="sr-only">GitHub (DrakezeWinds)</span>
                   </Link>
                 </Button>
                 <Button variant="ghost" size="icon" asChild>
-                  <Link href="https://www.linkedin.com/in/anthonyshead/" target="_blank">
+                  <Link href="https://www.linkedin.com/in/anthonyshead/" target="_blank" rel="noopener noreferrer">
                     <Linkedin className="h-5 w-5" />
+                    <span className="sr-only">LinkedIn</span>
                   </Link>
                 </Button>
               </div>
@@ -142,12 +130,17 @@ export default function AboutPage() {
 
             <div className="lg:justify-self-end">
               <div className="relative">
-                <img
-                  src="/professional-developer-portrait.png"
-                  alt="Profile"
-                  className="rounded-2xl shadow-2xl w-full max-w-md"
-                />
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary rounded-full flex items-center justify-center">
+                <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                  <Image
+                    src="/profile/anthony-shead-portrait.svg"
+                    alt="Portrait of Anthony Shead"
+                    width={440}
+                    height={560}
+                    className="h-auto w-full"
+                    priority
+                  />
+                </div>
+                <div className="absolute -bottom-6 -right-6 flex h-24 w-24 items-center justify-center rounded-full bg-primary">
                   <Code className="h-8 w-8 text-primary-foreground" />
                 </div>
               </div>
@@ -156,25 +149,25 @@ export default function AboutPage() {
 
           {/* Skills Section */}
           <section className="mb-20">
-            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Skills & Technologies</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {skills.map((skill, index) => (
-                <Card key={index} className="border-border hover:border-primary/20 transition-colors">
+            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">Skills & Technologies</h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {skills.map((skill) => (
+                <Card key={skill.category} className="border-border transition-colors hover:border-primary/20">
                   <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="p-2 bg-primary/10 rounded-lg text-primary">{skill.icon}</div>
+                    <div className="mb-4 flex items-center gap-3">
+                      <div className="rounded-lg bg-primary/10 p-2 text-primary">{skill.icon}</div>
                       <h3 className="font-semibold text-foreground">{skill.category}</h3>
                     </div>
-                    <div className="space-y-2">
+                    <ul className="flex flex-wrap gap-2">
                       {skill.technologies.map((tech) => (
-                        <span
+                        <li
                           key={tech}
-                          className="inline-block px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full mr-2 mb-2"
+                          className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground"
                         >
                           {tech}
-                        </span>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </CardContent>
                 </Card>
               ))}
@@ -183,21 +176,25 @@ export default function AboutPage() {
 
           {/* Experience Section */}
           <section>
-            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Professional Experience</h2>
+            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">Professional Experience</h2>
             <div className="space-y-6">
-              {experience.map((exp, index) => (
-                <Card key={index} className="border-border">
+              {experience.map((exp) => (
+                <Card key={exp.role} className="border-border">
                   <CardContent className="p-6">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
+                    <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                       <div>
                         <h3 className="text-xl font-semibold text-foreground">{exp.role}</h3>
-                        <p className="text-primary font-medium">{exp.company}</p>
+                        <p className="font-medium text-primary">{exp.company}</p>
                       </div>
-                      <span className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full mt-2 md:mt-0 self-start">
+                      <span className="self-start rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground md:self-center">
                         {exp.period}
                       </span>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">{exp.description}</p>
+                    <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
+                      {exp.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
                   </CardContent>
                 </Card>
               ))}

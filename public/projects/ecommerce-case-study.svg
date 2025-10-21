@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Modern e-commerce dashboard illustration</title>
+  <desc id="desc">Abstract illustration of an e-commerce dashboard with charts and product cards in green tones.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#22d3ee" />
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#f0fdf4" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)" rx="40" />
+  <rect x="120" y="120" width="960" height="560" rx="32" fill="#0f172a" opacity="0.15" />
+  <rect x="160" y="160" width="880" height="480" rx="28" fill="#0f172a" opacity="0.18" />
+  <rect x="200" y="200" width="800" height="420" rx="24" fill="url(#card)" />
+  <rect x="240" y="240" width="280" height="80" rx="18" fill="#0ea5e9" opacity="0.18" />
+  <rect x="240" y="340" width="280" height="48" rx="12" fill="#0ea5e9" opacity="0.1" />
+  <rect x="240" y="408" width="280" height="48" rx="12" fill="#0ea5e9" opacity="0.1" />
+  <rect x="560" y="240" width="360" height="240" rx="18" fill="#0ea5e9" opacity="0.15" />
+  <path d="M590 448 C640 360 680 420 730 320 C780 220 820 420 880 360" stroke="#0f172a" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.4" />
+  <circle cx="620" cy="420" r="28" fill="#22d3ee" opacity="0.6" />
+  <circle cx="760" cy="320" r="36" fill="#22d3ee" opacity="0.35" />
+  <rect x="560" y="504" width="360" height="72" rx="16" fill="#0ea5e9" opacity="0.12" />
+  <rect x="240" y="480" width="220" height="96" rx="18" fill="#f0f9ff" opacity="0.9" />
+  <rect x="472" y="480" width="68" height="96" rx="14" fill="#0ea5e9" opacity="0.4" />
+</svg>
