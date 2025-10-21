@@ -49,7 +49,7 @@ export default function ProjectsPage() {
       description:
         "A collaborative study repository with bite-sized projects and code snippets that document my learning journey.",
       image: "/projects/study-repository.svg",
-      tags: ["React", "JavaScript", "Python", "Go", "Docker"],
+      tags: ["React", "JavaScript", "Python", "C++", "Ruby", "C#", "Java", "PHP", "Go", "Docker"],
       liveUrl: "https://drakeze.notion.site/study-repository",
       githubUrl: "https://github.com/Drakeze/Notes-Study",
     },
