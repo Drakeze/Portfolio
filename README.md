@@ -1,30 +1,32 @@
-# Portfolio website
+# 🌎 Portfolio Website
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+> My personal developer portfolio built with **Next.js 15**, **TypeScript**, and **Tailwind CSS**, powered by **Bun** and hosted on **Vercel**.  
+> Designed to showcase my projects, skills, and the ecosystem behind **SorenLab** and **Earth Plus LLC**.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/anthony-s-projects-5c1f5b6f/v0-portfolio-website)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/0G5elcFs8OB)
+---
 
-## Overview
+## 🧠 Overview
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+This portfolio acts as my central hub — linking to my featured projects (Blog, Dashboard, CT-App), certifications, and professional details.  
+It reflects my focus on modern design, clean architecture, and the unified **Soren** dark theme (black base · dark blue accent · green/red for state indicators).  
 
-## Deployment
+---
 
-Your project is live at:
+## ⚙️ Installation & Setup
 
-**[https://vercel.com/anthony-s-projects-5c1f5b6f/v0-portfolio-website](https://vercel.com/anthony-s-projects-5c1f5b6f/v0-portfolio-website)**
+### 🔹 Prerequisites
+Ensure you have the following installed:
+- **Node.js** (v18+)
+- **Bun** → [Install Bun](https://bun.sh/)
+- **Git**
 
-## Build your app
+---
 
-Continue building your app on:
+### 🔹 Clone Repository
+```bash
+git clone https://github.com/Drakeze/Portfolio.git
+cd Portfolio
+```
+### 👤 Author
 
-**[https://v0.app/chat/projects/0G5elcFs8OB](https://v0.app/chat/projects/0G5elcFs8OB)**
-
-## How It Works
-
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+Anthony Shead
