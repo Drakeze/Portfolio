@@ -12,7 +12,7 @@ export default function ProjectsPage() {
       title: "Cryptocurrency Tracker",
       description:
         "A comprehensive cryptocurrency dashboard with real-time market data, curated watchlists, and conversion tools for fast portfolio insights.",
-      image: "/projects/crypto-tracker.svg",
+      image: "/public/CT.png",
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "CoinGecko API", "Vercel"],
       liveUrl: "https://v0-crypto-tracker-app-gamma.vercel.app/",
       githubUrl: "https://github.com/Drakeze/CT-app",
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
       title: "Blogging Platform",
       description:
         "Responsive portfolio website showcasing creative work and projects with smooth animations, optimized performance, and modern design principles.",
-      image: "/projects/blogging-platform.svg",
+      image: "/public/Blog.png",
       tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Vercel"],
       liveUrl: "https://blog-nine-eta-94.vercel.app/",
       githubUrl: "https://github.com/Drakeze/Blog",
