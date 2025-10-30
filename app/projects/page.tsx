@@ -14,7 +14,7 @@ export default function ProjectsPage() {
         "A comprehensive cryptocurrency dashboard with real-time market data, curated watchlists, and conversion tools for fast portfolio insights.",
       image: "/public/CT.png",
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "CoinGecko API", "Vercel"],
-      liveUrl: "https://v0-crypto-tracker-app-gamma.vercel.app/",
+      liveUrl: "https://cryptoapp-weld.vercel.app/",
       githubUrl: "https://github.com/Drakeze/CT-app",
     },
     {
