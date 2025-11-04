@@ -2,7 +2,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Download, Mail, Github, Linkedin, Code, Zap, Users, Apple } from "lucide-react"
 
-import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { SkillsSection, type SkillCategory } from "@/components/skills-section"
@@ -78,9 +77,7 @@ const experience = [
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
-
-      <div className="px-6 pb-20 pt-32">
+      <div className="px-6 pb-20">
         <div className="mx-auto max-w-6xl">
           {/* Hero Section */}
           <div className="mb-20 grid items-center gap-12 lg:grid-cols-2">

@@ -1,13 +1,16 @@
 import { Navigation } from "@/components/navigation"
 import { ProjectCard } from "@/components/project-card"
 import { projects } from "@/lib/projects"
+import Image from "next/image"
+import Link from "next/link"
+import { ExternalLink, Github } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
-
-      <div className="pt-32 pb-20 px-6">
+      <div className="px-6 pb-20">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">

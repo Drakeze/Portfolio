@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
-import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { ContactCTA } from "@/components/contact-cta"
 import { ProjectCard } from "@/components/project-card"
@@ -9,11 +8,9 @@ import { featuredProjects } from "@/lib/projects"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-
+    <div className="bg-background">
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="px-6 pb-20">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 text-balance">
             Crafting Digital
