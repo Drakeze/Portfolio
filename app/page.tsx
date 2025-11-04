@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
@@ -5,6 +6,39 @@ import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { absoluteUrl, siteConfig } from "@/lib/seo"
+
+const heroOgImage = absoluteUrl("/projects/ecommerce-case-study.svg")
+
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Discover Anthony Shead's featured full-stack projects, services, and ways to collaborate on modern web experiences.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Anthony Shead | Full-Stack Portfolio",
+    description:
+      "Explore highlighted projects and capabilities from full-stack developer Anthony Shead, including e-commerce and productivity showcases.",
+    url: siteConfig.url,
+    images: [
+      {
+        url: heroOgImage,
+        width: 1200,
+        height: 630,
+        alt: "Anthony Shead's featured e-commerce project thumbnail",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Anthony Shead | Full-Stack Portfolio",
+    description:
+      "Explore highlighted projects and capabilities from full-stack developer Anthony Shead, including e-commerce and productivity showcases.",
+    images: [heroOgImage],
+  },
+}
 
 export default function HomePage() {
   const featuredProjects = [

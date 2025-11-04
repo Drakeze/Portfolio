@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { ExternalLink, Github } from "lucide-react"
@@ -5,6 +6,37 @@ import { ExternalLink, Github } from "lucide-react"
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { absoluteUrl, siteConfig } from "@/lib/seo"
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "Browse Anthony Shead's portfolio of web applications, dashboards, and platforms built with Next.js, TypeScript, and more.",
+  alternates: {
+    canonical: "/projects",
+  },
+  openGraph: {
+    title: "Anthony Shead's Projects",
+    description:
+      "See detailed case studies and links for Anthony Shead's cryptocurrency tracker, dashboards, and other full-stack builds.",
+    url: absoluteUrl("/projects"),
+    images: [
+      {
+        url: absoluteUrl("/projects/productivity-dashboard.svg"),
+        width: 1200,
+        height: 630,
+        alt: "Preview of Anthony Shead's productivity dashboard project",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Anthony Shead's Projects",
+    description:
+      "See detailed case studies and links for Anthony Shead's cryptocurrency tracker, dashboards, and other full-stack builds.",
+    images: [absoluteUrl("/projects/productivity-dashboard.svg")],
+  },
+}
 
 export default function ProjectsPage() {
   const projects = [
@@ -54,9 +86,36 @@ export default function ProjectsPage() {
     },
   ]
 
+  const projectsBaseUrl = absoluteUrl("/projects")
+
+  const projectJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": projects.map((project) => {
+      const slug = project.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
+      const imagePath = project.image.startsWith("/public/")
+        ? project.image.replace("/public", "")
+        : project.image
+      return {
+        "@type": "Project",
+        name: project.title,
+        description: project.description,
+        url: project.liveUrl ?? `${projectsBaseUrl}#${slug}`,
+        image: absoluteUrl(imagePath),
+        sameAs: project.githubUrl ? [project.githubUrl] : undefined,
+        creator: {
+          "@type": "Person",
+          name: siteConfig.name,
+          url: siteConfig.url,
+        },
+      }
+    }),
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }} />
 
       <div className="pt-32 pb-20 px-6">
         <div className="max-w-6xl mx-auto">
