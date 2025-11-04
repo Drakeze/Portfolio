@@ -4,6 +4,7 @@ import { Download, Mail, Github, Linkedin, Code, Zap, Users, Apple } from "lucid
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { SkillsSection, type SkillCategory } from "@/components/skills-section"
 
 const aboutParagraphs = [
   "Hi, I’m Anthony Shead — a full-stack developer who loves turning ideas into intuitive products. I’m steadily working toward polyglot-level proficiency while completing the IBM Full-Stack JavaScript Developer certification and expanding the service catalog for my studio, Soren Tech.",
@@ -11,7 +12,7 @@ const aboutParagraphs = [
   "Outside of code you’ll find me in the pool, at the gym, or exploring new games — all outlets that keep me creative and balanced. If you’d like to collaborate, let’s connect! I run two GitHub accounts (Drakeze and DrakezeWinds) so feel free to explore both.",
 ]
 
-const skills = [
+const skills: SkillCategory[] = [
   {
     category: "Frontend",
     icon: <Code className="h-5 w-5" />,
@@ -145,31 +146,7 @@ export default function AboutPage() {
           </div>
 
           {/* Skills Section */}
-          <section className="mb-20">
-            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">Skills & Technologies</h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {skills.map((skill) => (
-                <Card key={skill.category} className="border-border transition-colors hover:border-primary/20">
-                  <CardContent className="p-6">
-                    <div className="mb-4 flex items-center gap-3">
-                      <div className="rounded-lg bg-primary/10 p-2 text-primary">{skill.icon}</div>
-                      <h3 className="font-semibold text-foreground">{skill.category}</h3>
-                    </div>
-                    <ul className="flex flex-wrap gap-2">
-                      {skill.technologies.map((tech) => (
-                        <li
-                          key={tech}
-                          className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground"
-                        >
-                          {tech}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </section>
+          <SkillsSection skills={skills} />
 
           {/* Experience Section */}
           <section>
