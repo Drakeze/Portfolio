@@ -1,33 +1,13 @@
-import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { ContactCTA } from "@/components/contact-cta"
+import { ProjectCard } from "@/components/project-card"
+import { featuredProjects } from "@/lib/projects"
 
 export default function HomePage() {
-  const featuredProjects = [
-    {
-      title: "E-Commerce Platform",
-      description: "A modern e-commerce solution built with Next.js and Stripe integration.",
-      image: "/projects/ecommerce-case-study.svg",
-      tags: ["Next.js", "TypeScript", "Stripe"],
-    },
-    {
-      title: "Task Management App",
-      description: "Collaborative task management tool with real-time updates and team features.",
-      image: "/projects/task-manager-showcase.svg",
-      tags: ["React", "Node.js", "Socket.io"],
-    },
-    {
-      title: "Portfolio Website",
-      description: "Responsive portfolio website showcasing creative work and projects.",
-      image: "/projects/portfolio-site-preview.svg",
-      tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
-    },
-  ]
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -69,33 +49,7 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProjects.map((project) => (
-              <Card
-                key={project.title}
-                className="group hover:shadow-lg transition-all duration-300 border-border hover:border-primary/20"
-              >
-                <CardContent className="p-0">
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(min-width: 1280px) 360px, (min-width: 768px) 45vw, 90vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-foreground mb-2">{project.title}</h3>
-                    <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="px-3 py-1 bg-accent/10 text-accent-foreground text-xs rounded-full">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <ProjectCard key={project.title} project={project} variant="featured" />
             ))}
           </div>
 
@@ -110,40 +64,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Let's Work Together</h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            I'm always interested in new opportunities and collaborations. Let's discuss how we can bring your ideas to
-            life.
-          </p>
-          <div className="flex items-center justify-center gap-4">
-            <Button asChild size="lg">
-              <Link href="mailto:asheadworking@gmail.com">
-                <Mail className="mr-2 h-4 w-4" />
-                Get In Touch
-              </Link>
-            </Button>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="https://github.com/Drakeze" target="_blank">
-                  <Github className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="https://github.com/DrakezeWind" target="_blank">
-                  <Github className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="https://www.linkedin.com/in/anthonyshead/" target="_blank">
-                  <Linkedin className="h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ContactCTA />
     </div>
   )
 }
