@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
+import { Navigation } from "@/components/navigation"
+import { ProjectCard } from "@/components/project-card"
+import { projects } from "@/lib/projects"
 import Image from "next/image"
 import Link from "next/link"
 import { ExternalLink, Github } from "lucide-react"
-
-import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
@@ -44,7 +45,7 @@ export default function ProjectsPage() {
       title: "Cryptocurrency Tracker",
       description:
         "A comprehensive cryptocurrency dashboard with real-time market data, curated watchlists, and conversion tools for fast portfolio insights.",
-      image: "/public/CT.png",
+      image: "/CT.png",
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "CoinGecko API", "Vercel"],
       liveUrl: "https://cryptoapp-weld.vercel.app/",
       githubUrl: "https://github.com/Drakeze/CT-app",
@@ -62,7 +63,7 @@ export default function ProjectsPage() {
       title: "Blogging Platform",
       description:
         "Responsive portfolio website showcasing creative work and projects with smooth animations, optimized performance, and modern design principles.",
-      image: "/public/Blog.png",
+      image: "/Blog.png",
       tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Vercel"],
       liveUrl: "https://blog-nine-eta-94.vercel.app/",
       githubUrl: "https://github.com/Drakeze/Blog",
@@ -118,6 +119,7 @@ export default function ProjectsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }} />
 
       <div className="pt-32 pb-20 px-6">
+      <div className="px-6 pb-20">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
@@ -129,7 +131,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
               <Card
                 key={project.title}
@@ -141,7 +143,8 @@ export default function ProjectsPage() {
                       src={project.image}
                       alt={project.title}
                       fill
-                      sizes="(min-width: 1024px) 520px, 90vw"
+                      sizes="(min-width: 1280px) 380px, (min-width: 1024px) 480px, 90vw"
+                      loading="lazy"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
