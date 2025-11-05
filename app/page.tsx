@@ -93,6 +93,21 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                 >
                   <Linkedin className="h-5 w-5" />
+                <Link href="https://github.com/Drakeze" target="_blank">
+                  <Github className="h-5 w-5" />
+                  <span className="sr-only">Visit Anthony Shead's GitHub profile (@Drakeze)</span>
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="https://github.com/DrakezeWind" target="_blank">
+                  <Github className="h-5 w-5" />
+                  <span className="sr-only">Visit Anthony Shead's GitHub profile (@DrakezeWind)</span>
+                </Link>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="https://www.linkedin.com/in/anthonyshead/" target="_blank">
+                  <Linkedin className="h-5 w-5" />
+                  <span className="sr-only">Visit Anthony Shead on LinkedIn</span>
                 </Link>
               </Button>
             </div>
