@@ -1,9 +1,11 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { Download, Mail, Github, Linkedin, Code, Zap, Users, Apple } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { absoluteUrl } from "@/lib/seo"
 import { SkillsSection, type SkillCategory } from "@/components/skills-section"
 
 const aboutParagraphs = [
@@ -73,6 +75,36 @@ const experience = [
     ],
   },
 ]
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Learn about Anthony Shead's background as a full-stack developer, the skills powering Soren Tech, and how to connect.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About Anthony Shead",
+    description:
+      "Discover the story, skills, and experience Anthony Shead brings to building thoughtful full-stack solutions.",
+    url: absoluteUrl("/about"),
+    images: [
+      {
+        url: absoluteUrl("/profile/anthony-shead-portrait.svg"),
+        width: 800,
+        height: 800,
+        alt: "Portrait of Anthony Shead",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Anthony Shead",
+    description:
+      "Discover the story, skills, and experience Anthony Shead brings to building thoughtful full-stack solutions.",
+    images: [absoluteUrl("/profile/anthony-shead-portrait.svg")],
+  },
+}
 
 export default function AboutPage() {
   return (
