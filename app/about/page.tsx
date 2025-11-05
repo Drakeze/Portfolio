@@ -99,7 +99,7 @@ export default function AboutPage() {
                 <Button variant="outline" asChild>
                   <Link href="/Resume.pdf" target="_blank" rel="noopener noreferrer">
                     <Download className="mr-2 h-4 w-4" />
-                    Download Résumé
+                    Download Resume
                   </Link>
                 </Button>
               </div>
