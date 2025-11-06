@@ -1,11 +1,13 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
+import { ContactCTA } from "@/components/contact-cta"
+import { ProjectCard } from "@/components/project-card"
+import { featuredProjects } from "@/lib/projects"
 
 const heroOgImage = absoluteUrl("/projects/ecommerce-case-study.svg")
 
@@ -38,9 +40,6 @@ export const metadata: Metadata = {
     images: [heroOgImage],
   },
 }
-import { ContactCTA } from "@/components/contact-cta"
-import { ProjectCard } from "@/components/project-card"
-import { featuredProjects } from "@/lib/projects"
 
 export default function HomePage() {
   return (
@@ -115,33 +114,17 @@ export default function HomePage() {
               <Button variant="ghost" size="icon" asChild>
                 <Link href="https://github.com/Drakeze" target="_blank" rel="noopener noreferrer">
                   <Github className="h-5 w-5" />
+                  <span className="sr-only">Visit Anthony Shead's GitHub profile (@Drakeze)</span>
                 </Link>
               </Button>
               <Button variant="ghost" size="icon" asChild>
                 <Link href="https://github.com/DrakezeWind" target="_blank" rel="noopener noreferrer">
                   <Github className="h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <Link
-                  href="https://www.linkedin.com/in/anthonyshead/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Linkedin className="h-5 w-5" />
-                <Link href="https://github.com/Drakeze" target="_blank">
-                  <Github className="h-5 w-5" />
-                  <span className="sr-only">Visit Anthony Shead's GitHub profile (@Drakeze)</span>
-                </Link>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <Link href="https://github.com/DrakezeWind" target="_blank">
-                  <Github className="h-5 w-5" />
                   <span className="sr-only">Visit Anthony Shead's GitHub profile (@DrakezeWind)</span>
                 </Link>
               </Button>
               <Button variant="ghost" size="icon" asChild>
-                <Link href="https://www.linkedin.com/in/anthonyshead/" target="_blank">
+                <Link href="https://www.linkedin.com/in/anthonyshead/" target="_blank" rel="noopener noreferrer">
                   <Linkedin className="h-5 w-5" />
                   <span className="sr-only">Visit Anthony Shead on LinkedIn</span>
                 </Link>
@@ -150,6 +133,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
       <ContactCTA />
     </div>
   )
