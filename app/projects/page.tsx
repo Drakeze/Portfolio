@@ -1,13 +1,14 @@
 import type { Metadata } from "next"
 import { Navigation } from "@/components/navigation"
-import { ProjectCard } from "@/components/project-card"
-import { projects } from "@/lib/projects"
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { absoluteUrl, siteConfig } from "@/lib/seo"
+import { ExternalLink, Github } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { ExternalLink, Github } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { absoluteUrl, siteConfig } from "@/lib/seo"
+import { ProjectCard } from "@/components/project-card"
+import { projects } from "@/lib/projects"
+
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -116,10 +117,12 @@ export default function ProjectsPage() {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+      />
 
       <div className="pt-32 pb-20 px-6">
-      <div className="px-6 pb-20">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
@@ -131,7 +134,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
               <Card
                 key={project.title}
@@ -150,12 +153,17 @@ export default function ProjectsPage() {
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-semibold text-foreground mb-3">{project.title}</h3>
-                    <p className="text-muted-foreground mb-4 text-sm leading-relaxed">{project.description}</p>
+                    <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                      {project.description}
+                    </p>
 
                     {/* Tags */}
                     <div className="mb-6 flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
-                        <span key={tag} className="px-3 py-1 bg-accent/10 text-accent-foreground text-xs rounded-full">
+                        <span
+                          key={tag}
+                          className="px-3 py-1 bg-accent/10 text-accent-foreground text-xs rounded-full"
+                        >
                           {tag}
                         </span>
                       ))}
