@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import { ThemeProvider } from "@/components/theme-provider"
 import {Navigation} from "@/components/navigation"
+import {Footer} from "@/components/footer"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
 import "./globals.css"
 
@@ -27,33 +28,26 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
   publisher: siteConfig.name,
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    sitemap: `${siteConfig.url}/sitemap.xml`, // ✅ moved here
+  },
   openGraph: {
     type: "website",
     url: siteConfig.url,
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    images: [
-      {
-        url: absoluteUrl("/projects/ecommerce-case-study.svg"),
-        width: 1200,
-        height: 630,
-        alt: "Featured e-commerce project by Anthony Shead",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [absoluteUrl("/projects/ecommerce-case-study.svg")],
   },
   robots: {
     index: true,
     follow: true,
     nocache: false,
-    sitemap: `${siteConfig.url}/sitemap.xml`,
     googleBot: {
       index: true,
       follow: true,
@@ -65,6 +59,7 @@ export const metadata: Metadata = {
   category: "technology",
   generator: "Next.js",
 }
+
 
 export default function RootLayout({
   children,
@@ -117,6 +112,7 @@ export default function RootLayout({
             </main>
           </Suspense>
           <Analytics />
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
