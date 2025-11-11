@@ -1,3 +1,12 @@
 {
-  "extends": ["next/core-web-vitals"]
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:tailwindcss/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "tailwindcss/no-custom-classname": "off",
+    "@next/next/no-img-element": "off"
+  }
 }

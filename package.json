@@ -5,7 +5,7 @@
   "scripts": {
     "build": "node scripts/build-with-eslint-stub.cjs",
     "dev": "next dev",
-    "lint": "node scripts/lint-with-eslint-stub.cjs",
+    "lint": "eslint . --max-warnings=0",
     "start": "next start"
   },
   "dependencies": {
@@ -27,7 +27,12 @@
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "^16.0.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-tailwindcss": "^3.18.2",
     "postcss": "^8.5",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4.1.9",
     "tw-animate-css": "1.3.3",
     "typescript": "^5"
