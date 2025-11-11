@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
 import {Footer} from "@/components/footer"
+import { Header } from "@/components/header"
 import { ProjectCard } from "@/components/project-card"
 import { featuredProjects } from "@/lib/projects"
 

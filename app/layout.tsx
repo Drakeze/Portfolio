@@ -5,8 +5,8 @@ import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import { ThemeProvider } from "@/components/theme-provider"
-import {Navigation} from "@/components/navigation"
 import {Footer} from "@/components/footer"
+import {Header} from "@/components/header"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
 import "./globals.css"
 
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   publisher: siteConfig.name,
   alternates: {
     canonical: "/",
-    sitemap: `${siteConfig.url}/sitemap.xml`, // ✅ moved here
+    // sitemap property removed; handled in app/sitemap.ts
   },
   openGraph: {
     type: "website",
@@ -102,7 +102,7 @@ export default function RootLayout({
         </a>
 
         {/* Global Navigation */}
-        <Navigation />
+        <Header/>
 
         {/* Page content */}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
