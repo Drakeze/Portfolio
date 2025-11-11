@@ -7,6 +7,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { ThemeProvider } from "./theme-provider"
 import { Menu, X } from "lucide-react"
 
 export function Header() {
@@ -36,8 +37,9 @@ export function Header() {
 
       <div className="container mx-auto flex items-center justify-between h-16 px-6">
         {/* Logo / Brand */}
-        <Link href="/" className="font-bold text-xl text-foreground hover:text-primary transition-colors">
-          Anthony Shead
+        <Link href="/" className="group flex flex-col transition-colors">
+          <span className="text-xl font-bold text-foreground group-hover:text-primary">Anthony Shead</span>
+          <span className="text-sm text-muted-foreground group-hover:text-primary">Aspiring Full-Stack Developer</span>
         </Link>
 
         {/* Desktop Navigation Links */}

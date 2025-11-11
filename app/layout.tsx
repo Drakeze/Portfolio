@@ -4,11 +4,12 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
-import { ThemeProvider } from "@/components/theme-provider"
+import {ThemeProvider} from "@/components/theme-provider"
 import {Footer} from "@/components/footer"
 import {Header} from "@/components/header"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
 import "./globals.css"
+
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
