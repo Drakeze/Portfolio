@@ -1,14 +1,15 @@
+//import {Footer} from "@/components/footer"
+//import { Header } from "@/components/header"
+//import Image from "next/image"
+//import { Github, Linkedin, Mail } from "lucide-react"
+//import { Card, CardContent } from "@/components/ui/card"
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
-import {Footer} from "@/components/footer"
-import { Header } from "@/components/header"
 import { ProjectCard } from "@/components/project-card"
 import { featuredProjects } from "@/lib/projects"
+import { ArrowRight } from "lucide-react";
 
 const heroOgImage = absoluteUrl("/projects/ecommerce-case-study.svg")
 

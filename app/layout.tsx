@@ -8,6 +8,7 @@ import {ThemeProvider} from "@/components/theme-provider"
 import {Footer} from "@/components/footer"
 import {Header} from "@/components/header"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
+import { URL } from "url";
 import "./globals.css"
 
 

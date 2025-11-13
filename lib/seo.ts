@@ -1,3 +1,5 @@
+import { URL } from "url";
+
 export const siteConfig = {
   name: "Anthony Shead",
   title: "Anthony Shead | Full-Stack Developer",

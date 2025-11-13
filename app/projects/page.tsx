@@ -6,9 +6,9 @@ import { ExternalLink, Github } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { ProjectCard } from "@/components/project-card"
-import { projects } from "@/lib/projects"
+//import { Footer } from "@/components/footer"
+//import { ProjectCard } from "@/components/project-card"
+//import { projects } from "@/lib/projects"
 
 
 export const metadata: Metadata = {
