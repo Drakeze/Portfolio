@@ -38,8 +38,12 @@ export function Header() {
       <div className="container mx-auto flex items-center justify-between h-16 px-6">
         {/* Logo / Brand */}
         <Link href="/" className="group flex flex-col transition-colors">
-          <span className="text-xl font-bold text-foreground group-hover:text-primary">Anthony Shead</span>
-          <span className="text-sm text-muted-foreground group-hover:text-primary">Aspiring Full-Stack Developer</span>
+          <span className="text-xl font-bold text-foreground group-hover:text-primary">
+            Anthony Shead
+          </span>
+          <span className="text-sm text-muted-foreground group-hover:text-primary">
+            Aspiring Full-Stack Developer
+          </span>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -97,7 +101,10 @@ export function Header() {
             ))}
             <li>
               <Button variant="outline" size="sm" asChild className="w-full">
-                <Link href="mailto:asheadworking@gmail.com" onClick={() => setMobileMenuOpen(false)}>
+                <Link
+                  href="mailto:asheadworking@gmail.com"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   Contact
                 </Link>
               </Button>

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
 import { ProjectCard } from "@/components/project-card"
 import { featuredProjects } from "@/lib/projects"
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react"
 
 const heroOgImage = absoluteUrl("/projects/ecommerce-case-study.svg")
 
@@ -54,8 +54,8 @@ export default function HomePage() {
             <span className="text-primary block">Experiences</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            I'm a passionate developer creating beautiful, functional, and user-centered digital experiences that make a
-            difference.
+            I'm a passionate developer creating beautiful, functional, and user-centered digital
+            experiences that make a difference.
           </p>
           <div className="flex items-center justify-center gap-4">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
@@ -74,10 +74,12 @@ export default function HomePage() {
       <section className="py-20 px-6 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Featured Projects</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Featured Projects
+            </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              A selection of recent work that showcases my skills and passion for creating exceptional digital
-              experiences.
+              A selection of recent work that showcases my skills and passion for creating
+              exceptional digital experiences.
             </p>
           </div>
 

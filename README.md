@@ -22,11 +22,13 @@ This site is the central hub for my featured projects (Blog, Dashboard, CT-App),
 ## ⚙️ Getting Started
 
 ### 🔹 Prerequisites
+
 - **Node.js** v18+
 - **Bun** → [Install Bun](https://bun.sh/)
 - **Git**
 
 ### 🔹 Clone & Install
+
 ```bash
 git clone https://github.com/Drakeze/Portfolio.git
 cd Portfolio
@@ -34,11 +36,13 @@ bun install
 ```
 
 ### 🔹 Local Development
+
 ```bash
 bun run dev
 ```
 
 ### 🔹 Production Build & Preview
+
 ```bash
 bun run build
 bun run start
@@ -48,11 +52,11 @@ bun run start
 
 ## 📦 Deployment on Vercel
 
-| Setting | Value |
-| --- | --- |
-| Install Command | `bun install` |
-| Build Command | `bun run build` |
-| Output Directory | `.next` |
+| Setting          | Value           |
+| ---------------- | --------------- |
+| Install Command  | `bun install`   |
+| Build Command    | `bun run build` |
+| Output Directory | `.next`         |
 
 ### Environment Variables
 

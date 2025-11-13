@@ -14,7 +14,10 @@ type ProjectCardProps = {
   variant?: ProjectCardVariant
 }
 
-const variantConfig: Record<ProjectCardVariant, { imageClass: string; imageSizes: string; showActions: boolean }> = {
+const variantConfig: Record<
+  ProjectCardVariant,
+  { imageClass: string; imageSizes: string; showActions: boolean }
+> = {
   featured: {
     imageClass: "aspect-[4/3]",
     imageSizes: "(min-width: 1280px) 360px, (min-width: 768px) 45vw, 90vw",
@@ -44,11 +47,16 @@ export function ProjectCard({ project, variant = "detailed" }: ProjectCardProps)
         </div>
         <div className="p-6">
           <h3 className="text-xl font-semibold text-foreground mb-3">{project.title}</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground mb-4">{project.description}</p>
+          <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+            {project.description}
+          </p>
 
           <div className={cn("flex flex-wrap gap-2", config.showActions && "mb-6")}>
             {project.tags.map((tag) => (
-              <span key={tag} className="rounded-full bg-accent/10 px-3 py-1 text-xs text-accent-foreground">
+              <span
+                key={tag}
+                className="rounded-full bg-accent/10 px-3 py-1 text-xs text-accent-foreground"
+              >
                 {tag}
               </span>
             ))}
@@ -64,7 +72,12 @@ export function ProjectCard({ project, variant = "detailed" }: ProjectCardProps)
                   </Link>
                 </Button>
               ) : (
-                <Button size="sm" variant="outline" disabled className="cursor-not-allowed opacity-70">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled
+                  className="cursor-not-allowed opacity-70"
+                >
                   Coming Soon
                 </Button>
               )}

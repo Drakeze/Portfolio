@@ -10,7 +10,6 @@ import { Header } from "@/components/header"
 //import { ProjectCard } from "@/components/project-card"
 //import { projects } from "@/lib/projects"
 
-
 export const metadata: Metadata = {
   title: "Projects",
   description:
@@ -94,7 +93,10 @@ export default function ProjectsPage() {
   const projectJsonLd = {
     "@context": "https://schema.org",
     "@graph": projects.map((project) => {
-      const slug = project.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
+      const slug = project.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "")
       const imagePath = project.image.startsWith("/public/")
         ? project.image.replace("/public", "")
         : project.image
@@ -129,8 +131,8 @@ export default function ProjectsPage() {
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">My Projects</h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              A collection of projects that demonstrate my skills in web development, user experience design, and
-              problem-solving across various technologies and domains.
+              A collection of projects that demonstrate my skills in web development, user
+              experience design, and problem-solving across various technologies and domains.
             </p>
           </div>
 
@@ -180,7 +182,12 @@ export default function ProjectsPage() {
                           </Link>
                         </Button>
                       ) : (
-                        <Button size="sm" variant="outline" disabled className="cursor-not-allowed opacity-70">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled
+                          className="cursor-not-allowed opacity-70"
+                        >
                           Coming Soon
                         </Button>
                       )}

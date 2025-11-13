@@ -1,6 +1,6 @@
-'use strict';
+"use strict"
 
 module.exports = {
-  plugins: ['@next/next'],
-  rules: {}
-};
+  plugins: ["@next/next"],
+  rules: {},
+}

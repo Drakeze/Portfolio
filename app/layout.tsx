@@ -4,13 +4,12 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
-import {ThemeProvider} from "@/components/theme-provider"
-import {Footer} from "@/components/footer"
-import {Header} from "@/components/header"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Footer } from "@/components/footer"
+import { Header } from "@/components/header"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
-import { URL } from "url";
+import { URL } from "url"
 import "./globals.css"
-
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -62,10 +61,7 @@ export const metadata: Metadata = {
   generator: "Next.js",
 }
 
-
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -74,11 +70,7 @@ export default function RootLayout({
     url: siteConfig.url,
     jobTitle: "Full-Stack Developer",
     image: absoluteUrl("/profile/anthony-shead-portrait.svg"),
-    sameAs: [
-      siteConfig.socials.github,
-      siteConfig.socials.githubAlt,
-      siteConfig.socials.linkedin,
-    ],
+    sameAs: [siteConfig.socials.github, siteConfig.socials.githubAlt, siteConfig.socials.linkedin],
     worksFor: {
       "@type": "Organization",
       name: "Soren Tech",
@@ -104,10 +96,15 @@ export default function RootLayout({
         </a>
 
         {/* Global Navigation */}
-        <Header/>
+        <Header />
 
         {/* Page content */}
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <Suspense fallback={null}>
             <main id="main-content" className="min-h-screen bg-background pt-24">
               {children}

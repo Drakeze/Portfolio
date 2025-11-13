@@ -143,13 +143,21 @@ export default function AboutPage() {
                   </Link>
                 </Button>
                 <Button variant="ghost" size="icon" asChild>
-                  <Link href="https://github.com/DrakezeWinds" target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href="https://github.com/DrakezeWinds"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Github className="h-5 w-5" />
                     <span className="sr-only">GitHub (DrakezeWinds)</span>
                   </Link>
                 </Button>
                 <Button variant="ghost" size="icon" asChild>
-                  <Link href="https://www.linkedin.com/in/anthonyshead/" target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href="https://www.linkedin.com/in/anthonyshead/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Linkedin className="h-5 w-5" />
                     <span className="sr-only">LinkedIn</span>
                   </Link>
@@ -181,7 +189,9 @@ export default function AboutPage() {
 
           {/* Experience Section */}
           <section>
-            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">Professional Experience</h2>
+            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">
+              Professional Experience
+            </h2>
             <div className="space-y-6">
               {experience.map((exp) => (
                 <Card key={exp.role} className="border-border">

@@ -15,13 +15,20 @@ type SkillsSectionProps = {
   className?: string
 }
 
-export function SkillsSection({ skills, title = "Skills & Technologies", className }: SkillsSectionProps) {
+export function SkillsSection({
+  skills,
+  title = "Skills & Technologies",
+  className,
+}: SkillsSectionProps) {
   return (
     <section className={cn("mb-20", className)}>
       <h2 className="mb-8 text-center text-3xl font-bold text-foreground">{title}</h2>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {skills.map((skill) => (
-          <Card key={skill.category} className="border-border transition-colors hover:border-primary/20">
+          <Card
+            key={skill.category}
+            className="border-border transition-colors hover:border-primary/20"
+          >
             <CardContent className="p-6">
               <div className="mb-4 flex items-center gap-3">
                 <div className="rounded-lg bg-primary/10 p-2 text-primary">{skill.icon}</div>
@@ -29,7 +36,10 @@ export function SkillsSection({ skills, title = "Skills & Technologies", classNa
               </div>
               <ul className="flex flex-wrap gap-2">
                 {skill.technologies.map((tech) => (
-                  <li key={tech} className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground">
+                  <li
+                    key={tech}
+                    className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground"
+                  >
                     {tech}
                   </li>
                 ))}

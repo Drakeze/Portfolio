@@ -21,8 +21,8 @@ export function Footer() {
 
         {/* Subheading */}
         <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-          I'm always interested in new opportunities and collaborations.
-          Let&apos;s discuss how we can bring your ideas to life.
+          I'm always interested in new opportunities and collaborations. Let&apos;s discuss how we
+          can bring your ideas to life.
         </p>
 
         {/* Contact button */}
