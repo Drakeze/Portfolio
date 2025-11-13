@@ -6,7 +6,10 @@
     "build": "node scripts/build-with-eslint-stub.cjs",
     "dev": "next dev",
     "lint": "eslint . --max-warnings=0",
-    "start": "next start"
+    "start": "next start",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "ci": "bun run lint && bun run typecheck && bun run build"
   },
   "dependencies": {
     "@radix-ui/react-slot": "latest",
