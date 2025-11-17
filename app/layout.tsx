@@ -8,7 +8,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
-import { URL } from "url"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -95,16 +94,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to main content
         </a>
 
-        {/* Global Navigation */}
-        <Header />
-
-        {/* Page content */}
-        <ThemeProvider
+      {/* Theme Provider */}
+    <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+        {/* Global Navigation */}
+        <Header />
+        {/* Page content */}
           <Suspense fallback={null}>
             <main id="main-content" className="min-h-screen bg-background pt-24">
               {children}
