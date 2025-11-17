@@ -94,16 +94,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to main content
         </a>
 
-      {/* Theme Provider */}
-    <ThemeProvider
+        {/* Theme Provider */}
+        <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-        {/* Global Navigation */}
-        <Header />
-        {/* Page content */}
+          {/* Global Navigation */}
+          <Header />
+          {/* Page content */}
           <Suspense fallback={null}>
             <main id="main-content" className="min-h-screen bg-background pt-24">
               {children}

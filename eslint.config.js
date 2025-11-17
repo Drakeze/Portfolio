@@ -1,11 +1,11 @@
 // eslint.config.js — Final Flat Config (Codex v3 Ready)
-import js from "@eslint/js";
-import tsParser from "@typescript-eslint/parser";
-import tsPlugin from "@typescript-eslint/eslint-plugin";
-import nextPlugin from "@next/eslint-plugin-next";
-import reactPlugin from "eslint-plugin-react";
-import tailwindPlugin from "eslint-plugin-tailwindcss";
-import prettierConfig from "eslint-config-prettier";
+import js from "@eslint/js"
+import tsParser from "@typescript-eslint/parser"
+import tsPlugin from "@typescript-eslint/eslint-plugin"
+import nextPlugin from "@next/eslint-plugin-next"
+import reactPlugin from "eslint-plugin-react"
+import tailwindPlugin from "eslint-plugin-tailwindcss"
+import prettierConfig from "eslint-config-prettier"
 
 export default [
   // Base JavaScript rules
@@ -57,4 +57,4 @@ export default [
 
   // Prettier (must stay last)
   prettierConfig,
-];
+]
