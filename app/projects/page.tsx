@@ -118,7 +118,6 @@ export default function ProjectsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
 
       <script
         type="application/ld+json"
