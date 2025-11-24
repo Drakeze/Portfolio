@@ -5,7 +5,7 @@ import { Download, Mail, Github, Linkedin, Code, Zap, Users, Apple } from "lucid
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { absoluteUrl } from "@/lib/seo"
-import { SkillsSection, type SkillCategory } from "@/components/skills-section"
+import { SkillsSection, type SkillCategory } from "@/components/sections/skills-section"
 
 const aboutParagraphs = [
   "Hi, I’m Anthony Shead — a full-stack developer who loves turning ideas into intuitive products. I’m steadily working toward polyglot-level proficiency while completing the IBM Full-Stack JavaScript Developer certification and expanding the service catalog for my studio, Soren Tech.",

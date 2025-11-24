@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 //import { ThemeProvider } from "./theme-provider"
 import { Menu, X } from "lucide-react"
 

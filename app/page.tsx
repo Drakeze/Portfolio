@@ -7,7 +7,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { absoluteUrl, siteConfig } from "@/lib/seo"
-import { ProjectCard } from "@/components/project-card"
+import { ProjectCard } from "@/components/sections/project-card"
 import { featuredProjects } from "@/lib/projects"
 import { ArrowRight } from "lucide-react"
 
