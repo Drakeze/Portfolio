@@ -70,13 +70,13 @@ export default function ProjectsPage() {
       githubUrl: "https://github.com/Drakeze/Blog",
     },
     {
-      title: "Church Website",
+      title: "Soren Tech",
       description:
-        "A modern church website with event management, sermon archives, and community engagement features to connect members and visitors.",
+        "A professional services website for Soren Tech, highlighting offerings in web development, consulting, and digital transformation solutions.",
       image: "/projects/community-site.svg",
-      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
-      liveUrl: "https://church-web-xi.vercel.app/",
-      githubUrl: "https://github.com/DrakezeWind/Church-Web",
+      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "React", "PnPm"],
+      liveUrl: "https://sorenlab.com/",
+      githubUrl: "https://github.com/SorenLab",
     },
     {
       title: "GrowthVault",
