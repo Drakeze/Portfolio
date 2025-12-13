@@ -1,0 +1,111 @@
+// Shared schema for portfolio data across Next.js apps (MongoDB Atlas)
+
+// Once @prisma/client is installed:
+// - Pull existing data: npx prisma db pull
+// - Push initial schema: npx prisma db push
+
+// Prisma currently targets the Node.js runtime; avoid edge handlers for Prisma-backed routes.
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["mongodb"]
+}
+
+model Project {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  slug        String         @unique
+  title       String
+  summary     String
+  heroImage   String
+  category    String
+  tags        String[]
+  liveUrl     String?
+  repoUrl     String?
+  status      ProjectStatus  @default(ACTIVE)
+  metadata    ProjectMetadata?
+  stats       ProjectStat[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model ProjectMetadata {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  projectId     String   @db.ObjectId
+  headline      String?
+  techStack     String[]
+  highlight     String?
+  client        String?
+  constraint    Constraint? @relation(fields: [constraintId], references: [id])
+  constraintId  String?  @db.ObjectId
+  project       Project  @relation(fields: [projectId], references: [id])
+}
+
+model ProjectStat {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  projectId   String   @db.ObjectId
+  metric      StatMetric
+  value       Int
+  recordedAt  DateTime @default(now())
+  project     Project  @relation(fields: [projectId], references: [id])
+}
+
+model ExternalContent {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  source      ExternalSource
+  externalId  String         @unique
+  title       String
+  url         String
+  summary     String?
+  author      String?
+  publishedAt DateTime?
+  syncedAt    DateTime?
+  metadata    Json?
+}
+
+model IntegrationSync {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  integration  ExternalSource
+  lastRunAt    DateTime?
+  status       SyncStatus     @default(PENDING)
+  note         String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  DRAFT
+}
+
+enum StatMetric {
+  VIEW
+  DEPLOY
+  STAR
+}
+
+enum Constraint {
+  PUBLIC
+  NDA
+  INTERNAL
+}
+
+enum ExternalSource {
+  PORTFOLIO
+  PATREON
+  TWITTER
+  LINKEDIN
+  REDDIT
+  BLOG
+}
+
+enum SyncStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
