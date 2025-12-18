@@ -1,7 +1,19 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { Download, Mail, Github, Linkedin, Code, Zap, Users, Apple } from "lucide-react"
+import {
+  Download,
+  Mail,
+  Github,
+  Linkedin,
+  Code,
+  Zap,
+  Users,
+  Apple,
+  Award,
+  CheckCircle,
+  GraduationCap,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { absoluteUrl } from "@/lib/seo"
@@ -41,27 +53,31 @@ const skills: SkillCategory[] = [
   },
 ]
 
-const certfications = [
+const certifications = [
   {
     name: "API Integration – End to End Web Development",
-    issuer: "Board Infinity",
-    grade: "Completed · 88.57%"
+    provider: "Board Infinity",
+    status: "Completed",
+    completion: "86%",
   },
   {
     name: "Getting Started with Git and GitHub",
-    issuer: "IBM",
-    grade: "Completed · 84%"
+    provider: "IBM",
+    status: "Completed",
+    completion: "84.28%",
   },
   {
-    name: "Inroduction to Software engineering",
-    issuer: "IBM",
-    grade: "Completed · 85%"
+    name: "Introduction to HTML, CSS, & JavaScript",
+    provider: "IBM",
+    status: "Completed",
+    completion: "88.57%",
   },
   {
-    name: "Inroduction to HTML, CSS, and JavaScript",
-    issuer: "IBM",
-    grade: "Completed · 88%"
-  }
+    name: "Introduction to Software Engineering",
+    provider: "IBM",
+    status: "Completed",
+    completion: "85.90%",
+  },
 ]
 
 const experience = [
@@ -211,9 +227,42 @@ export default function AboutPage() {
           <SkillsSection skills={skills} />
 
           {/* Certifications Section */}
-          <section>
+          <section className="mb-20">
             <h2 className="mb-8 text-center text-3xl font-bold text-foreground">Certifications</h2>
-
+            <div className="grid gap-6 md:grid-cols-2">
+              {certifications.map((cert) => (
+                <Card
+                  key={cert.name}
+                  className="border-border transition-colors hover:border-primary/20"
+                >
+                  <CardContent className="p-6">
+                    <div className="mb-4 flex items-start gap-3">
+                      <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                        <Award className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground">{cert.name}</h3>
+                        <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                          <GraduationCap className="h-4 w-4" />
+                          <span className="font-medium text-foreground">{cert.provider}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-3 rounded-lg bg-muted/50 px-4 py-3 text-sm">
+                      <div className="flex items-center gap-2 text-foreground">
+                        <CheckCircle className="h-4 w-4 text-primary" />
+                        <span className="font-medium">{cert.status}</span>
+                      </div>
+                      <span className="text-muted-foreground">•</span>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <Award className="h-4 w-4 text-primary/80" />
+                        <span className="font-semibold">{cert.completion}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </section>
 
           {/* Experience Section */}
