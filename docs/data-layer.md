@@ -1,51 +1,40 @@
 # Data Layer Blueprint (Next.js App Router + Prisma + MongoDB)
 
-This blueprint establishes a reusable data layer for the portfolio projects with Prisma, MongoDB, and HashMap-based caching/lookup patterns. It focuses on hydration safety, predictable server ↔ client boundaries, and minimal surface area for Vercel deployments.
+This blueprint captures the portfolio-only data layer: Prisma + MongoDB on the server, hash map helpers for server-side lookups, and hydration-safe serialization to clients. No social integrations, external ingestion, or background jobs are included.
 
 ## Guiding Principles
-- **Server-first data flow:** Fetch data in Server Components, route handlers, or server actions to avoid client-side waterfalls and hydration mismatches.
-- **Stability for App Router:** Use a singleton Prisma client and avoid re-creating connections on hot reloads.
-- **HashMap discipline:** Use `Map`/key-value structures for server-only caching and lookups; serialize to plain objects before sending to clients.
-- **Hydration safety:** Never pass class instances (e.g., `Map`, `Date`, `Decimal`) directly to clients. Convert to primitives or JSON-safe shapes.
+- **Server-only data access:** Keep all database calls in Server Components or route handlers.
+- **Hydration safety:** Never send `Map`/`Set`/`Date` instances to clients; serialize to plain objects/strings first.
+- **HashMap discipline:** Build lookup maps on the server for slugs/IDs and convert to JSON-safe records before responses.
+- **Singleton Prisma client:** Reuse one Prisma instance to avoid connection churn during dev hot reloads.
 
 ## Recommended Folder Structure
 ```
 prisma/
   schema.prisma               # MongoDB provider + portfolio models
 lib/
-  config/env.ts               # Server-only env + feature flags
+  config/env.ts               # Server-only env access
   db/
-    prisma-client.ts          # Safe, singleton Prisma client for App Router
-    queries.ts                # Reusable server-only fetchers (cached with React.cache if helpful)
+    prisma-client.ts          # Safe, singleton Prisma client
+    queries.ts                # Reusable server-only fetchers
   cache/
     maps.ts                   # HashMap helpers (slug/id lookups) kept server-side
     memory-cache.ts           # Optional lightweight in-memory cache primitives
   dto/
     projects.ts               # Plain serializable DTOs for client consumption
-  integrations/
-    patreon/                  # API client + transformers (disabled until env flags set)
-    twitter/
-    linkedin/
-    reddit/
 app/
   api/
     projects/route.ts         # Read-only route handler returning DTOs + slug map
-    patreon/route.ts          # Placeholder integration routes, disabled by default
-    twitter/route.ts
-    linkedin/route.ts
-    reddit/route.ts
-  (marketing|dashboard)/
-    projects/page.tsx         # Server Component consuming server fetchers
-    components/ProjectList.tsx# Client Component receiving DTOs only
-.env.example                  # Documented environment variables + feature flags
+  projects/page.tsx           # Server Component consuming server fetchers
+  (client components)         # Presentational only, receive DTOs/POJOs
+.env.example                  # Documented environment variables
 ```
 
 ## Minimal Prisma Schema (MongoDB)
 See [`prisma/schema.prisma`](../prisma/schema.prisma) for the canonical definition. Key points:
 - `provider = "mongodb"` uses ObjectId-backed string IDs.
-- `ProjectMetadata` is optional and can be expanded without migrations that touch core entities.
+- `ProjectMetadata` is optional and can expand without touching the core `Project` entity.
 - `ProjectStat` is append-only (e.g., deployments, views) and can be aggregated cheaply.
-- `ExternalContent` and `IntegrationSync` are included for storing third-party content snapshots and sync timestamps without coupling to UI.
 
 ```prisma
 // prisma/schema.prisma
@@ -117,17 +106,10 @@ enum Constraint {
 }
 ```
 
-## API Integration Scaffolds (disabled by default)
-- **Patreon, Twitter/X, LinkedIn, Reddit** each have their own `app/api/<integration>/route.ts` that returns `503` until the corresponding `ENABLE_*` flag and credentials are supplied.
-- API client setup and transformation logic live under `lib/integrations/<integration>/` to keep route handlers thin and composable.
-- All integration code is marked `server-only` to avoid accidental client bundling or hydration issues.
-
 ## Environment Variables
-See `.env.example` for a complete list. Highlights:
-- `DATABASE_URL` (MongoDB Atlas connection string) and optional `PRISMA_LOG_LEVEL`.
-- Feature flags: `ENABLE_PATREON`, `ENABLE_TWITTER`, `ENABLE_LINKEDIN`, `ENABLE_REDDIT` (all `false` by default).
-- Credentials: `PATREON_CLIENT_ID/SECRET/ACCESS_TOKEN`, `TWITTER_BEARER_TOKEN`, `LINKEDIN_CLIENT_ID/SECRET/ACCESS_TOKEN`, `REDDIT_CLIENT_ID/SECRET/ACCESS_TOKEN`.
-- No secrets are committed; all access is expected to come from the server environment (Vercel Project Settings).
+See `.env.example` for the full list:
+- `DATABASE_URL` (MongoDB Atlas connection string)
+- Optional `PRISMA_LOG_LEVEL`
 
 ## Prisma Client (Singleton)
 ```ts
@@ -147,7 +129,7 @@ export const prisma =
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 ```
 - Keep this file server-only (never imported by Client Components).
-- Vercel edge runtimes are not compatible with Prisma + MongoDB; keep usage on the Node runtime routes.
+- Prisma is Node-only; keep usage on Node runtime routes/Server Components.
 
 ## HashMap Usage Patterns
 - See `lib/cache/maps.ts` and `lib/cache/memory-cache.ts` for server-only helpers to build lookup tables and short-lived caches.
@@ -210,11 +192,6 @@ export default function ProjectList({ projects }: { projects: ProjectDTO[] }) {
 - **React cache + stable keys:** Use `React.cache` or `cache()` wrappers around Prisma queries to dedupe fetches per request without manual state.
 - **Avoid client-side fetch waterfalls:** Fetch all project data server-side and stream/segment UI as needed; keep client components purely presentational.
 - **Incremental caching:** For read-heavy pages, consider Next.js `revalidate` with RSC fetchers or `route segment config` if/when a static cache is acceptable.
-
-## When MongoDB May Not Be Ideal
-- **Relational queries / joins:** If the portfolio later needs complex relations (e.g., multi-tenant auth, transactional edits), Postgres with Prisma gives better guarantees and SQL tooling.
-- **Full-text search:** MongoDB Atlas Search works, but for advanced ranking consider Postgres + pgvector or dedicated search (Meilisearch/Algolia).
-- **Edge runtime needs:** Prisma is Node-only; for edge rendering a hosted REST/GraphQL layer (e.g., Neon/Postgres + Drizzle/HTTP) or KV (Upstash) may be preferred.
 
 ## Benefits
 - **Performance:** HashMap-based lookups prevent repeated array scans; server-side fetching removes client hydration thrash.

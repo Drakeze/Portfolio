@@ -54,29 +54,6 @@ model ProjectStat {
   project     Project  @relation(fields: [projectId], references: [id])
 }
 
-model ExternalContent {
-  id          String         @id @default(auto()) @map("_id") @db.ObjectId
-  source      ExternalSource
-  externalId  String         @unique
-  title       String
-  url         String
-  summary     String?
-  author      String?
-  publishedAt DateTime?
-  syncedAt    DateTime?
-  metadata    Json?
-}
-
-model IntegrationSync {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId
-  integration  ExternalSource
-  lastRunAt    DateTime?
-  status       SyncStatus     @default(PENDING)
-  note         String?
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-}
-
 enum ProjectStatus {
   ACTIVE
   ARCHIVED
@@ -93,19 +70,4 @@ enum Constraint {
   PUBLIC
   NDA
   INTERNAL
-}
-
-enum ExternalSource {
-  PORTFOLIO
-  PATREON
-  TWITTER
-  LINKEDIN
-  REDDIT
-  BLOG
-}
-
-enum SyncStatus {
-  PENDING
-  SUCCESS
-  FAILED
 }
