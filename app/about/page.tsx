@@ -22,23 +22,46 @@ const skills: SkillCategory[] = [
   {
     category: "Backend",
     icon: <Zap className="h-5 w-5" />,
-    technologies: ["Node.js", "MongoDB"],
+    technologies: ["Node.js", "MongoDB", "Prisma", "Rest APIs", "Server Actions"],
   },
   {
     category: "Tools",
     icon: <Users className="h-5 w-5" />,
-    technologies: ["Git & GitHub", "Vercel", "Supabase", "Stripe"],
+    technologies: ["Git & GitHub", "Vercel", "Familiar"],
   },
   {
-    category: "Learning (Backend)",
+    category: "Exploring Next (Backend)",
     icon: <Apple className="h-5 w-5" />,
     technologies: ["Python", "Redis", "Docker"],
   },
   {
-    category: "Learning (Cloud)",
+    category: "Currently Learning (Cloud)",
     icon: <Apple className="h-5 w-5" />,
     technologies: ["AWS", "Analytics", "Testing Libraries"],
   },
+]
+
+const certfications = [
+  {
+    name: "API Integration – End to End Web Development",
+    issuer: "Board Infinity",
+    grade: "Completed · 88.57%"
+  },
+  {
+    name: "Getting Started with Git and GitHub",
+    issuer: "IBM",
+    grade: "Completed · 84%"
+  },
+  {
+    name: "Inroduction to Software engineering",
+    issuer: "IBM",
+    grade: "Completed · 85%"
+  },
+  {
+    name: "Inroduction to HTML, CSS, and JavaScript",
+    issuer: "IBM",
+    grade: "Completed · 88%"
+  }
 ]
 
 const experience = [
@@ -128,7 +151,7 @@ export default function AboutPage() {
                   </Link>
                 </Button>
                 <Button variant="outline" asChild>
-                  <Link href="/Resume.pdf" target="_blank" rel="noopener noreferrer">
+                  <Link href="/Anthony Resume.pdf" target="_blank" rel="noopener noreferrer">
                     <Download className="mr-2 h-4 w-4" />
                     Download Resume
                   </Link>
@@ -186,6 +209,12 @@ export default function AboutPage() {
 
           {/* Skills Section */}
           <SkillsSection skills={skills} />
+
+          {/* Certifications Section */}
+          <section>
+            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">Certifications</h2>
+
+          </section>
 
           {/* Experience Section */}
           <section>
