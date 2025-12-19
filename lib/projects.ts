@@ -13,7 +13,7 @@ export const projects: Project[] = [
     description:
       "A comprehensive cryptocurrency dashboard with real-time market data, curated watchlists, and conversion tools for fast portfolio insights.",
     image: "/projects/crypto-tracker.svg",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "CoinGecko API", "Vercel"],
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "CoinGecko API", "Vercel", "React","Bun"],
     liveUrl: "https://cryptoapp-weld.vercel.app/",
     githubUrl: "https://github.com/Drakeze/CT-app",
   },
@@ -31,16 +31,16 @@ export const projects: Project[] = [
     description:
       "Content-driven blog platform with MDX-style posts, rich typography, and responsive layouts for long-form writing.",
     image: "/projects/blogging-platform.svg",
-    tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Vercel"],
+    tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Vercel", "Bun"],
     liveUrl: "https://blog-nine-eta-94.vercel.app/",
     githubUrl: "https://github.com/Drakeze/Blog",
   },
   {
-    title: "Church Website",
+    title: "Soren Tech Website",
     description:
-      "A modern church website with event management, sermon archives, and community engagement features to connect members and visitors.",
+      "This is a modern, responsive website built for Soren Tech, showcasing a New company specializing in web development and digital solutions.",
     image: "/projects/community-site.svg",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "PnPm",],
     liveUrl: "https://church-web-xi.vercel.app/",
     githubUrl: "https://github.com/DrakezeWind/Church-Web",
   },
