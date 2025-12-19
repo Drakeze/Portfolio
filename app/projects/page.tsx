@@ -1,210 +1,102 @@
-import type { Metadata } from "next"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { absoluteUrl, siteConfig } from "@/lib/seo"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Github } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { Header } from "@/components/layout/header"
-//import { Footer } from "@/components/footer"
-//import { ProjectCard } from "@/components/project-card"
-//import { projects } from "@/lib/projects"
+import { Button } from "@/components/ui/button"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Projects",
-  description:
-    "Browse Anthony Shead's portfolio of web applications, dashboards, and platforms built with Next.js, TypeScript, and more.",
-  alternates: {
-    canonical: "/projects",
-  },
-  openGraph: {
-    title: "Anthony Shead's Projects",
-    description:
-      "See detailed case studies and links for Anthony Shead's cryptocurrency tracker, dashboards, and other full-stack builds.",
-    url: absoluteUrl("/projects"),
-    images: [
-      {
-        url: absoluteUrl("/projects/productivity-dashboard.svg"),
-        width: 1200,
-        height: 630,
-        alt: "Preview of Anthony Shead's productivity dashboard project",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Anthony Shead's Projects",
-    description:
-      "See detailed case studies and links for Anthony Shead's cryptocurrency tracker, dashboards, and other full-stack builds.",
-    images: [absoluteUrl("/projects/productivity-dashboard.svg")],
-  },
+  title: "Projects - Your Name",
+  description: "View my portfolio of web development projects and applications",
 }
 
+const projects = [
+  {
+    title: "E-Commerce Platform",
+    description:
+      "Full-stack e-commerce solution with payment processing, inventory management, and analytics dashboard.",
+    tags: ["Next.js", "Stripe", "PostgreSQL", "Tailwind"],
+    image: "/modern-ecommerce-dashboard.png",
+    github: "https://github.com",
+    live: "https://example.com",
+  },
+  {
+    title: "Real-Time Chat Application",
+    description: "WebSocket-based chat app with rooms, direct messaging, and file sharing capabilities.",
+    tags: ["React", "Node.js", "Socket.io", "MongoDB"],
+    image: "/chat-application-interface.png",
+    github: "https://github.com",
+    live: "https://example.com",
+  },
+  {
+    title: "Task Management Tool",
+    description: "Collaborative project management platform with kanban boards, team collaboration, and time tracking.",
+    tags: ["TypeScript", "Next.js", "Prisma", "tRPC"],
+    image: "/task-management-kanban.png",
+    github: "https://github.com",
+    live: "https://example.com",
+  },
+  {
+    title: "Weather Forecast App",
+    description: "Beautiful weather application with 7-day forecasts, location-based data, and interactive maps.",
+    tags: ["React", "OpenWeather API", "Mapbox", "Chart.js"],
+    image: "/weather-forecast-app.png",
+    github: "https://github.com",
+    live: "https://example.com",
+  },
+]
+
 export default function ProjectsPage() {
-  const projects = [
-    {
-      title: "Cryptocurrency Tracker",
-      description:
-        "A comprehensive cryptocurrency dashboard with real-time market data, curated watchlists, and conversion tools for fast portfolio insights.",
-      image: "/projects/crypto-tracker.svg",
-      tags: ["Next.js", "TypeScript", "Tailwind CSS", "CoinGecko API", "Vercel"],
-      liveUrl: "https://cryptoapp-weld.vercel.app/",
-      githubUrl: "https://github.com/Drakeze/CT-app",
-    },
-    {
-      title: "Dashboard App",
-      description:
-        "A clean and intuitive task management dashboard with real-time collaboration, drag-and-drop functionality, and customizable workflows for enhanced productivity.",
-      image: "/projects/productivity-dashboard.svg",
-      tags: ["React", "Node.js", "TypeScript", "MongoDB"],
-      liveUrl: "https://dashboard-drakeze.vercel.app",
-      githubUrl: "https://github.com/Drakeze/Dashboard",
-    },
-    {
-      title: "Blogging Platform",
-      description:
-        "Responsive portfolio website showcasing creative work and projects with smooth animations, optimized performance, and modern design principles.",
-      image: "/projects/blogging-platform.svg",
-      tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Vercel"],
-      liveUrl: "https://blog-nine-eta-94.vercel.app/",
-      githubUrl: "https://github.com/Drakeze/Blog",
-    },
-    {
-      title: "Soren Tech",
-      description:
-        "A professional services website for Soren Tech, highlighting offerings in web development, consulting, and digital transformation solutions.",
-      image: "/projects/community-site.svg",
-      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "React", "PnPm"],
-      liveUrl: "https://sorenlab.com/",
-      githubUrl: "https://github.com/SorenLab",
-    },
-    {
-      title: "GrowthVault",
-      description:
-        "A collaborative study repository with bite-sized projects and code snippets that document my learning journey.",
-      image: "/projects/study-repository.svg",
-      tags: ["React", "JavaScript", "Python", "C++", "Ruby", "C#", "Java", "PHP", "Go", "Docker"],
-      githubUrl: "https://github.com/DrakezeWind/NotesStudy",
-    },
-  ]
-
-  const projectsBaseUrl = absoluteUrl("/projects")
-
-  const projectJsonLd = {
-    "@context": "https://schema.org",
-    "@graph": projects.map((project) => {
-      const slug = project.title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "")
-      const imagePath = project.image.startsWith("/public/")
-        ? project.image.replace("/public", "")
-        : project.image
-      return {
-        "@type": "Project",
-        name: project.title,
-        description: project.description,
-        url: project.liveUrl ?? `${projectsBaseUrl}#${slug}`,
-        image: absoluteUrl(imagePath),
-        sameAs: project.githubUrl ? [project.githubUrl] : undefined,
-        creator: {
-          "@type": "Person",
-          name: siteConfig.name,
-          url: siteConfig.url,
-        },
-      }
-    }),
-  }
-
   return (
-    <div className="min-h-screen bg-background">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
-      />
+    <main className="min-h-screen py-24 px-6 bg-muted/30">
+      <div className="container mx-auto max-w-6xl">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">Projects</h1>
+        <div className="w-16 h-1 bg-foreground mb-4"></div>
+        <p className="text-lg text-muted-foreground mb-12 max-w-2xl">
+          A collection of projects showcasing my work in web development, from full-stack applications to interactive
+          user interfaces.
+        </p>
 
-      <div className="pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">My Projects</h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              A collection of projects that demonstrate my skills in web development, user
-              experience design, and problem-solving across various technologies and domains.
-            </p>
-          </div>
-
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
-              <Card
-                key={project.title}
-                className="group border-border transition-all duration-300 hover:border-primary/20 hover:shadow-xl"
-              >
-                <CardContent className="p-0">
-                  <div className="relative aspect-[5/3] overflow-hidden rounded-t-lg">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(min-width: 1280px) 380px, (min-width: 1024px) 480px, 90vw"
-                      loading="lazy"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-foreground mb-3">{project.title}</h3>
-                    <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
-                      {project.description}
-                    </p>
-
-                    {/* Tags */}
-                    <div className="mb-6 flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1 bg-accent/10 text-accent-foreground text-xs rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex items-center gap-3">
-                      {project.liveUrl ? (
-                        <Button size="sm" asChild>
-                          <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="mr-2 h-4 w-4" />
-                            Live Demo
-                          </Link>
-                        </Button>
-                      ) : (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          disabled
-                          className="cursor-not-allowed opacity-70"
-                        >
-                          Coming Soon
-                        </Button>
-                      )}
-                      {project.githubUrl ? (
-                        <Button variant="outline" size="sm" asChild>
-                          <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                            <Github className="mr-2 h-4 w-4" />
-                            Code
-                          </Link>
-                        </Button>
-                      ) : null}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          {projects.map((project) => (
+            <Card key={project.title} className="overflow-hidden group hover:shadow-lg transition-shadow">
+              <div className="aspect-video overflow-hidden bg-muted">
+                <img
+                  src={project.image || "/placeholder.svg"}
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <CardHeader>
+                <CardTitle>{project.title}</CardTitle>
+                <CardDescription className="leading-relaxed">{project.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <Badge key={tag} variant="outline">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+              <CardFooter className="gap-2">
+                <Button size="sm" variant="outline" asChild>
+                  <a href={project.github} target="_blank" rel="noopener noreferrer">
+                    <Github className="h-4 w-4 mr-2" />
+                    Code
+                  </a>
+                </Button>
+                <Button size="sm" asChild>
+                  <a href={project.live} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    Live Demo
+                  </a>
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
       </div>
-    </div>
+    </main>
   )
 }
