@@ -37,7 +37,7 @@ export function Navigation() {
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-6 h-16 flex items-center justify-between max-w-6xl">
         <Link href="/" className="font-semibold text-lg hover:text-muted-foreground transition-colors">
-          Your Name
+          Anthony Shead
         </Link>
 
         <div className="flex items-center gap-6">

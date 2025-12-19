@@ -23,30 +23,39 @@ export function Footer() {
 
           <div className="flex gap-6">
             <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="GitHub"
-            >
-              <Github className="h-5 w-5" />
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="h-5 w-5" />
-            </a>
-            <a
-              href="mailto:hello@example.com"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="Email"
-            >
-              <Mail className="h-5 w-5" />
-            </a>
+                  href="https://github.com/Drakeze"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Github className="h-6 w-6" />
+                  <span className="sr-only">GitHub</span>
+                </a>
+                <a
+                  href="https://github.com/DrakezeWind"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Github className="h-6 w-6" />
+                  <span className="sr-only">GitHub</span>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/anthonyshead/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Linkedin className="h-6 w-6" />
+                  <span className="sr-only">LinkedIn</span>
+                </a>
+                <a
+                  href="mailto:asheadworking@gmail.com"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Mail className="h-6 w-6" />
+                  <span className="sr-only">Email</span>
+                </a>
           </div>
         </div>
 

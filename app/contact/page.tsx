@@ -24,13 +24,13 @@ export default function ContactPage() {
 
             <div className="flex flex-wrap gap-4 pt-4">
               <Button size="lg" asChild>
-                <a href="mailto:hello@example.com">
+                <a href="mailto:asheadworking@gmail.com">
                   <Mail className="h-5 w-5 mr-2" />
                   Send Email
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/anthonyshead/" target="_blank" rel="noopener noreferrer">
                   <Linkedin className="h-5 w-5 mr-2" />
                   LinkedIn
                 </a>
@@ -41,7 +41,7 @@ export default function ContactPage() {
               <h2 className="text-xl font-semibold mb-4">Connect</h2>
               <div className="flex gap-6">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/Drakeze"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
@@ -50,7 +50,16 @@ export default function ContactPage() {
                   <span className="sr-only">GitHub</span>
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href="https://github.com/DrakezeWind"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Github className="h-6 w-6" />
+                  <span className="sr-only">GitHub</span>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/anthonyshead/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
@@ -59,7 +68,7 @@ export default function ContactPage() {
                   <span className="sr-only">LinkedIn</span>
                 </a>
                 <a
-                  href="https://twitter.com"
+                  href="https://x.com/SorenIdeas"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
@@ -68,7 +77,7 @@ export default function ContactPage() {
                   <span className="sr-only">Twitter</span>
                 </a>
                 <a
-                  href="mailto:hello@example.com"
+                  href="mailto:asheadworking@gmail.com"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <Mail className="h-6 w-6" />
