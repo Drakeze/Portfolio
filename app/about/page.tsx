@@ -24,17 +24,31 @@ export default function AboutPage() {
           <div>
             <h2 className="text-2xl font-semibold mb-4">Who I Am</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              I'm a full-stack developer passionate about creating accessible, performant web applications. With a focus
-              on user experience and clean architecture, I build systems that scale and delight users.
+              Hi, I’m Anthony Shead, a full-stack developer focused on building clear, reliable, and intuitive web experiences. I specialize in turning ideas into well-structured products by combining thoughtful user experience with pragmatic engineering.
+
+              My current stack centers on Next.js, TypeScript, Tailwind CSS, and MongoDB, with a strong emphasis on clean data flow, performance, and maintainability. I’m completing the IBM Full-Stack JavaScript Developer certification and actively deepening my backend and infrastructure skills through Python, Redis, Docker, and AWS as part of a broader push toward polyglot proficiency.
+
+              I also operate Soren Tech, a small development studio where I design and build custom solutions, prototypes, and internal tools. Each project is approached with a balance of user-centered design, scalable architecture, and long-term maintainability.
+
+              Outside of development, I spend time swimming, training at the gym, and exploring new games — habits that keep me disciplined, creative, and grounded.
+              If you’re interested in collaborating, feel free to reach out. My work is available across two GitHub accounts (Drakeze and DrakezeWinds), organized by project focus and experimentation.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Currently working on projects that bridge technology with human needs, always learning, and contributing
-              to open-source communities.
+              Building software with a focus on people, systems, and long-term impact—across personal projects and emerging ventures.
             </p>
 
             <div className="flex gap-4">
               <a
-                href="https://github.com"
+                href="https://github.com/DrakezeWind"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="GitHub"
+              >
+                <Github className="h-6 w-6" />
+              </a>
+               <a
+                href="https://github.com/Drakeze"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -43,7 +57,7 @@ export default function AboutPage() {
                 <Github className="h-6 w-6" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/anthonyshead/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
