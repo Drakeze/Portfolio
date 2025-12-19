@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Github, Linkedin, Mail } from "lucide-react"
+import { siteConfig } from "@/lib/seo"
 
 export function Footer() {
   return (
@@ -23,44 +24,44 @@ export function Footer() {
 
           <div className="flex gap-6">
             <a
-                  href="https://github.com/Drakeze"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Github className="h-6 w-6" />
-                  <span className="sr-only">GitHub</span>
-                </a>
-                <a
-                  href="https://github.com/DrakezeWind"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Github className="h-6 w-6" />
-                  <span className="sr-only">GitHub</span>
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/anthonyshead/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Linkedin className="h-6 w-6" />
-                  <span className="sr-only">LinkedIn</span>
-                </a>
-                <a
-                  href="mailto:asheadworking@gmail.com"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Mail className="h-6 w-6" />
-                  <span className="sr-only">Email</span>
-                </a>
+              href={siteConfig.socials.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Github className="h-6 w-6" />
+              <span className="sr-only">GitHub</span>
+            </a>
+            <a
+              href={siteConfig.socials.githubAlt}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Github className="h-6 w-6" />
+              <span className="sr-only">GitHub</span>
+            </a>
+            <a
+              href={siteConfig.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Linkedin className="h-6 w-6" />
+              <span className="sr-only">LinkedIn</span>
+            </a>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Mail className="h-6 w-6" />
+              <span className="sr-only">Email</span>
+            </a>
           </div>
         </div>
 
         <div className="mt-8 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Your Name. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
         </div>
       </div>
     </footer>

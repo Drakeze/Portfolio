@@ -3,16 +3,26 @@ import { Badge } from "@/components/ui/badge"
 import { Download, Github, Linkedin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
+import { siteConfig } from "@/lib/seo"
 
 export const metadata: Metadata = {
-  title: "About - Your Name",
-  description: "Learn more about my experience, skills, and certifications",
+  title: `About - ${siteConfig.name}`,
+  description: "Learn more about my experience, skills, and certifications.",
 }
 
 export default function AboutPage() {
-  const skills = ["React", "Next.js", "TypeScript", "Node.js", "Tailwind CSS", "PostgreSQL", "REST APIs", "GraphQL"]
+  const skills = [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+    "Tailwind CSS",
+    "PostgreSQL",
+    "REST APIs",
+    "GraphQL",
+  ]
 
-  const certifications = ["AWS Certified Developer", "Google Cloud Professional", "Meta Frontend Developer"]
+  const certifications = ["IBM Full-Stack JavaScript Developer (in progress)"]
 
   return (
     <main className="min-h-screen py-24 px-6">
@@ -24,31 +34,35 @@ export default function AboutPage() {
           <div>
             <h2 className="text-2xl font-semibold mb-4">Who I Am</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Hi, I’m Anthony Shead, a full-stack developer focused on building clear, reliable, and intuitive web experiences. I specialize in turning ideas into well-structured products by combining thoughtful user experience with pragmatic engineering.
-
-              My current stack centers on Next.js, TypeScript, Tailwind CSS, and MongoDB, with a strong emphasis on clean data flow, performance, and maintainability. I’m completing the IBM Full-Stack JavaScript Developer certification and actively deepening my backend and infrastructure skills through Python, Redis, Docker, and AWS as part of a broader push toward polyglot proficiency.
-
-              I also operate Soren Tech, a small development studio where I design and build custom solutions, prototypes, and internal tools. Each project is approached with a balance of user-centered design, scalable architecture, and long-term maintainability.
-
-              Outside of development, I spend time swimming, training at the gym, and exploring new games — habits that keep me disciplined, creative, and grounded.
-              If you’re interested in collaborating, feel free to reach out. My work is available across two GitHub accounts (Drakeze and DrakezeWinds), organized by project focus and experimentation.
+              Hi, I’m Anthony Shead, a full-stack developer focused on building clear, reliable, and intuitive web
+              experiences. I specialize in turning ideas into well-structured products by combining thoughtful user
+              experience with pragmatic engineering.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              My current stack centers on Next.js, TypeScript, Tailwind CSS, and MongoDB, with a strong emphasis on
+              clean data flow, performance, and maintainability. I’m completing the IBM Full-Stack JavaScript Developer
+              certification and actively deepening my backend and infrastructure skills through Python, Redis, Docker,
+              and AWS as part of a broader push toward polyglot proficiency.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              I also operate Soren Tech, a small development studio where I design and build custom solutions,
+              prototypes, and internal tools. Each project is approached with a balance of user-centered design,
+              scalable architecture, and long-term maintainability.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Building software with a focus on people, systems, and long-term impact—across personal projects and emerging ventures.
+              Outside of development, I spend time swimming, training at the gym, and exploring new games — habits that
+              keep me disciplined, creative, and grounded. If you’re interested in collaborating, feel free to reach
+              out. My work is available across two GitHub accounts (Drakeze and DrakezeWinds), organized by project
+              focus and experimentation.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-6">
+              Building software with a focus on people, systems, and long-term impact—across personal projects and
+              emerging ventures.
             </p>
 
             <div className="flex gap-4">
               <a
-                href="https://github.com/DrakezeWind"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="GitHub"
-              >
-                <Github className="h-6 w-6" />
-              </a>
-               <a
-                href="https://github.com/Drakeze"
+                href={siteConfig.socials.githubAlt}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -57,7 +71,16 @@ export default function AboutPage() {
                 <Github className="h-6 w-6" />
               </a>
               <a
-                href="https://www.linkedin.com/in/anthonyshead/"
+                href={siteConfig.socials.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="GitHub"
+              >
+                <Github className="h-6 w-6" />
+              </a>
+              <a
+                href={siteConfig.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -74,26 +97,28 @@ export default function AboutPage() {
               <div>
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <h3 className="font-semibold">Senior Developer</h3>
-                    <p className="text-sm text-muted-foreground">Tech Company</p>
+                    <h3 className="font-semibold">Founder & Full-Stack Developer</h3>
+                    <p className="text-sm text-muted-foreground">Soren Tech</p>
                   </div>
-                  <span className="text-sm text-muted-foreground">2022 - Present</span>
+                  <span className="text-sm text-muted-foreground">2024 - Present</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Leading frontend development and architecting scalable web applications.
+                  Designing and delivering custom web solutions, prototypes, and internal tools with a focus on scalable
+                  architecture, thoughtful UX, and maintainable code.
                 </p>
               </div>
 
               <div>
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <h3 className="font-semibold">Full-Stack Developer</h3>
-                    <p className="text-sm text-muted-foreground">Startup Inc</p>
+                    <h3 className="font-semibold">Freelance Full-Stack Developer</h3>
+                    <p className="text-sm text-muted-foreground">Independent</p>
                   </div>
-                  <span className="text-sm text-muted-foreground">2020 - 2022</span>
+                  <span className="text-sm text-muted-foreground">2020 - 2024</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Built and maintained multiple client-facing applications.
+                  Built and maintained client-facing applications, modernizing stacks with Next.js, TypeScript, and
+                  cloud-first workflows while keeping performance and accessibility at the center.
                 </p>
               </div>
             </div>

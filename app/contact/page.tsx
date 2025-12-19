@@ -2,10 +2,11 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Github, Linkedin, Mail, Twitter } from "lucide-react"
 import type { Metadata } from "next"
+import { siteConfig } from "@/lib/seo"
 
 export const metadata: Metadata = {
-  title: "Contact - Your Name",
-  description: "Get in touch with me for projects and opportunities",
+  title: `Contact - ${siteConfig.name}`,
+  description: "Get in touch to collaborate or discuss new opportunities.",
 }
 
 export default function ContactPage() {
@@ -18,19 +19,19 @@ export default function ContactPage() {
         <Card className="p-8">
           <div className="space-y-6">
             <p className="text-lg text-muted-foreground leading-relaxed">
-              I'm always interested in hearing about new projects and opportunities. Whether you have a question or just
+              I’m always interested in hearing about new projects and opportunities. Whether you have a question or just
               want to say hi, feel free to reach out.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-4">
               <Button size="lg" asChild>
-                <a href="mailto:asheadworking@gmail.com">
+                <a href={`mailto:${siteConfig.email}`}>
                   <Mail className="h-5 w-5 mr-2" />
                   Send Email
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="https://www.linkedin.com/in/anthonyshead/" target="_blank" rel="noopener noreferrer">
+                <a href={siteConfig.socials.linkedin} target="_blank" rel="noopener noreferrer">
                   <Linkedin className="h-5 w-5 mr-2" />
                   LinkedIn
                 </a>
@@ -41,7 +42,7 @@ export default function ContactPage() {
               <h2 className="text-xl font-semibold mb-4">Connect</h2>
               <div className="flex gap-6">
                 <a
-                  href="https://github.com/Drakeze"
+                  href={siteConfig.socials.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
@@ -50,7 +51,7 @@ export default function ContactPage() {
                   <span className="sr-only">GitHub</span>
                 </a>
                 <a
-                  href="https://github.com/DrakezeWind"
+                  href={siteConfig.socials.githubAlt}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
@@ -59,7 +60,7 @@ export default function ContactPage() {
                   <span className="sr-only">GitHub</span>
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/anthonyshead/"
+                  href={siteConfig.socials.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
@@ -77,7 +78,7 @@ export default function ContactPage() {
                   <span className="sr-only">Twitter</span>
                 </a>
                 <a
-                  href="mailto:asheadworking@gmail.com"
+                  href={`mailto:${siteConfig.email}`}
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <Mail className="h-6 w-6" />

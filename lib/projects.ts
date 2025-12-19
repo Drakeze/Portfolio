@@ -7,33 +7,12 @@ export type Project = {
   githubUrl?: string
 }
 
-export const featuredProjects: Project[] = [
-  {
-    title: "E-Commerce Platform",
-    description: "A modern e-commerce solution built with Next.js and Stripe integration.",
-    image: "/projects/ecommerce-case-study.svg",
-    tags: ["Next.js", "TypeScript", "Stripe"],
-  },
-  {
-    title: "Task Management App",
-    description: "Collaborative task management tool with real-time updates and team features.",
-    image: "/projects/task-manager-showcase.svg",
-    tags: ["React", "Node.js", "Socket.io"],
-  },
-  {
-    title: "Portfolio Website",
-    description: "Responsive portfolio website showcasing creative work and projects.",
-    image: "/projects/portfolio-site-preview.svg",
-    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
-  },
-]
-
 export const projects: Project[] = [
   {
-    title: "Cryptocurrency Tracker",
+    title: "Crypto Tracker",
     description:
       "A comprehensive cryptocurrency dashboard with real-time market data, curated watchlists, and conversion tools for fast portfolio insights.",
-    image: "/public/CT.png",
+    image: "/projects/crypto-tracker.svg",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "CoinGecko API", "Vercel"],
     liveUrl: "https://cryptoapp-weld.vercel.app/",
     githubUrl: "https://github.com/Drakeze/CT-app",
@@ -50,8 +29,8 @@ export const projects: Project[] = [
   {
     title: "Blogging Platform",
     description:
-      "Responsive portfolio website showcasing creative work and projects with smooth animations, optimized performance, and modern design principles.",
-    image: "/public/Blog.png",
+      "Content-driven blog platform with MDX-style posts, rich typography, and responsive layouts for long-form writing.",
+    image: "/projects/blogging-platform.svg",
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Vercel"],
     liveUrl: "https://blog-nine-eta-94.vercel.app/",
     githubUrl: "https://github.com/Drakeze/Blog",
@@ -74,3 +53,5 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/DrakezeWind/NotesStudy",
   },
 ]
+
+export const featuredProjects: Project[] = projects.slice(0, 3)

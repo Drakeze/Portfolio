@@ -1,17 +1,17 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import { Navigation } from "@/components/navigation"
+
 import { Footer } from "@/components/footer"
+import { Navigation } from "@/components/navigation"
+import { ThemeProvider } from "@/components/theme-provider"
+import { siteConfig } from "@/lib/seo"
+
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
-
 export const metadata: Metadata = {
-  title: "Your Name - Developer Portfolio",
-  description: "Full-stack developer and designer building systems that connect people globally",
+  title: siteConfig.title,
+  description: siteConfig.description,
   generator: "Soren Technologies",
   icons: {
     icon: [
@@ -38,12 +38,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-sans antialiased`}>
-        <Navigation />
-        {children}
-        <Footer />
-        <Analytics />
+    <html lang="en" suppressHydrationWarning>
+      <body className="font-sans antialiased">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Navigation />
+          {children}
+          <Footer />
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   )
