@@ -7,7 +7,7 @@ import { prisma } from "@/lib/db/prisma-client";
 
 export type ProjectFetchResult = {
   projects: ProjectDTO[];
-  slugMap: Record<string, string>;
+  slugMap: Record<string, ProjectDTO>;
   slugLookup: Map<string, ProjectDTO>;
   error?: string;
 };
@@ -20,14 +20,22 @@ export const getProjects = cache(async (): Promise<ProjectFetchResult> => {
     });
 
     const serialized = projects.map(serializeProject);
-    const slugLookup = createSlugMap(serialized);
-    const slugMap = toSerializableRecord(
-      new Map(Array.from(slugLookup.entries()).map(([slug, project]) => [slug, project.id]))
-    );
 
-    return { projects: serialized, slugMap, slugLookup };
+    const slugLookup = createSlugMap(serialized);
+    const slugMap = toSerializableRecord(slugLookup);
+
+    return {
+      projects: serialized,
+      slugMap,
+      slugLookup,
+    };
   } catch (error) {
     console.error("Failed to load projects", error);
-    return { projects: [], slugMap: {}, slugLookup: new Map(), error: "Project fetch failed" };
+    return {
+      projects: [],
+      slugMap: {},
+      slugLookup: new Map(),
+      error: "Project fetch failed",
+    };
   }
 });
