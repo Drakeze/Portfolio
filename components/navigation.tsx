@@ -9,9 +9,8 @@ export function Navigation() {
   const pathname = usePathname()
 
   const links = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
     { href: "/projects", label: "Projects" },
+    { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
   ]
 
