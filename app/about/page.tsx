@@ -1,9 +1,118 @@
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Download, Github, Linkedin } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
-import { siteConfig } from "@/lib/seo"
+import Image from "next/image"
+import Link from "next/link"
+import {
+  Download,
+  Mail,
+  Github,
+  Linkedin,
+  Code,
+  Zap,
+  Users,
+  Apple,
+  Award,
+  CheckCircle,
+  GraduationCap,
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { absoluteUrl } from "@/lib/seo"
+import { SkillsSection, type SkillCategory } from "@/components/sections/skills-section"
+
+const aboutParagraphs = [
+  "Hi, I’m Anthony Shead — a full-stack developer who loves turning ideas into intuitive products. I’m steadily working toward polyglot-level proficiency while completing the IBM Full-Stack JavaScript Developer certification and expanding the service catalog for my studio, Soren Tech.",
+  "Right now my toolkit leans on Next.js, TypeScript, Tailwind CSS, and MongoDB, and I’m actively leveling up my backend automation and cloud workflows with Python, Redis, Docker, and AWS. Every engagement is an opportunity to blend user-centered thinking with reliable engineering.",
+  "Outside of code you’ll find me in the pool, at the gym, or exploring new games — all outlets that keep me creative and balanced. If you’d like to collaborate, let’s connect! I run two GitHub accounts (Drakeze and DrakezeWinds) so feel free to explore both.",
+]
+
+const skills: SkillCategory[] = [
+  {
+    category: "Frontend",
+    icon: <Code className="h-5 w-5" />,
+    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML", "CSS"],
+  },
+  {
+    category: "Backend",
+    icon: <Zap className="h-5 w-5" />,
+    technologies: ["Node.js", "MongoDB", "Prisma", "Rest APIs", "Server Actions"],
+  },
+  {
+    category: "Tools",
+    icon: <Users className="h-5 w-5" />,
+    technologies: ["Git & GitHub", "Vercel", "Familiar"],
+  },
+  {
+    category: "Exploring Next (Backend)",
+    icon: <Apple className="h-5 w-5" />,
+    technologies: ["Python", "Redis", "Docker"],
+  },
+  {
+    category: "Currently Learning (Cloud)",
+    icon: <Apple className="h-5 w-5" />,
+    technologies: ["AWS", "Analytics", "Testing Libraries"],
+  },
+]
+
+const certifications = [
+  {
+    name: "API Integration – End to End Web Development",
+    provider: "Board Infinity",
+    status: "Completed",
+    completion: "86%",
+  },
+  {
+    name: "Getting Started with Git and GitHub",
+    provider: "IBM",
+    status: "Completed",
+    completion: "84.28%",
+  },
+  {
+    name: "Introduction to HTML, CSS, & JavaScript",
+    provider: "IBM",
+    status: "Completed",
+    completion: "88.57%",
+  },
+  {
+    name: "Introduction to Software Engineering",
+    provider: "IBM",
+    status: "Completed",
+    completion: "85.90%",
+  },
+]
+
+const experience = [
+  {
+    role: "Founder & Full-Stack Developer",
+    company: "Soren Tech",
+    period: "2025 - Present",
+    points: [
+      "Launched a studio focused on building professional websites and APIs that align with client goals.",
+      "Design and maintain a growing suite of turnkey full-stack products that can be customized per engagement.",
+      "Lead every project phase, from UX strategy in Next.js and Tailwind CSS to backend architecture with Node.js and MongoDB.",
+      "Own deployment, hosting, and integrations via platforms such as Vercel, Supabase, and Stripe.",
+    ],
+  },
+  {
+    role: "Freelance Web Developer",
+    company: "Client Projects",
+    period: "2023 - 2024",
+    points: [
+      "Delivered responsive web experiences for entrepreneurs and small businesses across multiple industries.",
+      "Built bespoke interfaces with React, Next.js, and Tailwind CSS to reflect each brand’s voice and goals.",
+      "Managed projects end-to-end — discovery, roadmaps, launch, and ongoing support — while keeping communication clear.",
+    ],
+  },
+  {
+    role: "Junior Full-Stack Developer (Contributor)",
+    company: "D-Sports Ecosystem (Startup Project)",
+    period: "2024 - 2025",
+    points: [
+      "Collaborated with the founding team on early prototypes for a sports and technology platform.",
+      "Tackled junior-level full-stack tickets that strengthened fundamentals in React, Node.js, and data modeling.",
+      "Completed initial GitHub projects, certifications, and agile sprints while learning professional team workflows.",
+    ],
+  },
+]
 
 export const metadata: Metadata = {
   title: `About - ${siteConfig.name}`,
@@ -204,28 +313,44 @@ export default function AboutPage() {
               Skills & Technologies
             </h2>
 
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-sm font-medium mb-2">Core</h3>
-                <div className="flex flex-wrap gap-2">
-                  {coreSkills.map((skill) => (
-                    <Badge key={skill} variant="secondary">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">Supporting</h3>
-                <div className="flex flex-wrap gap-2">
-                  {supportingSkills.map((skill) => (
-                    <Badge key={skill} variant="secondary">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
+          {/* Certifications Section */}
+          <section className="mb-20">
+            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">Certifications</h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              {certifications.map((cert) => (
+                <Card
+                  key={cert.name}
+                  className="border-border transition-colors hover:border-primary/20"
+                >
+                  <CardContent className="p-6">
+                    <div className="mb-4 flex items-start gap-3">
+                      <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                        <Award className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground">{cert.name}</h3>
+                        <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                          <GraduationCap className="h-4 w-4" />
+                          <span className="font-medium text-foreground">{cert.provider}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-3 rounded-lg bg-muted/50 px-4 py-3 text-sm">
+                      <div className="flex items-center gap-2 text-foreground">
+                        <CheckCircle className="h-4 w-4 text-primary" />
+                        <span className="font-medium">{cert.status}</span>
+                      </div>
+                      <span className="text-muted-foreground">•</span>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <Award className="h-4 w-4 text-primary/80" />
+                        <span className="font-semibold">{cert.completion}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
 
               <div>
                 <h3 className="text-sm font-medium mb-2">
