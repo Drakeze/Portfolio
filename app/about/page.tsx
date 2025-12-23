@@ -115,116 +115,203 @@ const experience = [
 ]
 
 export const metadata: Metadata = {
-  title: "About",
-  description:
-    "Learn about Anthony Shead's background as a full-stack developer, the skills powering Soren Tech, and how to connect.",
-  alternates: {
-    canonical: "/about",
-  },
-  openGraph: {
-    title: "About Anthony Shead",
-    description:
-      "Discover the story, skills, and experience Anthony Shead brings to building thoughtful full-stack solutions.",
-    url: absoluteUrl("/about"),
-    images: [
-      {
-        url: absoluteUrl("/profile/anthony-shead-portrait.svg"),
-        width: 800,
-        height: 800,
-        alt: "Portrait of Anthony Shead",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "About Anthony Shead",
-    description:
-      "Discover the story, skills, and experience Anthony Shead brings to building thoughtful full-stack solutions.",
-    images: [absoluteUrl("/profile/anthony-shead-portrait.svg")],
-  },
+  title: `About - ${siteConfig.name}`,
+  description: "Learn more about my experience, skills, and certifications.",
 }
 
 export default function AboutPage() {
+  // ─────────────────────────────────────────────
+  // Skills
+  // ─────────────────────────────────────────────
+  const coreSkills = [
+    "React",
+    "Next.js (App Router)",
+    "TypeScript",
+    "Tailwind CSS",
+    "HTML",
+    "CSS",
+    "Node.js",
+    "MongoDB",
+    "Prisma",
+    "REST APIs",
+  ]
+
+  const supportingSkills = [
+    "Git & GitHub",
+    "Vercel",
+    "Server Actions",
+    "API Design Patterns",
+    "Supabase",
+  ]
+
+  const learningSkills = [
+    "Python",
+    "Redis",
+    "Docker",
+    "AWS (Fundamentals)",
+    "Testing Libraries",
+  ]
+
+  // ─────────────────────────────────────────────
+  // Certifications
+  // ─────────────────────────────────────────────
+  const certifications = [
+    {
+      title: "API Integration – End to End Web Development",
+      provider: "Board Infinity",
+      status: "Completed",
+      grade: "86%",
+    },
+    {
+      title: "Getting Started with Git and GitHub",
+      provider: "IBM",
+      status: "Completed",
+      grade: "84.28%",
+    },
+    {
+      title: "Introduction to HTML, CSS, & JavaScript",
+      provider: "IBM",
+      status: "Completed",
+      grade: "88.57%",
+    },
+    {
+      title: "Introduction to Software Engineering",
+      provider: "IBM",
+      status: "Completed",
+      grade: "85.90%",
+    },
+  ]
+
+  const certificationsInProgress = [
+    {
+      title: "IBM Full-Stack JavaScript Developer",
+      provider: "IBM / Coursera",
+      status: "In Progress",
+    },
+  ]
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="px-6 pb-20">
-        <div className="mx-auto max-w-6xl">
-          {/* Hero Section */}
-          <div className="mb-20 grid items-center gap-12 lg:grid-cols-2">
-            <div>
-              <h1 className="mb-6 text-4xl font-bold text-foreground md:text-5xl">About Me</h1>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                {aboutParagraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
+    <main className="min-h-screen py-24 px-6">
+      <div className="container mx-auto max-w-6xl">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">About Me</h1>
+        <div className="w-16 h-1 bg-foreground mb-12" />
 
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button asChild>
-                  <Link href="mailto:asheadworking@gmail.com">
-                    <Mail className="mr-2 h-4 w-4" />
-                    Get In Touch
-                  </Link>
-                </Button>
-                <Button variant="outline" asChild>
-                  <Link href="/Anthony Resume.pdf" target="_blank" rel="noopener noreferrer">
-                    <Download className="mr-2 h-4 w-4" />
-                    Download Resume
-                  </Link>
-                </Button>
-              </div>
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* ───────────── Left Column ───────────── */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Who I Am</h2>
 
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <Button variant="ghost" size="icon" asChild>
-                  <Link href="https://github.com/Drakeze" target="_blank" rel="noopener noreferrer">
-                    <Github className="h-5 w-5" />
-                    <span className="sr-only">GitHub (Drakeze)</span>
-                  </Link>
-                </Button>
-                <Button variant="ghost" size="icon" asChild>
-                  <Link
-                    href="https://github.com/DrakezeWinds"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Github className="h-5 w-5" />
-                    <span className="sr-only">GitHub (DrakezeWinds)</span>
-                  </Link>
-                </Button>
-                <Button variant="ghost" size="icon" asChild>
-                  <Link
-                    href="https://www.linkedin.com/in/anthonyshead/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Linkedin className="h-5 w-5" />
-                    <span className="sr-only">LinkedIn</span>
-                  </Link>
-                </Button>
-              </div>
-            </div>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              Hi, I’m Anthony Shead, a full-stack developer focused on building clear,
+              reliable, and intuitive web experiences. I specialize in turning ideas
+              into well-structured products by combining thoughtful user experience
+              with pragmatic engineering.
+            </p>
 
-            <div className="lg:justify-self-end">
-              <div className="relative">
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-                  <Image
-                    src="/profile/anthony-shead-portrait.svg"
-                    alt="Portrait of Anthony Shead"
-                    width={440}
-                    height={560}
-                    className="h-auto w-full"
-                    priority
-                  />
-                </div>
-                <div className="absolute -bottom-6 -right-6 flex h-24 w-24 items-center justify-center rounded-full bg-primary">
-                  <Code className="h-8 w-8 text-primary-foreground" />
-                </div>
-              </div>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              My current stack centers on Next.js, TypeScript, Tailwind CSS, and MongoDB,
+              with a strong emphasis on clean data flow, performance, and maintainability.
+              I’m completing the IBM Full-Stack JavaScript Developer certification and
+              actively deepening my backend and infrastructure skills through Python,
+              Redis, Docker, and AWS as part of a broader push toward polyglot proficiency.
+            </p>
+
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              I also operate Soren Tech, a small development studio where I design and
+              build custom solutions, prototypes, and internal tools. Each project is
+              approached with a balance of user-centered design, scalable architecture,
+              and long-term maintainability.
+            </p>
+
+            <p className="text-muted-foreground leading-relaxed mb-6">
+              Outside of development, I spend time swimming, training at the gym, and
+              exploring new games — habits that keep me disciplined, creative, and
+              grounded. My work is available across two GitHub accounts (Drakeze and
+              DrakezeWinds), organized by project focus and experimentation.
+            </p>
+
+            <p className="text-muted-foreground leading-relaxed mb-6">
+              Building software with a focus on people, systems, and long-term
+              impact—across personal projects and emerging ventures.
+            </p>
+
+            <div className="flex gap-4">
+              <a
+                href={siteConfig.socials.githubAlt}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub (Alternate)"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Github className="h-6 w-6" />
+              </a>
+              <a
+                href={siteConfig.socials.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Github className="h-6 w-6" />
+              </a>
+              <a
+                href={siteConfig.socials.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Linkedin className="h-6 w-6" />
+              </a>
             </div>
           </div>
 
-          {/* Skills Section */}
-          <SkillsSection skills={skills} />
+          {/* ───────────── Right Column ───────────── */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Experience</h2>
+
+            <div className="space-y-6">
+              <div>
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h3 className="font-semibold">Founder & Full-Stack Developer</h3>
+                    <p className="text-sm text-muted-foreground">Soren Tech</p>
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    2025 – Present
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Designing and delivering custom web solutions, prototypes, and internal
+                  tools with a focus on scalable architecture, thoughtful UX, and
+                  maintainable code.
+                </p>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h3 className="font-semibold">Freelance Full-Stack Developer</h3>
+                    <p className="text-sm text-muted-foreground">Independent</p>
+                  </div>
+                  <span className="text-sm text-muted-foreground">2024</span>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Built and maintained client-facing applications, modernizing stacks
+                  with Next.js, TypeScript, and cloud-first workflows while keeping
+                  performance and accessibility at the center.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ───────────── Skills & Certs ───────────── */}
+        <div className="grid md:grid-cols-2 gap-8">
+          <Card className="p-6">
+            <h2 className="text-2xl font-semibold mb-4">
+              Skills & Technologies
+            </h2>
 
           {/* Certifications Section */}
           <section className="mb-20">
@@ -265,36 +352,67 @@ export default function AboutPage() {
             </div>
           </section>
 
-          {/* Experience Section */}
-          <section>
-            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">
-              Professional Experience
-            </h2>
-            <div className="space-y-6">
-              {experience.map((exp) => (
-                <Card key={exp.role} className="border-border">
-                  <CardContent className="p-6">
-                    <div className="mb-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                      <div>
-                        <h3 className="text-xl font-semibold text-foreground">{exp.role}</h3>
-                        <p className="font-medium text-primary">{exp.company}</p>
-                      </div>
-                      <span className="self-start rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground md:self-center">
-                        {exp.period}
-                      </span>
-                    </div>
-                    <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
-                      {exp.points.map((point) => (
-                        <li key={point}>{point}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
+              <div>
+                <h3 className="text-sm font-medium mb-2">
+                  Currently Learning
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {learningSkills.map((skill) => (
+                    <Badge key={skill} variant="outline">
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
             </div>
-          </section>
+          </Card>
+
+          <Card className="p-6">
+            <h2 className="text-2xl font-semibold mb-4">Certifications</h2>
+
+            <ul className="space-y-4 mb-6">
+              {certifications.map((cert) => (
+                <li key={cert.title} className="text-sm text-muted-foreground">
+                  <div className="flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-foreground shrink-0" />
+                    <div>
+                      <p className="font-medium text-foreground">
+                        {cert.title}
+                      </p>
+                      <p className="text-xs">
+                        {cert.provider} · {cert.status} · {cert.grade}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+
+              {certificationsInProgress.map((cert) => (
+                <li key={cert.title} className="text-sm text-muted-foreground">
+                  <div className="flex items-start gap-2">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-muted-foreground shrink-0" />
+                    <div>
+                      <p className="font-medium text-foreground">
+                        {cert.title}
+                      </p>
+                      <p className="text-xs">
+                        {cert.provider} · {cert.status}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <Button variant="outline" className="w-full bg-transparent" asChild>
+              <a href="/Anthony Resume.pdf" download>
+                <Download className="h-4 w-4 mr-2" />
+                Download Resume
+              </a>
+            </Button>
+          </Card>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
