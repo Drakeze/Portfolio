@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -16,7 +17,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { absoluteUrl } from "@/lib/seo"
+import { absoluteUrl, siteConfig } from "@/lib/seo"
 import { SkillsSection, type SkillCategory } from "@/components/sections/skills-section"
 
 const aboutParagraphs = [
@@ -312,64 +313,40 @@ export default function AboutPage() {
             <h2 className="text-2xl font-semibold mb-4">
               Skills & Technologies
             </h2>
-
-          {/* Certifications Section */}
-          <section className="mb-20">
-            <h2 className="mb-8 text-center text-3xl font-bold text-foreground">Certifications</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              {certifications.map((cert) => (
-                <Card
-                  key={cert.name}
-                  className="border-border transition-colors hover:border-primary/20"
-                >
-                  <CardContent className="p-6">
-                    <div className="mb-4 flex items-start gap-3">
-                      <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                        <Award className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground">{cert.name}</h3>
-                        <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                          <GraduationCap className="h-4 w-4" />
-                          <span className="font-medium text-foreground">{cert.provider}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3 rounded-lg bg-muted/50 px-4 py-3 text-sm">
-                      <div className="flex items-center gap-2 text-foreground">
-                        <CheckCircle className="h-4 w-4 text-primary" />
-                        <span className="font-medium">{cert.status}</span>
-                      </div>
-                      <span className="text-muted-foreground">•</span>
-                      <div className="flex items-center gap-2 text-foreground">
-                        <Award className="h-4 w-4 text-primary/80" />
-                        <span className="font-semibold">{cert.completion}</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-2">Core</h3>
+              <div className="flex flex-wrap gap-2">
+                {coreSkills.map((skill) => (
+                  <Badge key={skill} variant="outline">
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </section>
-
-              <div>
-                <h3 className="text-sm font-medium mb-2">
-                  Currently Learning
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {learningSkills.map((skill) => (
-                    <Badge key={skill} variant="outline">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-2">Supporting</h3>
+              <div className="flex flex-wrap gap-2">
+                {supportingSkills.map((skill) => (
+                  <Badge key={skill} variant="outline">
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium mb-2">Currently Learning</h3>
+              <div className="flex flex-wrap gap-2">
+                {learningSkills.map((skill) => (
+                  <Badge key={skill} variant="outline">
+                    {skill}
+                  </Badge>
+                ))}
               </div>
             </div>
           </Card>
 
           <Card className="p-6">
             <h2 className="text-2xl font-semibold mb-4">Certifications</h2>
-
             <ul className="space-y-4 mb-6">
               {certifications.map((cert) => (
                 <li key={cert.title} className="text-sm text-muted-foreground">
@@ -386,7 +363,6 @@ export default function AboutPage() {
                   </div>
                 </li>
               ))}
-
               {certificationsInProgress.map((cert) => (
                 <li key={cert.title} className="text-sm text-muted-foreground">
                   <div className="flex items-start gap-2">
@@ -403,9 +379,8 @@ export default function AboutPage() {
                 </li>
               ))}
             </ul>
-
             <Button variant="outline" className="w-full bg-transparent" asChild>
-              <a href="/Anthony Resume.pdf" download>
+              <a href="/resume.pdf" download>
                 <Download className="h-4 w-4 mr-2" />
                 Download Resume
               </a>
