@@ -4,10 +4,18 @@ import tsParser from "@typescript-eslint/parser"
 import tsPlugin from "@typescript-eslint/eslint-plugin"
 import nextPlugin from "@next/eslint-plugin-next"
 import reactPlugin from "eslint-plugin-react"
-import tailwindPlugin from "eslint-plugin-tailwindcss"
 import prettierConfig from "eslint-config-prettier"
 
 export default [
+  {
+    ignores: [
+      ".next/**",
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      "**/*.min.js",
+    ],
+  },
   // Base JavaScript rules
   js.configs.recommended,
 
@@ -23,6 +31,23 @@ export default [
     },
     plugins: {
       "@typescript-eslint": tsPlugin,
+    },
+    globals: {
+      window: "readonly",
+      document: "readonly",
+      navigator: "readonly",
+      console: "readonly",
+      setTimeout: "readonly",
+      clearTimeout: "readonly",
+      setInterval: "readonly",
+      clearInterval: "readonly",
+      fetch: "readonly",
+      URL: "readonly",
+      URLSearchParams: "readonly",
+      Blob: "readonly",
+      FormData: "readonly",
+      ReadableStream: "readonly",
+      process: "readonly",
     },
     rules: {
       ...tsPlugin.configs.recommended.rules,
@@ -43,18 +68,9 @@ export default [
     rules: {
       ...nextPlugin.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
+      "react/react-in-jsx-scope": "off",
     },
   },
-
-  // Tailwind CSS
-  {
-    files: ["**/*.{ts,tsx}"],
-    plugins: { tailwindcss: tailwindPlugin },
-    rules: {
-      ...tailwindPlugin.configs.recommended.rules,
-    },
-  },
-
   // Prettier (must stay last)
   prettierConfig,
 ]
