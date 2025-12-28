@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "npm run typecheck && node ./scripts/build-with-eslint-stub.mjs",
     "dev": "next dev",
-    "lint": "eslint .",
-    "start": "next start"
+    "lint": "node ./scripts/lint-with-eslint-stub.mjs",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

@@ -1,6 +1,6 @@
 # 🌎 Portfolio Website
 
-My personal developer portfolio highlights recent work for the SorenLab and Earth Plus initiatives. It is built with **Next.js 14**, **TypeScript**, **Tailwind CSS**, and managed with **Bun**, then deployed to **Vercel**.
+My personal developer portfolio highlights recent work for the SorenLab and Earth Plus initiatives. It is built with **Next.js 16**, **React 19**, **TypeScript**, and **Tailwind CSS 4**, and deployed to **Vercel**.
 
 ---
 
@@ -12,10 +12,10 @@ This site is the central hub for my featured projects (Blog, Dashboard, CT-App),
 
 ## 🚀 Tech Stack
 
-- Next.js 14
-- React 18 & TypeScript
+- Next.js 16 (App Router + Turbopack)
+- React 19 & TypeScript 5.9
 - Tailwind CSS 4
-- Bun runtime & package manager
+- Node.js 20+
 
 ---
 
@@ -23,29 +23,40 @@ This site is the central hub for my featured projects (Blog, Dashboard, CT-App),
 
 ### 🔹 Prerequisites
 
-- **Node.js** v18+
-- **Bun** → [Install Bun](https://bun.sh/)
+- **Node.js** v20+
 - **Git**
+- Package manager of your choice (npm, pnpm, or Bun)
 
 ### 🔹 Clone & Install
 
 ```bash
 git clone https://github.com/Drakeze/Portfolio.git
 cd Portfolio
-bun install
+# npm install
+# pnpm install
+# bun install
 ```
 
 ### 🔹 Local Development
 
 ```bash
-bun run dev
+npm run dev
+# pnpm dev
+# bun run dev
 ```
+
+### 🔹 Quality Checks
+
+- `npm run lint` — runs ESLint with local stubs so it works offline.  
+  When you have registry access, install the real ESLint toolchain for full coverage:
+  `npm install -D eslint @eslint/js @next/eslint-plugin-next eslint-plugin-react eslint-config-prettier @typescript-eslint/parser @typescript-eslint/eslint-plugin`
+- `npm run typecheck` — strict TypeScript check (`tsc --noEmit`).
 
 ### 🔹 Production Build & Preview
 
 ```bash
-bun run build
-bun run start
+npm run build
+npm run start
 ```
 
 ---
@@ -54,8 +65,8 @@ bun run start
 
 | Setting          | Value           |
 | ---------------- | --------------- |
-| Install Command  | `bun install`   |
-| Build Command    | `bun run build` |
+| Install Command  | `npm install` (or `pnpm install` / `bun install`) |
+| Build Command    | `npm run build`                                   |
 | Output Directory | `.next`         |
 
 ### Environment Variables

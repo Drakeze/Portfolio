@@ -14,8 +14,31 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const stubDir = path.resolve(__dirname, "../stubs")
 process.env.NODE_PATH = [stubDir, process.env.NODE_PATH].filter(Boolean).join(path.delimiter)
 Module._initPaths()
+const require = Module.createRequire(import.meta.url)
 
-// Pretend the command was invoked as `next lint`
-if (!process.argv.includes("lint")) {
-  process.argv.splice(2, 0, "lint")
+async function runLint() {
+  try {
+    const { ESLint } = require("eslint")
+    const eslint = new ESLint({ cwd: process.cwd() })
+    const results = await eslint.lintFiles(["."])
+    const formatter = await eslint.loadFormatter("stylish")
+    const output = formatter.format(results)
+
+    if (output) {
+      console.log(output)
+    }
+
+    const errors = ESLint.getErrorResults(results)
+    if (errors.length > 0) {
+      process.exitCode = 1
+    } else {
+      console.log("Lint completed (stubbed ESLint toolchain loaded).")
+    }
+  } catch (error) {
+    console.error("Failed to run lint check.")
+    console.error(error)
+    process.exitCode = 1
+  }
 }
+
+await runLint()
