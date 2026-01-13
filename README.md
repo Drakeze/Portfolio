@@ -1,82 +1,169 @@
-# 🌎 Portfolio Website
+# 💼 Developer Portfolio
 
-My personal developer portfolio highlights recent work for the SorenLab and Earth Plus initiatives. It is built with **Next.js 16**, **React 19**, **TypeScript**, and **Tailwind CSS 4**, and deployed to **Vercel**.
-
----
-
-## 🧠 Overview
-
-This site is the central hub for my featured projects (Blog, Dashboard, CT-App), certifications, and professional details. The interface embraces the unified Soren dark theme — black base, dark blue accents, and green/red state indicators.
+A personal developer portfolio built with **Next.js**, designed to present projects, document ongoing growth, and serve as a central hub for my technical work.
 
 ---
 
-## 🚀 Tech Stack
+## 📌 Overview
 
-- Next.js 16 (App Router + Turbopack)
-- React 19 & TypeScript 5.9
-- Tailwind CSS 4
-- Node.js 20+
+This repository contains my primary developer portfolio.
 
----
+Its purpose is to clearly present:
+- Who I am as a developer  
+- How I structure and evolve projects  
+- What I am actively building and learning  
 
-## ⚙️ Getting Started
-
-### 🔹 Prerequisites
-
-- **Node.js** v20+
-- **Git**
-- Package manager of your choice (npm, pnpm, or Bun)
-
-### 🔹 Clone & Install
-
-```bash
-git clone https://github.com/Drakeze/Portfolio.git
-cd Portfolio
-# npm install
-# pnpm install
-# bun install
-```
-
-### 🔹 Local Development
-
-```bash
-npm run dev
-# pnpm dev
-# bun run dev
-```
-
-### 🔹 Quality Checks
-
-- `npm run lint` — runs ESLint with local stubs so it works offline.  
-  When you have registry access, install the real ESLint toolchain for full coverage:
-  `npm install -D eslint @eslint/js @next/eslint-plugin-next eslint-plugin-react eslint-config-prettier @typescript-eslint/parser @typescript-eslint/eslint-plugin`
-- `npm run typecheck` — strict TypeScript check (`tsc --noEmit`).
-
-### 🔹 Production Build & Preview
-
-```bash
-npm run build
-npm run start
-```
+Rather than being a static site, this portfolio is treated as a **living system** that evolves alongside my skills, tooling, and long-term goals.
 
 ---
 
-## 📦 Deployment on Vercel
+## 🎯 Goals of This Project
 
-| Setting          | Value           |
-| ---------------- | --------------- |
-| Install Command  | `npm install` (or `pnpm install` / `bun install`) |
-| Build Command    | `npm run build`                                   |
-| Output Directory | `.next`         |
+The portfolio is designed to:
 
-### Environment Variables
+- Act as a central entry point for all major projects  
+- Showcase real, working applications  
+- Provide context around ongoing development and learning  
+- Reflect professional standards in structure and documentation  
 
-This portfolio does not require runtime environment variables. If you add integrations (analytics, forms, etc.), document the necessary variables here before deploying.
+This repository prioritizes **clarity, organization, and long-term maintainability**.
 
-Custom Next.js configuration is currently unnecessary because all images are served from the local `/public` directory.
+---
+
+## 🧩 What This Portfolio Showcases
+
+This portfolio highlights and connects to multiple ongoing projects, including:
+
+- **Crypto Tracking App**  
+  A real-time cryptocurrency tracking application demonstrating API integration and frontend architecture.
+
+- **Blog Platform**  
+  A multi-source content platform integrating external services and structured data flow.
+
+- **Dashboard (Planned)**  
+  A future analytics and visualization project intended to centralize data and insights.
+
+- **Growth Vault**  
+  A dedicated repository documenting learning, experimentation, and technical progression.
+
+In addition, this portfolio reflects work associated with my organizations:
+- **Earth Plus**  
+- **Soren Tech**
+
+These projects represent both practical applications and long-term initiatives.
+
+---
+
+## 🧠 Development Philosophy
+
+This portfolio is built with a focus on:
+
+- Incremental improvement over time  
+- Clear separation of concerns  
+- Production-ready workflows  
+- Honest documentation of the current state vs planned features  
+
+Some sections act as **placeholders by design**, signaling intent and roadmap rather than unfinished work.
+
+---
+
+## 🧰 Tech Stack
+
+### Frontend
+- Next.js  
+- TypeScript  
+- Tailwind CSS  
+
+### Backend (Planned)
+- Prisma ORM  
+- MongoDB  
+
+---
+
+> ## 🧰 Tooling & Infrastructure
+> 
+> **Runtime & Tooling**
+> - Bun (runtime & package management)
+> - Postman (API testing & validation)
+> - Codex (code review and optimization support)
+> 
+> **Infrastructure**
+> - Vercel (deployment)
+
+---
+
+> ## ▶️ Running the Project Locally
+> 
+> This project uses **Bun** as the runtime and package manager.
+> 
+> **Install Dependencies**
+> ```bash
+> bun install
+> ```
+> 
+> **Start Development Server**
+> ```bash
+> bun dev
+> ```
+> 
+> **Build for Production**
+> ```bash
+> bun run build
+> ```
+> 
+> **Start Production Server**
+> ```bash
+> bun start
+> ```
+
+Environment variables will be used as backend services are introduced.
+
+---
+
+## 📍 Current Status
+
+- Core portfolio structure implemented  
+- Actively maintained and updated  
+- Serves as a central project hub  
+
+Some sections and features are intentionally minimal while underlying systems are still evolving.
+
+---
+
+## 🧭 Planned Improvements
+
+Future iterations of this portfolio may include:
+
+- Backend persistence for dynamic content  
+- Enhanced project metadata and filtering  
+- Deeper integration with showcased applications  
+- Expanded documentation of learning and growth  
+
+These improvements will be introduced incrementally.
+
+---
+
+## 🤖 AI Usage Disclosure
+
+Portions of this project were developed with AI assistance, including code review, refactoring suggestions, and baseline validation.
+
+All architectural decisions, implementations, and final content were reviewed and approved by the author.
+
+AI is used as a productivity and learning tool—not as a replacement for engineering judgment.
+
+---
+
+## 🎯 What This Project Demonstrates
+
+- Ability to structure and maintain a long-term project  
+- Clear documentation and communication  
+- Thoughtful portfolio design beyond surface-level demos  
+- Integration of multiple projects into a cohesive system  
+- Responsible use of modern tooling and AI assistance  
 
 ---
 
 ## 👤 Author
+Drakeze
+Built and maintained as part of an ongoing professional development journey.
 
-Anthony Shead
