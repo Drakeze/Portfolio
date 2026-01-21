@@ -11,7 +11,6 @@ import {
   Zap,
 } from "lucide-react"
 
-import { SkillsSection, type SkillCategory } from "@/components/sections/skills-section"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { siteConfig } from "@/lib/seo"
