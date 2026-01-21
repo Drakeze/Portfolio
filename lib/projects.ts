@@ -11,9 +11,9 @@ export const projects: Project[] = [
   {
     title: "Crypto Tracker",
     description:
-      "A comprehensive cryptocurrency dashboard with real-time market data, curated watchlists, and conversion tools for fast portfolio insights.",
+      "A comprehensive cryptocurrency dashboard with real-time market data, curated watch lists, and conversion tools for fast portfolio insights.",
     image: "/projects/crypto-tracker.svg",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "CoinGecko API", "Vercel", "React","Bun"],
+    tags: ["CoinGecko API", "HTML", "CSS", "JavaScript","Bun", "Vercel"],
     liveUrl: "https://drakeze-crypto-tracker.vercel.app/",
     githubUrl: "https://github.com/Drakeze/CT-app",
   },
@@ -22,7 +22,7 @@ export const projects: Project[] = [
     description:
       "A clean and intuitive task management dashboard with real-time collaboration, drag-and-drop functionality, and customizable workflows for enhanced productivity.",
     image: "/projects/productivity-dashboard.svg",
-    tags: ["React", "Node.js", "TypeScript", "MongoDB"],
+    tags: ["React", "Node.js", "TypeScript", "Tailwind CSS","Bun", "MongoDB", "Prisma", "Vercel"],
     liveUrl: "https://dashboard-drakeze.vercel.app",
     githubUrl: "https://github.com/Drakeze/Dashboard",
   },
@@ -31,7 +31,7 @@ export const projects: Project[] = [
     description:
       "Content-driven blog platform with MDX-style posts, rich typography, and responsive layouts for long-form writing.",
     image: "/projects/blogging-platform.svg",
-    tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Vercel", "Bun"],
+    tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Vercel", "Bun","MongoDB", "Prisma", "GraphQL","Patreon API","LinkedIn API", "Reddit API"],
     liveUrl: "https://drakeze-blog.vercel.app/",
     githubUrl: "https://github.com/Drakeze/Blog",
   },
@@ -40,7 +40,7 @@ export const projects: Project[] = [
     description:
       "This is a modern, responsive website built for Soren Tech, showcasing a New company specializing in web development and digital solutions.",
     image: "/projects/community-site.svg",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "PnPm",],
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "PnPm", "Prisma", "GraphQL", "React","MongoDB"],
     liveUrl: "https://SorenLab.com",
     githubUrl: "https://github.com/SorenLab",
   },
@@ -49,7 +49,7 @@ export const projects: Project[] = [
     description:
       "A sustainability-focused web platform promoting eco-friendly practices and environmental awareness through modern web technologies.",
     image: "/projects/earth-plus.svg",
-    tags: ["React", "JavaScript", "CSS", "TypreScript", "Tailwind CSS", "Vercel"],
+    tags: ["React", "JavaScript", "CSS", "TypreScript", "Tailwind CSS", "Vercel", "PnPm", "MongoDB"],
     liveUrl: "https://earth-plus.vercel.app/",
     githubUrl: "https://github.com/EarthPlus-Organization/EP-Mono",
   },

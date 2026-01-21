@@ -21,34 +21,6 @@ const aboutParagraphs = [
   "Outside of code you’ll find me in the pool, at the gym, or exploring new games — all outlets that keep me creative and balanced. If you’d like to collaborate, let’s connect! I run two GitHub accounts (Drakeze and DrakezeWinds) so feel free to explore both.",
 ]
 
-const skills: SkillCategory[] = [
-  {
-    category: "Frontend",
-    icon: <Code className="h-5 w-5" />,
-    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML", "CSS"],
-  },
-  {
-    category: "Backend",
-    icon: <Zap className="h-5 w-5" />,
-    technologies: ["Node.js", "MongoDB", "Prisma", "REST APIs", "Server Actions"],
-  },
-  {
-    category: "Tools",
-    icon: <Users className="h-5 w-5" />,
-    technologies: ["Git & GitHub", "Vercel", "Bun"],
-  },
-  {
-    category: "Exploring Next (Backend)",
-    icon: <Zap className="h-5 w-5" />,
-    technologies: ["Python", "Redis", "Docker"],
-  },
-  {
-    category: "Currently Learning (Cloud)",
-    icon: <Users className="h-5 w-5" />,
-    technologies: ["AWS", "Analytics", "Testing Libraries"],
-  },
-]
-
 const experiences = [
   {
     role: "Founder & Full-Stack Developer",
@@ -163,7 +135,8 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <SkillsSection skills={skills} title="Skills & Focus Areas" className="mb-12" />
+        <SkillsSection />
+
         <div className="border-t pt-12 space-y-8">
           <Card className="p-6">
             <div className="flex items-center gap-2 mb-4">
