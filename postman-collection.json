@@ -1,0 +1,176 @@
+{
+  "info": {
+    "name": "Portfolio API",
+    "description": "API endpoints for Portfolio project management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Get All Projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects"]
+            }
+          }
+        },
+        {
+          "name": "Get All Projects (Filtered by Status)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects?status=ACTIVE",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "ACTIVE"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Project by Slug",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/my-project-slug",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "my-project-slug"]
+            }
+          }
+        },
+        {
+          "name": "Create Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slug\": \"my-awesome-project\",\n  \"title\": \"My Awesome Project\",\n  \"summary\": \"This is a great project that does amazing things\",\n  \"heroImage\": \"https://example.com/image.jpg\",\n  \"category\": \"Web Development\",\n  \"tags\": [\"nextjs\", \"typescript\", \"mongodb\"],\n  \"liveUrl\": \"https://myproject.com\",\n  \"repoUrl\": \"https://github.com/username/project\",\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects"]
+            }
+          }
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Project Title\",\n  \"summary\": \"Updated project description\",\n  \"tags\": [\"nextjs\", \"typescript\", \"mongodb\", \"prisma\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/my-awesome-project",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "my-awesome-project"]
+            }
+          }
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/my-awesome-project",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "my-awesome-project"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Project Stats",
+      "item": [
+        {
+          "name": "Track Project View",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"metric\": \"VIEW\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/my-awesome-project/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "my-awesome-project", "stats"]
+            }
+          }
+        },
+        {
+          "name": "Track Project Deploy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"metric\": \"DEPLOY\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/my-awesome-project/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "my-awesome-project", "stats"]
+            }
+          }
+        },
+        {
+          "name": "Get Project Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/my-awesome-project/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "my-awesome-project", "stats"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
