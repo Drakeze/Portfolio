@@ -139,36 +139,6 @@ export default function AboutPage() {
                 {paragraph}
               </p>
             ))}
-
-            <div className="flex gap-4 pt-2">
-              <a
-                href={siteConfig.socials.githubAlt}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub (Alternate)"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <Github className="h-6 w-6" />
-              </a>
-              <a
-                href={siteConfig.socials.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <Github className="h-6 w-6" />
-              </a>
-              <a
-                href={siteConfig.socials.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <Linkedin className="h-6 w-6" />
-              </a>
-            </div>
           </div>
 
           <div>
@@ -195,8 +165,7 @@ export default function AboutPage() {
         </div>
 
         <SkillsSection skills={skills} title="Skills & Focus Areas" className="mb-12" />
-
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="border-t pt-12 space-y-8">
           <Card className="p-6">
             <div className="flex items-center gap-2 mb-4">
               <Award className="h-5 w-5" />
@@ -239,69 +208,7 @@ export default function AboutPage() {
             </Button>
           </Card>
 
-          <Card>
-            <CardContent className="p-6 space-y-6">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-semibold">Let&apos;s Collaborate</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  I’m always interested in hearing about new projects and opportunities. Whether you have a question or
-                  want to explore a build together, let&apos;s talk.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-4">
-                <Button size="lg" asChild>
-                  <a href={`mailto:${siteConfig.email}`}>
-                    <Mail className="h-5 w-5 mr-2" />
-                    Send an Email
-                  </a>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <a href={siteConfig.socials.linkedin} target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="h-5 w-5 mr-2" />
-                    Connect on LinkedIn
-                  </a>
-                </Button>
-              </div>
-
-              <div className="flex gap-6">
-                <Link
-                  href={siteConfig.socials.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Github className="h-6 w-6" />
-                  <span className="sr-only">GitHub</span>
-                </Link>
-                <Link
-                  href={siteConfig.socials.githubAlt}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Github className="h-6 w-6" />
-                  <span className="sr-only">GitHub</span>
-                </Link>
-                <Link
-                  href={siteConfig.socials.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Linkedin className="h-6 w-6" />
-                  <span className="sr-only">LinkedIn</span>
-                </Link>
-                <Link
-                  href={`mailto:${siteConfig.email}`}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Mail className="h-6 w-6" />
-                  <span className="sr-only">Email</span>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
+          
         </div>
       </div>
     </main>
