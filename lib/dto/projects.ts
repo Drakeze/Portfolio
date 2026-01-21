@@ -1,4 +1,41 @@
-import type { Constraint, Project, ProjectMetadata, ProjectStat, ProjectStatus, StatMetric } from "@prisma/client";
+type Constraint = string;
+type ProjectStatus = string;
+type StatMetric = string;
+
+type ProjectMetadataModel = {
+  id: string;
+  projectId: string;
+  headline?: string | null;
+  techStack: string[];
+  highlight?: string | null;
+  client?: string | null;
+  constraint?: Constraint | null;
+};
+
+type ProjectStatModel = {
+  id: string;
+  projectId: string;
+  metric: StatMetric;
+  value: number;
+  recordedAt: Date;
+};
+
+type ProjectModel = {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  heroImage: string;
+  category: string;
+  tags: string[];
+  liveUrl?: string | null;
+  repoUrl?: string | null;
+  status: ProjectStatus;
+  metadata: ProjectMetadataModel | null;
+  stats: ProjectStatModel[];
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 export type ProjectDTO = {
   id: string;
@@ -35,7 +72,7 @@ export type ProjectStatDTO = {
   recordedAt: string;
 };
 
-type ProjectWithRelations = Project & { metadata: ProjectMetadata | null; stats: ProjectStat[] };
+type ProjectWithRelations = ProjectModel;
 
 export function serializeProject(project: ProjectWithRelations): ProjectDTO {
   return {

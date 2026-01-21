@@ -45,6 +45,15 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/SorenLab",
   },
   {
+    title: "Earth Plus",
+    description:
+      "A sustainability-focused web platform promoting eco-friendly practices and environmental awareness through modern web technologies.",
+    image: "/projects/earth-plus.svg",
+    tags: ["React", "JavaScript", "CSS", "TypreScript", "Tailwind CSS", "Vercel"],
+    liveUrl: "https://earth-plus.vercel.app/",
+    githubUrl: "https://github.com/EarthPlus-Organization/EP-Mono",
+  },
+  {
     title: "GrowthVault",
     description:
       "A collaborative study repository with bite-sized projects and code snippets that document my learning journey.",
