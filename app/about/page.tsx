@@ -207,8 +207,6 @@ export default function AboutPage() {
               </a>
             </Button>
           </Card>
-
-          
         </div>
       </div>
     </main>
