@@ -1,24 +1,22 @@
-import type { Metadata } from "next"
-import Link from "next/link"
 import {
   Award,
-  Code,
-  Download,
-  Github,
-  Linkedin,
-  Mail,
-  Users,
-  Zap,
+  Download
 } from "lucide-react"
+import type { Metadata } from "next"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/lib/seo"
 
 const aboutParagraphs = [
-  "Hi, I’m Anthony Shead — a full-stack developer who loves turning ideas into intuitive products. I’m steadily working toward polyglot-level proficiency while completing the IBM Full-Stack JavaScript Developer certification and expanding the service catalog for my studio, Soren Tech.",
-  "Right now my toolkit leans on Next.js, TypeScript, Tailwind CSS, and MongoDB, and I’m actively leveling up my backend automation and cloud workflows with Python, Redis, Docker, and AWS. Every engagement is an opportunity to blend user-centered thinking with reliable engineering.",
-  "Outside of code you’ll find me in the pool, at the gym, or exploring new games — all outlets that keep me creative and balanced. If you’d like to collaborate, let’s connect! I run two GitHub accounts (Drakeze and DrakezeWinds) so feel free to explore both.",
+  "Hi, I’m Anthony Shead, a self-taught full-stack developer based in Los Angeles, California. I’m driven by curiosity, structure, and the process of turning ideas into real, working systems. My long-term goal is to become a polyglot software engineer, building thoughtful products while continuously expanding how I understand technology end to end.",
+"I originally found my way into coding through gaming. What started as customizing files and optimizing performance in Team Fortress 2 eventually turned into learning C++, experimenting with small programs, and realizing I could build tools for myself. That curiosity carried me from frontend development into full-stack engineering, and it hasn’t stopped since. I love that software has no ceiling; there’s always something new to learn, improve, or reimagine.",
+"What really made development click for me was seeing code as architecture. File structures, systems, and workflows felt similar to how buildings are designed, everything connects, and every decision shapes the whole. That mindset still guides how I approach projects today: I focus on building clear systems, not just writing code.",
+"Outside of development, I spend time at the gym, in the pool (I’ve been swimming for over 13 years), streaming games, and experimenting in the kitchen, especially with Asian cuisine. Fitness taught me consistency. Gaming taught me systems thinking. Both carry directly into how I learn and build as an engineer.",
+"I grew up in an African American household surrounded mostly by adults, which pushed me toward independence early on. Being largely self-taught, I’ve learned to hold myself accountable, showing up daily, studying, building, and improving even when no one is watching.",
+"Today, I’m working toward full-stack and software engineering roles while building my own studio, Soren Tech, focused on custom websites and APIs. I’m also developing Earth Plus, a longer-term project centered on blending technology with environmental responsibility. My work is driven by one core belief: consistency beats talent. Progress comes from systems, discipline, and showing up every day.",
+"If you’d like to collaborate or follow along, feel free to connect."
+
 ]
 
 const experiences = [
@@ -135,7 +133,6 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <SkillsSection />
 
         <div className="border-t pt-12 space-y-8">
           <Card className="p-6">
