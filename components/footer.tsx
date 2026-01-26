@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { Github, Linkedin, Mail } from "lucide-react"
 import { siteConfig } from "@/lib/seo"
+import { Github, Linkedin, Mail } from "lucide-react"
+import Link from "next/link"
 
 export function Footer() {
   return (
@@ -18,7 +18,7 @@ export function Footer() {
               Projects
             </Link>
             <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Contact
+              Connect
             </Link>
           </div>
 
