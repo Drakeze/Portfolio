@@ -1,8 +1,8 @@
-import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { siteConfig } from "@/lib/seo"
 import { Github, Linkedin, Mail, Twitter } from "lucide-react"
 import type { Metadata } from "next"
-import { siteConfig } from "@/lib/seo"
 
 export const metadata: Metadata = {
   title: `Contact - ${siteConfig.name}`,
@@ -22,7 +22,6 @@ export default function ContactPage() {
               I’m always interested in hearing about new projects and opportunities. Whether you have a question or just
               want to say hi, feel free to reach out.
             </p>
-
             <div className="flex flex-wrap gap-4 pt-4">
               <Button size="lg" asChild>
                 <a href={`mailto:${siteConfig.email}`}>
