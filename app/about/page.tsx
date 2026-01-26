@@ -135,8 +135,6 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <SkillsSection />
-
         <div className="border-t pt-12 space-y-8">
           <Card className="p-6">
             <div className="flex items-center gap-2 mb-4">
