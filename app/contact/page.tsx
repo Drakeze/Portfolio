@@ -16,8 +16,19 @@ export default function ContactPage() {
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Get in Touch</h1>
         <div className="w-16 h-1 bg-foreground mb-12"></div>
 
-        <Card className="p-8">
-          <div className="space-y-6">
+        <div className="space-y-8">
+          <GetInTouchCard />
+          <WorkAndCompaniesCard />
+          <ResourcesAndShopCard />
+        </div>
+      </div>
+    </main>
+  )
+}
+function GetInTouchCard() {
+  return (
+    <Card className="p-8">
+        <div className="space-y-6">
             <p className="text-lg text-muted-foreground leading-relaxed">
               I’m always interested in hearing about new projects and opportunities. Whether you have a question or just
               want to say hi, feel free to reach out.
@@ -86,8 +97,58 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
-        </Card>
+      </Card>
+  )
+}
+function WorkAndCompaniesCard() {
+  return (
+    <Card className="p-8">
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">My Work & Initiatives</h2>
+        <p className="text-muted-foreground leading-relaxed">
+          {/* short philosophy-driven description */}
+        </p>
+
+        <div className="flex flex-wrap gap-4 pt-2">
+          <Button variant="outline" asChild>
+            <a href="https://SorenLab.com" target="_blank" rel="noopener noreferrer">
+              Visit Soren.Tech
+            </a>
+          </Button>
+
+          <Button variant="outline" asChild>
+            <a href="https://earthplus.org" target="_blank" rel="noopener noreferrer">
+              Learn About Earth Plus
+            </a>
+          </Button>
+        </div>
       </div>
-    </main>
+    </Card>
+  )
+}
+function ResourcesAndShopCard() {
+  return (
+    <Card className="p-8">
+        <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Resources & Templates</h2>
+        <p className="text-muted-foreground leading-relaxed">
+          {/* explain what you share and why */}
+        </p>
+
+        <p className="text-sm text-muted-foreground">
+          Patreon members get access to many of these resources at no additional cost.
+        </p>
+
+        <div className="flex flex-wrap gap-4 pt-2">
+          <Button variant="outline" asChild>
+            <a href="/shop">Browse Resources</a>
+          </Button>
+
+          <Button variant="outline" asChild>
+            <a href="/shop">Visit the Shop</a>
+          </Button>
+        </div>
+      </div>
+    </Card>
   )
 }
