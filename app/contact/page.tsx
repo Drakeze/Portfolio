@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/lib/seo"
-import { Github, Linkedin, Mail, Twitter } from "lucide-react"
+import { Github, Linkedin, Mail, Twitter, Monitor, Globe, Home } from "lucide-react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -112,12 +112,14 @@ function WorkAndCompaniesCard() {
         <div className="flex flex-wrap gap-4 pt-2">
           <Button variant="outline" asChild>
             <a href="https://SorenLab.com" target="_blank" rel="noopener noreferrer">
-              Visit Soren.Tech
+              <Monitor className="h-4 w-4 mr-2" />
+              Visit Soren Tech
             </a>
           </Button>
 
           <Button variant="outline" asChild>
             <a href="https://earthplus.org" target="_blank" rel="noopener noreferrer">
+              <Globe className="h-4 w-4 mr-2" />
               Learn About Earth Plus
             </a>
           </Button>
@@ -145,7 +147,10 @@ function ResourcesAndShopCard() {
           </Button>
 
           <Button variant="outline" asChild>
-            <a href="/shop">Visit the Shop</a>
+            <a href="/shop">
+              <Home className="h-4 w-4 mr-2" />
+              Visit the Shop
+            </a>
           </Button>
         </div>
       </div>

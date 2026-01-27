@@ -48,7 +48,7 @@ export const projects: Project[] = [
     title: "Earth Plus Website",
     description:
       "A sustainability-focused web platform promoting eco-friendly practices and environmental awareness through modern web technologies.",
-    image: "/projects/earth-plus.svg",
+    image: "/projects/community-site.svg",
     tags: ["React", "JavaScript", "CSS", "TypreScript", "Tailwind CSS", "Vercel", "PnPm", "MongoDB", "GraphQL", "Prisma", "Stripe API"],
     liveUrl: "https://earth-plus.vercel.app/",
     githubUrl: "https://github.com/EarthPlus-Organization/EP-Mono",
@@ -57,7 +57,7 @@ export const projects: Project[] = [
     title: "Ceator Tools",
     description:
       "This is a Web shop where you can find templates and tools I have created to help speed up your notes and project work. From project planners to note-taking templates, find resources to boost your productivity.",
-    image: "/projects/creator-tools.svg",
+    image: "/projects/productivity-dashboard.svg",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "Bun", "Prisma", "GraphQL", "React","MongoDB", "Stripe API"],
     liveUrl: "https://creator-tools.vercel.app/",
     githubUrl: "https://github.com/Drakeze/Creator-Tools",
