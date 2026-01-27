@@ -1,81 +1,62 @@
 "use client";
 
-import { Code, Zap, Users } from "lucide-react";
+import { Code, Zap } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
-type SkillCategory = {
-  category: string;
-  icon: React.ReactNode;
-  technologies: string[];
-};
-
 export default function SkillsSection() {
-  const skills: SkillCategory[] = [
-    {
-      category: "Frontend",
-      icon: <Code className="h-5 w-5" />,
-      technologies: [
-        "React",
-        "Next.js",
-        "TypeScript",
-        "Tailwind CSS",
-        "HTML",
-        "CSS",
-      ],
-    },
-    {
-      category: "Backend",
-      icon: <Zap className="h-5 w-5" />,
-      technologies: [
-        "Node.js",
-        "MongoDB",
-        "Prisma",
-        "REST APIs",
-        "Server Actions",
-      ],
-    },
-    {
-      category: "Tools",
-      icon: <Users className="h-5 w-5" />,
-      technologies: ["Git & GitHub", "Vercel", "Bun"],
-    },
-    {
-      category: "Exploring Next (Backend)",
-      icon: <Zap className="h-5 w-5" />,
-      technologies: ["Python", "Redis", "Docker"],
-    },
-    {
-      category: "Currently Learning (Cloud)",
-      icon: <Users className="h-5 w-5" />,
-      technologies: ["AWS", "Analytics", "Testing Libraries"],
-    },
+  const completedSkills = [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "HTML",
+    "CSS",
+    "Git & GitHub",
+    "REST APIs",
+    "MongoDB",
+    "Node.js",
+  ];
+
+  const learningSkills = [
+    "Python",
+    "Redis",
+    "Docker",
+    "AWS",
+    "Analytics",
+    "Testing Libraries",
+    "Prisma",
+    "GraphQL",
   ];
 
   return (
-    <section className="mb-12">
-      <h2 className="text-2xl font-semibold mb-6">
-        Skills & Focus Areas
+    <Card className="p-6">
+      <h2 className="flex items-center text-2xl font-semibold mb-6 gap-2">
+        <Code className="h-5 w-5" />
+        Skills & Learning
       </h2>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {skills.map((skill) => (
-          <Card
-            key={skill.category}
-            className="p-5 hover:shadow-md transition"
-          >
-            <div className="flex items-center gap-2 mb-3">
-              {skill.icon}
-              <h3 className="font-medium">{skill.category}</h3>
-            </div>
+      <section>
+        <h3 className="text-lg font-medium mb-4">Proficient & Completed</h3>
+        <ul className="list-disc list-inside grid grid-cols-2 gap-2 text-sm text-muted-foreground">
+          {completedSkills.map((skill) => (
+            <li key={skill}>{skill}</li>
+          ))}
+        </ul>
+      </section>
 
-            <ul className="space-y-1 text-sm text-muted-foreground">
-              {skill.technologies.map((tech) => (
-                <li key={tech}>• {tech}</li>
-              ))}
-            </ul>
-          </Card>
-        ))}
-      </div>
-    </section>
+      <div className="border-t border-muted my-6" />
+
+      <section>
+        <h3 className="flex items-center text-lg font-medium mb-4 gap-2">
+          <Zap className="h-5 w-5" />
+          Currently Learning
+        </h3>
+        <ul className="list-disc list-inside grid grid-cols-2 gap-2 text-sm text-muted-foreground">
+          {learningSkills.map((skill) => (
+            <li key={skill}>{skill}</li>
+          ))}
+        </ul>
+      </section>
+    </Card>
   );
 }

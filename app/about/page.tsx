@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { siteConfig } from "@/lib/seo"
+import SkillsSection from "@/components/sections/skillsection"
 
 const aboutParagraphs = [
   "I’m Anthony Shed, a self-taught full-stack developer based in California. I’ve always been drawn to understanding how things work, not just using them, but breaking them apart, studying the structure behind them, and rebuilding them in better ways. That curiosity is what originally pulled me into programming, long before I thought of it as a career path.",
@@ -138,47 +139,60 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="border-t pt-12 space-y-8">
+        <div className="border-t pt-12">
           <Card className="p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Award className="h-5 w-5" />
-              <h2 className="text-2xl font-semibold">Certifications</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+
+              {/* LEFT: Certifications (unchanged content) */}
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <Award className="h-5 w-5" />
+                  <h2 className="text-2xl font-semibold">Certifications</h2>
+                </div>
+
+                <ul className="space-y-4 mb-6">
+                  {certifications.map((cert) => (
+                    <li key={cert.title} className="text-sm text-muted-foreground">
+                      <div className="flex items-start gap-2">
+                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-foreground shrink-0" />
+                        <div>
+                          <p className="font-medium text-foreground">{cert.title}</p>
+                          <p className="text-xs">
+                            {cert.provider} · {cert.status}
+                            {cert.detail ? ` · ${cert.detail}` : ""}
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+
+                  {certificationsInProgress.map((cert) => (
+                    <li key={cert.title} className="text-sm text-muted-foreground">
+                      <div className="flex items-start gap-2">
+                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-muted-foreground shrink-0" />
+                        <div>
+                          <p className="font-medium text-foreground">{cert.title}</p>
+                          <p className="text-xs">
+                            {cert.provider} · {cert.status}
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                <Button variant="outline" className="w-full bg-transparent" asChild>
+                  <a href="/resume.pdf" download>
+                    <Download className="h-4 w-4 mr-2" />
+                    Download Resume
+                  </a>
+                </Button>
+              </div>
+
+              {/* RIGHT: Skills */}
+              <SkillsSection />
+
             </div>
-            <ul className="space-y-4 mb-6">
-              {certifications.map((cert) => (
-                <li key={cert.title} className="text-sm text-muted-foreground">
-                  <div className="flex items-start gap-2">
-                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-foreground shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground">{cert.title}</p>
-                      <p className="text-xs">
-                        {cert.provider} · {cert.status}
-                        {cert.detail ? ` · ${cert.detail}` : ""}
-                      </p>
-                    </div>
-                  </div>
-                </li>
-              ))}
-              {certificationsInProgress.map((cert) => (
-                <li key={cert.title} className="text-sm text-muted-foreground">
-                  <div className="flex items-start gap-2">
-                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-muted-foreground shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground">{cert.title}</p>
-                      <p className="text-xs">
-                        {cert.provider} · {cert.status}
-                      </p>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <Button variant="outline" className="w-full bg-transparent" asChild>
-              <a href="/resume.pdf" download>
-                <Download className="h-4 w-4 mr-2" />
-                Download Resume
-              </a>
-            </Button>
           </Card>
         </div>
       </div>
