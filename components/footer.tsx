@@ -15,7 +15,7 @@ export function Footer() {
               About
             </Link>
             <Link href="/projects" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Projects
+              My Work
             </Link>
             <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Connect

@@ -36,24 +36,6 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Drakeze/Blog",
   },
   {
-    title: "Soren Tech Website",
-    description:
-      "This is a modern, responsive website built for Soren Tech, showcasing a New company specializing in web development and digital solutions.",
-    image: "/projects/community-site.svg",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "PnPm", "Prisma", "GraphQL", "React","MongoDB", "Stripe API"],
-    liveUrl: "https://SorenLab.com",
-    githubUrl: "https://github.com/SorenLab",
-  },
-  {
-    title: "Earth Plus Website",
-    description:
-      "A sustainability-focused web platform promoting eco-friendly practices and environmental awareness through modern web technologies.",
-    image: "/projects/community-site.svg",
-    tags: ["React", "JavaScript", "CSS", "TypreScript", "Tailwind CSS", "Vercel", "PnPm", "MongoDB", "GraphQL", "Prisma", "Stripe API"],
-    liveUrl: "https://earth-plus.vercel.app/",
-    githubUrl: "https://github.com/EarthPlus-Organization/EP-Mono",
-  },
-  {
     title: "Ceator Tools",
     description:
       "This is a Web shop where you can find templates and tools I have created to help speed up your notes and project work. From project planners to note-taking templates, find resources to boost your productivity.",

@@ -22,7 +22,7 @@ export default function Page() {
 
             <div className="flex flex-wrap gap-4 items-center">
               <Button size="lg" asChild>
-                <Link href="/projects">View Projects</Link>
+                <Link href="/projects">My Work</Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <Link href="/about">About Me</Link>

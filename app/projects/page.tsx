@@ -5,8 +5,8 @@ import { projects } from "@/lib/projects"
 import { siteConfig } from "@/lib/seo"
 
 export const metadata: Metadata = {
-  title: `Projects - ${siteConfig.name}`,
-  description: "A curated selection of full-stack projects built with modern web tooling.",
+  title: `My Work - ${siteConfig.name}`,
+  description: "A section of my work showcasing a range of technologies and stacks of things I have built.",
 }
 
 export default function ProjectsPage() {
