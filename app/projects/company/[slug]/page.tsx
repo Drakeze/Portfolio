@@ -30,6 +30,14 @@ export default function CompanyPage({ params }: CompanyPageProps) {
   const company = companies[index]
   const description = descriptions[index]
 
+  const prevCompany = companies[index - 1]
+  const nextCompany = companies[index + 1]
+
+  const prevSlug = prevCompany ? slugify(prevCompany.title) : null
+  const nextSlug = nextCompany ? slugify(nextCompany.title) : null
+
+  const allSlugs = companies.map((c) => slugify(c.title))
+
   return (
     <div className="flex flex-col items-center text-center">
       {/* Company Title */}
@@ -55,6 +63,61 @@ export default function CompanyPage({ params }: CompanyPageProps) {
       <div className="w-full max-w-xl">
         <ProjectCard project={company} variant="detailed" />
       </div>
+
+      {/* Company Pagination */}
+      <nav
+        className="mt-16 flex justify-center"
+        aria-label="Company pagination"
+      >
+        <div className="inline-flex items-center gap-6 rounded-lg border border-muted px-6 py-3 text-sm text-muted-foreground">
+
+          {/* Previous Arrow */}
+          {prevSlug ? (
+            <a
+              href={`/projects/company/${prevSlug}`}
+              className="hover:text-foreground transition"
+              aria-label="Previous company"
+            >
+              &lt;
+            </a>
+          ) : (
+            <span className="opacity-40">&lt;</span>
+          )}
+
+          {/* Numeric Links */}
+          {allSlugs.map((companySlug, i) => {
+            const isActive = companySlug === slug
+
+            return (
+              <a
+                key={companySlug}
+                href={`/projects/company/${companySlug}`}
+                aria-current={isActive ? "page" : undefined}
+                className={`transition ${
+                  isActive
+                    ? "text-foreground font-medium"
+                    : "hover:text-foreground"
+                }`}
+              >
+                {i + 1}
+              </a>
+            )
+          })}
+
+          {/* Next Arrow */}
+          {nextSlug ? (
+            <a
+              href={`/projects/company/${nextSlug}`}
+              className="hover:text-foreground transition"
+              aria-label="Next company"
+            >
+              &gt;
+            </a>
+          ) : (
+            <span className="opacity-40">&gt;</span>
+          )}
+        </div>
+      </nav>
     </div>
   )
 }
