@@ -13,7 +13,7 @@ export const projects: Project[] = [
     description:
       "A comprehensive cryptocurrency dashboard with real-time market data, curated watch lists, and conversion tools for fast portfolio insights.",
     image: "/projects/crypto-tracker.svg",
-    tags: ["CoinGecko API", "HTML", "CSS", "JavaScript","Bun", "Vercel"],
+    tags: ["CoinGecko API", "HTML", "CSS", "JavaScript","Vercel"],
     liveUrl: "https://drakeze-crypto-tracker.vercel.app/",
     githubUrl: "https://github.com/Drakeze/CT-app",
   },
