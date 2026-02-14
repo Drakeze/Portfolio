@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { siteConfig } from "@/lib/seo"
-import { Github, Linkedin, Mail, Twitter, Monitor, Globe, Home } from "lucide-react"
+import { Github, Linkedin, Mail, Twitter, Building2, Leaf, Home } from "lucide-react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -106,21 +106,21 @@ function WorkAndCompaniesCard() {
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">My Work & Initiatives</h2>
         <p className="text-muted-foreground leading-relaxed">
-          {/* short philosophy-driven description */}
+          Browse dedicated company pages with full context, story, and repository details for each initiative.
         </p>
 
         <div className="flex flex-wrap gap-4 pt-2">
           <Button variant="outline" asChild>
-            <a href="https://SorenLab.com" target="_blank" rel="noopener noreferrer">
-              <Monitor className="h-4 w-4 mr-2" />
-              Visit Soren Tech
+            <a href="/projects/company/soren-tech">
+              <Building2 className="h-4 w-4 mr-2" />
+              Soren Tech Page
             </a>
           </Button>
 
           <Button variant="outline" asChild>
-            <a href="https://earthplus.org" target="_blank" rel="noopener noreferrer">
-              <Globe className="h-4 w-4 mr-2" />
-              Learn About Earth Plus
+            <a href="/projects/company/earth-plus">
+              <Leaf className="h-4 w-4 mr-2" />
+              Earth Plus Page
             </a>
           </Button>
         </div>
@@ -134,7 +134,7 @@ function ResourcesAndShopCard() {
         <div className="space-y-4">
         <h2 className="text-xl font-semibold">Resources & Templates</h2>
         <p className="text-muted-foreground leading-relaxed">
-          {/* explain what you share and why */}
+          Resources are hosted in the shop experience. Use the links below to go directly to the full catalog.
         </p>
 
         <p className="text-sm text-muted-foreground">

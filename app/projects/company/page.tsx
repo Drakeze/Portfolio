@@ -1,5 +1,10 @@
 import type { Metadata } from "next"
+import Link from "next/link"
+
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { companies } from "@/lib/companies"
+import { descriptions } from "@/lib/description"
 import { siteConfig } from "@/lib/seo"
 
 export const metadata: Metadata = {
@@ -8,73 +13,50 @@ export const metadata: Metadata = {
 }
 
 function slugify(title: string) {
-  return title
-    .toLowerCase()
-    .replace(" website", "")
-    .replace(/\s+/g, "-")
+  return title.toLowerCase().replace(" website", "").replace(/\s+/g, "-")
 }
 
 export default function CompanyProjectsPage() {
-  const companySlugs = companies.map((company) => slugify(company.title))
-  const firstSlug = companySlugs[0]
-  const lastSlug = companySlugs[companySlugs.length - 1]
-
   return (
-    <>
-      <section className="max-w-3xl mb-16 space-y-6">
-        <h2 className="text-2xl font-semibold">
-          Building Beyond Individual Projects
-        </h2>
-
+    <div className="space-y-12">
+      <section className="max-w-3xl space-y-4">
+        <h2 className="text-2xl font-semibold">Company Initiatives</h2>
         <p className="text-muted-foreground">
-          The companies I’m building represent long-term systems rather than isolated builds.
-          They are designed to grow, adapt, and support real-world use cases over time,
-          rather than exist as one-off implementations.
-        </p>
-
-        <p className="text-muted-foreground">
-          This work reflects how I think about software not just as code,
-          but as infrastructure for ideas, collaboration, and impact.
-          Each initiative below is intentionally structured with longevity in mind.
+          These initiatives are the long-term systems I am building beyond individual projects.
+          Each company has its own page with the full story, current direction, and repository links.
         </p>
       </section>
 
-      <nav
-        className="mt-12 flex justify-center"
-        aria-label="Company selection"
-      >
-        <div className="inline-flex items-center gap-4 rounded-lg border border-muted px-4 py-2 text-sm text-muted-foreground">
+      <section className="grid gap-6 md:grid-cols-2">
+        {companies.map((company, index) => {
+          const slug = slugify(company.title)
+          const detailsPath = `/projects/company/${slug}`
+          const shortDescription = descriptions[index]?.shortDescription
 
-          {/* Jump to first company */}
-          <a
-            href={`/projects/company/${firstSlug}`}
-            className="hover:text-foreground transition"
-            aria-label="First company"
-          >
-            &lt;
-          </a>
+          return (
+            <Card key={company.title} className="p-6 space-y-4">
+              <h3 className="text-xl font-semibold">{company.title.replace(" Website", "")}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {shortDescription ?? company.description}
+              </p>
 
-          {/* Numeric company links */}
-          {companySlugs.map((slug, index) => (
-            <a
-              key={slug}
-              href={`/projects/company/${slug}`}
-              className="hover:text-foreground transition"
-            >
-              {index + 1}
-            </a>
-          ))}
+              <div className="flex flex-wrap gap-3 pt-2">
+                <Button asChild>
+                  <Link href={detailsPath}>Open Company Page</Link>
+                </Button>
 
-          {/* Jump to last company */}
-          <a
-            href={`/projects/company/${lastSlug}`}
-            className="hover:text-foreground transition"
-            aria-label="Last company"
-          >
-            &gt;
-          </a>
-        </div>
-      </nav>
-    </>
+                {company.githubUrl ? (
+                  <Button variant="outline" asChild>
+                    <a href={company.githubUrl} target="_blank" rel="noopener noreferrer">
+                      View Repo
+                    </a>
+                  </Button>
+                ) : null}
+              </div>
+            </Card>
+          )
+        })}
+      </section>
+    </div>
   )
 }
