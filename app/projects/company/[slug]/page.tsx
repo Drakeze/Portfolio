@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation"
 import { companies } from "@/lib/companies"
-import { descriptions } from "@/lib/description"
 import { ProjectCard } from "@/components/sections/project-card"
 
 type CompanyPageProps = {
@@ -9,18 +8,11 @@ type CompanyPageProps = {
   }
 }
 
-function slugify(title: string) {
-  return title
-    .toLowerCase()
-    .replace(" website", "")
-    .replace(/\s+/g, "-")
-}
-
 export default function CompanyPage({ params }: CompanyPageProps) {
   const { slug } = params
 
   const index = companies.findIndex(
-    (company) => slugify(company.title) === slug
+    (company) => company.slug === slug
   )
 
   if (index === -1) {
@@ -28,15 +20,14 @@ export default function CompanyPage({ params }: CompanyPageProps) {
   }
 
   const company = companies[index]
-  const description = descriptions[index]
 
   const prevCompany = companies[index - 1]
   const nextCompany = companies[index + 1]
 
-  const prevSlug = prevCompany ? slugify(prevCompany.title) : null
-  const nextSlug = nextCompany ? slugify(nextCompany.title) : null
+  const prevSlug = prevCompany ? prevCompany.slug : null
+  const nextSlug = nextCompany ? nextCompany.slug : null
 
-  const allSlugs = companies.map((c) => slugify(c.title))
+  const allSlugs = companies.map((c) => c.slug)
 
   return (
     <div className="flex flex-col items-center text-center">
@@ -50,7 +41,7 @@ export default function CompanyPage({ params }: CompanyPageProps) {
 
       {/* Long Description */}
       <div className="max-w-3xl space-y-6 mb-16 text-left">
-        {description.longDescription
+        {company.longDescription
           .split("\n\n")
           .map((paragraph, i) => (
             <p key={i} className="text-muted-foreground leading-relaxed">
