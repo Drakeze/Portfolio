@@ -36,7 +36,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Drakeze/Blog",
   },
   {
-    title: "Ceator Tools",
+    title: "Creator Tools",
     description:
       "This is a Web shop where you can find templates and tools I have created to help speed up your notes and project work. From project planners to note-taking templates, find resources to boost your productivity.",
     image: "/projects/productivity-dashboard.svg",
