@@ -15,19 +15,19 @@ export const companies: Company[] = [
   {
     slug: "soren-tech",
     title: "Soren Tech",
-    tagline: "AI-driven structured software systems.",
+    tagline: "Turning complex ideas into structured software systems.",
     shortDescription:
-      "A modern, scalable platform focused on custom APIs, structured architecture, and long-term partnership-driven development.",
-    longDescription: `Soren Tech is built around the philosophy of structured, scalable engineering. The focus is not just on delivering websites or APIs, but on creating long-term systems that grow with clients.
+      "A technology studio focused on turning ideas into clear, well-structured software systems through thoughtful design and guided collaboration.",
+    longDescription: `Soren Tech is built around the idea that many strong ideas fail not because they lack potential, but because they are difficult to translate into technical reality. The studio exists to bridge the gap between non-technical vision and production-ready software.
 
-The platform combines modern technologies like Next.js, Prisma, MongoDB, and GraphQL into a unified monorepo architecture. Emphasis is placed on clean abstractions, reusable packages, and disciplined system design.
+A core part of the process is clarity. Rather than jumping straight into implementation, work begins with walkthroughs, visual mockups, and early prototypes that allow ideas to be explored, adjusted, and understood before they are built. This helps clients see their vision take shape while allowing engineering decisions to be made with better context and fewer assumptions.
 
-Beyond technical implementation, Soren Tech represents a hybrid model of innovation and impact — building software that not only solves problems but supports sustainable, forward-thinking initiatives.`,
+Soren Tech treats software less like an abstract technical task and more like structured design. Code, interfaces, and systems are approached with the same care as architecture, focusing on maintainability, scalability, and long-term usefulness rather than short-term output.
+
+Beyond client work, the long-term direction of Soren Tech is to build reusable tools and APIs and to apply technology in areas that form the backbone of society, such as agriculture, healthcare, and veterinary systems, where thoughtful software can have lasting impact.`,
     heroImage: "/projects/community-site.svg",
     gallery: [
-      "/images/soren/1.png",
-      "/images/soren/2.png",
-      "/images/soren/3.png",
+      // Images from the company folder for Only Soren Tech
     ],
     tags: [
       "Next.js",
@@ -49,17 +49,17 @@ Beyond technical implementation, Soren Tech represents a hybrid model of innovat
     title: "Earth Plus",
     tagline: "Technology aligned with environmental responsibility.",
     shortDescription:
-      "A sustainability-focused web platform promoting eco-friendly practices and environmental awareness.",
-    longDescription: `Earth Plus is a technology initiative centered on environmental awareness and sustainable systems thinking.
+      "A long-term nonprofit initiative focused on aligning technology with environmental responsibility and sustainable systems.",
+    longDescription: `Earth Plus is a long-term nonprofit initiative centered on the belief that technological progress should not come at the cost of the planet we depend on. The goal is not to reject technology, but to use it responsibly to support sustainability, education, and environmental preservation.
 
-The platform leverages modern web architecture to provide structured tools, dashboards, and community-focused resources that encourage responsible digital and real-world practices.
+The initiative is designed as an ecosystem rather than a single product. As technical projects grow, Earth Plus aims to reinvest resources into environmental foundations, sustainability efforts, and practical tools that address real-world challenges such as clean water access, waste reduction, and infrastructure support.
 
-Built with a scalable backend foundation and designed for long-term expansion, Earth Plus serves as both a technical project and a mission-driven ecosystem.`,
+In addition to financial reinvestment, Earth Plus explores tangible initiatives such as recycled and reusable products, sustainable materials, and environmental tooling that can be applied across communities. The focus is on practical systems that scale, adapt, and improve over time rather than one-off solutions.
+
+At its core, Earth Plus exists to ensure that the systems we build today contribute to a future that remains livable. It is intentionally positioned as a long-term effort that grows alongside technological advancement rather than opposing it.`,
     heroImage: "/projects/community-site.svg",
     gallery: [
-      "/images/earth/1.png",
-      "/images/earth/2.png",
-      "/images/earth/3.png",
+     // Images from the company folder for Only Earth Plus 
     ],
     tags: [
       "React",

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import { companies } from "@/lib/companies"
-import { ProjectCard } from "@/components/sections/project-card"
+import { CompanyGallery } from "@/components/company/company-gallery"
+import { Button } from "@/components/ui/button"
 
 type CompanyPageProps = {
   params: {
@@ -30,17 +31,22 @@ export default function CompanyPage({ params }: CompanyPageProps) {
   const allSlugs = companies.map((c) => c.slug)
 
   return (
-    <div className="flex flex-col items-center text-center">
-      {/* Company Title */}
-      <h1 className="text-4xl md:text-5xl font-semibold mb-4">
-        {company.title}
-      </h1>
+    <div className="max-w-6xl mx-auto px-6 py-20 space-y-24">
 
-      {/* Divider */}
-      <div className="w-24 h-px bg-muted-foreground/40 mb-10" />
+      {/* Hero Section */}
+      <section className="text-center space-y-6 pt-8">
+        <h1 className="text-4xl md:text-5xl font-semibold">
+          {company.title}
+        </h1>
+        {company.tagline && (
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            {company.tagline}
+          </p>
+        )}
+      </section>
 
       {/* Long Description */}
-      <div className="max-w-3xl space-y-6 mb-16 text-left">
+      <section className="max-w-3xl mx-auto space-y-8 text-lg leading-relaxed">
         {company.longDescription
           .split("\n\n")
           .map((paragraph, i) => (
@@ -48,21 +54,64 @@ export default function CompanyPage({ params }: CompanyPageProps) {
               {paragraph}
             </p>
           ))}
-      </div>
+      </section>
 
-      {/* Artifact Card */}
-      <div className="w-full max-w-xl">
-        <ProjectCard project={company} variant="detailed" />
-      </div>
+      {/* Slideshow Gallery */}
+      <section className="max-w-5xl mx-auto">
+        {company.gallery && company.gallery.length > 0 ? (
+          <div className="rounded-2xl overflow-hidden border shadow-md">
+            <CompanyGallery images={company.gallery} />
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-muted-foreground/30 bg-muted/20 h-[420px] flex items-center justify-center">
+            <p className="text-sm text-muted-foreground">
+              Gallery space — visuals coming soon
+            </p>
+          </div>
+        )}
+      </section>
+
+      {/* Full Width Tech + Repo Section */}
+      <section className="rounded-2xl border p-12 space-y-12 bg-background shadow-sm">
+          <h2 className="text-2xl font-semibold text-center">
+              Architecture & Technology
+          </h2>
+        {/* Tech Stack */}
+        <div className="flex flex-wrap gap-3 justify-center">
+          {company.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-3 py-1 text-sm rounded-md bg-muted/60 border border-muted-foreground/20"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {/* Buttons */}
+        <div className="flex justify-center gap-6">
+          {company.liveUrl && (
+            <Button asChild>
+              <a href={company.liveUrl} target="_blank" rel="noopener noreferrer">
+                Visit Website
+              </a>
+            </Button>
+          )}
+
+          {company.githubUrl && (
+            <Button variant="outline" asChild>
+              <a href={company.githubUrl} target="_blank" rel="noopener noreferrer">
+                GitHub Organization
+              </a>
+            </Button>
+          )}
+        </div>
+      </section>
 
       {/* Company Pagination */}
-      <nav
-        className="mt-16 flex justify-center"
-        aria-label="Company pagination"
-      >
+      <nav className="flex justify-center" aria-label="Company pagination">
         <div className="inline-flex items-center gap-6 rounded-lg border border-muted px-6 py-3 text-sm text-muted-foreground">
 
-          {/* Previous Arrow */}
           {prevSlug ? (
             <a
               href={`/projects/company/${prevSlug}`}
@@ -75,7 +124,6 @@ export default function CompanyPage({ params }: CompanyPageProps) {
             <span className="opacity-40">&lt;</span>
           )}
 
-          {/* Numeric Links */}
           {allSlugs.map((companySlug, i) => {
             const isActive = companySlug === slug
 
@@ -95,7 +143,6 @@ export default function CompanyPage({ params }: CompanyPageProps) {
             )
           })}
 
-          {/* Next Arrow */}
           {nextSlug ? (
             <a
               href={`/projects/company/${nextSlug}`}
@@ -109,6 +156,7 @@ export default function CompanyPage({ params }: CompanyPageProps) {
           )}
         </div>
       </nav>
+
     </div>
   )
 }
