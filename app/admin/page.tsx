@@ -42,58 +42,7 @@ const inboxPreview = [
   },
 ]
 
-async function authenticate(formData: FormData) {
-  "use server"
-
-  const password = formData.get("password")
-
-  if (password === process.env.ADMIN_PASSWORD) {
-    const cookieStore = await cookies()
-    cookieStore.set("admin-auth", "true", {
-      httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-      path: "/",
-    })
-  }
-
-  redirect("/admin")
-}
-
-async function isAuthenticated() {
-  const cookieStore = await cookies()
-  return cookieStore.get("admin-auth")?.value === "true"
-}
-
-export default async function AdminPage() {
-  const authed = await isAuthenticated()
-
-  if (!authed) {
-    return (
-      <main className="min-h-screen flex items-center justify-center bg-muted/30 px-6">
-        <div className="w-full max-w-md space-y-6">
-          <div className="space-y-2 text-center">
-            <h1 className="text-3xl font-bold">Admin Access</h1>
-            <p className="text-muted-foreground text-sm">
-              Enter the admin password to continue.
-            </p>
-          </div>
-
-          <form action={authenticate} className="space-y-4">
-            <Input
-              type="password"
-              name="password"
-              placeholder="Admin password"
-              required
-            />
-            <Button type="submit" className="w-full">
-              Unlock admin
-            </Button>
-          </form>
-        </div>
-      </main>
-    )
-  }
+export default function AdminPage() {
   return (
     <main className="min-h-screen py-24 px-6 bg-muted/30">
       <div className="container mx-auto max-w-6xl space-y-8">
