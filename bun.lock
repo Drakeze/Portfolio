@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "my-v0-project",
+      "name": "at-projects",
       "dependencies": {
         "@hookform/resolvers": "^3.10.0",
         "@prisma/client": "^7.3.0",
