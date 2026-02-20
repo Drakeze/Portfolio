@@ -5,10 +5,10 @@ const options = {}
 let clientPromise: Promise<MongoClient> | null = null
 
 function getMongoUri(): string {
-  const uri = process.env.DATABASE_URL
+  const uri = process.env.MONGODB_URI
 
   if (!uri) {
-    throw new Error("DATABASE_URL is not set. Add your MongoDB URI in environment variables.")
+    throw new Error("MONGODB_URI is not set. Add your MongoDB URI in environment variables.")
   }
 
   return uri
