@@ -149,7 +149,7 @@ Portions of this project were developed with AI assistance, including code revie
 
 All architectural decisions, implementations, and final content were reviewed and approved by the author.
 
-AI is used as a productivity and learning tool—not as a replacement for engineering judgment.
+AI is used as a productivity and learning tool, not as a replacement for engineering judgment.
 
 ---
 
