@@ -5,13 +5,28 @@ const options = {}
 let clientPromise: Promise<MongoClient> | null = null
 
 function getMongoUri(): string {
-  const uri = process.env.MONGODB_URI
+  const uri = process.env.DATABASE_URL ?? process.env.MONGODB_URI
 
   if (!uri) {
-    throw new Error("MONGODB_URI is not set. Add your MongoDB URI in environment variables.")
+    throw new Error(
+      "DATABASE_URL is not set. Add your MongoDB URI (with a database name in the path) in environment variables."
+    )
   }
 
   return uri
+}
+
+function getConfiguredDbName(uri: string): string {
+  const pathname = new URL(uri).pathname.replace(/^\/+/, "")
+  const dbName = pathname.split("/")[0]
+
+  if (!dbName) {
+    throw new Error(
+      "DATABASE_URL must include a database name in the URI path (for example: ...mongodb.net/portfolio_main?retryWrites=true&w=majority)."
+    )
+  }
+
+  return dbName
 }
 
 function getClientPromise(): Promise<MongoClient> {
@@ -38,9 +53,10 @@ function getClientPromise(): Promise<MongoClient> {
   return clientPromise
 }
 
-export async function getDb(dbName = "portfolio"): Promise<Db> {
+export async function getDb(dbName?: string): Promise<Db> {
   const client = await getClientPromise()
-  return client.db(dbName)
+  const resolvedDbName = dbName ?? getConfiguredDbName(getMongoUri())
+  return client.db(resolvedDbName)
 }
 
 export default getClientPromise

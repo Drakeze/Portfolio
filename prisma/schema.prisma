@@ -1,9 +1,9 @@
 // Shared schema for portfolio data across Next.js apps (MongoDB Atlas)
-// Prisma v7 compatible
+// Prisma v6 compatible
 
 datasource db {
   provider = "mongodb"
-  url      = env("MONGODB_URI")
+  url      = env("DATABASE_URL")
 }
 
 generator client {
