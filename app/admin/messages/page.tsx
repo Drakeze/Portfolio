@@ -1,4 +1,4 @@
-import { ResourceList } from "@/app/admin/components/resource-list"
+import { ResourceList } from "@/components/admin/resource-list"
 
 export default function AdminMessagesPage() {
   return <ResourceList title="Messages" apiPath="/api/admin/messages" />
