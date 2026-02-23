@@ -10,9 +10,6 @@ import { companies } from "@/lib/companies"
 import { projects } from "@/lib/projects"
 import { siteConfig } from "@/lib/seo"
 
-import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
-
 export const metadata: Metadata = {
   title: `Admin - ${siteConfig.name}`,
   description: "Internal admin workspace for managing portfolio content and reviewing inbox requests.",
