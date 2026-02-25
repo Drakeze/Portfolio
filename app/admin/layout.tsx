@@ -1,6 +1,5 @@
-import Link from "next/link"
-
 import { AdminProviders } from "./providers"
+import { AdminNavbar } from "@/components/admin/navbar"
 import { cookies } from "next/headers"
 
 
@@ -14,17 +13,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <div className="mx-auto max-w-6xl px-6 py-10">
         {isAuthenticated ? (
           <>
-            <nav className="mb-8 flex flex-wrap gap-3 text-sm">
-              {adminNav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-md border bg-background px-3 py-1.5"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+            <AdminNavbar />
             <AdminProviders>{children}</AdminProviders>
           </>
         ) : (
