@@ -1,38 +1,25 @@
-import Link from "next/link"
 import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
+import { NextResponse } from "next/server"
 
-import { AdminProviders } from "@/components/admin/providers"
-import { adminNav } from "@/lib/admin/nav"
+export async function POST(req: Request) {
+  try {
+    const { password } = await req.json()
+    const adminPassword = process.env.ADMIN_PASSWORD
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const cookieStore = cookies()
-  const isAuthenticated = cookieStore.get("admin-auth")?.value === "true"
+    if (!adminPassword || password !== adminPassword) {
+      return NextResponse.json({ success: false, error: "Invalid password" }, { status: 401 })
+    }
 
-  if (!isAuthenticated) {
-    redirect("/admin/login")
+    const cookieStore = await cookies()
+    cookieStore.set("admin-auth", "true", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24, // 24 hours
+      path: "/",
+    })
+
+    return NextResponse.json({ success: true, data: null })
+  } catch (error) {
+    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
   }
-
-  return (
-    <div className="min-h-screen bg-muted/30">
-      <div className="mx-auto max-w-6xl px-6 py-10">
-        <nav className="mb-8 flex flex-wrap gap-3 text-sm">
-          {adminNav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-md border bg-background px-3 py-1.5"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        <AdminProviders>{children}</AdminProviders>
-      </div>
-    </div>
-  )
 }
