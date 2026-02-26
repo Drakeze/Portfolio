@@ -3,8 +3,8 @@ import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { companies } from "@/lib/companies"
 import { siteConfig } from "@/lib/seo"
+import { companies } from "@/lib/types/companies"
 
 export const metadata: Metadata = {
   title: `Companies - ${siteConfig.name}`,

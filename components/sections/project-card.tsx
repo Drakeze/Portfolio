@@ -1,10 +1,10 @@
-import Image from "next/image"
-import Link from "next/link"
-import { ExternalLink, Github } from "lucide-react"
-import type { Project } from "@/lib/projects"
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import type { Project } from "@/lib/types/projects"
+import { cn } from "@/lib/utils"
+import { ExternalLink, Github } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 
 type ProjectCardVariant = "featured" | "detailed"
 
