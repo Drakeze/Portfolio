@@ -22,7 +22,7 @@ export async function getCertificationById(id: string) {
 
 export async function createCertification(input: CertificationInput) {
   const collection = await certificationsCollection()
-  const doc = { ...input }
+  const doc = { ...input, completed: input.completed ?? true }
   const result = await collection.insertOne(doc as Omit<Certification, "_id">)
   return { _id: result.insertedId, ...doc }
 }

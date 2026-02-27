@@ -13,6 +13,8 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { listCertifications } from "@/lib/domains/certifications/service"
+import { listSkills } from "@/lib/domains/skills/service"
 import { siteConfig } from "@/lib/seo"
 import SkillsSection from "@/components/sections/skillsection"
 
@@ -59,47 +61,25 @@ const experiences = [
   },
 ]
 
-const certifications = [
-  {
-    title: "API Integration – End to End Web Development",
-    provider: "Board Infinity",
-    status: "Completed",
-    detail: "86%",
-  },
-  {
-    title: "Getting Started with Git and GitHub",
-    provider: "IBM",
-    status: "Completed",
-    detail: "84.28%",
-  },
-  {
-    title: "Introduction to HTML, CSS, & JavaScript",
-    provider: "IBM",
-    status: "Completed",
-    detail: "88.57%",
-  },
-  {
-    title: "Introduction to Software Engineering",
-    provider: "IBM",
-    status: "Completed",
-    detail: "85.90%",
-  },
-]
-
-const certificationsInProgress = [
-  {
-    title: "IBM Full-Stack JavaScript Developer",
-    provider: "IBM / Coursera",
-    status: "In Progress",
-  },
-]
-
 export const metadata: Metadata = {
   title: `About - ${siteConfig.name}`,
   description: "Learn more about my experience, skills, and certifications.",
 }
 
-export default function AboutPage() {
+export const dynamic = "force-dynamic"
+
+export default async function AboutPage() {
+  const [skillsDocs, certificationsDocs] = await Promise.all([listSkills(), listCertifications()])
+
+  const skills = skillsDocs.map((skill) => ({
+    id: skill._id.toString(),
+    name: skill.name,
+    status: skill.status ?? "active",
+  }))
+
+  const completedCertifications = certificationsDocs.filter((cert) => cert.completed !== false)
+  const inProgressCertifications = certificationsDocs.filter((cert) => cert.completed === false)
+
   return (
     <main className="min-h-screen py-24 px-6">
       <div className="container mx-auto max-w-6xl">
@@ -151,29 +131,29 @@ export default function AboutPage() {
                 </div>
 
                 <ul className="space-y-4 mb-6">
-                  {certifications.map((cert) => (
+                  {completedCertifications.map((cert) => (
                     <li key={cert.title} className="text-sm text-muted-foreground">
                       <div className="flex items-start gap-2">
                         <span className="mt-2 w-1.5 h-1.5 rounded-full bg-foreground shrink-0" />
                         <div>
                           <p className="font-medium text-foreground">{cert.title}</p>
                           <p className="text-xs">
-                            {cert.provider} · {cert.status}
-                            {cert.detail ? ` · ${cert.detail}` : ""}
+                            {cert.issuer ?? "Unknown Issuer"} · Completed
+                            {cert.grade ? ` · ${cert.grade}` : ""}
                           </p>
                         </div>
                       </div>
                     </li>
                   ))}
 
-                  {certificationsInProgress.map((cert) => (
+                  {inProgressCertifications.map((cert) => (
                     <li key={cert.title} className="text-sm text-muted-foreground">
                       <div className="flex items-start gap-2">
                         <span className="mt-2 w-1.5 h-1.5 rounded-full bg-muted-foreground shrink-0" />
                         <div>
                           <p className="font-medium text-foreground">{cert.title}</p>
                           <p className="text-xs">
-                            {cert.provider} · {cert.status}
+                            {cert.issuer ?? "Unknown Issuer"} · In Progress
                           </p>
                         </div>
                       </div>
@@ -190,7 +170,7 @@ export default function AboutPage() {
               </div>
 
               {/* RIGHT: Skills */}
-              <SkillsSection />
+              <SkillsSection skills={skills} />
 
             </div>
           </Card>

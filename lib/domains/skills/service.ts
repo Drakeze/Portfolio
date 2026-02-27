@@ -22,7 +22,7 @@ export async function getSkillById(id: string) {
 
 export async function createSkill(input: SkillInput) {
   const collection = await skillsCollection()
-  const doc = { ...input }
+  const doc = { ...input, status: input.status ?? "active" }
   const result = await collection.insertOne(doc as Omit<Skill, "_id">)
   return { _id: result.insertedId, ...doc }
 }

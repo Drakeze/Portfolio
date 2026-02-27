@@ -1,13 +1,18 @@
 import { ObjectId } from "mongodb"
 
+export type SkillStatus = "active" | "learning" | "archived"
+
 export type Skill = {
   _id?: ObjectId
   name: string
-  category: string
+  status: SkillStatus
+  category?: string
   level?: number
   icon?: string
   order?: number
 }
 
-export type SkillInput = Omit<Skill, "_id">
+export type SkillInput = Omit<Skill, "_id" | "status"> & {
+  status?: SkillStatus
+}
 export type SkillUpdateInput = Partial<SkillInput>

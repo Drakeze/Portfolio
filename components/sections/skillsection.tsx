@@ -1,32 +1,20 @@
-"use client";
+import { Code, Zap } from "lucide-react"
 
-import { Code, Zap } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/components/ui/card"
 
-export default function SkillsSection() {
-  const completedSkills = [
-    "React",
-    "Next.js",
-    "TypeScript",
-    "Tailwind CSS",
-    "HTML",
-    "CSS",
-    "Git & GitHub",
-    "REST APIs",
-    "MongoDB",
-    "Node.js",
-  ];
+type SkillItem = {
+  id: string
+  name: string
+  status: "active" | "learning" | "archived"
+}
 
-  const learningSkills = [
-    "Python",
-    "Redis",
-    "Docker",
-    "AWS",
-    "Analytics",
-    "Testing Libraries",
-    "Prisma",
-    "GraphQL",
-  ];
+type SkillsSectionProps = {
+  skills: SkillItem[]
+}
+
+export default function SkillsSection({ skills }: SkillsSectionProps) {
+  const completedSkills = skills.filter((skill) => skill.status === "active")
+  const learningSkills = skills.filter((skill) => skill.status === "learning")
 
   return (
     <Card className="p-6">
@@ -39,7 +27,7 @@ export default function SkillsSection() {
         <h3 className="text-lg font-medium mb-4">Proficient & Completed</h3>
         <ul className="list-disc list-inside grid grid-cols-2 gap-2 text-sm text-muted-foreground">
           {completedSkills.map((skill) => (
-            <li key={skill}>{skill}</li>
+            <li key={skill.id}>{skill.name}</li>
           ))}
         </ul>
       </section>
@@ -53,10 +41,10 @@ export default function SkillsSection() {
         </h3>
         <ul className="list-disc list-inside grid grid-cols-2 gap-2 text-sm text-muted-foreground">
           {learningSkills.map((skill) => (
-            <li key={skill}>{skill}</li>
+            <li key={skill.id}>{skill.name}</li>
           ))}
         </ul>
       </section>
     </Card>
-  );
+  )
 }
