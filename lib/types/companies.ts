@@ -27,7 +27,9 @@ Soren Tech treats software less like an abstract technical task and more like st
 Beyond client work, the long-term direction of Soren Tech is to build reusable tools and APIs and to apply technology in areas that form the backbone of society, such as agriculture, healthcare, and veterinary systems, where thoughtful software can have lasting impact.`,
     heroImage: "/projects/community-site.svg",
     gallery: [
-      // Images from the company folder for Only Soren Tech
+      "/projects/community-site.svg",
+      "/projects/crypto-tracker.svg",
+      "/projects/community-site.svg"
     ],
     tags: [
       "Next.js",
@@ -59,7 +61,9 @@ In addition to financial reinvestment, Earth Plus explores tangible initiatives 
 At its core, Earth Plus exists to ensure that the systems we build today contribute to a future that remains livable. It is intentionally positioned as a long-term effort that grows alongside technological advancement rather than opposing it.`,
     heroImage: "/projects/community-site.svg",
     gallery: [
-     // Images from the company folder for Only Earth Plus 
+      "/projects/community-site.svg",
+      "/projects/crypto-tracker.svg",
+      "/projects/community-site.svg"
     ],
     tags: [
       "React",

@@ -60,6 +60,7 @@
     "react-hook-form": "^7.71.2",
     "react-resizable-panels": "^2.1.9",
     "recharts": "2.15.4",
+    "resend": "^6.9.2",
     "sonner": "^1.7.4",
     "tailwind-merge": "^3.5.0",
     "tailwindcss-animate": "^1.0.7",
@@ -68,7 +69,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",
-    "@types/node": "^22.19.12",
+    "@types/node": "^22.19.13",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "baseline-browser-mapping": "^2.10.0",
