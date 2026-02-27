@@ -1,5 +1,7 @@
 import { listSkills } from "@/lib/domains/skills/service"
 
+export const dynamic = "force-dynamic"
+
 export default async function AdminSkillsPage() {
   const skills = await listSkills()
 

@@ -5,6 +5,8 @@ import { listProjects } from "@/lib/domains/projects/service"
 import { siteConfig } from "@/lib/seo"
 import type { Project } from "@/lib/types/projects"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: `My Work - ${siteConfig.name}`,
   description: "A section of my work showcasing a range of technologies and stacks of things I have built.",

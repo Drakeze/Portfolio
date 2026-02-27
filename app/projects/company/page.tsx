@@ -7,6 +7,8 @@ import { siteConfig } from "@/lib/seo"
 import { CompanyGallery } from "@/components/company/company-gallery"
 import type { Company } from "@/lib/types/companies"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: `Companies - ${siteConfig.name}`,
   description: "A selection of companies I started and am currently building.",

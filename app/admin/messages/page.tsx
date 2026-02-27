@@ -1,5 +1,7 @@
 import { listMessages } from "@/lib/domains/messages/service"
 
+export const dynamic = "force-dynamic"
+
 export default async function AdminMessagesPage() {
   const messages = await listMessages()
 

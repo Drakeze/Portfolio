@@ -6,6 +6,7 @@
     "build": "npm run typecheck && node ./scripts/build-with-eslint-stub.mjs",
     "dev": "next dev",
     "lint": "node ./scripts/lint-with-eslint-stub.mjs",
+    "seed:content": "bun scripts/seed-content.ts",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "postinstall": "prisma generate"

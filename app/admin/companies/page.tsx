@@ -1,5 +1,7 @@
 import { listCompanies } from "@/lib/domains/companies/service"
 
+export const dynamic = "force-dynamic"
+
 export default async function AdminCompaniesPage() {
   const companies = await listCompanies()
 

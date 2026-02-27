@@ -1,5 +1,7 @@
 import { listProjects } from "@/lib/domains/projects/service"
 
+export const dynamic = "force-dynamic"
+
 export default async function AdminProjectsPage() {
   const projects = await listProjects()
 

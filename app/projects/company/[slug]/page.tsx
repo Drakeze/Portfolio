@@ -4,6 +4,8 @@ import { listCompanies } from "@/lib/domains/companies/service"
 import { notFound } from "next/navigation"
 import type { Company } from "@/lib/types/companies"
 
+export const dynamic = "force-dynamic"
+
 type CompanyPageProps = {
   params: Promise<{
     slug: string

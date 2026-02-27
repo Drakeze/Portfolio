@@ -1,5 +1,7 @@
 import { listCertifications } from "@/lib/domains/certifications/service"
 
+export const dynamic = "force-dynamic"
+
 export default async function AdminCertificationsPage() {
   const certifications = await listCertifications()
 
