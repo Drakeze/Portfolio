@@ -4,14 +4,12 @@ export type Message = {
   _id?: ObjectId
   name: string
   email: string
-  subject: string
-  body: string
-  isNew: boolean
+  message: string
+  read: boolean
   createdAt: Date
-  updatedAt: Date
-  softDeleted: boolean
 }
 
-export type MessageInput = Omit<Message, "_id" | "createdAt" | "updatedAt" | "softDeleted" | "isNew"> & {
-  isNew?: boolean
+export type MessageInput = Omit<Message, "_id" | "createdAt" | "read"> & {
+  read?: boolean
 }
+export type MessageUpdateInput = Partial<MessageInput>

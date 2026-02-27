@@ -1,20 +1,43 @@
 import { CompanyGallery } from "@/components/company/company-gallery"
 import { Button } from "@/components/ui/button"
-import { companies } from "@/lib/types/companies"
+import { listCompanies } from "@/lib/domains/companies/service"
 import { notFound } from "next/navigation"
+import type { Company } from "@/lib/types/companies"
 
 type CompanyPageProps = {
-  params: {
+  params: Promise<{
     slug: string
+  }>
+}
+
+function toCompanyViewModel(company: {
+  slug: string
+  title: string
+  tagline: string
+  longDescription: string
+  gallery: string[]
+  techStack: string[]
+  liveUrl?: string
+  githubUrl?: string
+}): Company {
+  return {
+    slug: company.slug,
+    title: company.title,
+    tagline: company.tagline,
+    shortDescription: company.longDescription.split("\n\n")[0]?.slice(0, 220) ?? "",
+    longDescription: company.longDescription,
+    gallery: company.gallery,
+    tags: company.techStack,
+    liveUrl: company.liveUrl,
+    githubUrl: company.githubUrl,
   }
 }
 
-export default function CompanyPage({ params }: CompanyPageProps) {
-  const { slug } = params
+export default async function CompanyPage({ params }: CompanyPageProps) {
+  const { slug } = await params
+  const companies = (await listCompanies()).map(toCompanyViewModel)
 
-  const index = companies.findIndex(
-    (company) => company.slug === slug
-  )
+  const index = companies.findIndex((company) => company.slug === slug)
 
   if (index === -1) {
     notFound()
@@ -32,8 +55,6 @@ export default function CompanyPage({ params }: CompanyPageProps) {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-20 space-y-24">
-
-      {/* Hero Section */}
       <section className="text-center space-y-6 pt-8">
         <h1 className="text-4xl md:text-5xl font-semibold">
           {company.title}
@@ -45,7 +66,6 @@ export default function CompanyPage({ params }: CompanyPageProps) {
         )}
       </section>
 
-      {/* Long Description */}
       <section className="max-w-3xl mx-auto space-y-8 text-lg leading-relaxed">
         {company.longDescription
           .split("\n\n")
@@ -56,7 +76,6 @@ export default function CompanyPage({ params }: CompanyPageProps) {
           ))}
       </section>
 
-      {/* Slideshow Gallery */}
       <section className="max-w-5xl mx-auto">
         {company.gallery && company.gallery.length > 0 ? (
           <div className="rounded-2xl overflow-hidden border shadow-md">
@@ -65,18 +84,16 @@ export default function CompanyPage({ params }: CompanyPageProps) {
         ) : (
           <div className="rounded-2xl border border-dashed border-muted-foreground/30 bg-muted/20 h-[420px] flex items-center justify-center">
             <p className="text-sm text-muted-foreground">
-              Gallery space — visuals coming soon
+              Gallery space - visuals coming soon
             </p>
           </div>
         )}
       </section>
 
-      {/* Full Width Tech + Repo Section */}
       <section className="rounded-2xl border p-12 space-y-12 bg-background shadow-sm">
-          <h2 className="text-2xl font-semibold text-center">
-              Architecture & Technology
-          </h2>
-        {/* Tech Stack */}
+        <h2 className="text-2xl font-semibold text-center">
+          Architecture & Technology
+        </h2>
         <div className="flex flex-wrap gap-3 justify-center">
           {company.tags.map((tag) => (
             <span
@@ -88,7 +105,6 @@ export default function CompanyPage({ params }: CompanyPageProps) {
           ))}
         </div>
 
-        {/* Buttons */}
         <div className="flex justify-center gap-6">
           {company.liveUrl && (
             <Button asChild>
@@ -108,10 +124,8 @@ export default function CompanyPage({ params }: CompanyPageProps) {
         </div>
       </section>
 
-      {/* Company Pagination */}
       <nav className="flex justify-center" aria-label="Company pagination">
         <div className="inline-flex items-center gap-6 rounded-lg border border-muted px-6 py-3 text-sm text-muted-foreground">
-
           {prevSlug ? (
             <a
               href={`/projects/company/${prevSlug}`}
@@ -156,7 +170,6 @@ export default function CompanyPage({ params }: CompanyPageProps) {
           )}
         </div>
       </nav>
-
     </div>
   )
 }

@@ -1,18 +1,35 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { listCompanies } from "@/lib/domains/companies/service"
 import { siteConfig } from "@/lib/seo"
-import { companies } from "@/lib/types/companies"
 import { CompanyGallery } from "@/components/company/company-gallery"
+import type { Company } from "@/lib/types/companies"
 
 export const metadata: Metadata = {
   title: `Companies - ${siteConfig.name}`,
   description: "A selection of companies I started and am currently building.",
 }
 
-export default function CompanyProjectsPage() {
+function toShortDescription(longDescription: string) {
+  return longDescription.split("\n\n")[0]?.slice(0, 220) ?? ""
+}
+
+export default async function CompanyProjectsPage() {
+  const companyDocs = await listCompanies()
+  const companies: Company[] = companyDocs.map((company) => ({
+    slug: company.slug,
+    title: company.title,
+    tagline: company.tagline,
+    shortDescription: toShortDescription(company.longDescription),
+    longDescription: company.longDescription,
+    gallery: company.gallery,
+    tags: company.techStack,
+    liveUrl: company.liveUrl,
+    githubUrl: company.githubUrl,
+  }))
+
   return (
     <div className="space-y-20 py-16">
       <section className="max-w-4xl mx-auto text-center space-y-6 pt-8">

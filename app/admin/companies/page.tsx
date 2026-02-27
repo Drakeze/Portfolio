@@ -1,23 +1,10 @@
 import { listCompanies } from "@/lib/domains/companies/service"
-type Company = {
-  _id: string
-  name: string
-  description: string
-  techStack: string
-  websiteUrl?: string
-  githubUrl?: string
-  images: string[]
-  status: "active" | "archived"
-  createdAt: Date
-  updatedAt: Date
-}
 
 export default async function AdminCompaniesPage() {
   const companies = await listCompanies()
 
   return (
     <main className="space-y-10">
-      {/* Header */}
       <section className="space-y-2">
         <h1 className="text-3xl font-semibold tracking-tight">
           Companies
@@ -27,7 +14,6 @@ export default async function AdminCompaniesPage() {
         </p>
       </section>
 
-      {/* Create New Company */}
       <section className="rounded-lg border bg-background p-6">
         <h2 className="mb-6 text-sm font-medium">
           Create New Company
@@ -124,7 +110,6 @@ export default async function AdminCompaniesPage() {
         </div>
       </section>
 
-      {/* Existing Companies */}
       <section className="rounded-lg border bg-background">
         <div className="border-b p-6">
           <h2 className="text-sm font-medium">Existing Companies</h2>
@@ -138,28 +123,18 @@ export default async function AdminCompaniesPage() {
                 <th className="px-6 py-3">Tech Stack</th>
                 <th className="px-6 py-3">Website</th>
                 <th className="px-6 py-3">GitHub</th>
-                <th className="px-6 py-3">Status</th>
+                <th className="px-6 py-3">Order</th>
                 <th className="px-6 py-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
               {companies.map((company) => (
-                <tr key={company._id} className="border-t hover:bg-muted/30">
-                  <td className="px-6 py-4">{company.name}</td>
-                  <td className="px-6 py-4">{company.techStack}</td>
-                  <td className="px-6 py-4">{company.websiteUrl || "—"}</td>
-                  <td className="px-6 py-4">{company.githubUrl || "—"}</td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`rounded-full px-2 py-1 text-xs font-medium ${
-                        company.status === "active"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {company.status}
-                    </span>
-                  </td>
+                <tr key={company._id.toString()} className="border-t hover:bg-muted/30">
+                  <td className="px-6 py-4">{company.title}</td>
+                  <td className="px-6 py-4">{company.techStack.join(", ") || "-"}</td>
+                  <td className="px-6 py-4">{company.liveUrl || "-"}</td>
+                  <td className="px-6 py-4">{company.githubUrl || "-"}</td>
+                  <td className="px-6 py-4">{company.order ?? "-"}</td>
                   <td className="px-6 py-4 text-right space-x-4">
                     <button className="text-sm font-medium text-primary hover:underline">
                       Edit

@@ -2,13 +2,18 @@ import { ObjectId } from "mongodb"
 
 export type Company = {
   _id?: ObjectId
-  name: string
+  title: string
   slug: string
-  description: string
-  website?: string
+  tagline: string
+  longDescription: string
+  gallery: string[]
+  techStack: string[]
+  liveUrl?: string
+  githubUrl?: string
+  order?: number
   createdAt: Date
   updatedAt: Date
-  softDeleted: boolean
 }
 
-export type CompanyInput = Omit<Company, "_id" | "createdAt" | "updatedAt" | "softDeleted">
+export type CompanyInput = Omit<Company, "_id" | "createdAt" | "updatedAt">
+export type CompanyUpdateInput = Partial<CompanyInput>

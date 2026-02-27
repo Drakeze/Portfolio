@@ -26,11 +26,13 @@ function GetInTouchCard() {
   const [message, setMessage] = React.useState("")
   const [loading, setLoading] = React.useState(false)
   const [success, setSuccess] = React.useState(false)
+  const [submitError, setSubmitError] = React.useState<string | null>(null)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
     setSuccess(false)
+    setSubmitError(null)
 
     try {
       const res = await fetch("/api/contact", {
@@ -47,8 +49,8 @@ function GetInTouchCard() {
       setName("")
       setEmail("")
       setMessage("")
-    } catch (err) {
-      console.error(err)
+    } catch {
+      setSubmitError("Failed to send message. Please try again.")
     } finally {
       setLoading(false)
     }
@@ -97,6 +99,9 @@ function GetInTouchCard() {
 
           {success && (
             <p className="text-sm text-green-500">Message sent successfully.</p>
+          )}
+          {submitError && (
+            <p className="text-sm text-red-500">{submitError}</p>
           )}
         </form>
 

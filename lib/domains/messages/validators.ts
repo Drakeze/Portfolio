@@ -3,13 +3,11 @@ import { z } from "zod"
 export const messageInputSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
-  subject: z.string().min(1),
-  body: z.string().min(1),
-  isNew: z.boolean().optional(),
+  message: z.string().min(1),
+  read: z.boolean().optional(),
 })
 
-export const messageUpdateSchema = z
-  .object({
-    isNew: z.boolean().optional(),
-  })
-  .refine((value) => Object.keys(value).length > 0, "At least one field is required")
+export const messageUpdateSchema = messageInputSchema.partial().refine(
+  (value) => Object.keys(value).length > 0,
+  "At least one field is required"
+)

@@ -1,19 +1,10 @@
 import { listProjects } from "@/lib/domains/projects/service"
-type Project = {
-  _id: string
-  name: string
-  techStack: string
-  websiteUrl?: string
-  githubUrl?: string
-  status: "active" | "archived"
-}
 
 export default async function AdminProjectsPage() {
   const projects = await listProjects()
 
   return (
     <main className="space-y-10">
-      {/* Header */}
       <section className="space-y-2">
         <h1 className="text-3xl font-semibold tracking-tight">
           Projects
@@ -23,7 +14,6 @@ export default async function AdminProjectsPage() {
         </p>
       </section>
 
-      {/* Create New Project */}
       <section className="rounded-lg border bg-background p-6">
         <h2 className="mb-6 text-sm font-medium">
           Create New Project
@@ -107,7 +97,6 @@ export default async function AdminProjectsPage() {
         </div>
       </section>
 
-      {/* Existing Projects */}
       <section className="rounded-lg border bg-background">
         <div className="border-b p-6">
           <h2 className="text-sm font-medium">Existing Projects</h2>
@@ -126,36 +115,40 @@ export default async function AdminProjectsPage() {
               </tr>
             </thead>
             <tbody>
-              {projects.map((project) => (
-                <tr key={project._id} className="border-t hover:bg-muted/30">
-                  <td className="px-6 py-4">{project.name}</td>
-                  <td className="px-6 py-4">{project.techStack}</td>
-                  <td className="px-6 py-4">{project.websiteUrl || "—"}</td>
-                  <td className="px-6 py-4">{project.githubUrl || "—"}</td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`rounded-full px-2 py-1 text-xs font-medium ${
-                        project.status === "active"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {project.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right space-x-4">
-                    <button className="text-sm font-medium text-primary hover:underline">
-                      Edit
-                    </button>
-                    <button className="text-sm font-medium text-yellow-600 hover:underline">
-                      Archive
-                    </button>
-                    <button className="text-sm font-medium text-red-600 hover:underline">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {projects.map((project) => {
+                const status = project.featured ? "featured" : "standard"
+
+                return (
+                  <tr key={project._id.toString()} className="border-t hover:bg-muted/30">
+                    <td className="px-6 py-4">{project.title}</td>
+                    <td className="px-6 py-4">{project.techStack.join(", ") || "-"}</td>
+                    <td className="px-6 py-4">{project.liveUrl || "-"}</td>
+                    <td className="px-6 py-4">{project.githubUrl || "-"}</td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`rounded-full px-2 py-1 text-xs font-medium ${
+                          project.featured
+                            ? "bg-green-100 text-green-700"
+                            : "bg-yellow-100 text-yellow-700"
+                        }`}
+                      >
+                        {status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right space-x-4">
+                      <button className="text-sm font-medium text-primary hover:underline">
+                        Edit
+                      </button>
+                      <button className="text-sm font-medium text-yellow-600 hover:underline">
+                        Archive
+                      </button>
+                      <button className="text-sm font-medium text-red-600 hover:underline">
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>

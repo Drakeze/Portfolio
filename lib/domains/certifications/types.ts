@@ -2,13 +2,13 @@ import { ObjectId } from "mongodb"
 
 export type Certification = {
   _id?: ObjectId
-  name: string
+  title: string
   issuer: string
-  issuedAt: string
+  dateIssued: Date
   credentialUrl?: string
-  createdAt: Date
-  updatedAt: Date
-  softDeleted: boolean
+  image?: string
+  order?: number
 }
 
-export type CertificationInput = Omit<Certification, "_id" | "createdAt" | "updatedAt" | "softDeleted">
+export type CertificationInput = Omit<Certification, "_id">
+export type CertificationUpdateInput = Partial<CertificationInput>

@@ -2,9 +2,9 @@ import { ObjectId } from "mongodb"
 
 import { getDb } from "@/lib/mongodb"
 
-import { type Certification, type CertificationInput } from "./types"
+import { type Certification, type CertificationInput, type CertificationUpdateInput } from "./types"
 
-const COLLECTION = "admin_certifications"
+const COLLECTION = "certifications"
 
 function certificationsCollection() {
   return getDb().then((db) => db.collection<Certification>(COLLECTION))
@@ -12,36 +12,31 @@ function certificationsCollection() {
 
 export async function listCertifications() {
   const collection = await certificationsCollection()
-  return collection.find({ softDeleted: false }).sort({ createdAt: -1 }).toArray()
+  return collection.find({}).sort({ order: 1, dateIssued: -1 }).toArray()
 }
 
 export async function getCertificationById(id: string) {
   const collection = await certificationsCollection()
-  return collection.findOne({ _id: new ObjectId(id), softDeleted: false })
+  return collection.findOne({ _id: new ObjectId(id) })
 }
 
 export async function createCertification(input: CertificationInput) {
   const collection = await certificationsCollection()
-  const now = new Date()
-  const doc = { ...input, createdAt: now, updatedAt: now, softDeleted: false }
+  const doc = { ...input }
   const result = await collection.insertOne(doc as Omit<Certification, "_id">)
   return { _id: result.insertedId, ...doc }
 }
 
-export async function updateCertification(id: string, input: Partial<CertificationInput>) {
+export async function updateCertification(id: string, input: CertificationUpdateInput) {
   const collection = await certificationsCollection()
   return collection.findOneAndUpdate(
-    { _id: new ObjectId(id), softDeleted: false },
-    { $set: { ...input, updatedAt: new Date() } },
+    { _id: new ObjectId(id) },
+    { $set: input },
     { returnDocument: "after" }
   )
 }
 
-export async function softDeleteCertification(id: string) {
+export async function deleteCertification(id: string) {
   const collection = await certificationsCollection()
-  return collection.findOneAndUpdate(
-    { _id: new ObjectId(id), softDeleted: false },
-    { $set: { softDeleted: true, updatedAt: new Date() } },
-    { returnDocument: "after" }
-  )
+  return collection.findOneAndDelete({ _id: new ObjectId(id) })
 }

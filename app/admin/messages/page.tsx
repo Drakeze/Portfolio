@@ -5,7 +5,6 @@ export default async function AdminMessagesPage() {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
       <section className="space-y-2">
         <h1 className="text-3xl font-semibold tracking-tight">
           Messages
@@ -15,7 +14,6 @@ export default async function AdminMessagesPage() {
         </p>
       </section>
 
-      {/* Messages Table */}
       <section className="rounded-lg border bg-background">
         <div className="border-b p-6">
           <h2 className="text-sm font-medium">Inbox</h2>
@@ -28,14 +26,14 @@ export default async function AdminMessagesPage() {
                 <th className="px-6 py-3">Read</th>
                 <th className="px-6 py-3">Name</th>
                 <th className="px-6 py-3">Email</th>
-                <th className="px-6 py-3">Subject</th>
+                <th className="px-6 py-3">Message</th>
                 <th className="px-6 py-3">Date</th>
               </tr>
             </thead>
             <tbody>
               {messages.map((msg) => (
                 <tr
-                  key={msg._id}
+                  key={msg._id.toString()}
                   className={`border-t hover:bg-muted/30 ${
                     msg.read ? "opacity-60" : ""
                   }`}
@@ -57,8 +55,8 @@ export default async function AdminMessagesPage() {
                   <td className="px-6 py-4">
                     {msg.email}
                   </td>
-                  <td className="px-6 py-4">
-                    {msg.subject}
+                  <td className="px-6 py-4 max-w-xs truncate">
+                    {msg.message}
                   </td>
                   <td className="px-6 py-4">
                     {new Date(msg.createdAt).toLocaleDateString()}

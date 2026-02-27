@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb"
 import { ZodError } from "zod"
 
 import { errorResponse, successResponse } from "@/lib/api/responses"
-import { getCertificationById, softDeleteCertification, updateCertification } from "@/lib/domains/certifications/service"
+import { deleteCertification, getCertificationById, updateCertification } from "@/lib/domains/certifications/service"
 import { certificationUpdateSchema } from "@/lib/domains/certifications/validators"
 
 type RouteContext = { params: Promise<{ id: string }> }
@@ -37,7 +37,7 @@ export async function DELETE(_: Request, context: RouteContext) {
   const { id } = await context.params
   if (!ObjectId.isValid(id)) return errorResponse("Invalid certification id")
 
-  const data = await softDeleteCertification(id)
+  const data = await deleteCertification(id)
   if (!data) return errorResponse("Certification not found", 404)
 
   return successResponse(data)

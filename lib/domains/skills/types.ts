@@ -4,10 +4,10 @@ export type Skill = {
   _id?: ObjectId
   name: string
   category: string
-  level: string
-  createdAt: Date
-  updatedAt: Date
-  softDeleted: boolean
+  level?: number
+  icon?: string
+  order?: number
 }
 
-export type SkillInput = Omit<Skill, "_id" | "createdAt" | "updatedAt" | "softDeleted">
+export type SkillInput = Omit<Skill, "_id">
+export type SkillUpdateInput = Partial<SkillInput>

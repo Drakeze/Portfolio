@@ -9,36 +9,55 @@ type RouteContext = { params: Promise<{ id: string }> }
 
 export async function GET(_: Request, context: RouteContext) {
   const { id } = await context.params
-  if (!ObjectId.isValid(id)) return errorResponse("Invalid skill id")
 
-  const data = await getSkillById(id)
-  if (!data) return errorResponse("Skill not found", 404)
+  if (!ObjectId.isValid(id)) {
+    return errorResponse("Invalid skill id")
+  }
 
-  return successResponse(data)
+  const skill = await getSkillById(id)
+  if (!skill) {
+    return errorResponse("Skill not found", 404)
+  }
+
+  return successResponse(skill)
 }
 
 export async function PATCH(request: Request, context: RouteContext) {
   try {
     const { id } = await context.params
-    if (!ObjectId.isValid(id)) return errorResponse("Invalid skill id")
+
+    if (!ObjectId.isValid(id)) {
+      return errorResponse("Invalid skill id")
+    }
 
     const input = skillUpdateSchema.parse(await request.json())
-    const data = await updateSkill(id, input)
-    if (!data) return errorResponse("Skill not found", 404)
+    const skill = await updateSkill(id, input)
 
-    return successResponse(data)
+    if (!skill) {
+      return errorResponse("Skill not found", 404)
+    }
+
+    return successResponse(skill)
   } catch (error) {
-    if (error instanceof ZodError) return errorResponse(error.issues[0]?.message ?? "Invalid skill payload")
+    if (error instanceof ZodError) {
+      return errorResponse(error.issues[0]?.message ?? "Invalid skill payload")
+    }
+
     return errorResponse("Failed to update skill", 500)
   }
 }
 
 export async function DELETE(_: Request, context: RouteContext) {
   const { id } = await context.params
-  if (!ObjectId.isValid(id)) return errorResponse("Invalid skill id")
 
-  const data = await deleteSkill(id)
-  if (!data) return errorResponse("Skill not found", 404)
+  if (!ObjectId.isValid(id)) {
+    return errorResponse("Invalid skill id")
+  }
 
-  return successResponse(data)
+  const skill = await deleteSkill(id)
+  if (!skill) {
+    return errorResponse("Skill not found", 404)
+  }
+
+  return successResponse(skill)
 }

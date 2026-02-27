@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb"
 import { ZodError } from "zod"
 
 import { errorResponse, successResponse } from "@/lib/api/responses"
-import { getMessageById, softDeleteMessage, updateMessage } from "@/lib/domains/messages/service"
+import { deleteMessage, getMessageById, updateMessage } from "@/lib/domains/messages/service"
 import { messageUpdateSchema } from "@/lib/domains/messages/validators"
 
 type RouteContext = { params: Promise<{ id: string }> }
@@ -37,7 +37,7 @@ export async function DELETE(_: Request, context: RouteContext) {
   const { id } = await context.params
   if (!ObjectId.isValid(id)) return errorResponse("Invalid message id")
 
-  const data = await softDeleteMessage(id)
+  const data = await deleteMessage(id)
   if (!data) return errorResponse("Message not found", 404)
 
   return successResponse(data)

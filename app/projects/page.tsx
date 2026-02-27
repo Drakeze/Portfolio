@@ -1,15 +1,28 @@
 import type { Metadata } from "next"
 
 import { ProjectCard } from "@/components/sections/project-card"
+import { listProjects } from "@/lib/domains/projects/service"
 import { siteConfig } from "@/lib/seo"
-import { projects } from "@/lib/types/projects"
+import type { Project } from "@/lib/types/projects"
 
 export const metadata: Metadata = {
   title: `My Work - ${siteConfig.name}`,
   description: "A section of my work showcasing a range of technologies and stacks of things I have built.",
 }
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projectDocs = await listProjects()
+  const projects: Project[] = projectDocs.map((project) => ({
+    _id: project._id?.toString(),
+    title: project.title,
+    slug: project.slug,
+    description: project.description,
+    image: project.image,
+    tags: project.techStack,
+    liveUrl: project.liveUrl,
+    githubUrl: project.githubUrl,
+  }))
+
   return (
     <main className="min-h-screen py-24 px-6 bg-muted/30">
       <div className="container mx-auto max-w-6xl">
@@ -22,7 +35,7 @@ export default function ProjectsPage() {
 
         <div className="grid md:grid-cols-2 gap-6">
           {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} variant="detailed" />
+            <ProjectCard key={project._id ?? project.slug ?? project.title} project={project} variant="detailed" />
           ))}
         </div>
       </div>

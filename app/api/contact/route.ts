@@ -1,40 +1,62 @@
-import { NextResponse } from "next/server"
 import { Resend } from "resend"
+import { ZodError, z } from "zod"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { errorResponse, successResponse } from "@/lib/api/responses"
+import { createMessage } from "@/lib/domains/messages/service"
+
+const resendApiKey = process.env.RESEND_API_KEY
+const resend = resendApiKey ? new Resend(resendApiKey) : null
+
+const contactSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  message: z.string().min(1),
+})
+
+function getRecipientEmail() {
+  return process.env.CONTACT_TO_EMAIL ?? process.env.CONTACT_EMAIL ?? process.env.RESEND_TO_EMAIL
+}
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json()
-    const { name, email, message } = body
+    const { name, email, message } = contactSchema.parse(await req.json())
+    const to = getRecipientEmail()
 
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      )
+    if (!resend || !to) {
+      return errorResponse("Contact email is not configured", 500)
     }
 
-    const data = await resend.emails.send({
-      from: "Portfolio <onboarding@resend.dev>", // Replace with verified domain later
-      to: "your@email.com",
+    const emailResult = await resend.emails.send({
+      from: process.env.CONTACT_FROM_EMAIL ?? "Portfolio <onboarding@resend.dev>",
+      to,
       subject: `New Portfolio Contact from ${name}`,
       replyTo: email,
-      html: `
-        <h2>New Contact Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-      `,
+      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
     })
 
-    return NextResponse.json({ success: true, data })
-  } catch (error) {
-    console.error("Resend Error:", error)
-    return NextResponse.json(
-      { error: "Failed to send email" },
-      { status: 500 }
+    if (emailResult.error) {
+      return errorResponse("Failed to send email", 502)
+    }
+
+    const savedMessage = await createMessage({
+      name,
+      email,
+      message,
+      read: false,
+    })
+
+    return successResponse(
+      {
+        messageId: savedMessage._id,
+        emailId: emailResult.data?.id ?? null,
+      },
+      201
     )
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return errorResponse(error.issues[0]?.message ?? "Invalid contact payload")
+    }
+
+    return errorResponse("Failed to process contact request", 500)
   }
 }

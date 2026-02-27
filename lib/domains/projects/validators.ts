@@ -2,11 +2,14 @@ import { z } from "zod"
 
 export const projectInputSchema = z.object({
   title: z.string().min(1),
+  slug: z.string().min(1),
   description: z.string().min(1),
+  techStack: z.array(z.string().min(1)).default([]),
   image: z.string().min(1),
-  tags: z.array(z.string()).default([]),
   liveUrl: z.string().url().optional(),
   githubUrl: z.string().url().optional(),
+  featured: z.boolean().optional(),
+  order: z.number().int().optional(),
 })
 
 export const projectUpdateSchema = projectInputSchema.partial().refine(

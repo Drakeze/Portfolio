@@ -3,14 +3,17 @@ import { ObjectId } from "mongodb"
 export type Project = {
   _id?: ObjectId
   title: string
+  slug: string
   description: string
+  techStack: string[]
   image: string
-  tags: string[]
   liveUrl?: string
   githubUrl?: string
+  featured?: boolean
+  order?: number
   createdAt: Date
   updatedAt: Date
-  softDeleted: boolean
 }
 
-export type ProjectInput = Omit<Project, "_id" | "createdAt" | "updatedAt" | "softDeleted">
+export type ProjectInput = Omit<Project, "_id" | "createdAt" | "updatedAt">
+export type ProjectUpdateInput = Partial<ProjectInput>

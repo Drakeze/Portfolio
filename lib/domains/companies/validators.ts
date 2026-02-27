@@ -1,10 +1,15 @@
 import { z } from "zod"
 
 export const companyInputSchema = z.object({
-  name: z.string().min(1),
+  title: z.string().min(1),
   slug: z.string().min(1),
-  description: z.string().min(1),
-  website: z.string().url().optional(),
+  tagline: z.string().min(1),
+  longDescription: z.string().min(1),
+  gallery: z.array(z.string().min(1)).default([]),
+  techStack: z.array(z.string().min(1)).default([]),
+  liveUrl: z.string().url().optional(),
+  githubUrl: z.string().url().optional(),
+  order: z.number().int().optional(),
 })
 
 export const companyUpdateSchema = companyInputSchema.partial().refine(
