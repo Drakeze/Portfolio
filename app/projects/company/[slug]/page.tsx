@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation"
-import { companies } from "@/lib/companies"
 import { CompanyGallery } from "@/components/company/company-gallery"
 import { Button } from "@/components/ui/button"
+import { companies } from "@/lib/types/companies"
+import { notFound } from "next/navigation"
 
 type CompanyPageProps = {
   params: {

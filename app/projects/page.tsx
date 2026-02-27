@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 
 import { ProjectCard } from "@/components/sections/project-card"
-import { projects } from "@/lib/projects"
 import { siteConfig } from "@/lib/seo"
+import { projects } from "@/lib/types/projects"
 
 export const metadata: Metadata = {
   title: `My Work - ${siteConfig.name}`,

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 
 export function CompanyGallery({ images }: { images: string[] }) {
   const [index, setIndex] = useState(0)
@@ -12,15 +13,28 @@ export function CompanyGallery({ images }: { images: string[] }) {
 
   return (
     <div className="space-y-4">
-      <img
-        src={images[index]}
-        alt=""
-        className="rounded-lg border"
-      />
+      <div className="relative w-full h-[400px] rounded-lg overflow-hidden border">
+        <Image
+          src={images[index]}
+          alt={`Gallery image ${index + 1}`}
+          fill
+          className="object-cover"
+        />
+      </div>
 
       <div className="flex justify-center gap-4">
-        <button onClick={prev}>Prev</button>
-        <button onClick={next}>Next</button>
+        <button
+          onClick={prev}
+          className="px-4 py-2 border rounded-md hover:bg-muted transition"
+        >
+          Prev
+        </button>
+        <button
+          onClick={next}
+          className="px-4 py-2 border rounded-md hover:bg-muted transition"
+        >
+          Next
+        </button>
       </div>
     </div>
   )
