@@ -1,6 +1,37 @@
-import { listMessages } from "@/lib/domains/messages/service"
+import Link from "next/link"
+import { revalidatePath } from "next/cache"
+
+import { deleteMessage, listMessages, updateMessage } from "@/lib/domains/messages/service"
 
 export const dynamic = "force-dynamic"
+
+async function toggleMessageReadAction(formData: FormData) {
+  "use server"
+
+  const id = String(formData.get("id") ?? "")
+  const readValue = String(formData.get("read") ?? "")
+
+  if (!id || (readValue !== "true" && readValue !== "false")) {
+    return
+  }
+
+  await updateMessage(id, { read: readValue === "true" })
+
+  revalidatePath("/admin/messages")
+}
+
+async function deleteMessageAction(formData: FormData) {
+  "use server"
+
+  const id = String(formData.get("id") ?? "")
+  if (!id) {
+    return
+  }
+
+  await deleteMessage(id)
+
+  revalidatePath("/admin/messages")
+}
 
 export default async function AdminMessagesPage() {
   const messages = await listMessages()
@@ -30,6 +61,7 @@ export default async function AdminMessagesPage() {
                 <th className="px-6 py-3">Email</th>
                 <th className="px-6 py-3">Message</th>
                 <th className="px-6 py-3">Date</th>
+                <th className="px-6 py-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -62,6 +94,28 @@ export default async function AdminMessagesPage() {
                   </td>
                   <td className="px-6 py-4">
                     {new Date(msg.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center justify-end gap-4">
+                      <Link href={`/admin/messages/${msg._id.toString()}/edit`} className="text-sm font-medium text-primary hover:underline">
+                        View
+                      </Link>
+
+                      <form action={toggleMessageReadAction}>
+                        <input type="hidden" name="id" value={msg._id.toString()} />
+                        <input type="hidden" name="read" value={msg.read ? "false" : "true"} />
+                        <button className="text-sm font-medium text-yellow-600 hover:underline" type="submit">
+                          {msg.read ? "Mark Unread" : "Mark Read"}
+                        </button>
+                      </form>
+
+                      <form action={deleteMessageAction}>
+                        <input type="hidden" name="id" value={msg._id.toString()} />
+                        <button className="text-sm font-medium text-red-600 hover:underline" type="submit">
+                          Delete
+                        </button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               ))}
