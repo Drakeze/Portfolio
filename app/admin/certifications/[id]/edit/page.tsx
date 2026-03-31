@@ -2,6 +2,7 @@ import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 
+import { SubmitButton } from "@/components/admin/form-actions"
 import { getCertificationById, updateCertification } from "@/lib/domains/certifications/service"
 
 export const dynamic = "force-dynamic"
@@ -92,9 +93,7 @@ export default async function EditCertificationPage({ params }: EditCertificatio
             <Link href="/admin/certifications" className="rounded-md border px-4 py-2 text-sm hover:bg-muted/40">
               Cancel
             </Link>
-            <button className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90" type="submit">
-              Save Changes
-            </button>
+            <SubmitButton label="Save Changes" pendingLabel="Saving..." className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-60" />
           </div>
         </form>
       </section>

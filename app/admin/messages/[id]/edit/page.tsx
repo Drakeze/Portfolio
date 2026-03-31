@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache"
 import { ObjectId } from "mongodb"
 import { notFound, redirect } from "next/navigation"
 
+import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
 import { deleteMessage, getMessageById, updateMessage } from "@/lib/domains/messages/service"
 
 export const dynamic = "force-dynamic"
@@ -95,15 +96,11 @@ export default async function EditMessagePage({ params }: EditMessagePageProps) 
 
           <form action={toggleReadAction}>
             <input type="hidden" name="read" value={message.read ? "false" : "true"} />
-            <button className="rounded-md border border-yellow-500 px-4 py-2 text-sm text-yellow-700 hover:bg-yellow-50" type="submit">
-              {message.read ? "Mark Unread" : "Mark Read"}
-            </button>
+            <SubmitButton label={message.read ? "Mark Unread" : "Mark Read"} pendingLabel="Updating..." className="rounded-md border border-yellow-500 px-4 py-2 text-sm text-yellow-700 hover:bg-yellow-50 disabled:opacity-60" />
           </form>
 
           <form action={deleteMessageAction}>
-            <button className="rounded-md border border-red-600 px-4 py-2 text-sm text-red-700 hover:bg-red-50" type="submit">
-              Delete
-            </button>
+            <ConfirmSubmitButton label="Delete" pendingLabel="Deleting..." confirmMessage="Delete this message? This cannot be undone." className="rounded-md border border-red-600 px-4 py-2 text-sm text-red-700 hover:bg-red-50 disabled:opacity-60" />
           </form>
         </div>
       </section>

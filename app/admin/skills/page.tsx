@@ -1,6 +1,9 @@
 import Link from "next/link"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 
+import { FeedbackBanner } from "@/components/admin/feedback-banner"
+import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
 import { createSkill, deleteSkill, listSkills, updateSkill } from "@/lib/domains/skills/service"
 import type { SkillStatus } from "@/lib/domains/skills/types"
 
@@ -13,7 +16,7 @@ async function createSkillAction(formData: FormData) {
   const statusValue = String(formData.get("status") ?? "active") as SkillStatus
 
   if (!name) {
-    return
+    redirect("/admin/skills?status=error&message=Skill+name+is+required")
   }
 
   const status: SkillStatus =
@@ -23,6 +26,7 @@ async function createSkillAction(formData: FormData) {
 
   revalidatePath("/admin/skills")
   revalidatePath("/about")
+  redirect("/admin/skills?status=success&message=Skill+created")
 }
 
 async function archiveSkillAction(formData: FormData) {
@@ -30,13 +34,14 @@ async function archiveSkillAction(formData: FormData) {
 
   const id = String(formData.get("id") ?? "")
   if (!id) {
-    return
+    redirect("/admin/skills?status=error&message=Missing+skill+id")
   }
 
   await updateSkill(id, { status: "archived" })
 
   revalidatePath("/admin/skills")
   revalidatePath("/about")
+  redirect("/admin/skills?status=success&message=Skill+archived")
 }
 
 async function deleteSkillAction(formData: FormData) {
@@ -44,13 +49,14 @@ async function deleteSkillAction(formData: FormData) {
 
   const id = String(formData.get("id") ?? "")
   if (!id) {
-    return
+    redirect("/admin/skills?status=error&message=Missing+skill+id")
   }
 
   await deleteSkill(id)
 
   revalidatePath("/admin/skills")
   revalidatePath("/about")
+  redirect("/admin/skills?status=success&message=Skill+deleted")
 }
 
 function getStatusStyles(status: SkillStatus) {
@@ -65,8 +71,13 @@ function getStatusStyles(status: SkillStatus) {
   return "bg-yellow-100 text-yellow-700"
 }
 
-export default async function AdminSkillsPage() {
+export default async function AdminSkillsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ status?: string; message?: string }>
+}) {
   const skills = await listSkills()
+  const { status, message } = await searchParams
 
   return (
     <main className="space-y-10">
@@ -74,6 +85,8 @@ export default async function AdminSkillsPage() {
         <h1 className="text-3xl font-semibold tracking-tight">Skills</h1>
         <p className="text-sm text-muted-foreground">Create new skills or manage existing ones.</p>
       </section>
+
+      {status && message ? <FeedbackBanner type={status === "success" ? "success" : "error"} message={decodeURIComponent(message)} /> : null}
 
       <section className="rounded-lg border bg-background p-6">
         <h2 className="mb-6 text-sm font-medium">Create New Skill</h2>
@@ -110,9 +123,7 @@ export default async function AdminSkillsPage() {
           </div>
 
           <div className="flex items-end">
-            <button className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90" type="submit">
-              Save Skill
-            </button>
+            <SubmitButton label="Save Skill" pendingLabel="Saving..." className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-60" />
           </div>
         </form>
       </section>
@@ -154,17 +165,13 @@ export default async function AdminSkillsPage() {
                         {status !== "archived" ? (
                           <form action={archiveSkillAction}>
                             <input type="hidden" name="id" value={skill._id.toString()} />
-                            <button className="text-sm font-medium text-yellow-600 hover:underline" type="submit">
-                              Archive
-                            </button>
+                            <SubmitButton label="Archive" pendingLabel="Archiving..." className="text-sm font-medium text-yellow-600 hover:underline disabled:opacity-60" />
                           </form>
                         ) : null}
 
                         <form action={deleteSkillAction}>
                           <input type="hidden" name="id" value={skill._id.toString()} />
-                          <button className="text-sm font-medium text-red-600 hover:underline" type="submit">
-                            Delete
-                          </button>
+                          <ConfirmSubmitButton label="Delete" pendingLabel="Deleting..." confirmMessage="Delete this skill? This cannot be undone." className="text-sm font-medium text-red-600 hover:underline disabled:opacity-60" />
                         </form>
                       </div>
                     </td>
