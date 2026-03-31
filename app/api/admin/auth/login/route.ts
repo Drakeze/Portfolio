@@ -1,25 +1,19 @@
-import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
+
+import { getAdminPassword, setAdminSessionCookie } from "@/lib/auth/admin"
 
 export async function POST(req: Request) {
   try {
-    const { password } = await req.json()
-    const adminPassword = process.env.ADMIN_PASSWORD
+    const { password } = (await req.json()) as { password?: string }
 
-    if (!adminPassword || password !== adminPassword) {
+    if (!password || password !== getAdminPassword()) {
       return NextResponse.json({ success: false, error: "Invalid password" }, { status: 401 })
     }
 
-    const cookieStore = await cookies()
-    cookieStore.set("admin-auth", "true", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24, // 24 hours
-      path: "/",
-    })
+    await setAdminSessionCookie()
 
     return NextResponse.json({ success: true, data: null })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
   }
 }

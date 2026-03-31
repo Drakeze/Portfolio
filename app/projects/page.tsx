@@ -36,9 +36,15 @@ export default async function ProjectsPage() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {projects.map((project) => (
-            <ProjectCard key={project._id ?? project.slug ?? project.title} project={project} variant="detailed" />
-          ))}
+          {projects.length === 0 ? (
+            <div className="rounded-lg border border-dashed p-10 text-center text-muted-foreground md:col-span-2">
+              No projects published yet.
+            </div>
+          ) : (
+            projects.map((project) => (
+              <ProjectCard key={project._id ?? project.slug ?? project.title} project={project} variant="detailed" />
+            ))
+          )}
         </div>
       </div>
     </main>

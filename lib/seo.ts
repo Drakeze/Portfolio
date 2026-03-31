@@ -1,5 +1,7 @@
 import { URL } from "url"
 
+import { externalLinks } from "@/lib/site-links"
+
 export const siteConfig = {
   name: "Anthony Shead",
   title: "Anthony Shead | Full-Stack Developer",
@@ -7,11 +9,7 @@ export const siteConfig = {
     "Full-stack developer portfolio featuring Anthony Shead's projects, experience, and services across the modern web stack.",
   url: "https://www.anthonyshead.com",
   email: "asheadworking@gmail.com",
-  socials: {
-    github: "https://github.com/Drakeze",
-    githubAlt: "https://github.com/DrakezeWind",
-    linkedin: "https://www.linkedin.com/in/anthonyshead/",
-  },
+  socials: externalLinks.socials,
 }
 
 export function absoluteUrl(path: string) {
