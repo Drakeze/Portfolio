@@ -1,9 +1,14 @@
 import Link from "next/link"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 
+import { FeedbackBanner } from "@/components/admin/feedback-banner"
+import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
 import { deleteMessage, listMessages, updateMessage } from "@/lib/domains/messages/service"
 
 export const dynamic = "force-dynamic"
+
+type PageProps = { searchParams: Promise<{ status?: string; message?: string }> }
 
 async function toggleMessageReadAction(formData: FormData) {
   "use server"
@@ -12,12 +17,16 @@ async function toggleMessageReadAction(formData: FormData) {
   const readValue = String(formData.get("read") ?? "")
 
   if (!id || (readValue !== "true" && readValue !== "false")) {
-    return
+    redirect("/admin/messages?status=error&message=Invalid+message+action")
   }
 
-  await updateMessage(id, { read: readValue === "true" })
-
-  revalidatePath("/admin/messages")
+  try {
+    await updateMessage(id, { read: readValue === "true" })
+    revalidatePath("/admin/messages")
+    redirect("/admin/messages?status=success&message=Message+updated")
+  } catch {
+    redirect("/admin/messages?status=error&message=Failed+to+update+message")
+  }
 }
 
 async function deleteMessageAction(formData: FormData) {
@@ -25,27 +34,30 @@ async function deleteMessageAction(formData: FormData) {
 
   const id = String(formData.get("id") ?? "")
   if (!id) {
-    return
+    redirect("/admin/messages?status=error&message=Missing+message+id")
   }
 
-  await deleteMessage(id)
-
-  revalidatePath("/admin/messages")
+  try {
+    await deleteMessage(id)
+    revalidatePath("/admin/messages")
+    redirect("/admin/messages?status=success&message=Message+deleted")
+  } catch {
+    redirect("/admin/messages?status=error&message=Failed+to+delete+message")
+  }
 }
 
-export default async function AdminMessagesPage() {
+export default async function AdminMessagesPage({ searchParams }: PageProps) {
   const messages = await listMessages()
+  const { status, message } = await searchParams
 
   return (
     <div className="space-y-8">
       <section className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Messages
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          View and manage incoming emails.
-        </p>
+        <h1 className="text-3xl font-semibold tracking-tight">Messages</h1>
+        <p className="text-sm text-muted-foreground">View and manage incoming emails.</p>
       </section>
+
+      {status && message ? <FeedbackBanner type={status === "success" ? "success" : "error"} message={decodeURIComponent(message)} /> : null}
 
       <section className="rounded-lg border bg-background">
         <div className="border-b p-6">
@@ -66,35 +78,16 @@ export default async function AdminMessagesPage() {
             </thead>
             <tbody>
               {messages.map((msg) => (
-                <tr
-                  key={msg._id.toString()}
-                  className={`border-t hover:bg-muted/30 ${
-                    msg.read ? "opacity-60" : ""
-                  }`}
-                >
+                <tr key={msg._id.toString()} className={`border-t hover:bg-muted/30 ${msg.read ? "opacity-60" : ""}`}>
                   <td className="px-6 py-4">
-                    <span
-                      className={`rounded-full px-2 py-1 text-xs font-medium ${
-                        msg.read
-                          ? "bg-gray-100 text-gray-700"
-                          : "bg-blue-100 text-blue-700"
-                      }`}
-                    >
+                    <span className={`rounded-full px-2 py-1 text-xs font-medium ${msg.read ? "bg-gray-100 text-gray-700" : "bg-blue-100 text-blue-700"}`}>
                       {msg.read ? "Read" : "Unread"}
                     </span>
                   </td>
-                  <td className="px-6 py-4 font-medium">
-                    {msg.name}
-                  </td>
-                  <td className="px-6 py-4">
-                    {msg.email}
-                  </td>
-                  <td className="px-6 py-4 max-w-xs truncate">
-                    {msg.message}
-                  </td>
-                  <td className="px-6 py-4">
-                    {new Date(msg.createdAt).toLocaleDateString()}
-                  </td>
+                  <td className="px-6 py-4 font-medium">{msg.name}</td>
+                  <td className="px-6 py-4">{msg.email}</td>
+                  <td className="max-w-xs truncate px-6 py-4">{msg.message}</td>
+                  <td className="px-6 py-4">{new Date(msg.createdAt).toLocaleDateString()}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-4">
                       <Link href={`/admin/messages/${msg._id.toString()}/edit`} className="text-sm font-medium text-primary hover:underline">
@@ -104,21 +97,33 @@ export default async function AdminMessagesPage() {
                       <form action={toggleMessageReadAction}>
                         <input type="hidden" name="id" value={msg._id.toString()} />
                         <input type="hidden" name="read" value={msg.read ? "false" : "true"} />
-                        <button className="text-sm font-medium text-yellow-600 hover:underline" type="submit">
-                          {msg.read ? "Mark Unread" : "Mark Read"}
-                        </button>
+                        <SubmitButton
+                          label={msg.read ? "Mark Unread" : "Mark Read"}
+                          pendingLabel="Updating..."
+                          className="text-sm font-medium text-yellow-600 hover:underline disabled:opacity-60"
+                        />
                       </form>
 
                       <form action={deleteMessageAction}>
                         <input type="hidden" name="id" value={msg._id.toString()} />
-                        <button className="text-sm font-medium text-red-600 hover:underline" type="submit">
-                          Delete
-                        </button>
+                        <ConfirmSubmitButton
+                          label="Delete"
+                          pendingLabel="Deleting..."
+                          confirmMessage="Delete this message? This cannot be undone."
+                          className="text-sm font-medium text-red-600 hover:underline disabled:opacity-60"
+                        />
                       </form>
                     </div>
                   </td>
                 </tr>
               ))}
+              {messages.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-10 text-center text-muted-foreground">
+                    No messages yet.
+                  </td>
+                </tr>
+              ) : null}
             </tbody>
           </table>
         </div>

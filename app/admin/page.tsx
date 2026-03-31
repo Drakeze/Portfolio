@@ -1,52 +1,49 @@
-export default function AdminPage() {
+import Link from "next/link"
+
+import { countCompanies } from "@/lib/domains/companies/service"
+import { listMessages } from "@/lib/domains/messages/service"
+import { countProjects } from "@/lib/domains/projects/service"
+import { listSkills } from "@/lib/domains/skills/service"
+
+export const dynamic = "force-dynamic"
+
+export default async function AdminPage() {
+  const [projects, companies, skills, recentMessages] = await Promise.all([
+    countProjects(),
+    countCompanies(),
+    listSkills(),
+    listMessages(),
+  ])
+
+  const unreadCount = recentMessages.filter((message) => !message.read).length
+
   return (
-    <main className="space-y-10">
-      {/* Header */}
+    <main className="space-y-8">
       <section className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Dashboard
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          Overview of your portfolio system and activity.
-        </p>
+        <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
+        <p className="text-sm text-muted-foreground">Overview of portfolio content and inbound messages.</p>
       </section>
 
-      {/* Metrics */}
-      <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          { label: "Projects", value: 0 },
-          { label: "Companies", value: 0 },
-          { label: "Messages", value: 0 },
-          { label: "New Messages", value: 0 },
+          { label: "Projects", value: projects },
+          { label: "Companies", value: companies },
+          { label: "Skills", value: skills.length },
+          { label: "Unread Messages", value: unreadCount },
         ].map((stat) => (
-          <div
-            key={stat.label}
-            className="rounded-lg border bg-background p-5"
-          >
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">
-              {stat.label}
-            </p>
-            <p className="mt-2 text-3xl font-semibold">
-              {stat.value}
-            </p>
+          <div key={stat.label} className="rounded-lg border bg-card p-5">
+            <p className="text-xs uppercase tracking-wide text-muted-foreground">{stat.label}</p>
+            <p className="mt-2 text-3xl font-semibold">{stat.value}</p>
           </div>
         ))}
       </section>
 
-      {/* Activity Chart Placeholder */}
-      <section className="rounded-lg border bg-background p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-sm font-medium">Activity (Last 30 Days)</h2>
-        </div>
-        <div className="flex h-64 items-center justify-center rounded-md border border-dashed text-sm text-muted-foreground">
-          Chart placeholder
-        </div>
-      </section>
-
-      {/* Recent Messages */}
-      <section className="rounded-lg border bg-background">
-        <div className="border-b p-6">
+      <section className="rounded-lg border bg-card">
+        <div className="flex items-center justify-between border-b p-6">
           <h2 className="text-sm font-medium">Recent Messages</h2>
+          <Link href="/admin/messages" className="text-sm text-primary hover:underline">
+            View all
+          </Link>
         </div>
 
         <div className="overflow-x-auto">
@@ -55,29 +52,40 @@ export default function AdminPage() {
               <tr>
                 <th className="px-6 py-3">Name</th>
                 <th className="px-6 py-3">Email</th>
-                <th className="px-6 py-3">Subject</th>
                 <th className="px-6 py-3">Date</th>
                 <th className="px-6 py-3">Status</th>
                 <th className="px-6 py-3 text-right">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border-t hover:bg-muted/30">
-                <td className="px-6 py-4">John Doe</td>
-                <td className="px-6 py-4">john@email.com</td>
-                <td className="px-6 py-4">Project Inquiry</td>
-                <td className="px-6 py-4">Jan 10, 2026</td>
-                <td className="px-6 py-4">
-                  <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">
-                    Unread
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <button className="text-sm font-medium text-primary hover:underline">
-                    View
-                  </button>
-                </td>
-              </tr>
+              {recentMessages.slice(0, 5).map((message) => (
+                <tr key={message._id.toString()} className="border-t hover:bg-muted/20">
+                  <td className="px-6 py-4">{message.name}</td>
+                  <td className="px-6 py-4">{message.email}</td>
+                  <td className="px-6 py-4">{new Date(message.createdAt).toLocaleDateString()}</td>
+                  <td className="px-6 py-4">
+                    <span
+                      className={`rounded-full px-2 py-1 text-xs font-medium ${
+                        message.read ? "bg-muted text-muted-foreground" : "bg-primary/15 text-primary"
+                      }`}
+                    >
+                      {message.read ? "Read" : "Unread"}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <Link href={`/admin/messages/${message._id.toString()}/edit`} className="text-primary hover:underline">
+                      View
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+              {recentMessages.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="px-6 py-10 text-center text-muted-foreground">
+                    No messages yet.
+                  </td>
+                </tr>
+              ) : null}
             </tbody>
           </table>
         </div>

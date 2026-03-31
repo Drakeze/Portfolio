@@ -1,6 +1,9 @@
 import Link from "next/link"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 
+import { FeedbackBanner } from "@/components/admin/feedback-banner"
+import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
 import {
   createCertification,
   deleteCertification,
@@ -10,6 +13,8 @@ import {
 
 export const dynamic = "force-dynamic"
 
+type PageProps = { searchParams: Promise<{ status?: string; message?: string }> }
+
 async function createCertificationAction(formData: FormData) {
   "use server"
 
@@ -18,7 +23,7 @@ async function createCertificationAction(formData: FormData) {
   const grade = String(formData.get("grade") ?? "").trim()
 
   if (!title) {
-    return
+    redirect("/admin/certifications?status=error&message=Certification+title+is+required")
   }
 
   await createCertification({
@@ -29,6 +34,7 @@ async function createCertificationAction(formData: FormData) {
 
   revalidatePath("/admin/certifications")
   revalidatePath("/about")
+  redirect("/admin/certifications?status=success&message=Certification+created")
 }
 
 async function toggleCertificationAction(formData: FormData) {
@@ -38,13 +44,14 @@ async function toggleCertificationAction(formData: FormData) {
   const completedValue = String(formData.get("completed") ?? "")
 
   if (!id || (completedValue !== "true" && completedValue !== "false")) {
-    return
+    redirect("/admin/certifications?status=error&message=Invalid+certification+action")
   }
 
   await updateCertification(id, { completed: completedValue === "true" })
 
   revalidatePath("/admin/certifications")
   revalidatePath("/about")
+  redirect("/admin/certifications?status=success&message=Certification+updated")
 }
 
 async function deleteCertificationAction(formData: FormData) {
@@ -52,17 +59,19 @@ async function deleteCertificationAction(formData: FormData) {
 
   const id = String(formData.get("id") ?? "")
   if (!id) {
-    return
+    redirect("/admin/certifications?status=error&message=Missing+certification+id")
   }
 
   await deleteCertification(id)
 
   revalidatePath("/admin/certifications")
   revalidatePath("/about")
+  redirect("/admin/certifications?status=success&message=Certification+deleted")
 }
 
-export default async function AdminCertificationsPage() {
+export default async function AdminCertificationsPage({ searchParams }: PageProps) {
   const certifications = await listCertifications()
+  const { status, message } = await searchParams
 
   return (
     <main className="space-y-10">
@@ -70,6 +79,8 @@ export default async function AdminCertificationsPage() {
         <h1 className="text-3xl font-semibold tracking-tight">Certifications</h1>
         <p className="text-sm text-muted-foreground">Create new certifications or manage existing ones.</p>
       </section>
+
+      {status && message ? <FeedbackBanner type={status === "success" ? "success" : "error"} message={decodeURIComponent(message)} /> : null}
 
       <section className="rounded-lg border bg-background p-6">
         <h2 className="mb-6 text-sm font-medium">Create New Certification</h2>
@@ -118,9 +129,7 @@ export default async function AdminCertificationsPage() {
           </div>
 
           <div className="md:col-span-4 flex justify-end">
-            <button className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90" type="submit">
-              Save Certification
-            </button>
+            <SubmitButton label="Save Certification" pendingLabel="Saving..." className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-60" />
           </div>
         </form>
       </section>
@@ -149,9 +158,7 @@ export default async function AdminCertificationsPage() {
                   <td className="px-6 py-4">
                     <span
                       className={`rounded-full px-2 py-1 text-xs font-medium ${
-                        cert.completed === false
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-green-100 text-green-700"
+                        cert.completed === false ? "bg-yellow-100 text-yellow-700" : "bg-green-100 text-green-700"
                       }`}
                     >
                       {cert.completed === false ? "In Progress" : "Completed"}
@@ -171,16 +178,12 @@ export default async function AdminCertificationsPage() {
                           name="completed"
                           value={cert.completed === false ? "true" : "false"}
                         />
-                        <button className="text-sm font-medium text-yellow-600 hover:underline" type="submit">
-                          {cert.completed === false ? "Mark Complete" : "Mark In Progress"}
-                        </button>
+                        <SubmitButton label={cert.completed === false ? "Mark Complete" : "Mark In Progress"} pendingLabel="Updating..." className="text-sm font-medium text-yellow-600 hover:underline disabled:opacity-60" />
                       </form>
 
                       <form action={deleteCertificationAction}>
                         <input type="hidden" name="id" value={cert._id.toString()} />
-                        <button className="text-sm font-medium text-red-600 hover:underline" type="submit">
-                          Delete
-                        </button>
+                        <ConfirmSubmitButton label="Delete" pendingLabel="Deleting..." confirmMessage="Delete this certification? This cannot be undone." className="text-sm font-medium text-red-600 hover:underline disabled:opacity-60" />
                       </form>
                     </div>
                   </td>

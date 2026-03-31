@@ -1,3 +1,111 @@
-export default function CreateProjectPage() {
-  return <h1 className="text-2xl font-semibold">Create project</h1>
+import Link from "next/link"
+import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
+
+import { FeedbackBanner } from "@/components/admin/feedback-banner"
+import { SubmitButton } from "@/components/admin/form-actions"
+import { createProject } from "@/lib/domains/projects/service"
+
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+}
+
+type PageProps = { searchParams: Promise<{ status?: string; message?: string }> }
+
+export default async function CreateProjectPage({ searchParams }: PageProps) {
+  const { status, message } = await searchParams
+
+  async function createProjectAction(formData: FormData) {
+    "use server"
+
+    const title = String(formData.get("title") ?? "").trim()
+    const description = String(formData.get("description") ?? "").trim()
+    const image = String(formData.get("image") ?? "").trim()
+
+    if (!title || !description || !image) {
+      redirect("/admin/projects/create?status=error&message=Title%2C+description+and+image+are+required")
+    }
+
+    try {
+      await createProject({
+        title,
+        slug: slugify(String(formData.get("slug") ?? "").trim() || title),
+        description,
+        image,
+        techStack: String(formData.get("techStack") ?? "")
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean),
+        liveUrl: String(formData.get("liveUrl") ?? "").trim() || undefined,
+        githubUrl: String(formData.get("githubUrl") ?? "").trim() || undefined,
+        featured: String(formData.get("featured") ?? "") === "on",
+      })
+
+      revalidatePath("/admin/projects")
+      revalidatePath("/projects")
+      redirect("/admin/projects?status=success&message=Project+created")
+    } catch {
+      redirect("/admin/projects/create?status=error&message=Failed+to+create+project")
+    }
+  }
+
+  return (
+    <main className="space-y-8">
+      <section className="space-y-2">
+        <h1 className="text-3xl font-semibold tracking-tight">Create Project</h1>
+        <p className="text-sm text-muted-foreground">Add a portfolio project card.</p>
+      </section>
+
+      {status && message ? <FeedbackBanner type={status === "success" ? "success" : "error"} message={decodeURIComponent(message)} /> : null}
+
+      <form action={createProjectAction} className="grid gap-4 rounded-lg border bg-card p-6 md:grid-cols-2">
+        <div className="space-y-2">
+          <label htmlFor="title" className="text-sm">Title</label>
+          <input id="title" name="title" required placeholder="Project title" className="w-full rounded-md border bg-background px-3 py-2" />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="slug" className="text-sm">Slug</label>
+          <input id="slug" name="slug" placeholder="project-slug (optional)" className="w-full rounded-md border bg-background px-3 py-2" />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="image" className="text-sm">Image path</label>
+          <input id="image" name="image" required placeholder="/projects/project-image.svg" className="w-full rounded-md border bg-background px-3 py-2" />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="techStack" className="text-sm">Tech stack (comma separated)</label>
+          <input id="techStack" name="techStack" placeholder="Next.js, TypeScript, MongoDB" className="w-full rounded-md border bg-background px-3 py-2" />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="liveUrl" className="text-sm">Live URL</label>
+          <input id="liveUrl" name="liveUrl" type="url" placeholder="https://example.com" className="w-full rounded-md border bg-background px-3 py-2" />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="githubUrl" className="text-sm">GitHub URL</label>
+          <input id="githubUrl" name="githubUrl" type="url" placeholder="https://github.com/user/repo" className="w-full rounded-md border bg-background px-3 py-2" />
+        </div>
+        <label className="md:col-span-2 flex items-center gap-2 text-sm text-muted-foreground">
+          <input name="featured" type="checkbox" /> Featured project
+        </label>
+        <div className="space-y-2 md:col-span-2">
+          <label htmlFor="description" className="text-sm">Description</label>
+          <textarea id="description" name="description" required rows={5} placeholder="Project description" className="w-full rounded-md border bg-background px-3 py-2" />
+        </div>
+
+        <div className="md:col-span-2 flex justify-end gap-3">
+          <Link href="/admin/projects" className="rounded-md border px-4 py-2 text-sm">
+            Cancel
+          </Link>
+          <SubmitButton
+            label="Save project"
+            pendingLabel="Saving..."
+            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-60"
+          />
+        </div>
+      </form>
+    </main>
+  )
 }
