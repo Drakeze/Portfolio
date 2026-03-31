@@ -43,7 +43,9 @@ export default async function CompanyProjectsPage() {
       </section>
 
       <section className="grid gap-6 md:grid-cols-2">
-        {companies.map((company) => {
+        {companies.length === 0 ? (
+          <Card className="p-8 text-center text-muted-foreground md:col-span-2">No companies published yet.</Card>
+        ) : companies.map((company) => {
           return (
             <Card key={company.slug} className="p-8 space-y-6 rounded-2xl transition hover:shadow-lg hover:-translate-y-1 duration-300">
               <div className="space-y-2">

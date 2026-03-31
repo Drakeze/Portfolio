@@ -2,6 +2,7 @@ import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 
+import { SubmitButton, ConfirmSubmitButton } from "@/components/admin/form-actions"
 import { getSkillById, updateSkill } from "@/lib/domains/skills/service"
 import type { SkillStatus } from "@/lib/domains/skills/types"
 
@@ -84,9 +85,7 @@ export default async function EditSkillPage({ params }: EditSkillPageProps) {
             <Link href="/admin/skills" className="rounded-md border px-4 py-2 text-sm hover:bg-muted/40">
               Cancel
             </Link>
-            <button className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90" type="submit">
-              Save Changes
-            </button>
+            <SubmitButton label="Save Changes" pendingLabel="Saving..." className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-60" />
           </div>
         </form>
       </section>

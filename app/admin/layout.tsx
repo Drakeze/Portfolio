@@ -1,26 +1,12 @@
-import { AdminProviders } from "./providers"
 import { AdminNavbar } from "@/components/admin/navbar"
-import { cookies } from "next/headers"
+import { AdminProviders } from "./providers"
 
-
-
-export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const cookieStore = await cookies()
-  const isAuthenticated = cookieStore.get("admin-auth")?.value === "true"
-
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-muted/30">
-      <div className="mx-auto max-w-6xl px-6 py-10">
-        {isAuthenticated ? (
-          <>
-            <AdminNavbar />
-            <AdminProviders>{children}</AdminProviders>
-          </>
-        ) : (
-          <div className="mx-auto max-w-md">
-            {children}
-          </div>
-        )}
+    <div className="min-h-screen bg-background">
+      <div className="mx-auto max-w-6xl px-6 py-8">
+        <AdminNavbar />
+        <AdminProviders>{children}</AdminProviders>
       </div>
     </div>
   )

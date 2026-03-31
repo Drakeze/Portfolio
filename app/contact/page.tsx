@@ -1,25 +1,68 @@
 "use client"
+
 import * as React from "react"
+import { Building2, Github, Leaf, Linkedin, Mail, Package, Twitter, Wrench } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { siteConfig } from "@/lib/seo"
-import { Github, Linkedin, Mail, Twitter, Building2, Leaf, Home } from "lucide-react"
+import { externalLinks } from "@/lib/site-links"
+
+const connectLinks = [
+  { href: siteConfig.socials.github, label: "GitHub", icon: Github },
+  { href: siteConfig.socials.githubAlt, label: "GitHub (Alt)", icon: Github },
+  { href: siteConfig.socials.linkedin, label: "LinkedIn", icon: Linkedin },
+  { href: siteConfig.socials.twitter, label: "X", icon: Twitter },
+]
+
+const ventureLinks = [
+  {
+    href: externalLinks.ventures.sorenTech,
+    title: "Soren Tech",
+    description: "Custom web products, systems, and software delivery services.",
+    icon: Building2,
+  },
+  {
+    href: externalLinks.ventures.earthPlus,
+    title: "Earth Plus",
+    description: "Technology and community work focused on sustainable outcomes.",
+    icon: Leaf,
+  },
+  {
+    href: externalLinks.ventures.creatorStore,
+    title: "Creator Store",
+    description: "Final destination for templates, toolkits, and digital products.",
+    icon: Package,
+  },
+  {
+    href: externalLinks.ventures.resources,
+    title: "Resources",
+    description: "Curated links, docs, and tools I actively recommend.",
+    icon: Wrench,
+  },
+]
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen py-24 px-6">
-      <div className="container mx-auto max-w-4xl">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Get in Touch</h1>
-        <div className="w-16 h-1 bg-foreground mb-12"></div>
+    <main className="min-h-screen px-6 py-24">
+      <div className="container mx-auto max-w-4xl space-y-8">
+        <header className="space-y-3">
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Get in Touch</h1>
+          <p className="max-w-2xl text-muted-foreground">
+            Reach out for collaborations, consulting, or product opportunities. I usually reply within two business
+            days.
+          </p>
+        </header>
 
-        <div className="space-y-8">
-          <GetInTouchCard />
-          <OthersCard />
-        </div>
+        <GetInTouchCard />
+        <CreatorLinksCard />
       </div>
     </main>
   )
 }
+
 function GetInTouchCard() {
   const [name, setName] = React.useState("")
   const [email, setEmail] = React.useState("")
@@ -37,9 +80,7 @@ function GetInTouchCard() {
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
       })
 
@@ -50,179 +91,80 @@ function GetInTouchCard() {
       setEmail("")
       setMessage("")
     } catch {
-      setSubmitError("Failed to send message. Please try again.")
+      setSubmitError("Message failed to send. Please try again.")
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <Card className="p-8">
-      <div className="space-y-6">
-        <p className="text-lg text-muted-foreground leading-relaxed">
-          I’m always interested in hearing about new projects and opportunities. Whether you have a question or just
-          want to say hi, feel free to reach out.
-        </p>
+    <Card className="space-y-6 p-8">
+      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <Input type="text" placeholder="Your Name" autoFocus value={name} onChange={(e) => setName(e.target.value)} required />
+        <Input
+          type="email"
+          placeholder="Your Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <Textarea
+          placeholder="Tell me about your project"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          required
+          rows={6}
+        />
 
-        <form onSubmit={handleSubmit} className="space-y-4 pt-4">
-          <input
-            type="text"
-            placeholder="Your Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="w-full border rounded-md px-4 py-2 bg-background"
-          />
+        <Button type="submit" disabled={loading}>
+          <Mail className="mr-2 h-4 w-4" />
+          {loading ? "Sending..." : "Send Message"}
+        </Button>
 
-          <input
-            type="email"
-            placeholder="Your Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full border rounded-md px-4 py-2 bg-background"
-          />
+        {success ? <p className="text-sm text-green-500">Message sent successfully.</p> : null}
+        {submitError ? <p className="text-sm text-red-500">{submitError}</p> : null}
+      </form>
 
-          <textarea
-            placeholder="Your Message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            required
-            rows={5}
-            className="w-full border rounded-md px-4 py-2 bg-background"
-          />
-
-          <Button type="submit" size="lg" disabled={loading}>
-            <Mail className="h-5 w-5 mr-2" />
-            {loading ? "Sending..." : "Send Message"}
-          </Button>
-
-          {success && (
-            <p className="text-sm text-green-500">Message sent successfully.</p>
-          )}
-          {submitError && (
-            <p className="text-sm text-red-500">{submitError}</p>
-          )}
-        </form>
-
-        <div className="pt-8 border-t">
-          <h2 className="text-xl font-semibold mb-4">Connect</h2>
-          <div className="flex gap-6">
+      <div className="border-t pt-6">
+        <h2 className="mb-3 text-lg font-semibold">Connect</h2>
+        <div className="flex flex-wrap gap-5">
+          {connectLinks.map((item) => (
             <a
-              href={siteConfig.socials.github}
+              key={item.href}
+              href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground transition-colors hover:text-foreground"
             >
-              <Github className="h-6 w-6" />
-              <span className="sr-only">GitHub</span>
+              <item.icon className="h-5 w-5" />
+              <span className="sr-only">{item.label}</span>
             </a>
-            <a
-              href={siteConfig.socials.githubAlt}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Github className="h-6 w-6" />
-              <span className="sr-only">GitHub</span>
-            </a>
-            <a
-              href={siteConfig.socials.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Linkedin className="h-6 w-6" />
-              <span className="sr-only">LinkedIn</span>
-            </a>
-            <a
-              href="https://x.com/SorenIdeas"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Twitter className="h-6 w-6" />
-              <span className="sr-only">Twitter</span>
-            </a>
-          </div>
+          ))}
         </div>
       </div>
     </Card>
   )
 }
-function OthersCard() {
+
+function CreatorLinksCard() {
   return (
-    <Card className="p-8">
-      <div className="space-y-6">
-        <p className="text-lg text-muted-foreground leading-relaxed">
-          Explore the projects, organizations, and curated resources I build and maintain.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-          <a
-            href="https://soren.tech"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button variant="outline" size="lg" className="w-full justify-start items-start h-auto py-6 gap-4 whitespace-normal text-left">
-              <Building2 className="h-5 w-5 mt-1" />
-              <div className="flex flex-col">
-                <p className="font-medium">Soren Tech</p>
-                <p className="text-sm text-muted-foreground">
-                  Making programming a art form through innovative tools and resources
-                </p>
-              </div>
+    <Card className="space-y-6 p-8">
+      <h2 className="text-xl font-semibold">Projects & Creator Ecosystem</h2>
+      <div className="grid gap-4 md:grid-cols-2">
+        {ventureLinks.map((link) => (
+          <a key={link.title} href={link.href} target="_blank" rel="noopener noreferrer">
+            <Button
+              variant="outline"
+              className="h-auto w-full items-start justify-start gap-4 whitespace-normal py-5 text-left"
+            >
+              <link.icon className="mt-0.5 h-5 w-5 shrink-0" />
+              <span>
+                <span className="block font-medium">{link.title}</span>
+                <span className="text-sm text-muted-foreground">{link.description}</span>
+              </span>
             </Button>
           </a>
-
-          <a
-            href="https://earthplus.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button variant="outline" size="lg" className="w-full justify-start items-start h-auto py-6 gap-4 whitespace-normal text-left">
-              <Leaf className="h-5 w-5 mt-1" />
-              <div className="flex flex-col">
-                <p className="font-medium">Earth Plus</p>
-                <p className="text-sm text-muted-foreground">
-                  Empowering individuals and organizations to take meaningful action toward a more sustainable future through technology, visibility, and community engagement.
-                </p>
-              </div>
-            </Button>
-          </a>
-
-          <a
-            href="https://yourshop.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button variant="outline" size="lg" className="w-full justify-start items-start h-auto py-6 gap-4 whitespace-normal text-left">
-              <Home className="h-5 w-5 mt-1" />
-              <div className="flex flex-col">
-                <p className="font-medium">Shop</p>
-                <p className="text-sm text-muted-foreground">
-                  Products and templates I have worked on and will hopefully help you build your next projects ,Obsidian Vault faster and better
-                </p>
-              </div>
-            </Button>
-          </a>
-
-          <a
-            href="https://linktr.ee/yourresources"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button variant="outline" size="lg" className="w-full justify-start items-start h-auto py-6 gap-4 whitespace-normal text-left">
-              <Mail className="h-5 w-5 mt-1" />
-              <div className="flex flex-col">
-                <p className="font-medium">Resources</p>
-                <p className="text-sm text-muted-foreground">
-                  Helpful tools, guides, and recommendations
-                </p>
-              </div>
-            </Button>
-          </a>
-        </div>
+        ))}
       </div>
     </Card>
   )
