@@ -100,7 +100,7 @@ function GetInTouchCard() {
   return (
     <Card className="space-y-6 p-8">
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <Input type="text" placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} required />
+        <Input type="text" placeholder="Your Name" autoFocus value={name} onChange={(e) => setName(e.target.value)} required />
         <Input
           type="email"
           placeholder="Your Email"

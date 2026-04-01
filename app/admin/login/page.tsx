@@ -39,6 +39,7 @@ export default function AdminLoginPage() {
         <input
           className="w-full rounded-md border bg-background px-3 py-2"
           type="password"
+          autoFocus
           placeholder="Password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}

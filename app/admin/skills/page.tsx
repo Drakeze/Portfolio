@@ -2,6 +2,7 @@ import Link from "next/link"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
+import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
 import { createSkill, deleteSkill, listSkills, updateSkill } from "@/lib/domains/skills/service"
@@ -86,6 +87,7 @@ export default async function AdminSkillsPage({
         <p className="text-sm text-muted-foreground">Create new skills or manage existing ones.</p>
       </section>
 
+      <ActionToast status={status} message={message} />
       {status && message ? <FeedbackBanner type={status === "success" ? "success" : "error"} message={decodeURIComponent(message)} /> : null}
 
       <section className="rounded-lg border bg-background p-6">

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
+import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
 import { deleteMessage, listMessages, updateMessage } from "@/lib/domains/messages/service"
@@ -57,6 +58,7 @@ export default async function AdminMessagesPage({ searchParams }: PageProps) {
         <p className="text-sm text-muted-foreground">View and manage incoming emails.</p>
       </section>
 
+      <ActionToast status={status} message={message} />
       {status && message ? <FeedbackBanner type={status === "success" ? "success" : "error"} message={decodeURIComponent(message)} /> : null}
 
       <section className="rounded-lg border bg-background">
@@ -120,7 +122,7 @@ export default async function AdminMessagesPage({ searchParams }: PageProps) {
               {messages.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-10 text-center text-muted-foreground">
-                    No messages yet.
+                    No messages yet. New contact submissions will appear here once someone reaches out.
                   </td>
                 </tr>
               ) : null}

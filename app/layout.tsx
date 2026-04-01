@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/sonner"
 import { siteConfig } from "@/lib/seo"
 
 import "./globals.css"
@@ -43,6 +44,7 @@ export default function RootLayout({
           <Navigation />
           {children}
           <Footer />
+          <Toaster richColors closeButton />
           <Analytics />
         </ThemeProvider>
       </body>

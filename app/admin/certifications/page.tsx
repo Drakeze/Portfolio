@@ -80,6 +80,7 @@ export default async function AdminCertificationsPage({ searchParams }: PageProp
         <p className="text-sm text-muted-foreground">Create new certifications or manage existing ones.</p>
       </section>
 
+      <ActionToast status={status} message={message} />
       {status && message ? <FeedbackBanner type={status === "success" ? "success" : "error"} message={decodeURIComponent(message)} /> : null}
 
       <section className="rounded-lg border bg-background p-6">
