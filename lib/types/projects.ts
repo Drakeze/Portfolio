@@ -24,7 +24,7 @@ export const projects: Project[] = [
       "A clean and intuitive task management dashboard with real-time collaboration, drag-and-drop functionality, and customizable workflows for enhanced productivity.",
     image: "/projects/productivity-dashboard.svg",
     tags: ["React", "Node.js", "TypeScript", "Tailwind CSS","Bun", "MongoDB", "Prisma", "Vercel"],
-    liveUrl: "https://dashboard-drakeze.vercel.app",
+    liveUrl:"https://dashboard-peach-omega-44.vercel.app/",
     githubUrl: "https://github.com/Drakeze/Dashboard",
   },
   {
