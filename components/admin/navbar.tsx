@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
+import { authClient } from "@/src/lib/auth-client"
 
 export const adminNav = [
   { href: "/admin", label: "Dashboard" },
@@ -19,8 +20,8 @@ export function AdminNavbar() {
   const router = useRouter()
 
   async function handleLogout() {
-    await fetch("/api/admin/auth/logout", { method: "POST" })
-    router.replace("/admin/login")
+    await authClient.signOut()
+    router.replace("/sign-in")
     router.refresh()
   }
 

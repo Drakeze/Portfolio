@@ -1,5 +1,7 @@
-// Shared schema for portfolio data across Next.js apps (MongoDB Atlas)
-// Prisma v6 compatible
+// Prisma setup for this consumer app.
+// The canonical portfolio schema lives in the shared database repository.
+// If typed Prisma model delegates are ever needed here, sync them from the
+// shared source of truth instead of redefining models locally in this repo.
 
 datasource db {
   provider = "mongodb"
@@ -8,65 +10,4 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-}
-
-model Project {
-  id        String        @id @default(auto()) @map("_id") @db.ObjectId
-  slug      String        @unique
-  title     String
-  summary   String
-  heroImage String
-  category  String
-  tags      String[]
-  liveUrl   String?
-  repoUrl   String?
-  status    ProjectStatus @default(ACTIVE)
-
-  metadata ProjectMetadata?
-  stats    ProjectStat[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model ProjectMetadata {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  projectId String @unique @db.ObjectId
-
-  headline   String?
-  techStack  String[]
-  highlight  String?
-  client     String?
-  constraint Constraint?
-
-  project Project @relation(fields: [projectId], references: [id])
-}
-
-model ProjectStat {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  projectId String @db.ObjectId
-
-  metric     StatMetric
-  value      Int
-  recordedAt DateTime   @default(now())
-
-  project Project @relation(fields: [projectId], references: [id])
-}
-
-enum ProjectStatus {
-  ACTIVE
-  ARCHIVED
-  DRAFT
-}
-
-enum StatMetric {
-  VIEW
-  DEPLOY
-  STAR
-}
-
-enum Constraint {
-  PUBLIC
-  NDA
-  INTERNAL
 }

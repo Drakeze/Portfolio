@@ -2,6 +2,9 @@ import Link from "next/link"
 import { revalidatePath } from "next/cache"
 import { notFound, redirect } from "next/navigation"
 
+import { ActionToast } from "@/components/admin/action-toast"
+import { FeedbackBanner } from "@/components/admin/feedback-banner"
+import { SubmitButton } from "@/components/admin/form-actions"
 import { getCompanyById, updateCompany } from "@/lib/domains/companies/service"
 
 function slugify(value: string) {

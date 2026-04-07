@@ -1,22 +1,14 @@
-import { Resend } from "resend"
 import { ZodError, z } from "zod"
 
 import { errorResponse, successResponse } from "@/lib/api/responses"
 import { createMessage } from "@/lib/domains/messages/service"
-import { siteConfig } from "@/lib/seo"
-
-const resendApiKey = process.env.RESEND_API_KEY
-const resend = resendApiKey ? new Resend(resendApiKey) : null
+import { getContactRecipientEmail, getMailFrom, resend } from "@/src/lib/resend"
 
 const contactSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
   message: z.string().min(1),
 })
-
-function getRecipientEmail() {
-  return process.env.CONTACT_TO_EMAIL ?? process.env.CONTACT_EMAIL ?? process.env.RESEND_TO_EMAIL ?? siteConfig.email
-}
 
 export async function POST(req: Request) {
   try {
@@ -28,25 +20,42 @@ export async function POST(req: Request) {
       read: false,
     })
 
-    const to = getRecipientEmail()
-    let emailSent = false
-    let emailId: string | null = null
+    const to = getContactRecipientEmail()
+    let notificationEmailSent = false
+    let notificationEmailId: string | null = null
+    let autoReplySent = false
+    let autoReplyId: string | null = null
     let emailError: string | null = null
 
     if (resend && to) {
-      const emailResult = await resend.emails.send({
-        from: process.env.CONTACT_FROM_EMAIL ?? "Portfolio <onboarding@resend.dev>",
-        to,
-        subject: `New Portfolio Contact from ${name}`,
-        replyTo: email,
-        text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-      })
+      const [notificationResult, autoReplyResult] = await Promise.all([
+        resend.emails.send({
+          from: getMailFrom(),
+          to,
+          subject: `New Portfolio Contact from ${name}`,
+          replyTo: email,
+          text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+        }),
+        resend.emails.send({
+          from: getMailFrom(),
+          to: email,
+          subject: "Thanks for reaching out",
+          text: `Hi ${name},\n\nThanks for your message. I have received it and will get back to you soon.\n\nYour message:\n${message}\n`,
+        }),
+      ])
 
-      if (emailResult.error) {
-        emailError = emailResult.error.message
+      if (notificationResult.error) {
+        emailError = notificationResult.error.message
       } else {
-        emailSent = true
-        emailId = emailResult.data?.id ?? null
+        notificationEmailSent = true
+        notificationEmailId = notificationResult.data?.id ?? null
+      }
+
+      if (autoReplyResult.error) {
+        emailError = emailError ?? autoReplyResult.error.message
+      } else {
+        autoReplySent = true
+        autoReplyId = autoReplyResult.data?.id ?? null
       }
     } else {
       emailError = "Resend is not fully configured"
@@ -55,8 +64,10 @@ export async function POST(req: Request) {
     return successResponse(
       {
         messageId: savedMessage._id,
-        emailId,
-        emailSent,
+        notificationEmailId,
+        notificationEmailSent,
+        autoReplyId,
+        autoReplySent,
         emailError,
       },
       201
