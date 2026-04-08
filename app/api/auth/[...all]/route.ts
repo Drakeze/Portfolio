@@ -1,5 +1,8 @@
-import { toNextJsHandler } from "better-auth/next-js"
+import { errorResponse } from "@/lib/api/responses"
 
-import { auth } from "@/src/lib/auth"
+function disabledAuthRoute() {
+  return errorResponse("This auth endpoint is disabled.", 404)
+}
 
-export const { GET, POST } = toNextJsHandler(auth)
+export const GET = disabledAuthRoute
+export const POST = disabledAuthRoute

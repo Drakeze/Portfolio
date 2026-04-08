@@ -1,17 +1,15 @@
-import { headers } from "next/headers"
+import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-import { isAdmin } from "@/src/lib/admin"
-import { auth } from "@/src/lib/auth"
+import { ADMIN_SESSION_COOKIE_NAME, validateAdminSessionToken } from "@/src/lib/admin-session"
 
 import { AdminSignInForm } from "./sign-in-form"
 
 export default async function SignInPage() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  })
+  const cookieStore = await cookies()
+  const hasSession = await validateAdminSessionToken(cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value)
 
-  if (session && isAdmin(session.user)) {
+  if (hasSession) {
     redirect("/admin")
   }
 

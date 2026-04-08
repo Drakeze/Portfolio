@@ -1,8 +1,6 @@
-import { headers } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
-import { isAdmin } from "@/src/lib/admin"
-import { auth } from "@/src/lib/auth"
+import { requestHasAdminSession } from "@/src/lib/admin-session"
 
 function unauthorizedResponse(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/api/admin")) {
@@ -14,14 +12,6 @@ function unauthorizedResponse(request: NextRequest) {
   return NextResponse.redirect(loginUrl)
 }
 
-function forbiddenResponse(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith("/api/admin")) {
-    return NextResponse.json({ success: false, error: "Forbidden" }, { status: 403 })
-  }
-
-  return NextResponse.redirect(new URL("/", request.url))
-}
-
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
@@ -29,16 +19,9 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/sign-in", request.url))
   }
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  })
-
-  if (!session) {
+  const hasSession = await requestHasAdminSession(request)
+  if (!hasSession) {
     return unauthorizedResponse(request)
-  }
-
-  if (!isAdmin(session.user)) {
-    return forbiddenResponse(request)
   }
 
   return NextResponse.next()

@@ -1,35 +1,18 @@
-import { currentUser } from "@clerk/nextjs/server"
-import { prisma } from "@/lib/prisma"
+import { cookies } from "next/headers"
 
-/**
- * Ensures the current user is authenticated and has admin privileges.
- * Throws an error if not authorized.
- */
+import { ADMIN_SESSION_COOKIE_NAME, validateAdminSessionToken } from "@/src/lib/admin-session"
+
 export async function requireAdmin() {
-  const user = await currentUser()
+  const cookieStore = await cookies()
+  const hasSession = await validateAdminSessionToken(cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value)
 
-  if (!user) {
+  if (!hasSession) {
     throw new Error("Not authenticated")
   }
 
-  const dbUser = await prisma.user.findUnique({
-    where: { clerkId: user.id }
-  })
-
-  if (!dbUser) {
-    throw new Error("User not found in database")
-  }
-
-  if (dbUser.role !== "admin") {
-    throw new Error("Not authorized")
-  }
-
-  return dbUser
+  return { role: "admin" as const }
 }
 
-/**
- * Optional helper: returns boolean instead of throwing
- */
 export async function isAdmin() {
   try {
     await requireAdmin()
