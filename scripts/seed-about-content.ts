@@ -1,7 +1,9 @@
 import { MongoClient } from "mongodb"
 
+import { collectionNames, DEFAULT_DB_NAME } from "../lib/mongodb"
+
 const uri = process.env.DATABASE_URL ?? process.env.MONGODB_URI
-const dbName = "portfolio_main"
+const dbName = DEFAULT_DB_NAME
 
 if (!uri) {
   throw new Error("DATABASE_URL or MONGODB_URI must be set")
@@ -66,7 +68,7 @@ const certifications = [
 ]
 
 async function seedSkills(client: MongoClient) {
-  const collection = client.db(dbName).collection("skills")
+  const collection = client.db(dbName).collection(collectionNames.skills)
 
   for (const [index, name] of activeSkills.entries()) {
     await collection.updateOne(
@@ -98,7 +100,7 @@ async function seedSkills(client: MongoClient) {
 }
 
 async function seedCertifications(client: MongoClient) {
-  const collection = client.db(dbName).collection("certifications")
+  const collection = client.db(dbName).collection(collectionNames.certifications)
 
   for (const [index, cert] of certifications.entries()) {
     await collection.updateOne(
@@ -125,8 +127,8 @@ async function main() {
 
     const db = client.db(dbName)
     const [skillCount, certificationCount] = await Promise.all([
-      db.collection("skills").countDocuments(),
-      db.collection("certifications").countDocuments(),
+      db.collection(collectionNames.skills).countDocuments(),
+      db.collection(collectionNames.certifications).countDocuments(),
     ])
 
     process.stdout.write(`Seed complete. skills=${skillCount}, certifications=${certificationCount}\n`)

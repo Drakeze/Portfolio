@@ -1,10 +1,11 @@
 import { MongoClient } from "mongodb"
 
+import { collectionNames, DEFAULT_DB_NAME } from "../lib/mongodb"
 import { companies } from "../lib/types/companies"
 import { projects } from "../lib/types/projects"
 
 const uri = process.env.DATABASE_URL ?? process.env.MONGODB_URI
-const dbName = "portfolio_main"
+const dbName = DEFAULT_DB_NAME
 
 if (!uri) {
   throw new Error("DATABASE_URL or MONGODB_URI must be set")
@@ -22,7 +23,7 @@ function slugify(value: string) {
 }
 
 async function seedProjects(client: MongoClient) {
-  const collection = client.db(dbName).collection("projects")
+  const collection = client.db(dbName).collection(collectionNames.projects)
 
   for (const [index, project] of projects.entries()) {
     const slug = project.slug && project.slug.length > 0 ? project.slug : slugify(project.title)
@@ -52,7 +53,7 @@ async function seedProjects(client: MongoClient) {
 }
 
 async function seedCompanies(client: MongoClient) {
-  const collection = client.db(dbName).collection("companies")
+  const collection = client.db(dbName).collection(collectionNames.companies)
 
   for (const [index, company] of companies.entries()) {
     await collection.updateOne(
@@ -89,8 +90,8 @@ async function main() {
 
     const db = client.db(dbName)
     const [projectCount, companyCount] = await Promise.all([
-      db.collection("projects").countDocuments(),
-      db.collection("companies").countDocuments(),
+      db.collection(collectionNames.projects).countDocuments(),
+      db.collection(collectionNames.companies).countDocuments(),
     ])
 
     process.stdout.write(`Seed complete. projects=${projectCount}, companies=${companyCount}\n`)

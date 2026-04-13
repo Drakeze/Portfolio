@@ -1,6 +1,14 @@
 import { Db, MongoClient, MongoClientOptions } from "mongodb"
 
-const DEFAULT_DB_NAME = "portfolio_main"
+export const DEFAULT_DB_NAME = "portfolio_db"
+export const collectionNames = {
+  adminAuth: "admin_auth",
+  certifications: "portfolio_certifications",
+  companies: "portfolio_companies",
+  messages: "messages",
+  projects: "portfolio_projects",
+  skills: "portfolio_skills",
+} as const
 const options: MongoClientOptions = {}
 
 let clientPromise: Promise<MongoClient> | null = null

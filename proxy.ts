@@ -15,6 +15,10 @@ function unauthorizedResponse(request: NextRequest) {
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
+  if (pathname === "/api/admin/session" && request.method === "POST") {
+    return NextResponse.next()
+  }
+
   if (pathname === "/admin/login") {
     return NextResponse.redirect(new URL("/sign-in", request.url))
   }

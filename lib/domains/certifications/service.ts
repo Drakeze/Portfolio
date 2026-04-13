@@ -1,10 +1,10 @@
 import { ObjectId } from "mongodb"
 
-import { getDb } from "@/lib/mongodb"
+import { collectionNames, getDb } from "@/lib/mongodb"
 
 import { type Certification, type CertificationInput, type CertificationUpdateInput } from "./types"
 
-const COLLECTION = "certifications"
+const COLLECTION = collectionNames.certifications
 
 function certificationsCollection() {
   return getDb().then((db) => db.collection<Certification>(COLLECTION))

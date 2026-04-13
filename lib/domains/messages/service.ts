@@ -1,10 +1,10 @@
 import { ObjectId } from "mongodb"
 
-import { getDb } from "@/lib/mongodb"
+import { collectionNames, getDb } from "@/lib/mongodb"
 
 import { type Message, type MessageInput, type MessageUpdateInput } from "./types"
 
-const COLLECTION = "messages"
+const COLLECTION = collectionNames.messages
 
 function messagesCollection() {
   return getDb().then((db) => db.collection<Message>(COLLECTION))

@@ -1,10 +1,10 @@
 import { ObjectId } from "mongodb"
 
-import { getDb } from "@/lib/mongodb"
+import { collectionNames, getDb } from "@/lib/mongodb"
 
 import { type Project, type ProjectInput, type ProjectUpdateInput } from "./types"
 
-const COLLECTION = "projects"
+const COLLECTION = collectionNames.projects
 
 function projectsCollection() {
   return getDb().then((db) => db.collection<Project>(COLLECTION))

@@ -1,18 +1,21 @@
 import Link from "next/link"
 
+import { ChangePasswordForm } from "@/components/admin/change-password-form"
 import { countCompanies } from "@/lib/domains/companies/service"
 import { listMessages } from "@/lib/domains/messages/service"
 import { countProjects } from "@/lib/domains/projects/service"
 import { listSkills } from "@/lib/domains/skills/service"
+import { hasStoredAdminPassword } from "@/src/lib/admin-session"
 
 export const dynamic = "force-dynamic"
 
 export default async function AdminPage() {
-  const [projects, companies, skills, recentMessages] = await Promise.all([
+  const [projects, companies, skills, recentMessages, usesStoredPassword] = await Promise.all([
     countProjects(),
     countCompanies(),
     listSkills(),
     listMessages(),
+    hasStoredAdminPassword(),
   ])
 
   const unreadCount = recentMessages.filter((message) => !message.read).length
@@ -89,6 +92,16 @@ export default async function AdminPage() {
             </tbody>
           </table>
         </div>
+      </section>
+
+      <section className="space-y-3">
+        <div className="space-y-1">
+          <h2 className="text-sm font-medium">Admin Security</h2>
+          <p className="text-sm text-muted-foreground">
+            Current password source: {usesStoredPassword ? "MongoDB" : "environment fallback"}
+          </p>
+        </div>
+        <ChangePasswordForm />
       </section>
     </main>
   )
