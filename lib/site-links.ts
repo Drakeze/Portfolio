@@ -6,9 +6,9 @@ export const externalLinks = {
     twitter: "https://x.com/SorenIdeas",
   },
   ventures: {
-    sorenTech: "https://soren.tech",
+    sorenTech: "https://SorenLab.com",
     earthPlus: "https://earthplus.org",
-    creatorStore: process.env.NEXT_PUBLIC_CREATOR_STORE_URL ?? "https://store.soren.tech",
-    resources: process.env.NEXT_PUBLIC_CREATOR_RESOURCES_URL ?? "https://linktr.ee/sorenresources",
+    creatorStore: process.env.NEXT_PUBLIC_CREATOR_STORE_URL ?? "https://store.drakeze.com/",
+    resources: process.env.NEXT_PUBLIC_CREATOR_RESOURCES_URL ?? "https://linktr.ee/Drakeze",
   },
 } as const

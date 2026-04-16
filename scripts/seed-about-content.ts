@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb"
 
 import { collectionNames, DEFAULT_DB_NAME } from "../lib/mongodb"
+import { fallbackCertifications, fallbackSkills } from "../lib/types/about"
 
 const uri = process.env.DATABASE_URL ?? process.env.MONGODB_URI
 const dbName = DEFAULT_DB_NAME
@@ -11,71 +12,18 @@ if (!uri) {
 
 const mongoUri = uri
 
-const activeSkills = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
-  "HTML",
-  "CSS",
-  "Git & GitHub",
-  "REST APIs",
-  "MongoDB",
-  "Node.js",
-]
-
-const learningSkills = [
-  "Python",
-  "Redis",
-  "Docker",
-  "AWS",
-  "Analytics",
-  "Testing Libraries",
-  "Prisma",
-  "GraphQL",
-]
-
-const certifications = [
-  {
-    title: "API Integration - End to End Web Development",
-    issuer: "Board Infinity",
-    completed: true,
-    grade: "86%",
-  },
-  {
-    title: "Getting Started with Git and GitHub",
-    issuer: "IBM",
-    completed: true,
-    grade: "84.28%",
-  },
-  {
-    title: "Introduction to HTML, CSS, & JavaScript",
-    issuer: "IBM",
-    completed: true,
-    grade: "88.57%",
-  },
-  {
-    title: "Introduction to Software Engineering",
-    issuer: "IBM",
-    completed: true,
-    grade: "85.90%",
-  },
-  {
-    title: "IBM Full-Stack JavaScript Developer",
-    issuer: "IBM / Coursera",
-    completed: false,
-  },
-]
-
 async function seedSkills(client: MongoClient) {
   const collection = client.db(dbName).collection(collectionNames.skills)
 
-  for (const [index, name] of activeSkills.entries()) {
+  const activeSkills = fallbackSkills.filter((skill) => skill.status === "active")
+  const learningSkills = fallbackSkills.filter((skill) => skill.status === "learning")
+
+  for (const [index, skill] of activeSkills.entries()) {
     await collection.updateOne(
-      { name },
+      { name: skill.name },
       {
         $set: {
-          name,
+          name: skill.name,
           status: "active",
           order: index,
         },
@@ -84,12 +32,12 @@ async function seedSkills(client: MongoClient) {
     )
   }
 
-  for (const [index, name] of learningSkills.entries()) {
+  for (const [index, skill] of learningSkills.entries()) {
     await collection.updateOne(
-      { name },
+      { name: skill.name },
       {
         $set: {
-          name,
+          name: skill.name,
           status: "learning",
           order: activeSkills.length + index,
         },
@@ -102,7 +50,7 @@ async function seedSkills(client: MongoClient) {
 async function seedCertifications(client: MongoClient) {
   const collection = client.db(dbName).collection(collectionNames.certifications)
 
-  for (const [index, cert] of certifications.entries()) {
+  for (const [index, cert] of fallbackCertifications.entries()) {
     await collection.updateOne(
       { title: cert.title },
       {

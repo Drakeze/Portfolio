@@ -1,5 +1,13 @@
 import { listCompanies } from "@/lib/domains/companies/service"
+import { listCertifications } from "@/lib/domains/certifications/service"
 import { listProjects } from "@/lib/domains/projects/service"
+import { listSkills } from "@/lib/domains/skills/service"
+import {
+  fallbackCertifications,
+  fallbackSkills,
+  type PublicCertification,
+  type PublicSkill,
+} from "@/lib/types/about"
 import { companies as fallbackCompanies, type Company as PublicCompany } from "@/lib/types/companies"
 import { projects as fallbackProjects, type Project as PublicProject } from "@/lib/types/projects"
 
@@ -48,6 +56,49 @@ function toCompanyViewModel(company: {
   }
 }
 
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.trim().length > 0
+}
+
+function toSkillViewModel(skill: {
+  _id?: { toString(): string }
+  name?: unknown
+  status?: unknown
+}): PublicSkill | null {
+  if (!isNonEmptyString(skill.name)) {
+    return null
+  }
+
+  const normalizedStatus =
+    skill.status === "learning" || skill.status === "archived" ? skill.status : "active"
+
+  return {
+    id: skill._id?.toString(),
+    name: skill.name.trim(),
+    status: normalizedStatus,
+  }
+}
+
+function toCertificationViewModel(certification: {
+  _id?: { toString(): string }
+  title?: unknown
+  completed?: unknown
+  issuer?: unknown
+  grade?: unknown
+}): PublicCertification | null {
+  if (!isNonEmptyString(certification.title)) {
+    return null
+  }
+
+  return {
+    id: certification._id?.toString(),
+    title: certification.title.trim(),
+    completed: certification.completed === false ? false : true,
+    issuer: isNonEmptyString(certification.issuer) ? certification.issuer.trim() : undefined,
+    grade: isNonEmptyString(certification.grade) ? certification.grade.trim() : undefined,
+  }
+}
+
 export async function getPublicProjects(): Promise<PublicProject[]> {
   try {
     const projectDocs = await listProjects()
@@ -74,4 +125,36 @@ export async function getPublicCompanies(): Promise<PublicCompany[]> {
   }
 
   return fallbackCompanies
+}
+
+export async function getPublicSkills(): Promise<PublicSkill[]> {
+  try {
+    const skillDocs = await listSkills()
+    const skills = skillDocs.map(toSkillViewModel).filter((skill): skill is PublicSkill => skill !== null)
+
+    if (skills.length > 0) {
+      return skills
+    }
+  } catch (error) {
+    console.error("Failed to load skills from MongoDB. Falling back to local content.", error)
+  }
+
+  return fallbackSkills
+}
+
+export async function getPublicCertifications(): Promise<PublicCertification[]> {
+  try {
+    const certificationDocs = await listCertifications()
+    const certifications = certificationDocs
+      .map(toCertificationViewModel)
+      .filter((certification): certification is PublicCertification => certification !== null)
+
+    if (certifications.length > 0) {
+      return certifications
+    }
+  } catch (error) {
+    console.error("Failed to load certifications from MongoDB. Falling back to local content.", error)
+  }
+
+  return fallbackCertifications
 }

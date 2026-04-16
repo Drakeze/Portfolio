@@ -4,8 +4,7 @@ import { Award, Download } from "lucide-react"
 import SkillsSection from "@/components/sections/skillsection"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { listCertifications } from "@/lib/domains/certifications/service"
-import { listSkills } from "@/lib/domains/skills/service"
+import { getPublicCertifications, getPublicSkills } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
 
 const aboutParagraphs = [
@@ -59,23 +58,19 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic"
 
 export default async function AboutPage() {
-  const [skillsResult, certificationsResult] = await Promise.allSettled([
-    listSkills(),
-    listCertifications(),
+  const [skillsData, certifications] = await Promise.all([
+    getPublicSkills(),
+    getPublicCertifications(),
   ])
 
-  const skillsDocs = skillsResult.status === "fulfilled" ? skillsResult.value : []
-  const certificationsDocs =
-    certificationsResult.status === "fulfilled" ? certificationsResult.value : []
-
-  const skills = skillsDocs.map((skill) => ({
-    id: skill._id?.toString() ?? skill.name,
+  const skills = skillsData.map((skill) => ({
+    id: skill.id ?? skill.name,
     name: skill.name,
-    status: skill.status ?? "active",
+    status: skill.status,
   }))
 
-  const completedCertifications = certificationsDocs.filter((cert) => cert.completed !== false)
-  const inProgressCertifications = certificationsDocs.filter((cert) => cert.completed === false)
+  const completedCertifications = certifications.filter((cert) => cert.completed !== false)
+  const inProgressCertifications = certifications.filter((cert) => cert.completed === false)
 
   return (
     <main className="min-h-screen py-24 px-6">
