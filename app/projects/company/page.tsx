@@ -1,11 +1,10 @@
 import type { Metadata } from "next"
 
+import { CompanyGallery } from "@/components/company/company-gallery"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { listCompanies } from "@/lib/domains/companies/service"
+import { getPublicCompanies } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
-import { CompanyGallery } from "@/components/company/company-gallery"
-import type { Company } from "@/lib/types/companies"
 
 export const dynamic = "force-dynamic"
 
@@ -14,23 +13,8 @@ export const metadata: Metadata = {
   description: "A selection of companies I started and am currently building.",
 }
 
-function toShortDescription(longDescription: string) {
-  return longDescription.split("\n\n")[0]?.slice(0, 220) ?? ""
-}
-
 export default async function CompanyProjectsPage() {
-  const companyDocs = await listCompanies()
-  const companies: Company[] = companyDocs.map((company) => ({
-    slug: company.slug,
-    title: company.title,
-    tagline: company.tagline,
-    shortDescription: toShortDescription(company.longDescription),
-    longDescription: company.longDescription,
-    gallery: company.gallery,
-    tags: company.techStack,
-    liveUrl: company.liveUrl,
-    githubUrl: company.githubUrl,
-  }))
+  const companies = await getPublicCompanies()
 
   return (
     <div className="space-y-20 py-16">
@@ -47,7 +31,10 @@ export default async function CompanyProjectsPage() {
           <Card className="p-8 text-center text-muted-foreground md:col-span-2">No companies published yet.</Card>
         ) : companies.map((company) => {
           return (
-            <Card key={company.slug} className="p-8 space-y-6 rounded-2xl transition hover:shadow-lg hover:-translate-y-1 duration-300">
+            <Card
+              key={company.slug}
+              className="p-8 space-y-6 rounded-2xl transition hover:shadow-lg hover:-translate-y-1 duration-300"
+            >
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold">{company.title}</h3>
                 <p className="text-sm font-medium text-primary">

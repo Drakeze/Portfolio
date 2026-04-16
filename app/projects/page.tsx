@@ -1,9 +1,8 @@
 import type { Metadata } from "next"
 
 import { ProjectCard } from "@/components/sections/project-card"
-import { listProjects } from "@/lib/domains/projects/service"
+import { getPublicProjects } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
-import type { Project } from "@/lib/types/projects"
 
 export const dynamic = "force-dynamic"
 
@@ -13,17 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ProjectsPage() {
-  const projectDocs = await listProjects()
-  const projects: Project[] = projectDocs.map((project) => ({
-    _id: project._id?.toString(),
-    title: project.title,
-    slug: project.slug,
-    description: project.description,
-    image: project.image,
-    tags: project.techStack,
-    liveUrl: project.liveUrl,
-    githubUrl: project.githubUrl,
-  }))
+  const projects = await getPublicProjects()
 
   return (
     <main className="min-h-screen py-24 px-6 bg-muted/30">

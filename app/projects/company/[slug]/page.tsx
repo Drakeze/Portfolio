@@ -1,8 +1,7 @@
 import { CompanyGallery } from "@/components/company/company-gallery"
 import { Button } from "@/components/ui/button"
-import { listCompanies } from "@/lib/domains/companies/service"
+import { getPublicCompanies } from "@/lib/public-content"
 import { notFound } from "next/navigation"
-import type { Company } from "@/lib/types/companies"
 
 export const dynamic = "force-dynamic"
 
@@ -12,32 +11,9 @@ type CompanyPageProps = {
   }>
 }
 
-function toCompanyViewModel(company: {
-  slug: string
-  title: string
-  tagline: string
-  longDescription: string
-  gallery: string[]
-  techStack: string[]
-  liveUrl?: string
-  githubUrl?: string
-}): Company {
-  return {
-    slug: company.slug,
-    title: company.title,
-    tagline: company.tagline,
-    shortDescription: company.longDescription.split("\n\n")[0]?.slice(0, 220) ?? "",
-    longDescription: company.longDescription,
-    gallery: company.gallery,
-    tags: company.techStack,
-    liveUrl: company.liveUrl,
-    githubUrl: company.githubUrl,
-  }
-}
-
 export default async function CompanyPage({ params }: CompanyPageProps) {
   const { slug } = await params
-  const companies = (await listCompanies()).map(toCompanyViewModel)
+  const companies = await getPublicCompanies()
 
   const index = companies.findIndex((company) => company.slug === slug)
 
