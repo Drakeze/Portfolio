@@ -15,7 +15,7 @@ export const projects: Project[] = [
       "A comprehensive cryptocurrency dashboard with real-time market data, curated watch lists, and conversion tools for fast portfolio insights.",
     image: "/projects/crypto-tracker.svg",
     tags: ["CoinGecko API", "HTML", "CSS", "JavaScript","Vercel"],
-    liveUrl: "https://drakeze-crypto-tracker.vercel.app/",
+    liveUrl: "https://crypto-tracker.drakeze.com/",
     githubUrl: "https://github.com/Drakeze/CT-app",
   },
   {
@@ -33,7 +33,7 @@ export const projects: Project[] = [
       "Content-driven blog platform with MDX-style posts, rich typography, and responsive layouts for long-form writing.",
     image: "/projects/blogging-platform.svg",
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Vercel", "Bun","MongoDB", "Prisma", "GraphQL","Patreon API","LinkedIn API", "Reddit API"],
-    liveUrl: "https://drakeze-blog.vercel.app/",
+    liveUrl: "https://blog.drakeze.com/",
     githubUrl: "https://github.com/Drakeze/Blog",
   },
   {
@@ -42,7 +42,7 @@ export const projects: Project[] = [
       "This is a Web shop where you can find templates and tools I have created to help speed up your notes and project work. From project planners to note-taking templates, find resources to boost your productivity.",
     image: "/projects/productivity-dashboard.svg",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "Bun", "Prisma", "GraphQL", "React","MongoDB", "Stripe API"],
-    liveUrl: "https://creator-tools.vercel.app/",
+    liveUrl: "https://store.drakeze.com/",
     githubUrl: "https://github.com/Drakeze/Creator-Tools",
   },
   {
