@@ -83,15 +83,18 @@ function GetInTouchCard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
       })
+      const payload = (await res.json().catch(() => null)) as { error?: string; success?: boolean } | null
 
-      if (!res.ok) throw new Error("Failed to send")
+      if (!res.ok || !payload?.success) {
+        throw new Error(payload?.error ?? "Message failed to send. Please try again.")
+      }
 
       setSuccess(true)
       setName("")
       setEmail("")
       setMessage("")
-    } catch {
-      setSubmitError("Message failed to send. Please try again.")
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Message failed to send. Please try again.")
     } finally {
       setLoading(false)
     }

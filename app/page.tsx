@@ -1,4 +1,4 @@
-import { GlobeWireframe } from "@/components/globe-wireframe"
+import { DeferredGlobe } from "@/components/deferred-globe"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -7,7 +7,7 @@ export default function Page() {
     <main className="min-h-[calc(100vh-4rem)]">
       <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden">
         <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-[1000px] h-[1000px] opacity-30 pointer-events-none">
-          <GlobeWireframe />
+          <DeferredGlobe />
         </div>
 
         <div className="container relative z-10 px-6 py-24 mx-auto max-w-6xl">

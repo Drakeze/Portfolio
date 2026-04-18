@@ -8,12 +8,14 @@ import { getPublicCertifications, getPublicSkills } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
 
 const aboutParagraphs = [
-  "I'm Anthony Shed, a self-taught full-stack developer based in California. I've always been drawn to understanding how things work, not just using them, but breaking them apart, studying the structure behind them, and rebuilding them in better ways. That curiosity is what originally pulled me into programming, long before I thought of it as a career path.",
-  "My introduction to technical problem-solving came through games. What started as simple performance tweaks and customization in older titles, such as Team Fortress 2, gradually evolved into exploring configuration files, modifying behavior, and realizing that software itself is just a system waiting to be understood. That moment realizing I could change how things behaved became the foundation for how I approach learning today.",
-  "What really made programming click for me was recognizing it as a form of architecture. Tools like VS Code, file trees, and project structure felt similar to how buildings or engineered systems are designed, with layers, dependencies, and intentional organization. Since then, I've focused less on memorizing tools and more on understanding how systems fit together, how decisions compound over time, and how to build things that remain maintainable as they grow.",
-  "Consistency plays a major role in my life and my work. I've been swimming for over thirteen years, train regularly at the gym, and enjoy hobbies that reward patience and systems thinking, like Minecraft and automation-heavy gameplay. Those habits translate directly into how I learn and build software: steady progress, strong fundamentals, and long-term commitment matter more than short bursts of motivation.",
-  "Long-term, my goal is to grow into a polyglot software engineer, someone who understands multiple languages, paradigms, and architectures well enough to choose the right tool for the problem rather than forcing a familiar one. I'm motivated by depth, not shortcuts, and by building systems that are thoughtfully designed instead of rushed.",
-  "Alongside professional roles, I'm building Soren Tech as a way to help people turn ideas into real, well-structured products, and laying the groundwork for Earth Plus, a longer-term initiative focused on aligning technology with sustainability and environmental responsibility. I believe well-designed systems, whether technical or personal, have the power to create meaningful, lasting impact when they're built with intention.",
+  "I'm Anthony Shead, a full-stack developer in California who likes building structured, scalable systems with modern web tools.",
+  "I didn't take a traditional path into programming. I started by pulling things apart, modding games, tweaking configs, and seeing what broke. That curiosity turned into a pattern: deconstruct, understand, then rebuild with intention. That mindset still drives how I learn and how I build today.",
+  "Programming really clicked for me when I started seeing it as architecture. It's not just writing code; it's designing how everything fits together, how components connect, how data moves, and how the system holds up as it grows. I try to build with structure from the start, favoring maintainability, clarity, and long-term scalability over quick hacks.",
+  "Right now I'm working across a modern full-stack setup: Next.js, React, TypeScript, MongoDB, and Prisma. I'm also building real-world pieces like auth, payments, and email using tools such as Clerk, Stripe, and Resend. Most of what I work on revolves around connected systems, shared databases, multi-app setups, and APIs that can actually support real products.",
+  "I'm building a small ecosystem of projects that all plug into each other, a portfolio with multiple apps like a blog, a creator store, and data tools, all under one structure. Alongside that, I'm working on Soren Tech, a development-focused brand aimed at helping people turn ideas into solid, working products. For me, it's not just about shipping features; it's about building systems that can grow, evolve, and stay reliable over time.",
+  "Consistency is a big part of how I work. I've been swimming for over thirteen years and still train regularly, and that discipline carries over into development. I care about steady progress, strong fundamentals, and long-term effort. I try to write software the same way: structured, repeatable, and always improving.",
+  "Long-term, I want to become a polyglot full-stack engineer, someone who knows multiple languages, paradigms, and architectures well enough to pick the right tool for the job. I care more about depth than shortcuts, and about building systems that are thoughtfully designed instead of rushed together.",
+  "Outside of day-to-day development, I'm laying the groundwork for Earth Plus, a long-term project focused on aligning technology with sustainability and real-world impact. I believe that well-designed systems, technical or personal, can create meaningful, lasting change when they're built with intention.",
 ]
 
 const experiences = [
@@ -55,7 +57,7 @@ export const metadata: Metadata = {
   description: "Learn more about my experience, skills, and certifications.",
 }
 
-export const dynamic = "force-dynamic"
+export const revalidate = 3600
 
 export default async function AboutPage() {
   const [skillsData, certifications] = await Promise.all([

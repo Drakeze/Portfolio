@@ -13,6 +13,11 @@ const contactSchema = z.object({
 export async function POST(req: Request) {
   try {
     const { name, email, message } = contactSchema.parse(await req.json())
+    const to = getContactRecipientEmail()
+    if (!resend || !to) {
+      return errorResponse("Contact email is not configured right now. Please try again later.", 503)
+    }
+
     const savedMessage = await createMessage({
       name,
       email,
@@ -20,55 +25,37 @@ export async function POST(req: Request) {
       read: false,
     })
 
-    const to = getContactRecipientEmail()
-    let notificationEmailSent = false
-    let notificationEmailId: string | null = null
-    let autoReplySent = false
-    let autoReplyId: string | null = null
-    let emailError: string | null = null
+    const [notificationResult, autoReplyResult] = await Promise.all([
+      resend.emails.send({
+        from: getMailFrom(),
+        to,
+        subject: `New Portfolio Contact from ${name}`,
+        replyTo: email,
+        text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      }),
+      resend.emails.send({
+        from: getMailFrom(),
+        to: email,
+        subject: "Thanks for reaching out",
+        text: `Hi ${name},\n\nThanks for your message. I have received it and will get back to you soon.\n\nYour message:\n${message}\n`,
+      }),
+    ])
 
-    if (resend && to) {
-      const [notificationResult, autoReplyResult] = await Promise.all([
-        resend.emails.send({
-          from: getMailFrom(),
-          to,
-          subject: `New Portfolio Contact from ${name}`,
-          replyTo: email,
-          text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-        }),
-        resend.emails.send({
-          from: getMailFrom(),
-          to: email,
-          subject: "Thanks for reaching out",
-          text: `Hi ${name},\n\nThanks for your message. I have received it and will get back to you soon.\n\nYour message:\n${message}\n`,
-        }),
-      ])
-
-      if (notificationResult.error) {
-        emailError = notificationResult.error.message
-      } else {
-        notificationEmailSent = true
-        notificationEmailId = notificationResult.data?.id ?? null
-      }
-
-      if (autoReplyResult.error) {
-        emailError = emailError ?? autoReplyResult.error.message
-      } else {
-        autoReplySent = true
-        autoReplyId = autoReplyResult.data?.id ?? null
-      }
-    } else {
-      emailError = "Resend is not fully configured"
+    if (notificationResult.error) {
+      return errorResponse(
+        "Your message was saved, but notification delivery failed. Please email me directly if this is urgent.",
+        503
+      )
     }
 
     return successResponse(
       {
         messageId: savedMessage._id,
-        notificationEmailId,
-        notificationEmailSent,
-        autoReplyId,
-        autoReplySent,
-        emailError,
+        notificationEmailId: notificationResult.data?.id ?? null,
+        notificationEmailSent: true,
+        autoReplyId: autoReplyResult.error ? null : autoReplyResult.data?.id ?? null,
+        autoReplySent: !autoReplyResult.error,
+        autoReplyError: autoReplyResult.error?.message ?? null,
       },
       201
     )
