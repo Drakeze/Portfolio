@@ -85,11 +85,6 @@ export function GlobeWireframe({ animate = true }: GlobeWireframeProps) {
         ctx.stroke()
       }
 
-      // Slow rotation for subtle movement
-      if (animate) {
-        rotation += 0.15
-        if (rotation >= 360) rotation = 0
-      }
     }
 
     drawGlobe()
@@ -98,9 +93,23 @@ export function GlobeWireframe({ animate = true }: GlobeWireframeProps) {
       return
     }
 
-    const interval = window.setInterval(drawGlobe, 50)
+    let frameId = 0
+    let previousTime = performance.now()
 
-    return () => window.clearInterval(interval)
+    function animateGlobe(currentTime: number) {
+      const elapsedSeconds = (currentTime - previousTime) / 1000
+      previousTime = currentTime
+
+      rotation += elapsedSeconds * 2
+      if (rotation >= 360) rotation -= 360
+
+      drawGlobe()
+      frameId = window.requestAnimationFrame(animateGlobe)
+    }
+
+    frameId = window.requestAnimationFrame(animateGlobe)
+
+    return () => window.cancelAnimationFrame(frameId)
   }, [animate])
 
   return <canvas ref={canvasRef} className="block h-full w-full" aria-hidden="true" />
