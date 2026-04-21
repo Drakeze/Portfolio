@@ -9,7 +9,7 @@ const GlobeWireframe = dynamic(
 )
 
 export function DeferredGlobe() {
-  const [showGlobe, setShowGlobe] = useState(false)
+  const [animate, setAnimate] = useState(false)
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -17,19 +17,13 @@ export function DeferredGlobe() {
     }
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
-    if (mediaQuery.matches) {
-      return
-    }
+    const updateMotionPreference = () => setAnimate(!mediaQuery.matches)
 
-    const schedule = window.requestIdleCallback ?? ((callback: IdleRequestCallback) => window.setTimeout(callback, 300))
-    const cancel = window.cancelIdleCallback ?? window.clearTimeout
+    updateMotionPreference()
+    mediaQuery.addEventListener("change", updateMotionPreference)
 
-    const handle = schedule(() => {
-      setShowGlobe(true)
-    })
-
-    return () => cancel(handle)
+    return () => mediaQuery.removeEventListener("change", updateMotionPreference)
   }, [])
 
-  return showGlobe ? <GlobeWireframe /> : null
+  return <GlobeWireframe animate={animate} />
 }

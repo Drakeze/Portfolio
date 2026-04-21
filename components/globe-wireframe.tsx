@@ -2,7 +2,11 @@
 
 import { useEffect, useRef } from "react"
 
-export function GlobeWireframe() {
+export type GlobeWireframeProps = {
+  animate?: boolean
+}
+
+export function GlobeWireframe({ animate = true }: GlobeWireframeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -82,15 +86,22 @@ export function GlobeWireframe() {
       }
 
       // Slow rotation for subtle movement
-      rotation += 0.15
-      if (rotation >= 360) rotation = 0
+      if (animate) {
+        rotation += 0.15
+        if (rotation >= 360) rotation = 0
+      }
     }
 
-    // Animate at low frame rate for subtlety
-    const interval = setInterval(drawGlobe, 50)
+    drawGlobe()
 
-    return () => clearInterval(interval)
-  }, [])
+    if (!animate) {
+      return
+    }
 
-  return <canvas ref={canvasRef} className="w-full h-full" />
+    const interval = window.setInterval(drawGlobe, 50)
+
+    return () => window.clearInterval(interval)
+  }, [animate])
+
+  return <canvas ref={canvasRef} className="block h-full w-full" aria-hidden="true" />
 }
