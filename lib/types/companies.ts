@@ -24,11 +24,11 @@ A core part of the process is clarity. Rather than jumping straight into impleme
 Soren Tech treats software less like an abstract technical task and more like structured design. Code, interfaces, and systems are approached with the same care as architecture, focusing on maintainability, scalability, and long-term usefulness rather than short-term output.
 
 Beyond client work, the long-term direction of Soren Tech is to build reusable tools and APIs and to apply technology in areas that form the backbone of society, such as agriculture, healthcare, and veterinary systems, where thoughtful software can have lasting impact.`,
-    heroImage: "/projects/community-site.svg",
+    heroImage: "/Soren%20Tech/android-chrome-512x512.png",
     gallery: [
-      "/projects/community-site.svg",
-      "/projects/crypto-tracker.svg",
-      "/projects/community-site.svg"
+      "/Soren%20Tech/android-chrome-512x512.png",
+      "/Soren%20Tech/android-chrome-192x192.png",
+      "/Soren%20Tech/apple-touch-icon.png"
     ],
     tags: [
       "Next.js",
@@ -58,11 +58,11 @@ The initiative is designed as an ecosystem rather than a single product. As tech
 In addition to financial reinvestment, Earth Plus explores tangible initiatives such as recycled and reusable products, sustainable materials, and environmental tooling that can be applied across communities. The focus is on practical systems that scale, adapt, and improve over time rather than one-off solutions.
 
 At its core, Earth Plus exists to ensure that the systems we build today contribute to a future that remains livable. It is intentionally positioned as a long-term effort that grows alongside technological advancement rather than opposing it.`,
-    heroImage: "/projects/community-site.svg",
+    heroImage: "/Earth%20Plus/android-chrome-512x512.png",
     gallery: [
-      "/projects/community-site.svg",
-      "/projects/crypto-tracker.svg",
-      "/projects/community-site.svg"
+      "/Earth%20Plus/android-chrome-512x512.png",
+      "/Earth%20Plus/android-chrome-192x192.png",
+      "/Earth%20Plus/apple-touch-icon.png"
     ],
     tags: [
       "React",

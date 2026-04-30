@@ -13,12 +13,13 @@ export function CompanyGallery({ images }: { images: string[] }) {
 
   return (
     <div className="space-y-4">
-      <div className="relative w-full h-[400px] rounded-lg overflow-hidden border">
+      <div className="relative w-full h-[400px] rounded-lg overflow-hidden border bg-muted/40">
         <Image
           src={images[index]}
           alt={`Gallery image ${index + 1}`}
           fill
-          className="object-cover"
+          sizes="(min-width: 1024px) 896px, 90vw"
+          className="object-contain p-10"
         />
       </div>
 

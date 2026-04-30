@@ -35,13 +35,13 @@ export function ProjectCard({ project, variant = "detailed" }: ProjectCardProps)
   return (
     <Card className="group border-border transition-all duration-300 hover:border-primary/20 hover:shadow-xl">
       <CardContent className="p-0">
-        <div className={`relative overflow-hidden rounded-t-lg ${config.imageClass}`}>
+        <div className={`relative overflow-hidden rounded-t-lg bg-muted/40 p-8 ${config.imageClass}`}>
           <Image
             src={project.image}
             alt={project.title}
             fill
             sizes={config.imageSizes}
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-contain p-8 transition-transform duration-300 group-hover:scale-105"
           />
         </div>
         <div className="p-6">
