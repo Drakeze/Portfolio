@@ -5,9 +5,22 @@ import {
   setAdminSessionCookie,
   updateAdminPassword,
 } from "@/src/lib/admin-session"
+import {
+  clearFailedAdminLoginAttempts,
+  getAdminLoginRateLimitStatus,
+  recordFailedAdminLoginAttempt,
+} from "@/src/lib/admin-rate-limit"
 
 export async function POST(request: Request) {
   try {
+    const rateLimitStatus = getAdminLoginRateLimitStatus(request)
+    if (rateLimitStatus.blocked) {
+      return errorResponse(
+        `Too many failed sign-in attempts. Try again in ${rateLimitStatus.retryAfterSeconds} seconds.`,
+        429
+      )
+    }
+
     const body = await request.json()
     const password = typeof body?.password === "string" ? body.password : ""
 
@@ -18,8 +31,19 @@ export async function POST(request: Request) {
     const isValidPassword = await isValidAdminPassword(password)
 
     if (!isValidPassword) {
+      const failedAttempt = recordFailedAdminLoginAttempt(request)
+
+      if (failedAttempt.blocked) {
+        return errorResponse(
+          `Too many failed sign-in attempts. Try again in ${failedAttempt.retryAfterSeconds} seconds.`,
+          429
+        )
+      }
+
       return errorResponse("Invalid admin password.", 401)
     }
+
+    clearFailedAdminLoginAttempts(request)
 
     const response = successResponse({ authenticated: true })
     await setAdminSessionCookie(response)

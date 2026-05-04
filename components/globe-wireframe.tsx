@@ -2,7 +2,11 @@
 
 import { useEffect, useRef } from "react"
 
-export function GlobeWireframe() {
+export type GlobeWireframeProps = {
+  animate?: boolean
+}
+
+export function GlobeWireframe({ animate = true }: GlobeWireframeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -81,16 +85,32 @@ export function GlobeWireframe() {
         ctx.stroke()
       }
 
-      // Slow rotation for subtle movement
-      rotation += 0.15
-      if (rotation >= 360) rotation = 0
     }
 
-    // Animate at low frame rate for subtlety
-    const interval = setInterval(drawGlobe, 50)
+    drawGlobe()
 
-    return () => clearInterval(interval)
-  }, [])
+    if (!animate) {
+      return
+    }
 
-  return <canvas ref={canvasRef} className="w-full h-full" />
+    let frameId = 0
+    let previousTime = performance.now()
+
+    function animateGlobe(currentTime: number) {
+      const elapsedSeconds = (currentTime - previousTime) / 1000
+      previousTime = currentTime
+
+      rotation += elapsedSeconds * 2
+      if (rotation >= 360) rotation -= 360
+
+      drawGlobe()
+      frameId = window.requestAnimationFrame(animateGlobe)
+    }
+
+    frameId = window.requestAnimationFrame(animateGlobe)
+
+    return () => window.cancelAnimationFrame(frameId)
+  }, [animate])
+
+  return <canvas ref={canvasRef} className="block h-full w-full" aria-hidden="true" />
 }

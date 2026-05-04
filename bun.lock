@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "at-projects",
+      "name": "Anthony's Portfolio",
       "dependencies": {
         "@hookform/resolvers": "^3.10.0",
         "@prisma/client": "^6.19.3",
