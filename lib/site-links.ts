@@ -4,6 +4,8 @@ export const externalLinks = {
     githubAlt: "https://github.com/DrakezeWind",
     linkedin: "https://www.linkedin.com/in/anthonyshead/",
     twitter: "https://x.com/SorenIdeas",
+    discord: "https://discord.gg/ysJW2Jqcdj",
+    patreon: "https://www.patreon.com/Drakeze",
   },
   ventures: {
     sorenTech: "https://SorenLab.com",

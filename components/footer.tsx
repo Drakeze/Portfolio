@@ -1,6 +1,6 @@
 import { siteConfig } from "@/lib/seo"
 import { externalLinks } from "@/lib/site-links"
-import { Github, Linkedin, Mail, Store } from "lucide-react"
+import { Github, Heart, Linkedin, Mail, MessageCircle, Store } from "lucide-react"
 import Link from "next/link"
 
 export function Footer() {
@@ -35,6 +35,14 @@ export function Footer() {
             <a href={externalLinks.ventures.creatorStore} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
               <Store className="h-5 w-5" />
               <span className="sr-only">Creator Store</span>
+            </a>
+            <a href={siteConfig.socials.discord} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
+              <MessageCircle className="h-5 w-5" />
+              <span className="sr-only">Discord</span>
+            </a>
+            <a href={siteConfig.socials.patreon} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
+              <Heart className="h-5 w-5" />
+              <span className="sr-only">Patreon</span>
             </a>
             <a href={`mailto:${siteConfig.email}`} className="text-muted-foreground transition-colors hover:text-foreground">
               <Mail className="h-5 w-5" />
