@@ -18,8 +18,7 @@ export default function Page() {
               Anthony Shead
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed text-pretty mb-12">
-              Full-stack developer building reliable, intuitive web experiences with Next.js, TypeScript, and thoughtful
-              design.
+              A Developer, Streamer, and Gymaholic based in the US with a passion for building cool stuff and sharing it with the world.
             </p>
 
             <div className="flex flex-wrap gap-4 items-center">

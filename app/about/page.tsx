@@ -8,14 +8,27 @@ import { getPublicCertifications, getPublicSkills } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
 
 const aboutParagraphs = [
-  "I'm Anthony Shead, a full-stack developer in California who likes building structured, scalable systems with modern web tools.",
-  "I didn't take a traditional path into programming. I started by pulling things apart, modding games, tweaking configs, and seeing what broke. That curiosity turned into a pattern: deconstruct, understand, then rebuild with intention. That mindset still drives how I learn and how I build today.",
-  "Programming really clicked for me when I started seeing it as architecture. It's not just writing code; it's designing how everything fits together, how components connect, how data moves, and how the system holds up as it grows. I try to build with structure from the start, favoring maintainability, clarity, and long-term scalability over quick hacks.",
-  "Right now I'm working across a modern full-stack setup: Next.js, React, TypeScript, MongoDB, and Prisma. I'm also building real-world pieces like auth, payments, and email using tools such as Clerk, Stripe, and Resend. Most of what I work on revolves around connected systems, shared databases, multi-app setups, and APIs that can actually support real products.",
-  "I'm building a small ecosystem of projects that all plug into each other, a portfolio with multiple apps like a blog, a creator store, and data tools, all under one structure. Alongside that, I'm working on Soren Tech, a development-focused brand aimed at helping people turn ideas into solid, working products. For me, it's not just about shipping features; it's about building systems that can grow, evolve, and stay reliable over time.",
-  "Consistency is a big part of how I work. I've been swimming for over thirteen years and still train regularly, and that discipline carries over into development. I care about steady progress, strong fundamentals, and long-term effort. I try to write software the same way: structured, repeatable, and always improving.",
-  "Long-term, I want to become a polyglot full-stack engineer, someone who knows multiple languages, paradigms, and architectures well enough to pick the right tool for the job. I care more about depth than shortcuts, and about building systems that are thoughtfully designed instead of rushed together.",
-  "Outside of day-to-day development, I'm laying the groundwork for Earth Plus, a long-term project focused on aligning technology with sustainability and real-world impact. I believe that well-designed systems, technical or personal, can create meaningful, lasting change when they're built with intention.",
+"I'm Anthony Shead, a full-stack developer in California focused on building structured, scalable, and meaningful digital systems with modern web tools.",
+
+  "I did not take a traditional path into programming. I started by pulling things apart, modding games, tweaking configs, and learning through trial, error, and curiosity. Over time, that became the way I approach almost everything: deconstruct the system, understand how it works, then rebuild it with more intention.",
+
+  "Programming really clicked for me when I started seeing it as architecture. Code is not just about making something function. It is about designing how everything fits together, how the structure supports the experience, how data moves, how components connect, and how the system holds up as it grows.",
+
+  "That way of thinking has shaped how I build today. I care about clarity, maintainability, and long-term scalability. I try to avoid rushing into quick fixes when the stronger answer is usually a better structure, a cleaner flow, or a system that is easier to understand later.",
+
+  "Right now, I work across a modern full-stack setup with tools like Next.js, React, TypeScript, MongoDB, and Prisma. I am also building real-world product layers such as authentication, payments, email systems, APIs, dashboards, and multi-app project structures.",
+
+  "A lot of my current work revolves around connected systems. I am building a portfolio ecosystem with multiple apps under one larger structure, including a blog, creator-focused tools, service pages, data systems, and internal project workflows. Each project is not just a standalone build. It is part of a larger foundation I am learning to design, connect, and scale.",
+
+  "Alongside my personal development work, I am building Soren Lab, a development-focused brand centered on full-stack websites, digital systems, and client-ready solutions. The goal is not just to build basic websites. It is to help people turn their ideas, stories, and business goals into digital systems that feel clear, intentional, and built to grow.",
+
+  "I see websites as more than pages on a screen. A strong website should communicate the work behind the brand. It should show direction, trust, effort, and purpose. That is why I like approaching web development with an architectural mindset: planning the structure, shaping the visual direction, and making sure the final product supports both the client and the people using it.",
+
+  "Consistency is a big part of how I work. I have been swimming for over thirteen years and still train regularly, and that discipline carries over into development. I care about steady progress, strong fundamentals, and long-term effort. I try to write software the same way: structured, repeatable, and always improving.",
+
+  "Long-term, I want to become a polyglot full-stack engineer. I want to understand multiple languages, paradigms, tools, and architectures well enough to choose the right solution for the problem instead of forcing one approach onto everything. I care more about depth than shortcuts, and more about building systems that last than rushing something together.",
+
+  "Outside of day-to-day development, I am also laying the groundwork for Earth Plus, a long-term project focused on sustainability, renewal, and real-world impact. I believe well-designed systems, whether technical, creative, or personal, can create meaningful change when they are built with intention."
 ]
 
 const experiences = [
