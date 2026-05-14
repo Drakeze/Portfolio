@@ -83,31 +83,58 @@ export default async function AboutPage() {
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div>
             <h2 className="text-2xl font-semibold mb-4">Who I Am</h2>
-            {aboutParagraphs.map((paragraph) => (
-              <p key={paragraph} className="text-muted-foreground leading-relaxed mb-4">
-                {paragraph}
-              </p>
-            ))}
+            <Card className="bg-muted/40 border-border p-6">
+              <ul className="space-y-3">
+                {aboutParagraphs.map((paragraph) => (
+                  <li key={paragraph} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-foreground/50 shrink-0" />
+                    <span>{paragraph}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
           </div>
 
           <div>
             <h2 className="text-2xl font-semibold mb-4">Experience</h2>
-            <div className="space-y-6">
-              {experiences.map((item) => (
-                <div key={`${item.company}-${item.role}`}>
-                  <div className="flex justify-between items-start gap-3 mb-2">
-                    <div>
-                      <h3 className="font-semibold">{item.role}</h3>
-                      <p className="text-sm text-muted-foreground">{item.company}</p>
-                    </div>
-                    <span className="text-sm text-muted-foreground whitespace-nowrap">{item.period}</span>
+            <div className="space-y-4">
+              {experiences.map((item, index) => (
+                <Card
+                  key={`${item.company}-${item.role}`}
+                  className={[
+                    "p-5 border-l-4",
+                    index === 0 && "border-l-blue-500 bg-blue-500/5",
+                    index === 1 && "border-l-purple-500 bg-purple-500/5",
+                    index === 2 && "border-l-emerald-500 bg-emerald-500/5",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                >
+                  <div className="mb-3">
+                    <span
+                      className={[
+                        "inline-block text-xs font-semibold px-2.5 py-1 rounded-full mb-2",
+                        index === 0 && "bg-blue-500/15 text-blue-600 dark:text-blue-400",
+                        index === 1 && "bg-purple-500/15 text-purple-600 dark:text-purple-400",
+                        index === 2 && "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                    >
+                      {item.period}
+                    </span>
+                    <h3 className="font-semibold text-foreground">{item.role}</h3>
+                    <p className="text-sm text-muted-foreground">{item.company}</p>
                   </div>
-                  <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+                  <ul className="space-y-1.5 text-sm text-muted-foreground">
                     {item.points.map((point) => (
-                      <li key={point}>{point}</li>
+                      <li key={point} className="flex items-start gap-2">
+                        <span className="mt-2 w-1 h-1 rounded-full bg-muted-foreground/60 shrink-0" />
+                        {point}
+                      </li>
                     ))}
                   </ul>
-                </div>
+                </Card>
               ))}
             </div>
           </div>
