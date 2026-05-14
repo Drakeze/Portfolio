@@ -2,7 +2,8 @@
 
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
-import { Menu } from "lucide-react"
+import { externalLinks } from "@/lib/site-links"
+import { ExternalLink, Menu } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -10,6 +11,11 @@ const links = [
   { href: "/projects", label: "My Work" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Connect" },
+]
+
+const externalNavLinks = [
+  { href: externalLinks.ventures.creatorStore, label: "Creator Store" },
+  { href: externalLinks.ventures.anakonis, label: "Anakonis" },
 ]
 
 export function Navigation() {
@@ -34,6 +40,19 @@ export function Navigation() {
               >
                 {link.label}
               </Link>
+            ))}
+            <span className="w-px h-4 bg-border" aria-hidden="true" />
+            {externalNavLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+                <ExternalLink className="h-3 w-3" />
+              </a>
             ))}
           </div>
 
@@ -60,6 +79,20 @@ export function Navigation() {
                     >
                       {link.label}
                     </Link>
+                  </SheetClose>
+                ))}
+                <div className="my-2 h-px bg-border" />
+                {externalNavLinks.map((link) => (
+                  <SheetClose asChild key={link.href}>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between rounded-md px-4 py-3 text-base font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                    >
+                      {link.label}
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
                   </SheetClose>
                 ))}
               </nav>
