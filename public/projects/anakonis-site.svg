@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Anakonis website illustration</title>
+  <desc id="desc">Streaming and collaboration platform with chat, live indicator, and content panels in purple and dark tones.</desc>
+  <defs>
+    <linearGradient id="an-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0a1e" />
+      <stop offset="100%" stop-color="#1e0a3c" />
+    </linearGradient>
+    <linearGradient id="an-stream" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#4c1d95" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" rx="40" fill="url(#an-bg)" />
+
+  <!-- Main card -->
+  <rect x="80" y="80" width="1040" height="640" rx="28" fill="#ffffff" opacity="0.05" />
+
+  <!-- Top bar / nav -->
+  <rect x="80" y="80" width="1040" height="56" rx="28" fill="#7c3aed" opacity="0.25" />
+  <rect x="120" y="97" width="120" height="22" rx="11" fill="#a78bfa" opacity="0.7" />
+  <rect x="980" y="97" width="60" height="22" rx="11" fill="#7c3aed" opacity="0.5" />
+  <rect x="910" y="97" width="60" height="22" rx="11" fill="#7c3aed" opacity="0.5" />
+
+  <!-- Stream / video panel -->
+  <rect x="110" y="165" width="700" height="390" rx="20" fill="url(#an-stream)" opacity="0.18" />
+  <rect x="110" y="165" width="700" height="390" rx="20" fill="#1a0533" opacity="0.6" />
+  <!-- Live badge -->
+  <rect x="140" y="195" width="64" height="26" rx="13" fill="#ef4444" />
+  <circle cx="155" cy="208" r="6" fill="#ffffff" opacity="0.9" />
+  <rect x="167" y="202" width="28" height="12" rx="6" fill="#ffffff" opacity="0.9" />
+  <!-- Video play icon -->
+  <circle cx="460" cy="360" r="52" fill="#7c3aed" opacity="0.35" />
+  <polygon points="445,335 445,385 495,360" fill="#a78bfa" opacity="0.8" />
+
+  <!-- Chat panel -->
+  <rect x="840" y="165" width="280" height="390" rx="20" fill="#13082a" opacity="0.9" />
+  <rect x="860" y="185" width="160" height="18" rx="9" fill="#7c3aed" opacity="0.4" />
+  <!-- Chat messages -->
+  <rect x="860" y="220" width="120" height="14" rx="7" fill="#a78bfa" opacity="0.3" />
+  <rect x="860" y="242" width="200" height="14" rx="7" fill="#6d28d9" opacity="0.25" />
+  <rect x="860" y="264" width="160" height="14" rx="7" fill="#a78bfa" opacity="0.3" />
+  <rect x="860" y="286" width="180" height="14" rx="7" fill="#6d28d9" opacity="0.25" />
+  <rect x="860" y="308" width="140" height="14" rx="7" fill="#a78bfa" opacity="0.3" />
+  <rect x="860" y="330" width="200" height="14" rx="7" fill="#6d28d9" opacity="0.25" />
+  <rect x="860" y="352" width="120" height="14" rx="7" fill="#a78bfa" opacity="0.3" />
+  <rect x="860" y="374" width="180" height="14" rx="7" fill="#6d28d9" opacity="0.25" />
+  <rect x="860" y="396" width="160" height="14" rx="7" fill="#a78bfa" opacity="0.3" />
+  <!-- Chat input -->
+  <rect x="860" y="500" width="240" height="36" rx="18" fill="#2d1055" />
+  <rect x="875" y="512" width="120" height="12" rx="6" fill="#7c3aed" opacity="0.4" />
+
+  <!-- Bottom info row -->
+  <rect x="110" y="578" width="700" height="60" rx="16" fill="#1a0533" opacity="0.7" />
+  <rect x="135" y="596" width="180" height="16" rx="8" fill="#a78bfa" opacity="0.5" />
+  <rect x="135" y="618" width="120" height="12" rx="6" fill="#7c3aed" opacity="0.4" />
+  <rect x="650" y="596" width="80" height="22" rx="11" fill="#7c3aed" opacity="0.6" />
+
+  <!-- Collab avatars -->
+  <circle cx="640" cy="607" r="14" fill="#4c1d95" />
+  <circle cx="616" cy="607" r="14" fill="#5b21b6" />
+  <circle cx="592" cy="607" r="14" fill="#6d28d9" />
+
+  <!-- Glow accent -->
+  <ellipse cx="460" cy="360" rx="200" ry="120" fill="#7c3aed" opacity="0.06" />
+</svg>

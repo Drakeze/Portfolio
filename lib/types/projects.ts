@@ -46,6 +46,15 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Drakeze/Creator-Tools",
   },
   {
+    title: "Anakonis",
+    description:
+      "Streamer and work collaboration hub built for the Anakonis brand a central space for community, content, and creative partnerships.",
+    image: "/projects/anakonis-site.svg",
+    tags: ["React", "TypeScript", "Bun", "Vercel"],
+    liveUrl: "https://anakonis.drakeze.com",
+    githubUrl: "https://github.com/Drakeze/Anakonis",
+  },
+  {
     title: "GrowthVault",
     description:
       "A collaborative study repository with bite-sized projects and code snippets that document my learning journey.",

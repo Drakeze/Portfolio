@@ -70,9 +70,28 @@ function GetInTouchCard() {
   const [loading, setLoading] = React.useState(false)
   const [success, setSuccess] = React.useState(false)
   const [submitError, setSubmitError] = React.useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = React.useState<{ name?: string; email?: string; message?: string }>({})
+
+  function validate() {
+    const errors: typeof fieldErrors = {}
+    if (!name.trim()) errors.name = "Name is required."
+    if (!email.trim()) {
+      errors.email = "Email is required."
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "Enter a valid email address."
+    }
+    if (!message.trim()) errors.message = "Message is required."
+    return errors
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const errors = validate()
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      return
+    }
+    setFieldErrors({})
     setLoading(true)
     setSuccess(false)
     setSubmitError(null)
@@ -103,21 +122,48 @@ function GetInTouchCard() {
   return (
     <Card className="space-y-6 p-8">
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <Input type="text" placeholder="Your Name" autoFocus value={name} onChange={(e) => setName(e.target.value)} required />
-        <Input
-          type="email"
-          placeholder="Your Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <Textarea
-          placeholder="Tell me about your project"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          required
-          rows={6}
-        />
+        <div className="space-y-1.5">
+          <label htmlFor="contact-name" className="text-sm font-medium">
+            Name
+          </label>
+          <Input
+            id="contact-name"
+            type="text"
+            placeholder="Your name"
+            autoFocus
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          {fieldErrors.name ? <p className="text-xs text-red-500">{fieldErrors.name}</p> : null}
+        </div>
+
+        <div className="space-y-1.5">
+          <label htmlFor="contact-email" className="text-sm font-medium">
+            Email
+          </label>
+          <Input
+            id="contact-email"
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {fieldErrors.email ? <p className="text-xs text-red-500">{fieldErrors.email}</p> : null}
+        </div>
+
+        <div className="space-y-1.5">
+          <label htmlFor="contact-message" className="text-sm font-medium">
+            Message
+          </label>
+          <Textarea
+            id="contact-message"
+            placeholder="Tell me about your project or idea"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            rows={6}
+          />
+          {fieldErrors.message ? <p className="text-xs text-red-500">{fieldErrors.message}</p> : null}
+        </div>
 
         <Button type="submit" disabled={loading}>
           <Mail className="mr-2 h-4 w-4" />
