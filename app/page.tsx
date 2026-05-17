@@ -1,16 +1,10 @@
 import { DeferredGlobe } from "@/components/deferred-globe"
-import { ProjectCard } from "@/components/sections/project-card"
 import { Button } from "@/components/ui/button"
-import { getPublicProjects } from "@/lib/public-content"
-import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 
 export const revalidate = 3600
 
-export default async function Page() {
-  const projects = await getPublicProjects()
-  const featured = projects.slice(0, 3)
-
+export default function Page() {
   return (
     <main>
       <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden">
@@ -24,8 +18,7 @@ export default async function Page() {
               Anthony Shead
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed text-pretty mb-12">
-              Full-stack developer building reliable, intuitive web experiences with Next.js, TypeScript, and thoughtful
-              design.
+              A Developer, Streamer, and Gymaholic based in the US with a passion for building cool stuff and sharing it with the world.
             </p>
 
             <div className="flex flex-wrap gap-4 items-center">
@@ -39,36 +32,6 @@ export default async function Page() {
           </div>
         </div>
       </section>
-
-      {featured.length > 0 && (
-        <section className="bg-muted/30 border-t px-6 py-24">
-          <div className="container mx-auto max-w-6xl">
-            <div className="flex items-end justify-between mb-10">
-              <div>
-                <h2 className="text-3xl font-bold mb-2">Featured Work</h2>
-                <p className="text-muted-foreground">A few recent projects worth looking at.</p>
-              </div>
-              <Button variant="ghost" asChild className="hidden sm:flex items-center gap-1">
-                <Link href="/projects">
-                  View all <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featured.map((project) => (
-                <ProjectCard key={project._id ?? project.slug ?? project.title} project={project} variant="featured" />
-              ))}
-            </div>
-
-            <div className="mt-8 sm:hidden">
-              <Button variant="outline" asChild className="w-full">
-                <Link href="/projects">View all projects</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
     </main>
   )
 }
