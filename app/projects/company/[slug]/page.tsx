@@ -55,7 +55,11 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
       </section>
 
       <section className="max-w-5xl mx-auto">
-        {company.gallery && company.gallery.length > 0 ? (
+        {company.Banner ? (
+          <div className="rounded-2xl overflow-hidden border shadow-md">
+            <company.Banner href={company.liveUrl} />
+          </div>
+        ) : company.gallery && company.gallery.length > 0 ? (
           <div className="rounded-2xl overflow-hidden border shadow-md">
             <CompanyGallery images={company.gallery} />
           </div>

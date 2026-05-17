@@ -1,3 +1,8 @@
+import type { ComponentType } from "react"
+
+import EarthPlusBanner from "@/components/banners/EarthPlusBanner"
+import SorenLabBanner from "@/components/banners/SorenLabBanner"
+
 export type Company = {
   slug: string
   title: string
@@ -6,6 +11,8 @@ export type Company = {
   longDescription: string
   heroImage?: string
   gallery: string[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Banner?: ComponentType<any>
   tags: string[]
   liveUrl?: string
   githubUrl?: string
@@ -24,12 +31,8 @@ A core part of the process is clarity. Rather than jumping straight into impleme
 Soren Lab treats software less like an abstract technical task and more like structured design. Code, interfaces, and systems are approached with the same care as architecture, focusing on maintainability, scalability, and long-term usefulness rather than short-term output.
 
 Beyond client work, the long-term direction of Soren Lab is to build reusable tools and APIs and to apply technology in areas that form the backbone of society, such as agriculture, healthcare, and veterinary systems, where thoughtful software can have lasting impact.`,
-    heroImage: "/Soren%20Tech/android-chrome-512x512.png",
-    gallery: [
-      "/components/banners/SorenLabBanner.jsx",
-      "/Soren%20Tech/android-chrome-192x192.png",
-      "/Soren%20Tech/apple-touch-icon.png"
-    ],
+    Banner: SorenLabBanner,
+    gallery: [],
     tags: [
       "Next.js",
       "TypeScript",
@@ -57,12 +60,8 @@ The initiative is designed as an ecosystem rather than a single product. As tech
 In addition to financial reinvestment, Earth Plus explores tangible initiatives such as recycled and reusable products, sustainable materials, and environmental tooling that can be applied across communities. The focus is on practical systems that scale, adapt, and improve over time rather than one-off solutions.
 
 At its core, Earth Plus exists to ensure that the systems we build today contribute to a future that remains livable. It is intentionally positioned as a long-term effort that grows alongside technological advancement rather than opposing it.`,
-    heroImage: "/Earth%20Plus/android-chrome-512x512.png",
-    gallery: [
-      "/components/banners/EarthPlusBanner.jsx",
-      "/Earth%20Plus/android-chrome-192x192.png",
-      "/Earth%20Plus/apple-touch-icon.png"
-    ],
+    Banner: EarthPlusBanner,
+    gallery: [],
     tags: [
       "React",
       "TypeScript",

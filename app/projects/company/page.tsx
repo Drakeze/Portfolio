@@ -45,10 +45,12 @@ export default async function CompanyProjectsPage() {
                 {company.shortDescription}
               </p>
               
-              {/* Slideshow */}
-              {company.gallery && company.gallery.length > 0 && (
+              {/* Banner / Gallery */}
+              {company.Banner ? (
+                <company.Banner href={company.liveUrl} />
+              ) : company.gallery && company.gallery.length > 0 ? (
                 <CompanyGallery images={company.gallery} />
-              )}
+              ) : null}
 
               {/* Long Description */}
               <div className="space-y-4 text-muted-foreground leading-relaxed">

@@ -3,6 +3,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import type { Project } from "@/lib/types/projects"
 import { cn } from "@/lib/utils"
 import { ExternalLink } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 
 function GitHubMark({ className }: { className?: string }) {
   return (
@@ -11,8 +13,6 @@ function GitHubMark({ className }: { className?: string }) {
     </svg>
   )
 }
-import Image from "next/image"
-import Link from "next/link"
 
 type ProjectCardVariant = "featured" | "detailed"
 
@@ -40,18 +40,29 @@ const variantConfig: Record<
 export function ProjectCard({ project, variant = "detailed" }: ProjectCardProps) {
   const config = variantConfig[variant]
 
+  const accent = project.accentColor
+
   return (
-    <Card className="group border-border transition-all duration-300 hover:border-primary/20 hover:shadow-xl">
+    <Card
+      className="group border transition-all duration-300 hover:shadow-xl"
+      style={accent ? { borderColor: accent } : undefined}
+    >
       <CardContent className="p-0">
-        <div className={`relative overflow-hidden rounded-t-lg bg-muted/40 p-8 ${config.imageClass}`}>
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            sizes={config.imageSizes}
-            className="object-contain p-8 transition-transform duration-300 group-hover:scale-105"
-          />
-        </div>
+        {project.Banner ? (
+          <div className="overflow-hidden rounded-t-lg">
+            <project.Banner href={project.liveUrl} />
+          </div>
+        ) : project.image ? (
+          <div className={`relative overflow-hidden rounded-t-lg bg-muted/40 p-8 ${config.imageClass}`}>
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes={config.imageSizes}
+              className="object-contain p-8 transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+        ) : null}
         <div className="p-6">
           <h3 className="text-xl font-semibold text-foreground mb-3">{project.title}</h3>
           <p className="text-sm leading-relaxed text-muted-foreground mb-4">
