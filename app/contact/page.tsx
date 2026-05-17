@@ -20,7 +20,7 @@ const connectLinks = [
 const ventureLinks = [
   {
     href: externalLinks.ventures.sorenTech,
-    title: "Soren Tech",
+    title: "Soren Lab",
     description: "Custom web products, systems, and software delivery services.",
     icon: Building2,
   },

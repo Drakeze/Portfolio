@@ -13,20 +13,20 @@ export type Company = {
 export const companies: Company[] = [
   {
     slug: "soren-tech",
-    title: "Soren Tech",
+    title: "Soren Lab",
     tagline: "Turning complex ideas into structured software systems.",
     shortDescription:
       "A technology studio focused on turning ideas into clear, well-structured software systems through thoughtful design and guided collaboration.",
-    longDescription: `Soren Tech is built around the idea that many strong ideas fail not because they lack potential, but because they are difficult to translate into technical reality. The studio exists to bridge the gap between non-technical vision and production-ready software.
+    longDescription: `Soren Lab is built around the idea that many strong ideas fail not because they lack potential, but because they are difficult to translate into technical reality. The studio exists to bridge the gap between non-technical vision and production-ready software.
 
 A core part of the process is clarity. Rather than jumping straight into implementation, work begins with walkthroughs, visual mockups, and early prototypes that allow ideas to be explored, adjusted, and understood before they are built. This helps clients see their vision take shape while allowing engineering decisions to be made with better context and fewer assumptions.
 
-Soren Tech treats software less like an abstract technical task and more like structured design. Code, interfaces, and systems are approached with the same care as architecture, focusing on maintainability, scalability, and long-term usefulness rather than short-term output.
+Soren Lab treats software less like an abstract technical task and more like structured design. Code, interfaces, and systems are approached with the same care as architecture, focusing on maintainability, scalability, and long-term usefulness rather than short-term output.
 
-Beyond client work, the long-term direction of Soren Tech is to build reusable tools and APIs and to apply technology in areas that form the backbone of society, such as agriculture, healthcare, and veterinary systems, where thoughtful software can have lasting impact.`,
+Beyond client work, the long-term direction of Soren Lab is to build reusable tools and APIs and to apply technology in areas that form the backbone of society, such as agriculture, healthcare, and veterinary systems, where thoughtful software can have lasting impact.`,
     heroImage: "/Soren%20Tech/android-chrome-512x512.png",
     gallery: [
-      "/Soren%20Tech/android-chrome-512x512.png",
+      "/components/banners/SorenLabBanner.jsx",
       "/Soren%20Tech/android-chrome-192x192.png",
       "/Soren%20Tech/apple-touch-icon.png"
     ],
@@ -42,7 +42,6 @@ Beyond client work, the long-term direction of Soren Tech is to build reusable t
       "MongoDB",
       "Stripe API",
     ],
-    liveUrl: "https://SorenLab.com",
     githubUrl: "https://github.com/SorenLab",
   },
   {
@@ -60,7 +59,7 @@ In addition to financial reinvestment, Earth Plus explores tangible initiatives 
 At its core, Earth Plus exists to ensure that the systems we build today contribute to a future that remains livable. It is intentionally positioned as a long-term effort that grows alongside technological advancement rather than opposing it.`,
     heroImage: "/Earth%20Plus/android-chrome-512x512.png",
     gallery: [
-      "/Earth%20Plus/android-chrome-512x512.png",
+      "/components/banners/EarthPlusBanner.jsx",
       "/Earth%20Plus/android-chrome-192x192.png",
       "/Earth%20Plus/apple-touch-icon.png"
     ],
@@ -75,7 +74,6 @@ At its core, Earth Plus exists to ensure that the systems we build today contrib
       "Prisma",
       "Stripe API",
     ],
-    liveUrl: "https://earth-plus.vercel.app/",
     githubUrl: "https://github.com/EarthPlus-Organization/EP-Mono",
   },
 ]

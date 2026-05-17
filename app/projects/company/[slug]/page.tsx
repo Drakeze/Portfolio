@@ -84,13 +84,9 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
         </div>
 
         <div className="flex justify-center gap-6">
-          {company.liveUrl && (
-            <Button asChild>
-              <a href={company.liveUrl} target="_blank" rel="noopener noreferrer">
-                Visit Website
-              </a>
-            </Button>
-          )}
+          <Button variant="secondary" disabled>
+            Still in development
+          </Button>
 
           {company.githubUrl && (
             <Button variant="outline" asChild>

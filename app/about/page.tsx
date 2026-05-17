@@ -1,5 +1,5 @@
-import type { Metadata } from "next"
 import { Award, Download } from "lucide-react"
+import type { Metadata } from "next"
 
 import SkillsSection from "@/components/sections/skillsection"
 import { Button } from "@/components/ui/button"
@@ -30,37 +30,29 @@ const aboutParagraphs = [
 
   "Outside of day-to-day development, I am also laying the groundwork for Earth Plus, a long-term project focused on sustainability, renewal, and real-world impact. I believe well-designed systems, whether technical, creative, or personal, can create meaningful change when they are built with intention."
 ]
-
 const experiences = [
   {
-    role: "Founder & Full-Stack Developer",
-    company: "Soren Tech",
-    period: "2025 - Present",
+    role: "Front-End / Full-Stack Developer",
+    company: "D-Sports",
+    period: "2025 | 6 months",
     points: [
-      "Launched a studio focused on building professional websites and APIs that align with client goals.",
-      "Design and maintain a growing suite of turnkey full-stack products that can be customized per engagement.",
-      "Lead every project phase, from UX strategy in Next.js and Tailwind CSS to backend architecture with Node.js and MongoDB.",
-      "Own deployment, hosting, and integrations via platforms such as Vercel, Supabase, and Stripe.",
+      "Contributed to the development of a sports card trading web/mobile application with pack-opening, card collection, quests, and achievement-based reward systems.",
+      "Built and improved user-facing features for interactive sports card experiences, including UI flows for collecting, trading, and unlocking digital cards.",
+      "Worked on responsive layouts, reusable components, and application interface structure using modern JavaScript and TypeScript workflows.",
+      "Assisted with connecting front-end features to backend/API functionality for app data, user actions, and card-related features.",
+      "Helped debug, test, and improve application features during active startup development.",
+      "Gained hands-on experience working in a fast-moving startup environment with changing product priorities.",
     ],
   },
   {
-    role: "Freelance Web Developer",
-    company: "Client Projects",
-    period: "2023 - 2024",
+    role: "Protein Shake Bar Associate",
+    company: "Crunch Fitness",
+    period: "2022 | 2 months",
     points: [
-      "Delivered responsive web experiences for entrepreneurs and small businesses across multiple industries.",
-      "Built bespoke interfaces with React, Next.js, and Tailwind CSS to reflect each brand's voice and goals.",
-      "Managed projects end-to-end - discovery, roadmaps, launch, and ongoing support - while keeping communication clear.",
-    ],
-  },
-  {
-    role: "Junior Full-Stack Developer (Contributor)",
-    company: "D-Sports Ecosystem (Startup Project)",
-    period: "2024 - 2025",
-    points: [
-      "Collaborated with the founding team on early prototypes for a sports and technology platform.",
-      "Tackled junior-level full-stack tickets that strengthened fundamentals in React, Node.js, and data modeling.",
-      "Completed initial GitHub projects, certifications, and agile sprints while learning professional team workflows.",
+      "Prepared and served protein shakes and nutrition-focused products in a gym environment.",
+      "Assisted customers with orders, product questions, and point-of-sale transactions.",
+      "Maintained cleanliness, organization, and product readiness during shifts.",
+      "Developed customer service, communication, and time-management skills.",
     ],
   },
 ]
@@ -192,7 +184,7 @@ export default async function AboutPage() {
                 </ul>
 
                 <Button variant="outline" className="w-full bg-transparent" asChild>
-                  <a href="/resume.pdf" download>
+                  <a href="/public/ashead-resume.pdf" download>
                     <Download className="h-4 w-4 mr-2" />
                     Download Resume
                   </a>

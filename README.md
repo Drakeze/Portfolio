@@ -48,7 +48,7 @@ This portfolio highlights and connects to multiple ongoing projects, including:
 
 In addition, this portfolio reflects work associated with my organizations:
 - **Earth Plus**  
-- **Soren Tech**
+- **Soren Lab**
 
 These projects represent both practical applications and long-term initiatives.
 

@@ -75,13 +75,9 @@ export default async function CompanyProjectsPage() {
 
               {/* Links */}
               <div className="flex flex-wrap gap-3 pt-4">
-                {company.liveUrl && (
-                  <Button asChild>
-                    <a href={company.liveUrl} target="_blank" rel="noopener noreferrer">
-                      Visit Website
-                    </a>
-                  </Button>
-                )}
+                <Button variant="secondary" disabled>
+                  Still in development
+                </Button>
 
                 {company.githubUrl && (
                   <Button variant="outline" asChild>
