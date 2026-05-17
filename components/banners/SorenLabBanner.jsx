@@ -50,8 +50,10 @@ export default function SorenLabBanner({ onClick, href, bare }) {
     if (!svg) return;
     const NS = 'http://www.w3.org/2000/svg';
 
-    // Clear any existing content (strict mode double-mount safe)
-    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    // Clear dynamic content but preserve the <style> element
+    Array.from(svg.children)
+      .filter(el => el.tagName.toLowerCase() !== 'style')
+      .forEach(el => svg.removeChild(el));
 
     // Edges (drawn first so they sit behind nodes)
     EDGES.forEach(([a, b], i) => {
@@ -187,7 +189,7 @@ export default function SorenLabBanner({ onClick, href, bare }) {
           ref={svgRef}
           width="90"
           height="90"
-          viewBox="0 0 90 90"
+          viewBox="-10 -10 110 110"
           aria-label="Service connection diagram"
         >
           <style>{`

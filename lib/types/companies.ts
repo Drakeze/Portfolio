@@ -16,6 +16,7 @@ export type Company = {
   tags: string[]
   liveUrl?: string
   githubUrl?: string
+  accentColor?: string
 }
 export const companies: Company[] = [
   {
@@ -32,6 +33,7 @@ Soren Lab treats software less like an abstract technical task and more like str
 
 Beyond client work, the long-term direction of Soren Lab is to build reusable tools and APIs and to apply technology in areas that form the backbone of society, such as agriculture, healthcare, and veterinary systems, where thoughtful software can have lasting impact.`,
     Banner: SorenLabBanner,
+    accentColor: '#185FA5',
     gallery: [],
     tags: [
       "Next.js",
@@ -61,6 +63,7 @@ In addition to financial reinvestment, Earth Plus explores tangible initiatives 
 
 At its core, Earth Plus exists to ensure that the systems we build today contribute to a future that remains livable. It is intentionally positioned as a long-term effort that grows alongside technological advancement rather than opposing it.`,
     Banner: EarthPlusBanner,
+    accentColor: '#1D9E75',
     gallery: [],
     tags: [
       "React",

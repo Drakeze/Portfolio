@@ -36,6 +36,12 @@ const WORLD_MAP = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
+const PARTICLES = [
+  { left: 18, top: 28 }, { left: 35, top: 58 }, { left: 52, top: 38 },
+  { left: 67, top: 68 }, { left: 76, top: 32 }, { left: 24, top: 72 },
+  { left: 44, top: 26 }, { left: 82, top: 52 },
+];
+
 const GRID = 10;
 const PX   = 8;   // canvas pixels per cell
 const CX   = 5;   // circle center x (cell units)
@@ -77,6 +83,8 @@ export default function EarthPlusBanner({ onClick, href, bare }) {
       const noise = noiseRef.current;
       if (!noise) return;
 
+      const isDark = document.documentElement.classList.contains('dark');
+
       ctx.clearRect(0, 0, GRID * PX, GRID * PX);
       const offset = Math.floor(((t * 0.000028) % 1) * GRID);
 
@@ -88,10 +96,13 @@ export default function EarthPlusBanner({ onClick, href, bare }) {
           const cell   = WORLD_MAP[row][mapCol] || 1;
           const n      = noise[row][col];
 
-          ctx.fillStyle =
-            cell === 2
-              ? `rgb(${(28 * n) | 0}, ${(148 * n) | 0}, ${(55 * n) | 0})`   // land green
-              : `rgb(${(18 * n) | 0}, ${(100 * n) | 0}, ${(185 * n) | 0})`; // ocean blue
+          ctx.fillStyle = isDark
+            ? cell === 2
+              ? `rgb(${(50 * n) | 0}, ${(195 * n) | 0}, ${(85 * n) | 0})`    // land — brighter for dark
+              : `rgb(${(35 * n) | 0}, ${(140 * n) | 0}, ${(225 * n) | 0})`   // ocean — brighter for dark
+            : cell === 2
+              ? `rgb(${(28 * n) | 0}, ${(148 * n) | 0}, ${(55 * n) | 0})`    // land
+              : `rgb(${(18 * n) | 0}, ${(100 * n) | 0}, ${(185 * n) | 0})`;  // ocean
           ctx.fillRect(col * PX, row * PX, PX - 1, PX - 1);
         }
       }
@@ -99,7 +110,7 @@ export default function EarthPlusBanner({ onClick, href, bare }) {
       // Atmosphere rim
       ctx.beginPath();
       ctx.arc(CX * PX, CY * PX, R * PX, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(29, 158, 117, 0.45)';
+      ctx.strokeStyle = isDark ? 'rgba(50, 210, 130, 0.55)' : 'rgba(29, 158, 117, 0.45)';
       ctx.lineWidth   = 1.5;
       ctx.stroke();
     }
@@ -168,7 +179,7 @@ export default function EarthPlusBanner({ onClick, href, bare }) {
         aria-hidden="true"
         style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}
       >
-        {Array.from({ length: 8 }).map((_, i) => (
+        {PARTICLES.map(({ left, top }, i) => (
           <div
             key={i}
             style={{
@@ -177,8 +188,8 @@ export default function EarthPlusBanner({ onClick, href, bare }) {
               height:          '3px',
               borderRadius:    '50%',
               background:      'rgba(29, 158, 117, 0.3)',
-              left:            `${15 + Math.random() * 70}%`,
-              top:             `${25 + Math.random() * 55}%`,
+              left:            `${left}%`,
+              top:             `${top}%`,
               opacity:         0,
               animation:       `earthFloat ${3 + i * 0.5}s ${i * 0.6}s ease-in-out infinite`,
             }}

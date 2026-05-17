@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 const TAGLINES = ['Your content, live and direct','Stream it. Clip it. Share it.','Built for creators, by a creator','Go live anywhere, anytime'];
 const BAR_SCALES = [.5,.8,.35,.9,.55,.75,.4,.85,.6,.7,.45,.9,.55,.8,.4,.65];
+const BAR_PARAMS = BAR_SCALES.map((_, i) => ({ mn: .15 + (i % 4) * .05, dur: .45 + (i % 5) * .15 }));
 export default function StreamHubBanner({ onClick, href, bare }) {
   const wfRef = useRef(null);
   const [tlIdx, setTlIdx] = useState(0);
@@ -9,9 +10,10 @@ export default function StreamHubBanner({ onClick, href, bare }) {
   useEffect(() => {
     const bars = wfRef.current;
     if (!bars) return;
+    while (bars.firstChild) bars.removeChild(bars.firstChild);
     BAR_SCALES.forEach((h, i) => {
       const b = document.createElement('div');
-      const mn = .15 + Math.random() * .2, dur = .45 + Math.random() * .7;
+      const { mn, dur } = BAR_PARAMS[i];
       b.style.cssText = `width:3px;height:52px;flex-shrink:0;background:#6B21A8;border-radius:2px 2px 0 0;transform-origin:bottom;transform:scaleY(${h});animation:streamWave ${dur}s ${i*.06}s ease-in-out infinite;--mn:${mn}`;
       bars.appendChild(b);
     });

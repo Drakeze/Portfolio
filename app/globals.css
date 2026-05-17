@@ -4,6 +4,16 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --color-background-primary: oklch(0.985 0.002 260);
+  --color-background-secondary: oklch(0.95 0.004 255);
+  --color-border-tertiary: oklch(0.88 0.004 255);
+  --color-border-secondary: oklch(0.88 0.004 255);
+  --color-text-primary: oklch(0.15 0.01 255);
+  --color-text-secondary: oklch(0.5 0.01 255);
+  --color-background-info: oklch(0.95 0.04 245);
+  --color-border-info: oklch(0.72 0.12 245);
+  --color-text-info: oklch(0.36 0.12 245);
+
   --background: oklch(0.985 0.002 260);
   --foreground: oklch(0.15 0.01 255);
   --card: oklch(0.995 0.001 260);
@@ -40,6 +50,16 @@
 }
 
 .dark {
+  --color-background-primary: oklch(0.2 0.012 255);
+  --color-background-secondary: oklch(0.25 0.01 255);
+  --color-border-tertiary: oklch(0.3 0.01 255);
+  --color-border-secondary: oklch(0.3 0.01 255);
+  --color-text-primary: oklch(0.96 0.002 260);
+  --color-text-secondary: oklch(0.72 0.01 255);
+  --color-background-info: oklch(0.24 0.04 245);
+  --color-border-info: oklch(0.52 0.12 245);
+  --color-text-info: oklch(0.72 0.12 245);
+
   --background: oklch(0.16 0.01 255);
   --foreground: oklch(0.96 0.002 260);
   --card: oklch(0.2 0.012 255);

@@ -33,6 +33,7 @@ export default async function CompanyProjectsPage() {
           <Card
             key={company.slug}
             className="overflow-hidden rounded-2xl transition hover:shadow-lg hover:-translate-y-1 duration-300"
+            style={company.accentColor ? { borderColor: company.accentColor } : undefined}
           >
             {/* Banner — bare, full width at top */}
             {company.Banner ? (
