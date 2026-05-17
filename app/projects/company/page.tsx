@@ -29,58 +29,34 @@ export default async function CompanyProjectsPage() {
       <section className="grid gap-6 md:grid-cols-2">
         {companies.length === 0 ? (
           <Card className="p-8 text-center text-muted-foreground md:col-span-2">No companies published yet.</Card>
-        ) : companies.map((company) => {
-          return (
-            <Card
-              key={company.slug}
-              className="p-8 space-y-6 rounded-2xl transition hover:shadow-lg hover:-translate-y-1 duration-300"
-            >
-              <div className="space-y-2">
-                <h3 className="text-xl font-semibold">{company.title}</h3>
-                <p className="text-sm font-medium text-primary">
-                  {company.tagline}
-                </p>
+        ) : companies.map((company) => (
+          <Card
+            key={company.slug}
+            className="overflow-hidden rounded-2xl transition hover:shadow-lg hover:-translate-y-1 duration-300"
+          >
+            {/* Banner — bare, full width at top */}
+            {company.Banner ? (
+              <div className="overflow-hidden rounded-t-2xl">
+                <company.Banner href={company.liveUrl} bare />
               </div>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                {company.shortDescription}
-              </p>
-              
-              {/* Banner / Gallery */}
-              {company.Banner ? (
-                <company.Banner href={company.liveUrl} />
-              ) : company.gallery && company.gallery.length > 0 ? (
-                <CompanyGallery images={company.gallery} />
-              ) : null}
+            ) : company.gallery && company.gallery.length > 0 ? (
+              <CompanyGallery images={company.gallery} />
+            ) : null}
 
-              {/* Long Description */}
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                {company.longDescription
-                  .split("\n\n")
-                  .map((paragraph, i) => (
-                    <p key={i}>{paragraph}</p>
-                  ))}
-              </div>
-
-              
-
-              {/* Tech Stack */}
-              <div className="flex flex-wrap gap-2 pt-4">
-                {company.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs px-2 py-1 rounded-md bg-muted/60 border border-muted-foreground/20"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Links */}
-              <div className="flex flex-wrap gap-3 pt-4">
-                <Button variant="secondary" disabled>
-                  Still in development
-                </Button>
-
+            {/* Buttons — right under the animation */}
+            <div className="p-4 border-b border-border">
+              <div className="flex flex-wrap gap-3">
+                {company.liveUrl ? (
+                  <Button asChild>
+                    <a href={company.liveUrl} target="_blank" rel="noopener noreferrer">
+                      Visit Live Website
+                    </a>
+                  </Button>
+                ) : (
+                  <Button variant="secondary" disabled>
+                    Still in development
+                  </Button>
+                )}
                 {company.githubUrl && (
                   <Button variant="outline" asChild>
                     <a href={company.githubUrl} target="_blank" rel="noopener noreferrer">
@@ -89,9 +65,19 @@ export default async function CompanyProjectsPage() {
                   </Button>
                 )}
               </div>
-            </Card>
-          )
-        })}
+            </div>
+
+            {/* Description */}
+            <div className="p-6 space-y-4 text-sm text-muted-foreground leading-relaxed">
+              <p className="text-base">{company.shortDescription}</p>
+              {company.longDescription
+                .split("\n\n")
+                .map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+            </div>
+          </Card>
+        ))}
       </section>
     </div>
   )

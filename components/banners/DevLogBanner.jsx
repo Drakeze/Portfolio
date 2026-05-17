@@ -9,7 +9,7 @@ const POSTS = [
   {date:'Apr 22',title:'The Polyglot Journey Begins'},
   {date:'Apr 15',title:'Learning Lua the Hard Way'},
 ];
-export default function DevLogBanner({ onClick, href }) {
+export default function DevLogBanner({ onClick, href, bare }) {
   const postsRef = useRef(null);
   const [tlIdx, setTlIdx] = useState(0);
   const [tlFade, setTlFade] = useState(true);
@@ -29,9 +29,12 @@ export default function DevLogBanner({ onClick, href }) {
   }, []);
   const W = href ? 'a' : 'div';
   return (
-    <W href={href} onClick={onClick} style={{display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #0A8060',borderRadius:'12px',overflow:'hidden',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
-      onMouseEnter={e=>e.currentTarget.style.borderLeftColor='#1D9E75'}
-      onMouseLeave={e=>e.currentTarget.style.borderLeftColor='#0A8060'}>
+    <W href={href} onClick={onClick}
+      style={bare
+        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',overflow:'hidden',width:'100%',cursor:'pointer',textDecoration:'none'}
+        : {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #0A8060',borderRadius:'12px',overflow:'hidden',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
+      onMouseEnter={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#1D9E75'}
+      onMouseLeave={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#0A8060'}>
       <div style={{flexShrink:0,width:'80px',height:'78px',overflow:'hidden'}}>
         <div ref={postsRef}/>
       </div>

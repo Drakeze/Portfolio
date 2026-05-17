@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 const TAGLINES = ['Everything you need to create','Presets, overlays, and more','Your creative toolkit','Built for your workflow'];
 const ITEMS = [{icon:'🎮',label:'Stream Overlays',price:'$9'},{icon:'🎨',label:'LUT Bundle',price:'$24'},{icon:'🎵',label:'Audio Pack',price:'$12'}];
-export default function CreatorStoreBanner({ onClick, href }) {
+export default function CreatorStoreBanner({ onClick, href, bare }) {
   const [tlIdx, setTlIdx] = useState(0);
   const [tlFade, setTlFade] = useState(true);
   useEffect(() => {
@@ -14,9 +14,12 @@ export default function CreatorStoreBanner({ onClick, href }) {
   }, []);
   const W = href ? 'a' : 'div';
   return (
-    <W href={href} onClick={onClick} style={{display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #BA7517',borderRadius:'12px',overflow:'hidden',position:'relative',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
-      onMouseEnter={e=>e.currentTarget.style.borderLeftColor='#EF9F27'}
-      onMouseLeave={e=>e.currentTarget.style.borderLeftColor='#BA7517'}>
+    <W href={href} onClick={onClick}
+      style={bare
+        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',overflow:'hidden',position:'relative',width:'100%',cursor:'pointer',textDecoration:'none'}
+        : {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #BA7517',borderRadius:'12px',overflow:'hidden',position:'relative',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
+      onMouseEnter={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#EF9F27'}
+      onMouseLeave={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#BA7517'}>
       <div style={{flexShrink:0,width:'80px',height:'78px',display:'flex',flexDirection:'column',justifyContent:'center',gap:'7px'}}>
         {ITEMS.map(({icon,label,price},i)=>(
           <div key={i} style={{display:'flex',alignItems:'center',gap:'5px',background:'var(--color-background-secondary)',border:'.5px solid var(--color-border-secondary)',borderRadius:'6px',padding:'4px 6px',animation:`storeSlide .5s ${.3+i*.18}s ease-out both`}}>

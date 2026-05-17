@@ -51,7 +51,7 @@ const IN_CIRCLE = Array.from({ length: GRID }, (_, r) =>
   })
 );
 
-export default function EarthPlusBanner({ onClick, href }) {
+export default function EarthPlusBanner({ onClick, href, bare }) {
   const canvasRef  = useRef(null);
   const noiseRef   = useRef(null);
   const rafRef     = useRef(null);
@@ -135,7 +135,17 @@ export default function EarthPlusBanner({ onClick, href }) {
     <Wrapper
       {...wrapperProps}
       onClick={onClick}
-      style={{
+      style={bare ? {
+        display:         'flex',
+        alignItems:      'center',
+        gap:             '16px',
+        padding:         '1.25rem',
+        overflow:        'hidden',
+        position:        'relative',
+        width:           '100%',
+        cursor:          'pointer',
+        textDecoration:  'none',
+      } : {
         display:         'flex',
         alignItems:      'center',
         gap:             '16px',
@@ -150,8 +160,8 @@ export default function EarthPlusBanner({ onClick, href }) {
         textDecoration:  'none',
         transition:      'border-left-color 0.2s ease',
       }}
-      onMouseEnter={e => (e.currentTarget.style.borderLeftColor = '#22c55e')}
-      onMouseLeave={e => (e.currentTarget.style.borderLeftColor = '#1D9E75')}
+      onMouseEnter={bare ? undefined : e => (e.currentTarget.style.borderLeftColor = '#22c55e')}
+      onMouseLeave={bare ? undefined : e => (e.currentTarget.style.borderLeftColor = '#1D9E75')}
     >
       {/* Floating particles */}
       <div

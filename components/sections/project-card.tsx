@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import type { Project } from "@/lib/types/projects"
-import { cn } from "@/lib/utils"
 import { ExternalLink } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -21,26 +20,9 @@ type ProjectCardProps = {
   variant?: ProjectCardVariant
 }
 
-const variantConfig: Record<
-  ProjectCardVariant,
-  { imageClass: string; imageSizes: string; showActions: boolean }
-> = {
-  featured: {
-    imageClass: "aspect-[4/3]",
-    imageSizes: "(min-width: 1280px) 360px, (min-width: 768px) 45vw, 90vw",
-    showActions: false,
-  },
-  detailed: {
-    imageClass: "aspect-[5/3]",
-    imageSizes: "(min-width: 1024px) 520px, 90vw",
-    showActions: true,
-  },
-}
-
 export function ProjectCard({ project, variant = "detailed" }: ProjectCardProps) {
-  const config = variantConfig[variant]
-
   const accent = project.accentColor
+  const isDetailed = variant === "detailed"
 
   return (
     <Card
@@ -50,52 +32,32 @@ export function ProjectCard({ project, variant = "detailed" }: ProjectCardProps)
       <CardContent className="p-0">
         {project.Banner ? (
           <div className="overflow-hidden rounded-t-lg">
-            <project.Banner href={project.liveUrl} />
+            <project.Banner href={project.liveUrl} bare={isDetailed} />
           </div>
         ) : project.image ? (
-          <div className={`relative overflow-hidden rounded-t-lg bg-muted/40 p-8 ${config.imageClass}`}>
+          <div className={`relative overflow-hidden rounded-t-lg bg-muted/40 ${isDetailed ? "aspect-5/3" : "aspect-4/3"}`}>
             <Image
               src={project.image}
               alt={project.title}
               fill
-              sizes={config.imageSizes}
+              sizes={isDetailed ? "(min-width: 1024px) 520px, 90vw" : "(min-width: 1280px) 360px, (min-width: 768px) 45vw, 90vw"}
               className="object-contain p-8 transition-transform duration-300 group-hover:scale-105"
             />
           </div>
         ) : null}
-        <div className="p-6">
-          <h3 className="text-xl font-semibold text-foreground mb-3">{project.title}</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-            {project.description}
-          </p>
 
-          <div className={cn("flex flex-wrap gap-2", config.showActions && "mb-6")}>
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-accent/10 px-3 py-1 text-xs text-accent-foreground"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {config.showActions ? (
+        {isDetailed ? (
+          <div className="p-4">
             <div className="flex items-center gap-3">
               {project.liveUrl ? (
                 <Button size="sm" asChild>
                   <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="mr-2 h-4 w-4" />
-                    Visit Site
+                    Visit Live Website
                   </Link>
                 </Button>
               ) : (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  disabled
-                  className="cursor-not-allowed opacity-70"
-                >
+                <Button size="sm" variant="outline" disabled className="cursor-not-allowed opacity-70">
                   Coming Soon
                 </Button>
               )}
@@ -103,13 +65,30 @@ export function ProjectCard({ project, variant = "detailed" }: ProjectCardProps)
                 <Button variant="outline" size="sm" asChild>
                   <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                     <GitHubMark className="mr-2 h-4 w-4" />
-                    Code
+                    GitHub Repo
                   </Link>
                 </Button>
               ) : null}
             </div>
-          ) : null}
-        </div>
+          </div>
+        ) : (
+          <div className="p-6">
+            <h3 className="text-xl font-semibold text-foreground mb-3">{project.title}</h3>
+            <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+              {project.description}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-accent/10 px-3 py-1 text-xs text-accent-foreground"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   )

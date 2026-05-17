@@ -39,7 +39,7 @@ const EDGES = [
   [0, 1], [2, 3],                           // cross connections
 ];
 
-export default function SorenLabBanner({ onClick, href }) {
+export default function SorenLabBanner({ onClick, href, bare }) {
   const svgRef        = useRef(null);
   const [taglineIdx,  setTaglineIdx]  = useState(0);
   const [taglineFade, setTaglineFade] = useState(true);
@@ -140,7 +140,17 @@ export default function SorenLabBanner({ onClick, href }) {
     <Wrapper
       {...wrapperProps}
       onClick={onClick}
-      style={{
+      style={bare ? {
+        display:        'flex',
+        alignItems:     'center',
+        gap:            '16px',
+        padding:        '1.25rem',
+        overflow:       'hidden',
+        position:       'relative',
+        width:          '100%',
+        cursor:         'pointer',
+        textDecoration: 'none',
+      } : {
         display:        'flex',
         alignItems:     'center',
         gap:            '16px',
@@ -155,8 +165,8 @@ export default function SorenLabBanner({ onClick, href }) {
         textDecoration: 'none',
         transition:     'border-left-color 0.2s ease',
       }}
-      onMouseEnter={e => (e.currentTarget.style.borderLeftColor = '#3b82f6')}
-      onMouseLeave={e => (e.currentTarget.style.borderLeftColor = '#185FA5')}
+      onMouseEnter={bare ? undefined : e => (e.currentTarget.style.borderLeftColor = '#3b82f6')}
+      onMouseLeave={bare ? undefined : e => (e.currentTarget.style.borderLeftColor = '#185FA5')}
     >
       {/* Blueprint grid background */}
       <svg

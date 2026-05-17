@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 const TAGLINES = ['Track every move of the market','Data-driven crypto decisions','Real-time prices, your way','Your portfolio at a glance'];
 const CANDLES = [{x:4,o:38,c:52,h:57,l:34},{x:15,o:52,c:44,h:56,l:40},{x:26,o:44,c:63,h:67,l:40},{x:37,o:63,c:55,h:67,l:51},{x:48,o:55,c:73,h:77,l:52},{x:59,o:73,c:65,h:76,l:61},{x:70,o:65,c:79,h:83,l:62}];
 const toY = p => 10 + (100-p)/100*58;
-export default function CryptoTrackBanner({ onClick, href }) {
+export default function CryptoTrackBanner({ onClick, href, bare }) {
   const svgRef = useRef(null);
   const [tlIdx, setTlIdx] = useState(0);
   const [tlFade, setTlFade] = useState(true);
@@ -36,12 +36,15 @@ export default function CryptoTrackBanner({ onClick, href }) {
   }, []);
   const W = href ? 'a' : 'div';
   return (
-    <W href={href} onClick={onClick} style={{display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #3B6D11',borderRadius:'12px',overflow:'hidden',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
-      onMouseEnter={e=>e.currentTarget.style.borderLeftColor='#639922'}
-      onMouseLeave={e=>e.currentTarget.style.borderLeftColor='#3B6D11'}>
+    <W href={href} onClick={onClick}
+      style={bare
+        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',overflow:'hidden',width:'100%',cursor:'pointer',textDecoration:'none'}
+        : {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #3B6D11',borderRadius:'12px',overflow:'hidden',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
+      onMouseEnter={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#639922'}
+      onMouseLeave={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#3B6D11'}>
       <div style={{flexShrink:0}}><svg ref={svgRef} width="80" height="78" viewBox="0 0 80 78" aria-label="Candlestick chart"/></div>
       <div style={{flex:1,minWidth:0}}>
-        <div style={{fontSize:'20px',fontWeight:500,color:'var(--color-text-primary)',lineHeight:1,marginBottom:'4px'}}>CRYPTO<span style={{color:'#3B6D11'}}>TRACK</span></div>
+        <div style={{fontSize:'20px',fontWeight:500,color:'var(--color-text-primary)',lineHeight:1,marginBottom:'4px'}}>CRYPTO<span style={{color:'#3B6D11'}}>TRACKER</span></div>
         <div style={{fontSize:'10px',letterSpacing:'2px',textTransform:'uppercase',color:'#3B6D11',fontFamily:'monospace',marginBottom:'10px'}}>Real-Time · Portfolio</div>
         <div style={{fontSize:'12px',color:'var(--color-text-secondary)',lineHeight:1.4,opacity:tlFade?1:0,transition:'opacity .4s'}}>{TAGLINES[tlIdx]}</div>
       </div>

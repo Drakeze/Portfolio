@@ -9,7 +9,7 @@ const LANGS = [
   {name:'Go',    color:'#1760AA',code:'func main() {\n  fmt.Println("hi")\n}'},
   {name:'JS',    color:'#BA7517',code:'const hi = n =>\n  `Hello ${n}`'},
 ];
-export default function StudyVaultBanner({ onClick, href }) {
+export default function StudyVaultBanner({ onClick, href, bare }) {
   const [lang, setLang] = useState(LANGS[0]);
   const [typed, setTyped] = useState('');
   const [tlIdx, setTlIdx] = useState(0);
@@ -35,9 +35,12 @@ export default function StudyVaultBanner({ onClick, href }) {
   }, []);
   const W = href ? 'a' : 'div';
   return (
-    <W href={href} onClick={onClick} style={{display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #4A42A8',borderRadius:'12px',overflow:'hidden',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
-      onMouseEnter={e=>e.currentTarget.style.borderLeftColor='#7F77DD'}
-      onMouseLeave={e=>e.currentTarget.style.borderLeftColor='#4A42A8'}>
+    <W href={href} onClick={onClick}
+      style={bare
+        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',overflow:'hidden',width:'100%',cursor:'pointer',textDecoration:'none'}
+        : {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #4A42A8',borderRadius:'12px',overflow:'hidden',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
+      onMouseEnter={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#7F77DD'}
+      onMouseLeave={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#4A42A8'}>
       <div style={{flexShrink:0,width:'80px',height:'78px',background:'var(--color-background-secondary)',border:'.5px solid var(--color-border-secondary)',borderRadius:'6px',padding:'6px',boxSizing:'border-box',overflow:'hidden'}}>
         <div style={{display:'flex',alignItems:'center',gap:'3px',marginBottom:'5px'}}>
           {[0,1,2].map(i=><span key={i} style={{width:'5px',height:'5px',borderRadius:'50%',background:'var(--color-border-secondary)',display:'inline-block'}}/>)}

@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 const TAGLINES = ['Your data, beautifully visualized','Metrics that actually matter','Analytics for every workflow','One dashboard to rule them all'];
 const BARS = [38,63,30,82,54,72,44,60];
-export default function DashBoardBanner({ onClick, href }) {
+export default function DashBoardBanner({ onClick, href, bare }) {
   const svgRef = useRef(null);
   const [tlIdx, setTlIdx] = useState(0);
   const [tlFade, setTlFade] = useState(true);
@@ -34,9 +34,12 @@ export default function DashBoardBanner({ onClick, href }) {
   }, []);
   const W = href ? 'a' : 'div';
   return (
-    <W href={href} onClick={onClick} style={{display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #1760AA',borderRadius:'12px',overflow:'hidden',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
-      onMouseEnter={e=>e.currentTarget.style.borderLeftColor='#378ADD'}
-      onMouseLeave={e=>e.currentTarget.style.borderLeftColor='#1760AA'}>
+    <W href={href} onClick={onClick}
+      style={bare
+        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',overflow:'hidden',width:'100%',cursor:'pointer',textDecoration:'none'}
+        : {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #1760AA',borderRadius:'12px',overflow:'hidden',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
+      onMouseEnter={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#378ADD'}
+      onMouseLeave={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#1760AA'}>
       <div style={{flexShrink:0}}><svg ref={svgRef} width="80" height="78" viewBox="0 0 80 78" aria-label="Bar chart"/></div>
       <div style={{flex:1,minWidth:0}}>
         <div style={{fontSize:'20px',fontWeight:500,color:'var(--color-text-primary)',lineHeight:1,marginBottom:'4px'}}>DASH<span style={{color:'#1760AA'}}>BOARD</span></div>

@@ -23,7 +23,7 @@ export type Project = {
 }
 export const projects: Project[] = [
   {
-    title: "Crypto Tracker",
+    title: "CryptoTracker",
     description:
       "A comprehensive cryptocurrency dashboard with real-time market data, curated watch lists, and conversion tools for fast portfolio insights.",
     Banner: CryptoTrackBanner,
