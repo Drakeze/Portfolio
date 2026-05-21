@@ -17,12 +17,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/profile/Minecraft%20Pfp%201.png",
+        url: "/public/Minecraft Pfp 2.png",
         type: "image/png",
       },
     ],
-    shortcut: "/profile/Minecraft%20Pfp%201.png",
-    apple: "/profile/Minecraft%20Pfp%201.png",
+    shortcut: "/public/Minecraft Pfp 1.png",
+    apple: "/public/Minecraft Pfp 1.png",
   },
 }
 
