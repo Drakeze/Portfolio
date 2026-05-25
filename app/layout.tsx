@@ -21,8 +21,8 @@ export const metadata: Metadata = {
         type: "image/png",
       },
     ],
-    shortcut: "/public/Minecraft Pfp 1.png",
-    apple: "/public/Minecraft Pfp 1.png",
+    shortcut: "/public/Minecraft Pfp 2.png",
+    apple: "/public/Minecraft Pfp 2.png",
   },
 }
 
