@@ -6,9 +6,20 @@ import { siteConfig } from "@/lib/seo"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
 import type React from "react"
 
 import "./globals.css"
+
+const geistSans = Geist({
+  variable: "--font-sans",
+  subsets: ["latin"],
+})
+
+const geistMono = Geist_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+})
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -33,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-sans antialiased">
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navigation />
           {children}

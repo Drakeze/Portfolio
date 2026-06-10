@@ -1,5 +1,3 @@
-import { URL } from "url"
-
 import { externalLinks } from "@/lib/site-links"
 
 export const siteConfig = {
