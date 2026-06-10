@@ -29,7 +29,7 @@ export default function ProjectsLayout({
 
         {/* Local Sub-Navigation */}
         <nav
-          className="mb-12 flex justify-end"
+          className="mb-12 flex justify-center md:justify-end"
           aria-label="Projects section navigation"
         >
           <div className="inline-flex rounded-lg border border-purple-300/40 overflow-hidden">

@@ -120,7 +120,7 @@ function GetInTouchCard() {
   }
 
   return (
-    <Card className="space-y-6 p-8">
+    <Card className="space-y-6 p-5 md:p-8">
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         <div className="space-y-1.5">
           <label htmlFor="contact-name" className="text-sm font-medium">
@@ -197,7 +197,7 @@ function GetInTouchCard() {
 
 function CreatorLinksCard() {
   return (
-    <Card className="space-y-6 p-8">
+    <Card className="space-y-6 p-5 md:p-8">
       <h2 className="text-xl font-semibold">Projects & Creator Ecosystem</h2>
       <div className="grid gap-4 md:grid-cols-2">
         {ventureLinks.map((link) => (
