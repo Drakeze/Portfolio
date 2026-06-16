@@ -1,21 +1,27 @@
 import Link from "next/link"
 
 import { ChangePasswordForm } from "@/components/admin/change-password-form"
+import { getBio } from "@/lib/domains/bio/service"
 import { countCompanies } from "@/lib/domains/companies/service"
+import { getLinks } from "@/lib/domains/links/service"
 import { listMessages } from "@/lib/domains/messages/service"
 import { countProjects } from "@/lib/domains/projects/service"
+import { getResume } from "@/lib/domains/resume/service"
 import { listSkills } from "@/lib/domains/skills/service"
 import { hasStoredAdminPassword } from "@/src/lib/admin-session"
 
 export const dynamic = "force-dynamic"
 
 export default async function AdminPage() {
-  const [projects, companies, skills, recentMessages, usesStoredPassword] = await Promise.all([
+  const [projects, companies, skills, recentMessages, usesStoredPassword, bio, links, resume] = await Promise.all([
     countProjects(),
     countCompanies(),
     listSkills(),
     listMessages(),
     hasStoredAdminPassword(),
+    getBio(),
+    getLinks(),
+    getResume(),
   ])
 
   const unreadCount = recentMessages.filter((message) => !message.read).length
@@ -39,6 +45,28 @@ export default async function AdminPage() {
             <p className="mt-2 text-3xl font-semibold">{stat.value}</p>
           </div>
         ))}
+      </section>
+
+      <section>
+        <h2 className="mb-3 text-sm font-medium">Content Status</h2>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {[
+            { label: "Bio", configured: !!bio && bio.paragraphs.length > 0, href: "/admin/bio" },
+            { label: "Links", configured: !!links, href: "/admin/links" },
+            { label: "Resume", configured: !!resume, href: "/admin/resume" },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="rounded-lg border bg-card p-5 hover:bg-muted/30 transition-colors"
+            >
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">{item.label}</p>
+              <p className={`mt-2 text-sm font-medium ${item.configured ? "text-green-600 dark:text-green-400" : "text-yellow-600 dark:text-yellow-400"}`}>
+                {item.configured ? "Configured" : "Not set"}
+              </p>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <section className="rounded-lg border bg-card">

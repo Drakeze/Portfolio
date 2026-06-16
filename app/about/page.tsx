@@ -4,32 +4,9 @@ import type { Metadata } from "next"
 import SkillsSection from "@/components/sections/skillsection"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { getPublicCertifications, getPublicSkills } from "@/lib/public-content"
+import { getPublicBio, getPublicCertifications, getPublicResume, getPublicSkills } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
 
-const aboutParagraphs = [
-"I'm Anthony Shead, a full-stack developer in California focused on building structured, scalable, and meaningful digital systems with modern web tools.",
-
-  "I did not take a traditional path into programming. I started by pulling things apart, modding games, tweaking configs, and learning through trial, error, and curiosity. Over time, that became the way I approach almost everything: deconstruct the system, understand how it works, then rebuild it with more intention.",
-
-  "Programming really clicked for me when I started seeing it as architecture. Code is not just about making something function. It is about designing how everything fits together, how the structure supports the experience, how data moves, how components connect, and how the system holds up as it grows.",
-
-  "That way of thinking has shaped how I build today. I care about clarity, maintainability, and long-term scalability. I try to avoid rushing into quick fixes when the stronger answer is usually a better structure, a cleaner flow, or a system that is easier to understand later.",
-
-  "Right now, I work across a modern full-stack setup with tools like Next.js, React, TypeScript, MongoDB, and Prisma. I am also building real-world product layers such as authentication, payments, email systems, APIs, dashboards, and multi-app project structures.",
-
-  "A lot of my current work revolves around connected systems. I am building a portfolio ecosystem with multiple apps under one larger structure, including a blog, creator-focused tools, service pages, data systems, and internal project workflows. Each project is not just a standalone build. It is part of a larger foundation I am learning to design, connect, and scale.",
-
-  "Alongside my personal development work, I am building Soren Lab, a development-focused brand centered on full-stack websites, digital systems, and client-ready solutions. The goal is not just to build basic websites. It is to help people turn their ideas, stories, and business goals into digital systems that feel clear, intentional, and built to grow.",
-
-  "I see websites as more than pages on a screen. A strong website should communicate the work behind the brand. It should show direction, trust, effort, and purpose. That is why I like approaching web development with an architectural mindset: planning the structure, shaping the visual direction, and making sure the final product supports both the client and the people using it.",
-
-  "Consistency is a big part of how I work. I have been swimming for over thirteen years and still train regularly, and that discipline carries over into development. I care about steady progress, strong fundamentals, and long-term effort. I try to write software the same way: structured, repeatable, and always improving.",
-
-  "Long-term, I want to become a polyglot full-stack engineer. I want to understand multiple languages, paradigms, tools, and architectures well enough to choose the right solution for the problem instead of forcing one approach onto everything. I care more about depth than shortcuts, and more about building systems that last than rushing something together.",
-
-  "Outside of day-to-day development, I am also laying the groundwork for Earth Plus, a long-term project focused on sustainability, renewal, and real-world impact. I believe well-designed systems, whether technical, creative, or personal, can create meaningful change when they are built with intention."
-]
 const experiences = [
   {
     role: "Front-End / Full-Stack Developer",
@@ -65,9 +42,11 @@ export const metadata: Metadata = {
 export const revalidate = 3600
 
 export default async function AboutPage() {
-  const [skillsData, certifications] = await Promise.all([
+  const [skillsData, certifications, bioParagraphs, resume] = await Promise.all([
     getPublicSkills(),
     getPublicCertifications(),
+    getPublicBio(),
+    getPublicResume(),
   ])
 
   const skills = skillsData.map((skill) => ({
@@ -90,10 +69,10 @@ export default async function AboutPage() {
             <h2 className="text-2xl font-semibold mb-4">Who I Am</h2>
             <Card className="bg-muted/40 border-border p-6">
               <ul className="space-y-3">
-                {aboutParagraphs.map((paragraph) => (
-                  <li key={paragraph} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
+                {bioParagraphs.map((paragraph) => (
+                  <li key={paragraph.id} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-foreground/50 shrink-0" />
-                    <span>{paragraph}</span>
+                    <span>{paragraph.text}</span>
                   </li>
                 ))}
               </ul>
@@ -184,9 +163,9 @@ export default async function AboutPage() {
                 </ul>
 
                 <Button variant="outline" className="w-full bg-transparent" asChild>
-                  <a href="/public/ashead-resume.pdf" download>
+                  <a href={resume.url} download>
                     <Download className="h-4 w-4 mr-2" />
-                    Download Resume
+                    {resume.label}
                   </a>
                 </Button>
               </div>

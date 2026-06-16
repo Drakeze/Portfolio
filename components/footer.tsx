@@ -1,6 +1,6 @@
 import { siteConfig } from "@/lib/seo"
 import { externalLinks } from "@/lib/site-links"
-import { Heart, Mail, MessageCircle, Store } from "lucide-react"
+import { Heart, Mail, MessageCircle } from "lucide-react"
 import Link from "next/link"
 
 function GitHubMark({ className }: { className?: string }) {
@@ -47,10 +47,6 @@ export function Footer() {
             <a href={siteConfig.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
               <LinkedInMark className="h-5 w-5" />
               <span className="sr-only">LinkedIn</span>
-            </a>
-            <a href={externalLinks.ventures.creatorStore} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
-              <Store className="h-5 w-5" />
-              <span className="sr-only">Creator Store</span>
             </a>
             <a href={siteConfig.socials.discord} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
               <MessageCircle className="h-5 w-5" />

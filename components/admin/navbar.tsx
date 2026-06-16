@@ -12,6 +12,9 @@ export const adminNav = [
   { href: "/admin/skills", label: "Skills" },
   { href: "/admin/certifications", label: "Certifications" },
   { href: "/admin/messages", label: "Messages" },
+  { href: "/admin/bio", label: "Bio" },
+  { href: "/admin/links", label: "Links" },
+  { href: "/admin/resume", label: "Resume" },
 ]
 
 export function AdminNavbar() {

@@ -3,10 +3,13 @@ import { Db, MongoClient, MongoClientOptions } from "mongodb"
 export const DEFAULT_DB_NAME = "portfolio_db"
 export const collectionNames = {
   adminAuth: "admin_auth",
+  bio: "portfolio_bio",
   certifications: "portfolio_certifications",
   companies: "portfolio_companies",
+  links: "portfolio_links",
   messages: "messages",
   projects: "portfolio_projects",
+  resume: "portfolio_resume",
   skills: "portfolio_skills",
 } as const
 const options: MongoClientOptions = {}

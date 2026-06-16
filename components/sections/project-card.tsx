@@ -47,7 +47,21 @@ export function ProjectCard({ project, variant = "detailed" }: ProjectCardProps)
         ) : null}
 
         {isDetailed ? (
-          <div className="p-4">
+          <div className="p-6">
+            <h3 className="text-xl font-semibold text-foreground mb-3">{project.title}</h3>
+            <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+              {project.description}
+            </p>
+            <div className="mb-6 flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-accent/10 px-3 py-1 text-xs text-accent-foreground"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
             <div className="flex items-center gap-3">
               {project.liveUrl ? (
                 <Button size="sm" asChild>
