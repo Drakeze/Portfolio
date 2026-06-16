@@ -1,7 +1,14 @@
+import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
 import { uploadToR2 } from "@/lib/r2"
 
 export async function POST(request: Request) {
+  try {
+    await requireAdmin()
+  } catch {
+    return errorResponse("Not authenticated", 401)
+  }
+
   try {
     const formData = await request.formData()
     const file = formData.get("file")
