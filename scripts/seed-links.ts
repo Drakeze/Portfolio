@@ -9,6 +9,7 @@ if (!DATABASE_URL) {
 
 const CREATOR_STORE_URL = process.env.NEXT_PUBLIC_CREATOR_STORE_URL ?? "https://store.drakeze.com/"
 const ANAKONIS_URL = process.env.NEXT_PUBLIC_ANAKONIS_URL ?? "https://anakonis.drakeze.com"
+const BLOG_URL = process.env.NEXT_PUBLIC_BLOG_URL ?? "https://blog.drakeze.com"
 const RESOURCES_URL = process.env.NEXT_PUBLIC_CREATOR_RESOURCES_URL ?? "https://linktr.ee/Drakeze"
 
 const socials = {
@@ -25,7 +26,8 @@ const ventures = [
   { key: "earthPlus", label: "Earth Plus", description: "Technology and community work focused on sustainable outcomes.", url: "https://earthplus.org", showInNav: false, showInEcosystem: true, order: 1 },
   { key: "creatorStore", label: "Creator Store", description: "Final destination for templates, toolkits, and digital products.", url: CREATOR_STORE_URL, showInNav: true, showInEcosystem: true, order: 2 },
   { key: "anakonis", label: "Anakonis", description: "My streaming and content brand.", url: ANAKONIS_URL, showInNav: true, showInEcosystem: true, order: 3 },
-  { key: "resources", label: "Resources", description: "Curated links, docs, and tools I actively recommend.", url: RESOURCES_URL, showInNav: false, showInEcosystem: true, order: 4 },
+  { key: "blog", label: "Blog", description: "Thoughts on code, building, and everything in between.", url: BLOG_URL, showInNav: true, showInEcosystem: true, order: 4 },
+  { key: "resources", label: "Resources", description: "Curated links, docs, and tools I actively recommend.", url: RESOURCES_URL, showInNav: false, showInEcosystem: true, order: 5 },
 ]
 
 const client = new MongoClient(DATABASE_URL)

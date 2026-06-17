@@ -197,7 +197,8 @@ const fallbackVentures: VentureLink[] = [
   { key: "earthPlus", label: "Earth Plus", description: "Technology and community work focused on sustainable outcomes.", url: externalLinks.ventures.earthPlus, showInNav: false, showInEcosystem: true, order: 1 },
   { key: "creatorStore", label: "Creator Store", description: "Final destination for templates, toolkits, and digital products.", url: externalLinks.ventures.creatorStore, showInNav: true, showInEcosystem: true, order: 2 },
   { key: "anakonis", label: "Anakonis", description: "My streaming and content brand.", url: externalLinks.ventures.anakonis, showInNav: true, showInEcosystem: true, order: 3 },
-  { key: "resources", label: "Resources", description: "Curated links, docs, and tools I actively recommend.", url: externalLinks.ventures.resources, showInNav: false, showInEcosystem: true, order: 4 },
+  { key: "blog", label: "Blog", description: "Thoughts on code, building, and everything in between.", url: externalLinks.ventures.blog, showInNav: true, showInEcosystem: true, order: 4 },
+  { key: "resources", label: "Resources", description: "Curated links, docs, and tools I actively recommend.", url: externalLinks.ventures.resources, showInNav: false, showInEcosystem: true, order: 5 },
 ]
 
 const fallbackSocials: SocialLinks = {
