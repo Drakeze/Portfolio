@@ -58,7 +58,7 @@ export default async function ContactPage() {
   const ecosystemVentures = ventures.filter((v) => v.showInEcosystem)
 
   return (
-    <main className="min-h-screen px-6 py-24">
+    <main className="min-h-screen px-6 py-12 md:py-24">
       <div className="container mx-auto max-w-4xl space-y-8">
         <header className="space-y-3">
           <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Get in Touch</h1>

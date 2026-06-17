@@ -2,7 +2,6 @@ import { DeferredGlobe } from "@/components/deferred-globe"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-export const runtime = "edge"
 export const revalidate = 3600
 
 export default function Page() {

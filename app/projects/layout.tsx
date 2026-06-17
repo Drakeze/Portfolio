@@ -14,12 +14,12 @@ export default function ProjectsLayout({
   const isCompany = pathname.startsWith("/projects/company")
 
   return (
-    <main className="min-h-screen py-24 px-6">
+    <main className="min-h-screen py-12 md:py-24 px-6">
       <div className="container mx-auto max-w-6xl">
 
         {/* Header */}
-        <header className="mb-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">
+        <header className="mb-6 md:mb-10">
+          <h1 className="text-3xl md:text-5xl font-bold mb-3">
             My Work
           </h1>
           <p className="text-muted-foreground max-w-2xl">
@@ -29,7 +29,7 @@ export default function ProjectsLayout({
 
         {/* Local Sub-Navigation */}
         <nav
-          className="mb-12 flex justify-center md:justify-end"
+          className="mb-8 md:mb-12 flex justify-center md:justify-end"
           aria-label="Projects section navigation"
         >
           <div className="inline-flex rounded-lg border border-purple-300/40 overflow-hidden">

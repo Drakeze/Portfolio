@@ -59,10 +59,10 @@ export default async function AboutPage() {
   const inProgressCertifications = certifications.filter((cert) => cert.completed === false)
 
   return (
-    <main className="min-h-screen py-24 px-6">
+    <main className="min-h-screen py-12 md:py-24 px-6">
       <div className="container mx-auto max-w-6xl">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">About Me</h1>
-        <div className="w-16 h-1 bg-foreground mb-12" />
+        <div className="w-16 h-1 bg-foreground mb-8 md:mb-12" />
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div>

@@ -17,9 +17,9 @@ export default async function CompanyProjectsPage() {
   const companies = await getPublicCompanies()
 
   return (
-    <div className="space-y-20 py-16">
-      <section className="max-w-4xl mx-auto text-center space-y-6 pt-8">
-        <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">Company Initiatives</h2>
+    <div className="space-y-12 md:space-y-20 py-8 md:py-16">
+      <section className="max-w-4xl mx-auto text-center space-y-4 md:space-y-6 pt-4 md:pt-8">
+        <h2 className="text-3xl md:text-5xl font-semibold tracking-tight">Company Initiatives</h2>
         <p className="text-muted-foreground">
           These initiatives are the long-term systems I am building beyond individual projects.
           Each company has its own page with the full story, current direction, and repository links.

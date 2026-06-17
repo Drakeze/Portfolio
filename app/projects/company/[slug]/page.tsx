@@ -32,7 +32,7 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
   const allSlugs = companies.map((c) => c.slug)
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-20 space-y-24">
+    <div className="max-w-6xl mx-auto px-6 py-10 md:py-20 space-y-12 md:space-y-24">
       <section className="text-center space-y-6 pt-8">
         <h1 className="text-4xl md:text-5xl font-semibold">
           {company.title}
@@ -72,7 +72,7 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
         )}
       </section>
 
-      <section className="rounded-2xl border p-12 space-y-12 bg-background shadow-sm">
+      <section className="rounded-2xl border p-6 md:p-12 space-y-8 md:space-y-12 bg-background shadow-sm">
         <h2 className="text-2xl font-semibold text-center">
           Architecture & Technology
         </h2>
