@@ -16,19 +16,24 @@ export function ForgotPasswordForm() {
     setError("")
     setLoading(true)
 
-    const { error: resetError } = await authClient.requestPasswordReset({
-      email,
-      redirectTo: "/reset-password",
-    })
+    try {
+      const { error: resetError } = await authClient.requestPasswordReset({
+        email,
+        redirectTo: "/reset-password",
+      })
 
-    if (resetError) {
-      setError(resetError.message ?? "Unable to send reset email.")
+      if (resetError) {
+        setError(resetError.message ?? "Unable to send reset email.")
+        setLoading(false)
+        return
+      }
+
+      setSent(true)
       setLoading(false)
-      return
+    } catch {
+      setError("Connection error. Please try again.")
+      setLoading(false)
     }
-
-    setSent(true)
-    setLoading(false)
   }
 
   if (sent) {

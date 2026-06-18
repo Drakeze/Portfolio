@@ -42,18 +42,23 @@ export function ResetPasswordForm() {
 
     setLoading(true)
 
-    const { error: resetError } = await authClient.resetPassword({
-      newPassword,
-      token,
-    })
+    try {
+      const { error: resetError } = await authClient.resetPassword({
+        newPassword,
+        token,
+      })
 
-    if (resetError) {
-      setError(resetError.message ?? "Unable to reset password. The link may have expired.")
+      if (resetError) {
+        setError(resetError.message ?? "Unable to reset password. The link may have expired.")
+        setLoading(false)
+        return
+      }
+
+      router.replace("/sign-in?reset=1")
+    } catch {
+      setError("Connection error. Please try again.")
       setLoading(false)
-      return
     }
-
-    router.replace("/sign-in?reset=1")
   }
 
   return (

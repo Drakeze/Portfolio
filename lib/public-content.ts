@@ -27,15 +27,20 @@ function toProjectViewModel(project: {
   liveUrl?: string
   githubUrl?: string
 }): PublicProject {
+  // Banner components and accent colors are frontend-only — look them up by title
+  const local = fallbackProjects.find((p) => p.title === project.title)
+
   return {
     _id: project._id?.toString(),
     title: project.title,
     slug: project.slug,
     description: project.description,
-    image: project.image,
+    image: project.image || local?.image,
     tags: project.techStack,
     liveUrl: project.liveUrl,
     githubUrl: project.githubUrl,
+    Banner: local?.Banner,
+    accentColor: local?.accentColor,
   }
 }
 
