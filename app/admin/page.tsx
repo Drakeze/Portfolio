@@ -8,17 +8,15 @@ import { listMessages } from "@/lib/domains/messages/service"
 import { countProjects } from "@/lib/domains/projects/service"
 import { getResume } from "@/lib/domains/resume/service"
 import { listSkills } from "@/lib/domains/skills/service"
-import { hasStoredAdminPassword } from "@/src/lib/admin-session"
 
 export const dynamic = "force-dynamic"
 
 export default async function AdminPage() {
-  const [projects, companies, skills, recentMessages, usesStoredPassword, bio, links, resume] = await Promise.all([
+  const [projects, companies, skills, recentMessages, bio, links, resume] = await Promise.all([
     countProjects(),
     countCompanies(),
     listSkills(),
     listMessages(),
-    hasStoredAdminPassword(),
     getBio(),
     getLinks(),
     getResume(),
@@ -123,12 +121,7 @@ export default async function AdminPage() {
       </section>
 
       <section className="space-y-3">
-        <div className="space-y-1">
-          <h2 className="text-sm font-medium">Admin Security</h2>
-          <p className="text-sm text-muted-foreground">
-            Current password source: {usesStoredPassword ? "MongoDB" : "environment fallback"}
-          </p>
-        </div>
+        <h2 className="text-sm font-medium">Admin Security</h2>
         <ChangePasswordForm />
       </section>
     </main>

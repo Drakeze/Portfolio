@@ -1,13 +1,26 @@
 import { ObjectId } from "mongodb"
 import { ZodError } from "zod"
 
+import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
 import { deleteCertification, getCertificationById, updateCertification } from "@/lib/domains/certifications/service"
 import { certificationUpdateSchema } from "@/lib/domains/certifications/validators"
 
 type RouteContext = { params: Promise<{ id: string }> }
 
+async function authGuard() {
+  try {
+    await requireAdmin()
+  } catch {
+    return errorResponse("Not authenticated", 401)
+  }
+  return null
+}
+
 export async function GET(_: Request, context: RouteContext) {
+  const denied = await authGuard()
+  if (denied) return denied
+
   const { id } = await context.params
   if (!ObjectId.isValid(id)) return errorResponse("Invalid certification id")
 
@@ -18,6 +31,9 @@ export async function GET(_: Request, context: RouteContext) {
 }
 
 export async function PATCH(request: Request, context: RouteContext) {
+  const denied = await authGuard()
+  if (denied) return denied
+
   try {
     const { id } = await context.params
     if (!ObjectId.isValid(id)) return errorResponse("Invalid certification id")
@@ -34,6 +50,9 @@ export async function PATCH(request: Request, context: RouteContext) {
 }
 
 export async function DELETE(_: Request, context: RouteContext) {
+  const denied = await authGuard()
+  if (denied) return denied
+
   const { id } = await context.params
   if (!ObjectId.isValid(id)) return errorResponse("Invalid certification id")
 

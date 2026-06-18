@@ -2,6 +2,8 @@
 
 import { FormEvent, useState } from "react"
 
+import { authClient } from "@/lib/auth-client"
+
 type FormState = {
   currentPassword: string
   newPassword: string
@@ -24,30 +26,29 @@ export function ChangePasswordForm() {
     event.preventDefault()
     setError("")
     setSuccess("")
+
+    if (form.newPassword !== form.confirmPassword) {
+      setError("New password and confirmation do not match.")
+      return
+    }
+
     setLoading(true)
 
-    try {
-      const response = await fetch("/api/admin/session", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      })
-      const payload = (await response.json().catch(() => null)) as { error?: string; success?: boolean } | null
+    const { error: changeError } = await authClient.changePassword({
+      currentPassword: form.currentPassword,
+      newPassword: form.newPassword,
+      revokeOtherSessions: true,
+    })
 
-      if (!response.ok || !payload?.success) {
-        setError(payload?.error ?? "Unable to update password.")
-        return
-      }
-
-      setForm(initialFormState)
-      setSuccess("Admin password updated successfully.")
-    } catch {
-      setError("Unable to update password.")
-    } finally {
+    if (changeError) {
+      setError(changeError.message ?? "Unable to update password.")
       setLoading(false)
+      return
     }
+
+    setForm(initialFormState)
+    setSuccess("Password updated successfully.")
+    setLoading(false)
   }
 
   function updateField(field: keyof FormState, value: string) {
@@ -57,11 +58,8 @@ export function ChangePasswordForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border bg-card p-6">
       <div className="space-y-1">
-        <h2 className="text-lg font-semibold">Change Admin Password</h2>
-        <p className="text-sm text-muted-foreground">
-          Save a new admin password to MongoDB. Once saved, sign-in will use the stored password instead of the fallback
-          `.env` value.
-        </p>
+        <h2 className="text-lg font-semibold">Change Password</h2>
+        <p className="text-sm text-muted-foreground">Update your admin account password.</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -85,7 +83,7 @@ export function ChangePasswordForm() {
             autoComplete="new-password"
             value={form.newPassword}
             onChange={(event) => updateField("newPassword", event.target.value)}
-            minLength={12}
+            minLength={8}
             required
           />
         </label>
@@ -98,7 +96,7 @@ export function ChangePasswordForm() {
             autoComplete="new-password"
             value={form.confirmPassword}
             onChange={(event) => updateField("confirmPassword", event.target.value)}
-            minLength={12}
+            minLength={8}
             required
           />
         </label>

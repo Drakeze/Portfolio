@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
+import { authClient } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
 
 export const adminNav = [
@@ -22,9 +23,7 @@ export function AdminNavbar() {
   const router = useRouter()
 
   async function handleLogout() {
-    await fetch("/api/admin/session", {
-      method: "DELETE",
-    })
+    await authClient.signOut()
     router.replace("/sign-in")
     router.refresh()
   }

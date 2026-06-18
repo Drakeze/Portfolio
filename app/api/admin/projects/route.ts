@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb"
 import { ZodError } from "zod"
 
+import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
 import {
   createProject,
@@ -11,7 +12,19 @@ import {
 } from "@/lib/domains/projects/service"
 import { projectInputSchema, projectUpdateSchema } from "@/lib/domains/projects/validators"
 
+async function authGuard() {
+  try {
+    await requireAdmin()
+  } catch {
+    return errorResponse("Not authenticated", 401)
+  }
+  return null
+}
+
 export async function GET() {
+  const denied = await authGuard()
+  if (denied) return denied
+
   try {
     return successResponse(await listProjects())
   } catch {
@@ -20,6 +33,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const denied = await authGuard()
+  if (denied) return denied
+
   try {
     const input = projectInputSchema.parse(await request.json())
     const existing = await getProjectBySlug(input.slug)
@@ -38,6 +54,9 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
+  const denied = await authGuard()
+  if (denied) return denied
+
   try {
     const { id, ...payload } = await request.json()
 
@@ -69,6 +88,9 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const denied = await authGuard()
+  if (denied) return denied
+
   try {
     const body = await request.json()
     const id = body?.id

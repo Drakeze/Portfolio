@@ -1,16 +1,15 @@
-import { cookies } from "next/headers"
+import { headers } from "next/headers"
 
-import { ADMIN_SESSION_COOKIE_NAME, validateAdminSessionToken } from "@/src/lib/admin-session"
+import { auth } from "@/lib/auth"
 
 export async function requireAdmin() {
-  const cookieStore = await cookies()
-  const hasSession = await validateAdminSessionToken(cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value)
+  const session = await auth.api.getSession({ headers: await headers() })
 
-  if (!hasSession) {
+  if (!session) {
     throw new Error("Not authenticated")
   }
 
-  return { role: "admin" as const }
+  return session
 }
 
 export async function isAdmin() {

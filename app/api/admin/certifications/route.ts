@@ -1,10 +1,23 @@
 import { ZodError } from "zod"
 
+import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
 import { createCertification, listCertifications } from "@/lib/domains/certifications/service"
 import { certificationInputSchema } from "@/lib/domains/certifications/validators"
 
+async function authGuard() {
+  try {
+    await requireAdmin()
+  } catch {
+    return errorResponse("Not authenticated", 401)
+  }
+  return null
+}
+
 export async function GET() {
+  const denied = await authGuard()
+  if (denied) return denied
+
   try {
     return successResponse(await listCertifications())
   } catch {
@@ -13,6 +26,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const denied = await authGuard()
+  if (denied) return denied
+
   try {
     const input = certificationInputSchema.parse(await request.json())
     return successResponse(await createCertification(input), 201)
