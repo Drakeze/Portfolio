@@ -60,7 +60,6 @@ export const projects: Project[] = [
     accentColor: "#BA7517",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel", "Bun", "Prisma", "GraphQL", "React","MongoDB", "Stripe API"],
     liveUrl: "https://store.drakeze.com/",
-    githubUrl: "https://github.com/Drakeze/Creator-Tools",
   },
   {
     title: "Anakonis",

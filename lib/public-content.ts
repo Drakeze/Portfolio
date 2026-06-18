@@ -54,6 +54,8 @@ function toCompanyViewModel(company: {
   liveUrl?: string
   githubUrl?: string
 }): PublicCompany {
+  const local = fallbackCompanies.find((c) => c.slug === company.slug)
+
   return {
     slug: company.slug,
     title: company.title,
@@ -64,6 +66,8 @@ function toCompanyViewModel(company: {
     tags: company.techStack,
     liveUrl: company.liveUrl,
     githubUrl: company.githubUrl,
+    Banner: local?.Banner,
+    accentColor: local?.accentColor,
   }
 }
 
@@ -115,7 +119,10 @@ export async function getPublicProjects(): Promise<PublicProject[]> {
     const projectDocs = await listProjects()
 
     if (projectDocs.length > 0) {
-      return projectDocs.map(toProjectViewModel)
+      const dbProjects = projectDocs.map(toProjectViewModel)
+      const dbTitles = new Set(dbProjects.map((p) => p.title))
+      const localOnly = fallbackProjects.filter((p) => !dbTitles.has(p.title))
+      return [...dbProjects, ...localOnly]
     }
   } catch (error) {
     console.error("Failed to load projects from MongoDB. Falling back to local content.", error)

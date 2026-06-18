@@ -20,14 +20,21 @@ export default function CryptoTrackBanner({ onClick, href, bare }) {
     CANDLES.forEach(({x,o,c,h,l},i)=>{
       const up=c>o, col=up?'#3B6D11':'#C94C2A';
       const g=document.createElementNS(NS,'g');
-      g.style.cssText=`animation:cryptoIn .5s ${i*.09}s ease-out both`;
+      g.setAttribute('opacity','0');
       const wk=document.createElementNS(NS,'line');
       Object.entries({x1:x+4,y1:toY(h),x2:x+4,y2:toY(l),stroke:col,'stroke-width':'1'}).forEach(([k,v])=>wk.setAttribute(k,v));
       g.appendChild(wk);
       const bd=document.createElementNS(NS,'rect');
       const top=Math.min(o,c),bot=Math.max(o,c);
       Object.entries({x,y:toY(bot),width:8,height:Math.max(2,toY(top)-toY(bot)),fill:col,rx:1}).forEach(([k,v])=>bd.setAttribute(k,v));
-      g.appendChild(bd); svg.appendChild(g);
+      g.appendChild(bd);
+      const animOp=document.createElementNS(NS,'animate');
+      Object.entries({attributeName:'opacity',from:'0',to:'1',dur:'.5s',begin:`${i*.09}s`,fill:'freeze'}).forEach(([k,v])=>animOp.setAttribute(k,v));
+      g.appendChild(animOp);
+      const animTr=document.createElementNS(NS,'animateTransform');
+      Object.entries({attributeName:'transform',type:'translate',from:'0,4',to:'0,0',dur:'.5s',begin:`${i*.09}s`,fill:'freeze'}).forEach(([k,v])=>animTr.setAttribute(k,v));
+      g.appendChild(animTr);
+      svg.appendChild(g);
     });
   }, []);
   useEffect(() => {
@@ -48,7 +55,6 @@ export default function CryptoTrackBanner({ onClick, href, bare }) {
         <div style={{fontSize:'10px',letterSpacing:'2px',textTransform:'uppercase',color:'#3B6D11',fontFamily:'monospace',marginBottom:'10px'}}>Real-Time · Portfolio</div>
         <div style={{fontSize:'12px',color:'var(--color-text-secondary)',lineHeight:1.4,opacity:tlFade?1:0,transition:'opacity .4s'}}>{TAGLINES[tlIdx]}</div>
       </div>
-      <style>{`@keyframes cryptoIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}`}</style>
     </W>
   );
 }

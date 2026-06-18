@@ -55,7 +55,7 @@ export default async function CompanyProjectsPage() {
                   </Button>
                 ) : (
                   <Button variant="secondary" disabled>
-                    Still in development
+                    In Progress
                   </Button>
                 )}
                 {company.githubUrl && (
