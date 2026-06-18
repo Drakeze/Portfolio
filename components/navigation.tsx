@@ -2,10 +2,11 @@
 
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { authClient } from "@/lib/auth-client"
 import type { VentureLink } from "@/lib/domains/links/types"
-import { ChevronDown, ExternalLink, Menu } from "lucide-react"
+import { ChevronDown, ExternalLink, Menu, LayoutDashboard } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
 const links = [
@@ -20,13 +21,20 @@ type Props = {
 
 export function Navigation({ navVentures }: Props) {
   const pathname = usePathname()
+  const router = useRouter()
   const [ecosystemOpen, setEcosystemOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const userMenuRef = useRef<HTMLDivElement>(null)
+  const { data: session } = authClient.useSession()
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setEcosystemOpen(false)
+      }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false)
       }
     }
     document.addEventListener("mousedown", handleClickOutside)
@@ -35,7 +43,14 @@ export function Navigation({ navVentures }: Props) {
 
   useEffect(() => {
     setEcosystemOpen(false)
+    setUserMenuOpen(false)
   }, [pathname])
+
+  async function handleSignOut() {
+    await authClient.signOut()
+    setUserMenuOpen(false)
+    router.refresh()
+  }
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -105,6 +120,39 @@ export function Navigation({ navVentures }: Props) {
 
           <ThemeToggle />
 
+          {session ? (
+            <div ref={userMenuRef} className="relative hidden md:block">
+              <button
+                type="button"
+                onClick={() => setUserMenuOpen((v) => !v)}
+                className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
+                aria-label="User menu"
+              >
+                {(session.user?.name?.[0] ?? session.user?.email?.[0] ?? "A").toUpperCase()}
+              </button>
+              {userMenuOpen ? (
+                <div className="absolute right-0 top-full mt-2 w-44 rounded-lg border bg-popover shadow-md py-1 z-50">
+                  <Link
+                    href="/admin"
+                    onClick={() => setUserMenuOpen(false)}
+                    className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted/60 transition-colors"
+                  >
+                    <LayoutDashboard className="h-3.5 w-3.5" />
+                    Admin Panel
+                  </Link>
+                  <div className="my-1 h-px bg-border" />
+                  <button
+                    type="button"
+                    onClick={handleSignOut}
+                    className="w-full text-left px-4 py-2.5 text-sm text-muted-foreground hover:bg-muted/60 hover:text-foreground transition-colors"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
           <Sheet>
             <SheetTrigger asChild>
               <button
@@ -148,6 +196,28 @@ export function Navigation({ navVentures }: Props) {
                         </a>
                       </SheetClose>
                     ))}
+                  </>
+                ) : null}
+
+                {session ? (
+                  <>
+                    <div className="my-2 h-px bg-border" />
+                    <SheetClose asChild>
+                      <Link
+                        href="/admin"
+                        className="flex items-center gap-2 rounded-md px-4 py-3 text-base font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <LayoutDashboard className="h-4 w-4" />
+                        Admin Panel
+                      </Link>
+                    </SheetClose>
+                    <button
+                      type="button"
+                      onClick={handleSignOut}
+                      className="text-left rounded-md px-4 py-3 text-base font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                    >
+                      Sign out
+                    </button>
                   </>
                 ) : null}
               </nav>

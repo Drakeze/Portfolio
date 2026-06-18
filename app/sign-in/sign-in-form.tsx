@@ -22,17 +22,22 @@ export function AdminSignInForm() {
     const nextPath = searchParams.get("next") ?? "/admin"
     const redirectPath = nextPath.startsWith("/admin") ? nextPath : "/admin"
 
-    const { error: signInError } = await authClient.signIn.email({ email, password })
+    try {
+      const { error: signInError } = await authClient.signIn.email({ email, password })
 
-    if (signInError) {
-      setError(signInError.message ?? "Unable to sign in.")
+      if (signInError) {
+        setError(signInError.message ?? "Unable to sign in.")
+        setLoading(false)
+        return
+      }
+
+      setPassword("")
+      router.replace(redirectPath)
+      router.refresh()
+    } catch {
+      setError("Connection error. Please try again.")
       setLoading(false)
-      return
     }
-
-    setPassword("")
-    router.replace(redirectPath)
-    router.refresh()
   }
 
   return (
