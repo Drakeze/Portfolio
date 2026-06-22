@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1069.0",
-    "@better-auth/infra": "^0.2.14",
     "@hookform/resolvers": "^3.10.0",
     "@prisma/client": "^6.19.3",
     "@radix-ui/react-accordion": "1.2.2",
