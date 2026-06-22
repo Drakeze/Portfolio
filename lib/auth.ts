@@ -11,6 +11,7 @@ export const auth = betterAuth({
   database: mongodbAdapter(getMongoDb()),
   secret: process.env.BETTER_AUTH_SECRET!,
   baseURL: process.env.BETTER_AUTH_URL!,
+  trustedOrigins: ["https://drakeze.com", "https://www.drakeze.com"],
   plugins: [dash()],
   emailAndPassword: {
     enabled: true,
