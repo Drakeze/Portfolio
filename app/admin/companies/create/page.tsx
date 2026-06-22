@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { SubmitButton } from "@/components/admin/form-actions"
+import { GalleryUploader } from "@/components/admin/gallery-uploader"
 import { createCompany } from "@/lib/domains/companies/service"
 
 function slugify(value: string) {
@@ -90,8 +91,7 @@ export default async function CreateCompanyPage({ searchParams }: PageProps) {
           <input id="githubUrl" name="githubUrl" type="url" placeholder="https://github.com/org" className="w-full rounded-md border bg-background px-3 py-2" />
         </div>
         <div className="space-y-2">
-          <label htmlFor="gallery" className="text-sm">Gallery image URLs/paths (one per line)</label>
-          <textarea id="gallery" name="gallery" rows={4} placeholder="/projects/image-1.svg" className="w-full rounded-md border bg-background px-3 py-2" />
+          <GalleryUploader name="gallery" folder="companies" />
         </div>
         <div className="space-y-2 md:col-span-2">
           <label htmlFor="longDescription" className="text-sm">Description</label>

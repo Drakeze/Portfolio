@@ -5,6 +5,7 @@ import { notFound, redirect } from "next/navigation"
 import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { SubmitButton } from "@/components/admin/form-actions"
+import { GalleryUploader } from "@/components/admin/gallery-uploader"
 import { getCompanyById, updateCompany } from "@/lib/domains/companies/service"
 
 function slugify(value: string) {
@@ -100,8 +101,7 @@ export default async function EditCompanyPage({ params, searchParams }: PageProp
           <input id="githubUrl" name="githubUrl" type="url" defaultValue={currentCompany.githubUrl ?? ""} className="w-full rounded-md border bg-background px-3 py-2" />
         </div>
         <div className="space-y-2">
-          <label htmlFor="gallery" className="text-sm">Gallery image URLs/paths</label>
-          <textarea id="gallery" name="gallery" rows={4} defaultValue={currentCompany.gallery.join("\n")} className="w-full rounded-md border bg-background px-3 py-2" />
+          <GalleryUploader name="gallery" folder="companies" defaultValue={currentCompany.gallery} />
         </div>
         <div className="space-y-2 md:col-span-2">
           <label htmlFor="longDescription" className="text-sm">Description</label>

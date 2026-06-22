@@ -5,6 +5,7 @@ import { notFound, redirect } from "next/navigation"
 import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { SubmitButton } from "@/components/admin/form-actions"
+import { ImageUploader } from "@/components/admin/image-uploader"
 import { getProjectById, updateProject } from "@/lib/domains/projects/service"
 
 function slugify(value: string) {
@@ -77,9 +78,8 @@ export default async function EditProjectPage({ params, searchParams }: PageProp
           <label htmlFor="slug" className="text-sm">Slug</label>
           <input id="slug" name="slug" defaultValue={project.slug} className="w-full rounded-md border bg-background px-3 py-2" />
         </div>
-        <div className="space-y-2">
-          <label htmlFor="image" className="text-sm">Image path</label>
-          <input id="image" name="image" required defaultValue={project.image} className="w-full rounded-md border bg-background px-3 py-2" />
+        <div className="space-y-2 md:col-span-2">
+          <ImageUploader name="image" folder="projects" label="Project image" defaultValue={project.image} />
         </div>
         <div className="space-y-2">
           <label htmlFor="techStack" className="text-sm">Tech stack</label>
