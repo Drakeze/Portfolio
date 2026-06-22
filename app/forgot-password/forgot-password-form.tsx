@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { FormEvent, useState } from "react"
+import posthog from "posthog-js"
 
 import { authClient } from "@/lib/auth-client"
 
@@ -28,10 +29,12 @@ export function ForgotPasswordForm() {
         return
       }
 
+      posthog.capture("password_reset_requested")
       setSent(true)
       setLoading(false)
-    } catch {
+    } catch (err) {
       setError("Connection error. Please try again.")
+      posthog.captureException(err)
       setLoading(false)
     }
   }

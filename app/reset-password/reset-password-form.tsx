@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { FormEvent, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import posthog from "posthog-js"
 
 import { authClient } from "@/lib/auth-client"
 
@@ -54,9 +55,11 @@ export function ResetPasswordForm() {
         return
       }
 
+      posthog.capture("password_reset_completed")
       router.replace("/sign-in?reset=1")
-    } catch {
+    } catch (err) {
       setError("Connection error. Please try again.")
+      posthog.captureException(err)
       setLoading(false)
     }
   }

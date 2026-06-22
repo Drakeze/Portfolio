@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Github, Linkedin, Mail, Twitter } from "lucide-react"
+import posthog from "posthog-js"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -65,8 +66,12 @@ export function GetInTouchCard() {
       setName("")
       setEmail("")
       setMessage("")
+      posthog.capture("contact_form_submitted")
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Message failed to send. Please try again.")
+      const errMsg = error instanceof Error ? error.message : "Message failed to send. Please try again."
+      setSubmitError(errMsg)
+      posthog.capture("contact_form_error", { error_message: errMsg })
+      posthog.captureException(error)
     } finally {
       setLoading(false)
     }
@@ -137,6 +142,7 @@ export function GetInTouchCard() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground transition-colors hover:text-foreground"
+              onClick={() => posthog.capture("social_link_clicked", { platform: item.label, href: item.href })}
             >
               <item.icon className="h-5 w-5" />
               <span className="sr-only">{item.label}</span>

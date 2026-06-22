@@ -1,8 +1,8 @@
-import { Award, Download } from "lucide-react"
+import { Award } from "lucide-react"
 import type { Metadata } from "next"
 
 import SkillsSection from "@/components/sections/skillsection"
-import { Button } from "@/components/ui/button"
+import { ResumeDownloadButton } from "@/components/sections/resume-download-button"
 import { Card } from "@/components/ui/card"
 import { getPublicBio, getPublicCertifications, getPublicResume, getPublicSkills } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
@@ -162,12 +162,7 @@ export default async function AboutPage() {
                   ))}
                 </ul>
 
-                <Button variant="outline" className="w-full bg-transparent" asChild>
-                  <a href={resume.url} download>
-                    <Download className="h-4 w-4 mr-2" />
-                    {resume.label}
-                  </a>
-                </Button>
+                <ResumeDownloadButton url={resume.url} label={resume.label} />
               </div>
 
               <SkillsSection skills={skills} />

@@ -2,6 +2,7 @@ import { ZodError, z } from "zod"
 
 import { errorResponse, successResponse } from "@/lib/api/responses"
 import { createMessage } from "@/lib/domains/messages/service"
+import { getPostHogClient } from "@/lib/posthog-server"
 import { getContactRecipientEmail, getMailFrom, resend } from "@/src/lib/resend"
 
 const contactSchema = z.object({
@@ -47,6 +48,16 @@ export async function POST(req: Request) {
         503
       )
     }
+
+    const posthog = getPostHogClient()
+    posthog.capture({
+      distinctId: email,
+      event: "contact_message_received",
+      properties: {
+        sender_name: name,
+        auto_reply_sent: !autoReplyResult.error,
+      },
+    })
 
     return successResponse(
       {

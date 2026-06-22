@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { FormEvent, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import posthog from "posthog-js"
 
 import { authClient } from "@/lib/auth-client"
 
@@ -27,15 +28,20 @@ export function AdminSignInForm() {
 
       if (signInError) {
         setError(signInError.message ?? "Unable to sign in.")
+        posthog.capture("admin_sign_in_failed", { error_message: signInError.message })
         setLoading(false)
         return
       }
 
+      posthog.identify(email, { email })
+      posthog.capture("admin_signed_in")
       setPassword("")
       router.replace(redirectPath)
       router.refresh()
-    } catch {
+    } catch (err) {
       setError("Connection error. Please try again.")
+      posthog.capture("admin_sign_in_failed", { error_message: "connection_error" })
+      posthog.captureException(err)
       setLoading(false)
     }
   }
