@@ -29,14 +29,14 @@ Why this helps:
 - UI table for centralized contact history preview.
 - Readiness checklist for Vercel-focused review.
 
-### Phase B (next)
-- Add route protection (`/admin`) with middleware + secret token/cookie.
-- Add authenticated API endpoints:
-  - `POST /api/admin/projects`
-  - `PATCH /api/admin/projects/:id`
-  - `PATCH /api/admin/projects/:id/archive`
-  - Similar endpoints for companies.
-- Add `GET /api/admin/messages` for inbox table.
+### Phase B (done)
+- Route protection (`/admin`) now uses better-auth session cookies (see `middleware.ts`, `lib/auth/admin.ts`).
+- Authenticated API endpoints shipped for both projects and companies:
+  - `app/api/admin/companies/route.ts`, `app/api/admin/companies/[id]/route.ts`
+  - `app/api/companies/route.ts`, `app/api/companies/[id]/route.ts`
+  - Equivalent project endpoints, all guarded by `requireAdmin()`.
+- Image uploads on the project/company edit forms (`components/admin/gallery-uploader.tsx`) go through Cloudflare R2 (`lib/r2.ts`) — this requires `CLOUDFLARE_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`, and `R2_PUBLIC_URL` to be set in `.env`, or the upload step fails silently while the rest of the form still saves.
+- `GET /api/admin/messages` for inbox table also shipped.
 
 ### Phase C
 - Add optimistic updates with TanStack Query.
