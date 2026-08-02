@@ -36,25 +36,22 @@ export default async function EditCompanyPage({ params, searchParams }: PageProp
     const title = String(formData.get("title") ?? "").trim()
     const tagline = String(formData.get("tagline") ?? "").trim()
     const longDescription = String(formData.get("longDescription") ?? "").trim()
-
-    if (!title || !tagline || !longDescription) {
-      redirect(`/admin/companies/${id}/edit?status=error&message=Title%2C+tagline%2C+and+description+are+required`)
-    }
+    const gallery = String(formData.get("gallery") ?? "")
+      .split("\n")
+      .map((item) => item.trim())
+      .filter(Boolean)
+    const techStack = String(formData.get("techStack") ?? "")
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean)
 
     try {
       await updateCompany(id, {
-        title,
-        slug: slugify(String(formData.get("slug") ?? "").trim() || title),
-        tagline,
-        longDescription,
-        gallery: String(formData.get("gallery") ?? "")
-          .split("\n")
-          .map((item) => item.trim())
-          .filter(Boolean),
-        techStack: String(formData.get("techStack") ?? "")
-          .split(",")
-          .map((item) => item.trim())
-          .filter(Boolean),
+        ...(title ? { title, slug: slugify(String(formData.get("slug") ?? "").trim() || title) } : {}),
+        ...(tagline ? { tagline } : {}),
+        ...(longDescription ? { longDescription } : {}),
+        ...(gallery.length ? { gallery } : {}),
+        ...(techStack.length ? { techStack } : {}),
         liveUrl: String(formData.get("liveUrl") ?? "").trim() || undefined,
         githubUrl: String(formData.get("githubUrl") ?? "").trim() || undefined,
       })

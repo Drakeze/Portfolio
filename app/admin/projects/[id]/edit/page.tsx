@@ -34,21 +34,17 @@ export default async function EditProjectPage({ params, searchParams }: PageProp
     const title = String(formData.get("title") ?? "").trim()
     const description = String(formData.get("description") ?? "").trim()
     const image = String(formData.get("image") ?? "").trim()
-
-    if (!title || !description || !image) {
-      redirect(`/admin/projects/${id}/edit?status=error&message=Title%2C+description+and+image+are+required`)
-    }
+    const techStack = String(formData.get("techStack") ?? "")
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean)
 
     try {
       await updateProject(id, {
-        title,
-        slug: slugify(String(formData.get("slug") ?? "").trim() || title),
-        description,
-        image,
-        techStack: String(formData.get("techStack") ?? "")
-          .split(",")
-          .map((item) => item.trim())
-          .filter(Boolean),
+        ...(title ? { title, slug: slugify(String(formData.get("slug") ?? "").trim() || title) } : {}),
+        ...(description ? { description } : {}),
+        ...(image ? { image } : {}),
+        ...(techStack.length ? { techStack } : {}),
         liveUrl: String(formData.get("liveUrl") ?? "").trim() || undefined,
         githubUrl: String(formData.get("githubUrl") ?? "").trim() || undefined,
         featured: String(formData.get("featured") ?? "") === "on",
