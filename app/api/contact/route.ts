@@ -43,6 +43,7 @@ export async function POST(req: Request) {
     ])
 
     if (notificationResult.error) {
+      console.error("Resend contact notification failed:", notificationResult.error)
       return errorResponse(
         "Your message was saved, but notification delivery failed. Please email me directly if this is urgent.",
         503
