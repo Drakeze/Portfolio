@@ -1,25 +1,36 @@
 import { BarChart3, TestTube, Webhook, Wrench } from "lucide-react"
 import type { IconType } from "react-icons"
-import { FaAws, FaCss3 } from "react-icons/fa6"
+import { FaAws, FaCss3, FaJava } from "react-icons/fa6"
 import {
+  SiBetterauth,
+  SiC,
   SiClaude,
   SiCloudflare,
+  SiCplusplus,
+  SiDavinciresolve,
   SiDocker,
+  SiFigma,
   SiGit,
   SiGraphql,
   SiHtml5,
+  SiJavascript,
   SiLua,
   SiMongodb,
   SiNeovim,
   SiNextdotjs,
   SiNodedotjs,
+  SiObsidian,
+  SiPosthog,
   SiPrisma,
   SiPython,
   SiReact,
   SiRedis,
+  SiRust,
+  SiStripe,
   SiTailwindcss,
   SiTypescript,
 } from "react-icons/si"
+import { TbDatabase } from "react-icons/tb"
 
 const TECH_ICONS: Record<string, IconType> = {
   react: SiReact,
@@ -45,6 +56,7 @@ const TECH_ICONS: Record<string, IconType> = {
   graphql: SiGraphql,
   prisma: SiPrisma,
   claude: SiClaude,
+  "claude code": SiClaude,
   cloudflare: SiCloudflare,
   lua: SiLua,
   neovim: SiNeovim,
@@ -53,6 +65,21 @@ const TECH_ICONS: Record<string, IconType> = {
   analytics: BarChart3,
   testing: TestTube,
   "testing libraries": TestTube,
+  javascript: SiJavascript,
+  java: FaJava,
+  cplusplus: SiCplusplus,
+  "c++": SiCplusplus,
+  figma: SiFigma,
+  obsidian: SiObsidian,
+  stripe: SiStripe,
+  betterauth: SiBetterauth,
+  "better-auth": SiBetterauth,
+  posthog: SiPosthog,
+  davinciresolve: SiDavinciresolve,
+  "davinci resolve": SiDavinciresolve,
+  rust: SiRust,
+  c: SiC,
+  sql: TbDatabase,
 }
 
 /** ponytail: covers common tech names; unmapped skills fall back to a generic icon. */

@@ -1,6 +1,8 @@
 import { siteConfig } from "@/lib/seo"
 import { externalLinks } from "@/lib/site-links"
-import { Heart, Mail, MessageCircle } from "lucide-react"
+import { Building2, Radio, Store } from "lucide-react"
+import type { IconType } from "react-icons"
+import { SiDailydotdev, SiDiscord, SiLinktree, SiPatreon, SiX } from "react-icons/si"
 import Link from "next/link"
 
 function GitHubMark({ className }: { className?: string }) {
@@ -19,51 +21,98 @@ function LinkedInMark({ className }: { className?: string }) {
   )
 }
 
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "My Work" },
+  { href: "/case-studies", label: "Case Studies" },
+  { href: "/about", label: "About" },
+  { href: externalLinks.ventures.blog, label: "Blog", external: true },
+  { href: "/contact", label: "Connect" },
+]
+
+const socialLinksPrimary: { key: string; label: string; href: string; Icon: IconType }[] = [
+  { key: "github", label: "GitHub", href: siteConfig.socials.github, Icon: GitHubMark },
+  { key: "linkedin", label: "LinkedIn", href: siteConfig.socials.linkedin, Icon: LinkedInMark },
+  { key: "twitter", label: "X", href: siteConfig.socials.twitter, Icon: SiX },
+  { key: "discord", label: "Discord", href: siteConfig.socials.discord, Icon: SiDiscord },
+  { key: "patreon", label: "Patreon", href: siteConfig.socials.patreon, Icon: SiPatreon },
+]
+
+const socialLinksSecondary: { key: string; label: string; href: string; Icon: IconType }[] = [
+  { key: "dailydotdev", label: "daily.dev", href: siteConfig.socials.dailydotdev, Icon: SiDailydotdev },
+  { key: "linktree", label: "Linktree", href: siteConfig.socials.linktree, Icon: SiLinktree },
+  { key: "creatorStore", label: "Creator Store", href: externalLinks.ventures.creatorStore, Icon: Store },
+  { key: "anakonis", label: "Anakonis (Streaming)", href: externalLinks.ventures.anakonis, Icon: Radio },
+  { key: "sorenTech", label: "Soren Lab", href: externalLinks.ventures.sorenTech, Icon: Building2 },
+]
+
+function SocialIconRow({ links }: { links: typeof socialLinksPrimary }) {
+  return (
+    <div className="flex gap-3">
+      {links.map(({ key, label, href, Icon }) => (
+        <a
+          key={key}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={label}
+          className="text-accent-foreground/70 transition-colors hover:text-accent-foreground"
+        >
+          <Icon className="h-4 w-4" />
+          <span className="sr-only">{label}</span>
+        </a>
+      ))}
+    </div>
+  )
+}
+
 export function Footer() {
   return (
-    <footer className="border-t px-6 py-10">
+    <footer className="bg-accent px-6 py-8 text-accent-foreground">
       <div className="container mx-auto max-w-6xl">
-        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <div className="flex gap-6">
-            <Link href="/" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-              Home
-            </Link>
-            <Link href="/about" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-              About
-            </Link>
-            <Link href="/projects" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-              My Work
-            </Link>
-            <Link href="/contact" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-              Connect
-            </Link>
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+          <div className="max-w-md">
+            <p className="text-lg font-medium">
+              Losing sleep over the goals and dreams I&apos;m chasing. Up late, putting in the hours, trying to get where I want to be.
+            </p>
+            <p className="mt-3 text-sm text-accent-foreground/70">Thanks for being part of the journey.</p>
           </div>
 
-          <div className="flex gap-5">
-            <a href={siteConfig.socials.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
-              <GitHubMark className="h-5 w-5" />
-              <span className="sr-only">GitHub</span>
-            </a>
-            <a href={siteConfig.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
-              <LinkedInMark className="h-5 w-5" />
-              <span className="sr-only">LinkedIn</span>
-            </a>
-            <a href={siteConfig.socials.discord} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
-              <MessageCircle className="h-5 w-5" />
-              <span className="sr-only">Discord</span>
-            </a>
-            <a href={siteConfig.socials.patreon} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
-              <Heart className="h-5 w-5" />
-              <span className="sr-only">Patreon</span>
-            </a>
-            <a href={`mailto:${siteConfig.email}`} className="text-muted-foreground transition-colors hover:text-foreground">
-              <Mail className="h-5 w-5" />
-              <span className="sr-only">Email</span>
-            </a>
+          <div className="flex gap-12">
+            <nav className="flex flex-col gap-2">
+              {navLinks.map((link) =>
+                link.external ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-accent-foreground/70 transition-colors hover:text-accent-foreground"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-sm text-accent-foreground/70 transition-colors hover:text-accent-foreground"
+                  >
+                    {link.label}
+                  </Link>
+                )
+              )}
+            </nav>
+
+            <div className="flex flex-col gap-3">
+              <SocialIconRow links={socialLinksPrimary} />
+              <SocialIconRow links={socialLinksSecondary} />
+            </div>
           </div>
         </div>
 
-        <p className="mt-8 text-center text-sm text-muted-foreground">© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
+        <p className="mt-10 text-center text-xs text-accent-foreground/70">
+          © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+        </p>
       </div>
     </footer>
   )

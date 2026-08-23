@@ -22,16 +22,16 @@ export const companies: Company[] = [
   {
     slug: "soren-tech",
     title: "Soren Lab",
-    tagline: "Turning complex ideas into structured software systems.",
+    tagline: "Turning ideas into working prototypes before a line of code is written.",
     shortDescription:
-      "A technology studio focused on turning ideas into clear, well-structured software systems through thoughtful design and guided collaboration.",
-    longDescription: `Soren Lab is built around the idea that many strong ideas fail not because they lack potential, but because they are difficult to translate into technical reality. The studio exists to bridge the gap between non-technical vision and production-ready software.
+      "A one-person web studio that builds a live, clickable mockup before the second meeting, then ships company-level, fully-owned code for local businesses and founders.",
+    longDescription: `SorenLab is a web studio built on a simple observation: most good ideas do not fail for lack of potential. They fail in translation, in the gap between what someone pictured and what actually got built.
 
-A core part of the process is clarity. Rather than jumping straight into implementation, work begins with walkthroughs, visual mockups, and early prototypes that allow ideas to be explored, adjusted, and understood before they are built. This helps clients see their vision take shape while allowing engineering decisions to be made with better context and fewer assumptions.
+The studio closes that gap early. After a first conversation, SorenLab builds a live, clickable mockup of the proposed site before the second meeting. Not a wireframe, not a Figma file only a designer can read. A real prototype you can navigate. You walk through it, react to it in real time, and what you approve becomes the scope. Nobody leaves that meeting wondering what they are getting.
 
-Soren Lab treats software less like an abstract technical task and more like structured design. Code, interfaces, and systems are approached with the same care as architecture, focusing on maintainability, scalability, and long-term usefulness rather than short-term output.
+There are two ways to work: fully custom builds for businesses with specific workflows, branding, or functionality a template cannot carry, and standardized site packages for businesses that need to be live quickly at the same quality bar. Either way, the output is company-level code, maintainable and documented, and the client owns all of it outright on final payment.
 
-Beyond client work, the long-term direction of Soren Lab is to build reusable tools and APIs and to apply technology in areas that form the backbone of society, such as agriculture, healthcare, and veterinary systems, where thoughtful software can have lasting impact.`,
+SorenLab is run by one person, operating as EarthPlus LLC. AI is part of how the work moves this fast; the architecture, the judgment, and the craft are not handed off. The focus right now is deliberately narrow: build genuinely excellent websites for local businesses, entrepreneurs, and early-stage founders. Reusable tooling and broader ambitions come after that core is real and proven, not before.`,
     Banner: SorenLabBanner,
     accentColor: '#185FA5',
     gallery: [],
@@ -52,16 +52,16 @@ Beyond client work, the long-term direction of Soren Lab is to build reusable to
   {
     slug: "earth-plus",
     title: "Earth Plus",
-    tagline: "Technology aligned with environmental responsibility.",
+    tagline: "For-profit by design, so it can fund environmental work on its own terms.",
     shortDescription:
-      "A long-term nonprofit initiative focused on aligning technology with environmental responsibility and sustainable systems.",
-    longDescription: `Earth Plus is a long-term nonprofit initiative centered on the belief that technological progress should not come at the cost of the planet we depend on. The goal is not to reject technology, but to use it responsibly to support sustainability, education, and environmental preservation.
+      "A for-profit venture that reinvests its own revenue into sustainability — recycled goods, environmental tooling, and on-the-ground foundations — instead of relying on donation cycles.",
+    longDescription: `EarthPlus is a long-term venture centered on the belief that technological progress shouldn't come at the cost of the planet it depends on. The goal isn't to reject technology; it's to build with it deliberately, and to route what it earns back toward sustainability and environmental preservation.
 
-The initiative is designed as an ecosystem rather than a single product. As technical projects grow, Earth Plus aims to reinvest resources into environmental foundations, sustainability efforts, and practical tools that address real-world challenges such as clean water access, waste reduction, and infrastructure support.
+The model is for-profit by design. Nonprofits depend on donation cycles; a business that sells something people want can fund environmental work from its own operations and scale that funding as it grows. EarthPlus is structured so that reinvestment is part of the operating model rather than a line item that gets cut in a bad quarter.
 
-In addition to financial reinvestment, Earth Plus explores tangible initiatives such as recycled and reusable products, sustainable materials, and environmental tooling that can be applied across communities. The focus is on practical systems that scale, adapt, and improve over time rather than one-off solutions.
+It's built as an ecosystem rather than a single product: sustainable and reusable goods, environmental tooling, and reinvestment into foundations doing work on the ground. The emphasis is on systems that adapt and compound over time rather than one-off gestures.
 
-At its core, Earth Plus exists to ensure that the systems we build today contribute to a future that remains livable. It is intentionally positioned as a long-term effort that grows alongside technological advancement rather than opposing it.`,
+EarthPlus is in early planning. The technical work funding it comes first, and this page will get more specific as the initiative does.`,
     Banner: EarthPlusBanner,
     accentColor: '#1D9E75',
     gallery: [],

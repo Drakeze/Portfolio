@@ -6,6 +6,8 @@ export const externalLinks = {
     twitter: "https://x.com/SorenIdeas",
     discord: "https://discord.gg/ysJW2Jqcdj",
     patreon: "https://www.patreon.com/cw/Drakeze",
+    dailydotdev: "https://daily.dev/drakeze",
+    linktree: "https://linktr.ee/Drakeze",
   },
   ventures: {
     sorenTech: "https://SorenLab.com",

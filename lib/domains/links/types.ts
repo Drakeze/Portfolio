@@ -7,6 +7,8 @@ export type SocialLinks = {
   twitter?: string
   discord?: string
   patreon?: string
+  dailydotdev?: string
+  linktree?: string
 }
 
 export type VentureLink = {

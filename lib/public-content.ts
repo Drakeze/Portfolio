@@ -186,17 +186,13 @@ export async function getPublicCertifications(): Promise<PublicCertification[]> 
 }
 
 const fallbackBioParagraphs: BioParagraph[] = [
-  "I'm Anthony Shead, a full-stack developer in California focused on building structured, scalable, and meaningful digital systems with modern web tools.",
-  "I did not take a traditional path into programming. I started by pulling things apart, modding games, tweaking configs, and learning through trial, error, and curiosity. Over time, that became the way I approach almost everything: deconstruct the system, understand how it works, then rebuild it with more intention.",
-  "Programming really clicked for me when I started seeing it as architecture. Code is not just about making something function. It is about designing how everything fits together, how the structure supports the experience, how data moves, how components connect, and how the system holds up as it grows.",
-  "That way of thinking has shaped how I build today. I care about clarity, maintainability, and long-term scalability. I try to avoid rushing into quick fixes when the stronger answer is usually a better structure, a cleaner flow, or a system that is easier to understand later.",
-  "Right now, I work across a modern full-stack setup with tools like Next.js, React, TypeScript, MongoDB, and Prisma. I am also building real-world product layers such as authentication, payments, email systems, APIs, dashboards, and multi-app project structures.",
-  "A lot of my current work revolves around connected systems. I am building a portfolio ecosystem with multiple apps under one larger structure, including a blog, creator-focused tools, service pages, data systems, and internal project workflows. Each project is not just a standalone build. It is part of a larger foundation I am learning to design, connect, and scale.",
-  "Alongside my personal development work, I am building Soren Lab, a development-focused brand centered on full-stack websites, digital systems, and client-ready solutions. The goal is not just to build basic websites. It is to help people turn their ideas, stories, and business goals into digital systems that feel clear, intentional, and built to grow.",
-  "I see websites as more than pages on a screen. A strong website should communicate the work behind the brand. It should show direction, trust, effort, and purpose. That is why I like approaching web development with an architectural mindset: planning the structure, shaping the visual direction, and making sure the final product supports both the client and the people using it.",
-  "Consistency is a big part of how I work. I have been swimming for over thirteen years and still train regularly, and that discipline carries over into development. I care about steady progress, strong fundamentals, and long-term effort. I try to write software the same way: structured, repeatable, and always improving.",
-  "Long-term, I want to become a polyglot full-stack engineer. I want to understand multiple languages, paradigms, tools, and architectures well enough to choose the right solution for the problem instead of forcing one approach onto everything. I care more about depth than shortcuts, and more about building systems that last than rushing something together.",
-  "Outside of day-to-day development, I am also laying the groundwork for Earth Plus, a long-term project focused on sustainability, renewal, and real-world impact. I believe well-designed systems, whether technical, creative, or personal, can create meaningful change when they are built with intention.",
+  "I'm Anthony Shead, a full-stack developer in Southern California. I build web systems, and I care about how they're put together as much as whether they work.",
+  "I didn't take the normal path. I got here pulling things apart, modding games, breaking configs, putting them back together better. That's still how I approach most things. Take it apart, figure out how it actually works, rebuild it with a plan.",
+  "Programming clicked for me once I started seeing it as architecture. Not just whether the code runs, but how data moves, how pieces connect, and whether any of it still makes sense six months and ten features later.",
+  "Day to day, I'm in Next.js, React, TypeScript, Tailwind, Prisma, and MongoDB, shipping on Vercel and Cloudflare. I've built the parts tutorials skip too: auth, Stripe payments, email, APIs, dashboards, admin panels. That's the stuff that turns a project into a product.",
+  "Soren Lab is my development studio for full-stack sites and systems for clients. It runs as a Turborepo monorepo, five apps and ten shared packages, which is pretty much how I think about client work too. You should get a foundation you can build on, not a page you have to throw out in a year.",
+  "Under Anakonis, I build tools for streamers. A VOD splitter people are using now, a compressor, overlays, and translation work in progress. I'm part of that community, so I hear fast when something isn't working.",
+  "I've been swimming for thirteen years and still train. It taught me what showing up over and over actually does for you. I write software the same way: fundamentals, reps, steady improvement, no shortcuts that cost me more later.",
 ].map((text, index) => ({ id: `p${index + 1}`, text, order: index }))
 
 export async function getPublicBio(): Promise<BioParagraph[]> {
@@ -217,7 +213,7 @@ export async function getPublicBio(): Promise<BioParagraph[]> {
 // to match and `bun run seed:links` is run (or the links are edited in /admin/links).
 const fallbackVentures: VentureLink[] = [
   { key: "sorenLab", label: "Soren Lab", description: "Custom web products, systems, and software delivery services.", url: externalLinks.ventures.sorenTech, showInNav: false, showInEcosystem: true, order: 0 },
-  { key: "earthPlus", label: "Earth Plus", description: "Technology and community work focused on sustainable outcomes.", url: externalLinks.ventures.earthPlus, showInNav: false, showInEcosystem: true, order: 1 },
+  { key: "earthPlus", label: "Earth Plus", description: "A for-profit venture that reinvests in sustainability and environmental work.", url: externalLinks.ventures.earthPlus, showInNav: false, showInEcosystem: true, order: 1 },
   { key: "creatorStore", label: "Creator Store", description: "Final destination for templates, toolkits, and digital products.", url: externalLinks.ventures.creatorStore, showInNav: true, showInEcosystem: true, order: 2 },
   { key: "anakonis", label: "Anakonis", description: "My streaming and content brand.", url: externalLinks.ventures.anakonis, showInNav: true, showInEcosystem: true, order: 3 },
   { key: "blog", label: "Blog", description: "Thoughts on code, building, and everything in between.", url: externalLinks.ventures.blog, showInNav: false, showInEcosystem: true, order: 4 },
@@ -232,6 +228,8 @@ const fallbackSocials: SocialLinks = {
   twitter: externalLinks.socials.twitter,
   discord: externalLinks.socials.discord,
   patreon: externalLinks.socials.patreon,
+  dailydotdev: externalLinks.socials.dailydotdev,
+  linktree: externalLinks.socials.linktree,
 }
 
 export async function getPublicLinks(): Promise<{ socials: SocialLinks; ventures: VentureLink[] }> {

@@ -19,6 +19,8 @@ const socials = {
   twitter: "https://x.com/SorenIdeas",
   discord: "https://discord.gg/ysJW2Jqcdj",
   patreon: "https://www.patreon.com/cw/Drakeze",
+  dailydotdev: "https://daily.dev/drakeze",
+  linktree: "https://linktr.ee/Drakeze",
 }
 
 const PATREON_URL = socials.patreon
@@ -26,7 +28,7 @@ const PATREON_URL = socials.patreon
 // Keep in sync with fallbackVentures in lib/public-content.ts.
 const ventures = [
   { key: "sorenLab", label: "Soren Lab", description: "Custom web products, systems, and software delivery services.", url: "https://SorenLab.com", showInNav: false, showInEcosystem: true, order: 0 },
-  { key: "earthPlus", label: "Earth Plus", description: "Technology and community work focused on sustainable outcomes.", url: "https://earthplus.org", showInNav: false, showInEcosystem: true, order: 1 },
+  { key: "earthPlus", label: "Earth Plus", description: "A for-profit venture that reinvests in sustainability and environmental work.", url: "https://earthplus.org", showInNav: false, showInEcosystem: true, order: 1 },
   { key: "creatorStore", label: "Creator Store", description: "Final destination for templates, toolkits, and digital products.", url: CREATOR_STORE_URL, showInNav: true, showInEcosystem: true, order: 2 },
   { key: "anakonis", label: "Anakonis", description: "My streaming and content brand.", url: ANAKONIS_URL, showInNav: true, showInEcosystem: true, order: 3 },
   { key: "blog", label: "Blog", description: "Thoughts on code, building, and everything in between.", url: BLOG_URL, showInNav: false, showInEcosystem: true, order: 4 },

@@ -1,14 +1,10 @@
-import { Building2, Leaf, Package, Wrench } from "lucide-react"
-import type { LucideIcon } from "lucide-react"
 import type { Metadata } from "next"
 
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { getPublicLinks } from "@/lib/public-content"
-import type { VentureLink } from "@/lib/domains/links/types"
 import { siteConfig } from "@/lib/seo"
 
 import { GetInTouchCard } from "./get-in-touch-card"
+import { JoinGlobeCard } from "./join-globe-card"
 
 export const metadata: Metadata = {
   title: `Connect - ${siteConfig.name}`,
@@ -17,45 +13,8 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600
 
-const VENTURE_ICONS: Record<string, LucideIcon> = {
-  sorenLab: Building2,
-  earthPlus: Leaf,
-  creatorStore: Package,
-  resources: Wrench,
-}
-
-function CreatorLinksCard({ ventures }: { ventures: VentureLink[] }) {
-  return (
-    <Card className="space-y-6 p-5 md:p-8">
-      <h2 className="text-xl font-semibold">Projects & Creator Ecosystem</h2>
-      <div className="grid gap-4 md:grid-cols-2">
-        {ventures.map((venture) => {
-          const Icon = VENTURE_ICONS[venture.key] ?? Package
-          return (
-            <a key={venture.key} href={venture.url} target="_blank" rel="noopener noreferrer">
-              <Button
-                variant="outline"
-                className="h-auto w-full items-start justify-start gap-4 whitespace-normal py-5 text-left"
-              >
-                <Icon className="mt-0.5 h-5 w-5 shrink-0" />
-                <span>
-                  <span className="block font-medium">{venture.label}</span>
-                  {venture.description ? (
-                    <span className="text-sm text-muted-foreground">{venture.description}</span>
-                  ) : null}
-                </span>
-              </Button>
-            </a>
-          )
-        })}
-      </div>
-    </Card>
-  )
-}
-
 export default async function ContactPage() {
-  const { ventures } = await getPublicLinks()
-  const ecosystemVentures = ventures.filter((v) => v.showInEcosystem)
+  const { socials } = await getPublicLinks()
 
   return (
     <main className="min-h-screen px-6 py-12 md:py-24">
@@ -68,8 +27,8 @@ export default async function ContactPage() {
           </p>
         </header>
 
-        <GetInTouchCard />
-        <CreatorLinksCard ventures={ecosystemVentures} />
+        <GetInTouchCard socials={socials} />
+        <JoinGlobeCard />
       </div>
     </main>
   )

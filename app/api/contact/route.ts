@@ -3,6 +3,7 @@ import { ZodError, z } from "zod"
 import { errorResponse, successResponse } from "@/lib/api/responses"
 import { createMessage } from "@/lib/domains/messages/service"
 import { getPostHogClient } from "@/lib/posthog-server"
+import { createRateLimiter } from "@/lib/rate-limit"
 import { getContactRecipientEmail, getMailFrom, resend } from "@/src/lib/resend"
 
 const contactSchema = z.object({
@@ -11,26 +12,7 @@ const contactSchema = z.object({
   message: z.string().min(1),
 })
 
-// ponytail: in-memory fixed window, per instance. Swap for a shared store if this ever runs multi-instance.
-const RATE_LIMIT = 5
-const RATE_WINDOW_MS = 10 * 60 * 1000
-const hits = new Map<string, { count: number; resetAt: number }>()
-
-function isRateLimited(ip: string) {
-  const now = Date.now()
-  for (const [key, entry] of hits) {
-    if (entry.resetAt <= now) hits.delete(key)
-  }
-
-  const entry = hits.get(ip)
-  if (!entry || entry.resetAt <= now) {
-    hits.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS })
-    return false
-  }
-
-  entry.count += 1
-  return entry.count > RATE_LIMIT
-}
+const isRateLimited = createRateLimiter(5, 10 * 60 * 1000)
 
 export async function POST(req: Request) {
   try {

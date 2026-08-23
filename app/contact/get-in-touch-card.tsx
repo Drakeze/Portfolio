@@ -1,23 +1,17 @@
 "use client"
 
 import * as React from "react"
-import { Github, Linkedin, Mail, Twitter } from "lucide-react"
+import { Mail } from "lucide-react"
 import posthog from "posthog-js"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { siteConfig } from "@/lib/seo"
+import { SocialsGrid } from "@/components/sections/socials-workshop"
+import type { SocialLinks } from "@/lib/domains/links/types"
 
-const connectLinks = [
-  { href: siteConfig.socials.github, label: "GitHub", icon: Github },
-  { href: siteConfig.socials.githubAlt, label: "GitHub (Alt)", icon: Github },
-  { href: siteConfig.socials.linkedin, label: "LinkedIn", icon: Linkedin },
-  { href: siteConfig.socials.twitter, label: "X", icon: Twitter },
-]
-
-export function GetInTouchCard() {
+export function GetInTouchCard({ socials }: { socials: SocialLinks }) {
   const [name, setName] = React.useState("")
   const [email, setEmail] = React.useState("")
   const [message, setMessage] = React.useState("")
@@ -133,22 +127,8 @@ export function GetInTouchCard() {
       </form>
 
       <div className="border-t pt-6">
-        <h2 className="mb-3 text-lg font-semibold">Connect</h2>
-        <div className="flex flex-wrap gap-5">
-          {connectLinks.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-              onClick={() => posthog.capture("social_link_clicked", { platform: item.label, href: item.href })}
-            >
-              <item.icon className="h-5 w-5" />
-              <span className="sr-only">{item.label}</span>
-            </a>
-          ))}
-        </div>
+        <h2 className="mb-3 text-lg font-semibold">Socials</h2>
+        <SocialsGrid socials={socials} />
       </div>
     </Card>
   )

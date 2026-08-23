@@ -39,7 +39,7 @@ export const projects: Project[] = [
     Banner: DashBoardBanner,
     accentColor: "#1760AA",
     tags: ["React", "Node.js", "TypeScript", "Tailwind CSS","Bun", "MongoDB", "Prisma", "Vercel"],
-    liveUrl:"https://dashboard-peach-omega-44.vercel.app/",
+    liveUrl:"https://dashboard-xi-six-41.vercel.app/",
     githubUrl: "https://github.com/Drakeze/Dashboard",
   },
   {

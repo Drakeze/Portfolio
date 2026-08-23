@@ -25,6 +25,10 @@ async function seedSkills(client: MongoClient) {
         $set: {
           name: skill.name,
           status: "active",
+          category: skill.category,
+          experienceDuration: skill.experienceDuration,
+          icon: skill.icon,
+          blurb: skill.blurb,
           order: index,
         },
       },
@@ -39,6 +43,10 @@ async function seedSkills(client: MongoClient) {
         $set: {
           name: skill.name,
           status: "learning",
+          category: skill.category,
+          experienceDuration: skill.experienceDuration,
+          icon: skill.icon,
+          blurb: skill.blurb,
           order: activeSkills.length + index,
         },
       },
