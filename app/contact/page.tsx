@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 export const revalidate = 3600
 
 export default async function ContactPage() {
-  const { socials } = await getPublicLinks()
+  const { socials, ventures } = await getPublicLinks()
+  const ecosystemVentures = ventures.filter((venture) => venture.showInEcosystem)
 
   return (
     <main className="min-h-screen px-6 py-12 md:py-24">
@@ -27,7 +28,7 @@ export default async function ContactPage() {
           </p>
         </header>
 
-        <GetInTouchCard socials={socials} />
+        <GetInTouchCard socials={socials} ventures={ecosystemVentures} />
         <JoinGlobeCard />
       </div>
     </main>

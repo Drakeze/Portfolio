@@ -2,9 +2,10 @@ import Link from "next/link"
 
 import { ChangePasswordForm } from "@/components/admin/change-password-form"
 import { getBio } from "@/lib/domains/bio/service"
+import { listCertifications } from "@/lib/domains/certifications/service"
 import { countCompanies } from "@/lib/domains/companies/service"
 import { getLinks } from "@/lib/domains/links/service"
-import { listMessages } from "@/lib/domains/messages/service"
+import { countPendingNameSubmissions, listMessages } from "@/lib/domains/messages/service"
 import { countProjects } from "@/lib/domains/projects/service"
 import { getResume } from "@/lib/domains/resume/service"
 import { listSkills } from "@/lib/domains/skills/service"
@@ -12,11 +13,13 @@ import { listSkills } from "@/lib/domains/skills/service"
 export const dynamic = "force-dynamic"
 
 export default async function AdminPage() {
-  const [projects, companies, skills, recentMessages, bio, links, resume] = await Promise.all([
+  const [projects, companies, skills, certifications, recentMessages, pendingNames, bio, links, resume] = await Promise.all([
     countProjects(),
     countCompanies(),
     listSkills(),
+    listCertifications(),
     listMessages(),
+    countPendingNameSubmissions(),
     getBio(),
     getLinks(),
     getResume(),
@@ -31,18 +34,26 @@ export default async function AdminPage() {
         <p className="text-sm text-muted-foreground">Overview of portfolio content and inbound messages.</p>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {[
           { label: "Projects", value: projects },
           { label: "Companies", value: companies },
-          { label: "Skills", value: skills.length },
-          { label: "Unread Messages", value: unreadCount },
-        ].map((stat) => (
-          <div key={stat.label} className="rounded-lg border bg-card p-5">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">{stat.label}</p>
-            <p className="mt-2 text-3xl font-semibold">{stat.value}</p>
-          </div>
-        ))}
+          { label: "Workshop", value: skills.length + certifications.length, href: "/admin/workshop" },
+          { label: "Unread Messages", value: unreadCount, href: "/admin/messages" },
+          { label: "Pending Names", value: pendingNames, href: "/admin/names" },
+        ].map((stat) =>
+          stat.href ? (
+            <Link key={stat.label} href={stat.href} className="rounded-lg border bg-card p-5 hover:bg-muted/30 transition-colors">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">{stat.label}</p>
+              <p className="mt-2 text-3xl font-semibold">{stat.value}</p>
+            </Link>
+          ) : (
+            <div key={stat.label} className="rounded-lg border bg-card p-5">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">{stat.label}</p>
+              <p className="mt-2 text-3xl font-semibold">{stat.value}</p>
+            </div>
+          )
+        )}
       </section>
 
       <section>

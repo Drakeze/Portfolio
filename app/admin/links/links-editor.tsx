@@ -17,6 +17,8 @@ const SOCIAL_FIELDS: { key: keyof SocialLinks; label: string; placeholder: strin
   { key: "twitter", label: "X / Twitter", placeholder: "https://x.com/..." },
   { key: "discord", label: "Discord", placeholder: "https://discord.gg/..." },
   { key: "patreon", label: "Patreon", placeholder: "https://patreon.com/..." },
+  { key: "dailydotdev", label: "daily.dev", placeholder: "https://daily.dev/..." },
+  { key: "linktree", label: "Linktree", placeholder: "https://linktr.ee/..." },
 ]
 
 export function LinksEditor({ initialSocials, initialVentures }: Props) {
@@ -106,7 +108,7 @@ export function LinksEditor({ initialSocials, initialVentures }: Props) {
 
       {/* Social Links */}
       <section className="rounded-lg border bg-background p-6 space-y-4">
-        <h2 className="text-sm font-medium">Social Links</h2>
+        <h2 className="text-sm font-medium">Social Links (Connect page)</h2>
         <div className="grid gap-4 md:grid-cols-2">
           {SOCIAL_FIELDS.map(({ key, label, placeholder }) => (
             <div key={key} className="space-y-1.5">
@@ -125,9 +127,9 @@ export function LinksEditor({ initialSocials, initialVentures }: Props) {
 
       {/* Venture Links */}
       <section className="rounded-lg border bg-background p-6 space-y-4">
-        <h2 className="text-sm font-medium">Venture Links</h2>
+        <h2 className="text-sm font-medium">Venture Links (Ecosystem dropdown + Connect page)</h2>
         <p className="text-xs text-muted-foreground">
-          Show in Nav: appears in the Ecosystem dropdown. Show in Ecosystem: appears on the Contact page.
+          Show in Nav: appears in the navbar&apos;s More dropdown. Show in Ecosystem: appears in the Ecosystem section of the Connect page.
         </p>
 
         <div className="space-y-4">

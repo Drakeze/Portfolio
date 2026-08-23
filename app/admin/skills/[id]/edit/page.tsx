@@ -46,9 +46,9 @@ export default async function EditSkillPage({ params }: EditSkillPageProps) {
       blurb: blurb || undefined,
     })
 
-    revalidatePath("/admin/skills")
+    revalidatePath("/admin/workshop")
     revalidatePath("/about")
-    redirect("/admin/skills")
+    redirect("/admin/workshop")
   }
 
   return (
@@ -146,7 +146,7 @@ export default async function EditSkillPage({ params }: EditSkillPageProps) {
           </div>
 
           <div className="md:col-span-2 flex items-center justify-end gap-3">
-            <Link href="/admin/skills" className="rounded-md border px-4 py-2 text-sm hover:bg-muted/40">
+            <Link href="/admin/workshop" className="rounded-md border px-4 py-2 text-sm hover:bg-muted/40">
               Cancel
             </Link>
             <SubmitButton label="Save Changes" pendingLabel="Saving..." className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-60" />

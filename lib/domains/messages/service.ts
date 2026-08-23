@@ -13,7 +13,17 @@ function messagesCollection() {
 
 export async function listMessages() {
   const collection = await messagesCollection()
-  return collection.find({}).sort({ createdAt: -1 }).toArray()
+  return collection.find({ source: "contact" }).sort({ createdAt: -1 }).toArray()
+}
+
+export async function listNameSubmissions() {
+  const collection = await messagesCollection()
+  return collection.find({ source: "globe" }).sort({ createdAt: -1 }).toArray()
+}
+
+export async function countPendingNameSubmissions() {
+  const collection = await messagesCollection()
+  return collection.countDocuments({ source: "globe", read: false })
 }
 
 export async function getMessageById(id: string) {
@@ -24,13 +34,11 @@ export async function getMessageById(id: string) {
 export async function createMessage(input: MessageInput) {
   const collection = await messagesCollection()
   const now = new Date()
-  const { lat, lng } = randomLandPoint()
   const doc = {
     ...input,
     read: input.read ?? false,
     createdAt: now,
-    lat,
-    lng,
+    ...(input.source === "globe" ? randomLandPoint() : {}),
   }
   const result = await collection.insertOne(doc as Omit<Message, "_id">)
   return { _id: result.insertedId, ...doc }
@@ -66,7 +74,7 @@ export async function listPublicPins(): Promise<{ lat: number; lng: number; labe
   const collection = await messagesCollection()
   const pins = await collection
     .find(
-      { lat: { $exists: true }, lng: { $exists: true }, read: true },
+      { source: "globe", read: true, lat: { $exists: true }, lng: { $exists: true } },
       { projection: { name: 1, lat: 1, lng: 1 } }
     )
     .toArray()

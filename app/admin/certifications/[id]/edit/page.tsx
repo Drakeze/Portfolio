@@ -34,9 +34,9 @@ export default async function EditCertificationPage({ params }: EditCertificatio
       completed: completedValue === "true",
     })
 
-    revalidatePath("/admin/certifications")
+    revalidatePath("/admin/workshop")
     revalidatePath("/about")
-    redirect("/admin/certifications")
+    redirect("/admin/workshop")
   }
 
   return (
@@ -90,7 +90,7 @@ export default async function EditCertificationPage({ params }: EditCertificatio
           </div>
 
           <div className="md:col-span-3 flex items-center justify-end gap-3">
-            <Link href="/admin/certifications" className="rounded-md border px-4 py-2 text-sm hover:bg-muted/40">
+            <Link href="/admin/workshop" className="rounded-md border px-4 py-2 text-sm hover:bg-muted/40">
               Cancel
             </Link>
             <SubmitButton label="Save Changes" pendingLabel="Saving..." className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-60" />

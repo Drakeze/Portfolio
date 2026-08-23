@@ -23,6 +23,7 @@ export async function POST(req: Request) {
       name,
       email: "",
       message: "Wants to join the globe.",
+      source: "globe",
       read: false,
     })
 

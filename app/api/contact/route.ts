@@ -31,6 +31,7 @@ export async function POST(req: Request) {
       name,
       email,
       message,
+      source: "contact",
       read: false,
     })
 

@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils"
 
 export const adminNav = [
   { href: "/admin", label: "Dashboard" },
-  { href: "/admin/projects", label: "Projects" },
+  { href: "/admin/projects", label: "My Work" },
   { href: "/admin/companies", label: "Companies" },
-  { href: "/admin/skills", label: "Skills" },
-  { href: "/admin/certifications", label: "Certifications" },
+  { href: "/admin/workshop", label: "Workshop" },
   { href: "/admin/messages", label: "Messages" },
+  { href: "/admin/names", label: "Names" },
   { href: "/admin/bio", label: "Bio" },
   { href: "/admin/links", label: "Links" },
   { href: "/admin/resume", label: "Resume" },

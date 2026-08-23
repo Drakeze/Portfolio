@@ -5,6 +5,7 @@ export const messageInputSchema = z.object({
   email: z.string().email(),
   message: z.string().min(1),
   read: z.boolean().optional(),
+  source: z.enum(["contact", "globe"]).default("contact"),
 })
 
 export const messageUpdateSchema = messageInputSchema.partial().refine(

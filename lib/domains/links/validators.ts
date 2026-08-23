@@ -17,6 +17,8 @@ export const socialLinksSchema = z.object({
   twitter: urlOrEmpty,
   discord: urlOrEmpty,
   patreon: urlOrEmpty,
+  dailydotdev: urlOrEmpty,
+  linktree: urlOrEmpty,
 })
 
 export const ventureLinkSchema = z.object({
