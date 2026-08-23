@@ -29,7 +29,11 @@ export function AdminNavbar() {
   }
 
   return (
-    <nav className="mb-8 flex flex-wrap items-center gap-2 rounded-lg border bg-card p-2 text-sm">
+    <nav className="mb-8 flex flex-wrap items-center gap-2 rounded-xl border bg-accent p-3 text-sm">
+      <Link href="/" className="mr-2 font-semibold text-lg hover:text-muted-foreground transition-colors">
+        AS
+      </Link>
+
       {adminNav.map((item) => {
         const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
 
@@ -38,8 +42,10 @@ export function AdminNavbar() {
             key={item.href}
             href={item.href}
             className={cn(
-              "rounded-md px-3 py-2 text-muted-foreground transition-colors hover:text-foreground",
-              isActive && "bg-primary text-primary-foreground hover:text-primary-foreground"
+              "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+              isActive
+                ? "bg-brand-purple text-brand-purple-foreground"
+                : "bg-brand-purple/15 text-brand-purple hover:bg-brand-purple/25"
             )}
           >
             {item.label}
@@ -50,7 +56,7 @@ export function AdminNavbar() {
       <button
         type="button"
         onClick={handleLogout}
-        className="ml-auto rounded-md px-3 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        className="ml-auto rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
       >
         Logout
       </button>

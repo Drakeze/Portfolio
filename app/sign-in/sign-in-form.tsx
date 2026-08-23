@@ -47,12 +47,17 @@ export function AdminSignInForm() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-6">
-      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4 rounded-lg border bg-card p-6">
-        <h1 className="text-2xl font-semibold">Admin sign in</h1>
-        <p className="text-sm text-muted-foreground">Enter your admin credentials to access the portfolio dashboard.</p>
+    <main className="flex min-h-screen items-center justify-center bg-accent px-6">
+      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4 rounded-xl border bg-card p-8 shadow-sm">
+        <Link href="/" className="inline-block font-semibold text-lg hover:text-muted-foreground transition-colors">
+          AS
+        </Link>
+        <div>
+          <h1 className="text-2xl font-semibold">Admin sign in</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Enter your admin credentials to access the portfolio dashboard.</p>
+        </div>
         <input
-          className="w-full rounded-md border bg-background px-3 py-2"
+          className="w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-purple/40"
           type="email"
           autoComplete="email"
           autoFocus
@@ -62,7 +67,7 @@ export function AdminSignInForm() {
           required
         />
         <input
-          className="w-full rounded-md border bg-background px-3 py-2"
+          className="w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-purple/40"
           type="password"
           autoComplete="current-password"
           placeholder="Password"
@@ -71,8 +76,12 @@ export function AdminSignInForm() {
           required
         />
         {error ? <p className="text-sm text-red-500">{error}</p> : null}
-        <div className="flex items-center justify-between">
-          <button className="rounded-md bg-primary px-4 py-2 text-primary-foreground" disabled={loading} type="submit">
+        <div className="flex items-center justify-between pt-2">
+          <button
+            className="rounded-full bg-brand-purple px-5 py-2 text-sm font-medium text-brand-purple-foreground transition-colors hover:bg-brand-purple/90 disabled:opacity-60"
+            disabled={loading}
+            type="submit"
+          >
             {loading ? "Signing in..." : "Sign in"}
           </button>
           <Link href="/forgot-password" className="text-sm text-muted-foreground hover:text-foreground">

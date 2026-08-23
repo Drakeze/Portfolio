@@ -10,6 +10,8 @@ export type Skill = {
   level?: number
   icon?: string
   order?: number
+  experienceDuration?: string
+  blurb?: string
 }
 
 export type SkillInput = Omit<Skill, "_id" | "status"> & {

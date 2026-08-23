@@ -79,6 +79,10 @@ function toSkillViewModel(skill: {
   _id?: { toString(): string }
   name?: unknown
   status?: unknown
+  category?: unknown
+  experienceDuration?: unknown
+  icon?: unknown
+  blurb?: unknown
 }): PublicSkill | null {
   if (!isNonEmptyString(skill.name)) {
     return null
@@ -91,6 +95,10 @@ function toSkillViewModel(skill: {
     id: skill._id?.toString(),
     name: skill.name.trim(),
     status: normalizedStatus,
+    category: isNonEmptyString(skill.category) ? skill.category.trim() : undefined,
+    experienceDuration: isNonEmptyString(skill.experienceDuration) ? skill.experienceDuration.trim() : undefined,
+    icon: isNonEmptyString(skill.icon) ? skill.icon.trim() : undefined,
+    blurb: isNonEmptyString(skill.blurb) ? skill.blurb.trim() : undefined,
   }
 }
 

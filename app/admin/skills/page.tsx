@@ -15,6 +15,10 @@ async function createSkillAction(formData: FormData) {
 
   const name = String(formData.get("name") ?? "").trim()
   const statusValue = String(formData.get("status") ?? "active") as SkillStatus
+  const category = String(formData.get("category") ?? "").trim()
+  const experienceDuration = String(formData.get("experienceDuration") ?? "").trim()
+  const icon = String(formData.get("icon") ?? "").trim()
+  const blurb = String(formData.get("blurb") ?? "").trim()
 
   if (!name) {
     redirect("/admin/skills?status=error&message=Skill+name+is+required")
@@ -23,7 +27,14 @@ async function createSkillAction(formData: FormData) {
   const status: SkillStatus =
     statusValue === "learning" || statusValue === "archived" ? statusValue : "active"
 
-  await createSkill({ name, status })
+  await createSkill({
+    name,
+    status,
+    category: category || undefined,
+    experienceDuration: experienceDuration || undefined,
+    icon: icon || undefined,
+    blurb: blurb || undefined,
+  })
 
   revalidatePath("/admin/skills")
   revalidatePath("/about")
@@ -79,6 +90,7 @@ export default async function AdminSkillsPage({
 }) {
   const skills = await listSkills()
   const { status, message } = await searchParams
+  const existingCategories = [...new Set(skills.map((skill) => skill.category).filter(Boolean))] as string[]
 
   return (
     <main className="space-y-10">
@@ -124,6 +136,64 @@ export default async function AdminSkillsPage({
             </select>
           </div>
 
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-wide text-muted-foreground" htmlFor="skill-category">
+              Category (Workshop folder)
+            </label>
+            <input
+              id="skill-category"
+              name="category"
+              type="text"
+              list="skill-categories"
+              placeholder="Frontend"
+              className="w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/40"
+            />
+            <datalist id="skill-categories">
+              {existingCategories.map((category) => (
+                <option key={category} value={category} />
+              ))}
+            </datalist>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-wide text-muted-foreground" htmlFor="skill-duration">
+              Time Used
+            </label>
+            <input
+              id="skill-duration"
+              name="experienceDuration"
+              type="text"
+              placeholder="2 years"
+              className="w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/40"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-wide text-muted-foreground" htmlFor="skill-icon">
+              Icon Key
+            </label>
+            <input
+              id="skill-icon"
+              name="icon"
+              type="text"
+              placeholder="react"
+              className="w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/40"
+            />
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-xs uppercase tracking-wide text-muted-foreground" htmlFor="skill-blurb">
+              Blurb
+            </label>
+            <input
+              id="skill-blurb"
+              name="blurb"
+              type="text"
+              placeholder="My daily driver."
+              className="w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/40"
+            />
+          </div>
+
           <div className="flex items-end">
             <SubmitButton label="Save Skill" pendingLabel="Saving..." className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-60" />
           </div>
@@ -142,6 +212,8 @@ export default async function AdminSkillsPage({
                 <th className="px-6 py-3">ID</th>
                 <th className="px-6 py-3">Skill Name</th>
                 <th className="px-6 py-3">Status</th>
+                <th className="px-6 py-3">Category</th>
+                <th className="px-6 py-3">Time Used</th>
                 <th className="px-6 py-3 text-right">Actions</th>
               </tr>
             </thead>
@@ -158,6 +230,8 @@ export default async function AdminSkillsPage({
                         {status}
                       </span>
                     </td>
+                    <td className="px-6 py-4 text-muted-foreground">{skill.category ?? "—"}</td>
+                    <td className="px-6 py-4 text-muted-foreground">{skill.experienceDuration ?? "—"}</td>
                     <td className="px-6 py-4">
                       <div className="flex justify-end items-center gap-4">
                         <Link href={`/admin/skills/${skill._id.toString()}/edit`} className="text-sm font-medium text-primary hover:underline">
