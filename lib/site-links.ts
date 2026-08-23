@@ -5,7 +5,7 @@ export const externalLinks = {
     linkedin: "https://www.linkedin.com/in/anthonyshead/",
     twitter: "https://x.com/SorenIdeas",
     discord: "https://discord.gg/ysJW2Jqcdj",
-    patreon: "https://www.patreon.com/Drakeze",
+    patreon: "https://www.patreon.com/cw/Drakeze",
   },
   ventures: {
     sorenTech: "https://SorenLab.com",
@@ -14,5 +14,6 @@ export const externalLinks = {
     anakonis: process.env.NEXT_PUBLIC_ANAKONIS_URL ?? "https://anakonis.drakeze.com",
     blog: process.env.NEXT_PUBLIC_BLOG_URL ?? "https://blog.drakeze.com",
     resources: process.env.NEXT_PUBLIC_CREATOR_RESOURCES_URL ?? "https://linktr.ee/Drakeze",
+    patreon: "https://www.patreon.com/cw/Drakeze",
   },
 } as const

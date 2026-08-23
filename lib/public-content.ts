@@ -204,13 +204,17 @@ export async function getPublicBio(): Promise<BioParagraph[]> {
   return fallbackBioParagraphs
 }
 
+// Only used when the links document is absent — an existing DB record wins wholesale.
+// Editing this list does nothing in production until scripts/seed-links.ts is updated
+// to match and `bun run seed:links` is run (or the links are edited in /admin/links).
 const fallbackVentures: VentureLink[] = [
   { key: "sorenLab", label: "Soren Lab", description: "Custom web products, systems, and software delivery services.", url: externalLinks.ventures.sorenTech, showInNav: false, showInEcosystem: true, order: 0 },
   { key: "earthPlus", label: "Earth Plus", description: "Technology and community work focused on sustainable outcomes.", url: externalLinks.ventures.earthPlus, showInNav: false, showInEcosystem: true, order: 1 },
   { key: "creatorStore", label: "Creator Store", description: "Final destination for templates, toolkits, and digital products.", url: externalLinks.ventures.creatorStore, showInNav: true, showInEcosystem: true, order: 2 },
   { key: "anakonis", label: "Anakonis", description: "My streaming and content brand.", url: externalLinks.ventures.anakonis, showInNav: true, showInEcosystem: true, order: 3 },
-  { key: "blog", label: "Blog", description: "Thoughts on code, building, and everything in between.", url: externalLinks.ventures.blog, showInNav: true, showInEcosystem: true, order: 4 },
+  { key: "blog", label: "Blog", description: "Thoughts on code, building, and everything in between.", url: externalLinks.ventures.blog, showInNav: false, showInEcosystem: true, order: 4 },
   { key: "resources", label: "Resources", description: "Curated links, docs, and tools I actively recommend.", url: externalLinks.ventures.resources, showInNav: false, showInEcosystem: true, order: 5 },
+  { key: "patreon", label: "Patreon", description: "Support my work directly.", url: externalLinks.ventures.patreon, showInNav: true, showInEcosystem: true, order: 6 },
 ]
 
 const fallbackSocials: SocialLinks = {

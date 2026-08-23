@@ -7,6 +7,8 @@ export type Message = {
   message: string
   read: boolean
   createdAt: Date
+  lat?: number
+  lng?: number
 }
 
 export type MessageInput = Omit<Message, "_id" | "createdAt" | "read"> & {

@@ -11,8 +11,34 @@ const contactSchema = z.object({
   message: z.string().min(1),
 })
 
+// ponytail: in-memory fixed window, per instance. Swap for a shared store if this ever runs multi-instance.
+const RATE_LIMIT = 5
+const RATE_WINDOW_MS = 10 * 60 * 1000
+const hits = new Map<string, { count: number; resetAt: number }>()
+
+function isRateLimited(ip: string) {
+  const now = Date.now()
+  for (const [key, entry] of hits) {
+    if (entry.resetAt <= now) hits.delete(key)
+  }
+
+  const entry = hits.get(ip)
+  if (!entry || entry.resetAt <= now) {
+    hits.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS })
+    return false
+  }
+
+  entry.count += 1
+  return entry.count > RATE_LIMIT
+}
+
 export async function POST(req: Request) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown"
+    if (isRateLimited(ip)) {
+      return errorResponse("Too many messages sent. Please try again later.", 429)
+    }
+
     const { name, email, message } = contactSchema.parse(await req.json())
     const to = getContactRecipientEmail()
     if (!resend || !to) {

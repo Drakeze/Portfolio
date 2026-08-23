@@ -2,11 +2,13 @@
 
 import dynamic from "next/dynamic"
 
-const GlobeWireframe = dynamic(
-  () => import("@/components/globe-wireframe").then((mod) => mod.GlobeWireframe),
+import type { GlobeRealisticProps } from "@/components/globe-realistic"
+
+const GlobeRealistic = dynamic(
+  () => import("@/components/globe-realistic").then((mod) => mod.GlobeRealistic),
   { ssr: false }
 )
 
-export function DeferredGlobe() {
-  return <GlobeWireframe />
+export function DeferredGlobe(props: GlobeRealisticProps) {
+  return <GlobeRealistic {...props} />
 }

@@ -4,6 +4,7 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/s
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { authClient } from "@/lib/auth-client"
 import type { VentureLink } from "@/lib/domains/links/types"
+import { externalLinks } from "@/lib/site-links"
 import { ChevronDown, ExternalLink, Menu, LayoutDashboard } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -11,7 +12,9 @@ import { useEffect, useRef, useState } from "react"
 
 const links = [
   { href: "/projects", label: "My Work" },
+  { href: "/case-studies", label: "Case Studies" },
   { href: "/about", label: "About" },
+  { href: externalLinks.ventures.blog, label: "Blog", external: true },
   { href: "/contact", label: "Connect" },
 ]
 
@@ -53,70 +56,81 @@ export function Navigation({ navVentures }: Props) {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-      <div className="container mx-auto px-6 h-16 flex items-center justify-between max-w-6xl">
+    <nav className="sticky top-0 z-50 w-full border-b border-border bg-accent">
+      <div className="container mx-auto px-6 h-16 grid grid-cols-[auto_1fr_auto] items-center max-w-6xl">
         <Link href="/" className="font-semibold text-lg hover:text-muted-foreground transition-colors">
-          Anthony Shead
+          AS
         </Link>
 
-        <div className="flex items-center gap-4">
-          <div className="hidden md:flex items-center gap-6">
-            {links.map((link) => (
+        <div className="hidden md:flex items-center justify-center gap-6">
+          {links.map((link) =>
+            link.external ? (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-brand-purple/15 px-4 py-1.5 text-sm font-medium text-brand-purple transition-colors hover:bg-brand-purple/25"
+              >
+                {link.label}
+              </a>
+            ) : (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-foreground ${
-                  pathname === link.href ? "text-foreground" : "text-muted-foreground"
+                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                  pathname === link.href
+                    ? "bg-brand-purple text-brand-purple-foreground"
+                    : "bg-brand-purple/15 text-brand-purple hover:bg-brand-purple/25"
                 }`}
               >
                 {link.label}
               </Link>
-            ))}
+            )
+          )}
+        </div>
 
-            {navVentures.length > 0 ? (
-              <>
-                <span className="w-px h-4 bg-border" aria-hidden="true" />
-                <div ref={dropdownRef} className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setEcosystemOpen((v) => !v)}
-                    className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                    aria-expanded={ecosystemOpen}
-                  >
-                    Ecosystem
-                    <ChevronDown
-                      className={`h-3.5 w-3.5 transition-transform duration-150 ${ecosystemOpen ? "rotate-180" : ""}`}
-                    />
-                  </button>
+        <div className="flex items-center justify-end gap-4">
+          {navVentures.length > 0 ? (
+            <div ref={dropdownRef} className="relative hidden md:block">
+              <button
+                type="button"
+                onClick={() => setEcosystemOpen((v) => !v)}
+                className="flex items-center gap-1 rounded-full bg-brand-purple/15 px-4 py-1.5 text-sm font-medium text-brand-purple transition-colors hover:bg-brand-purple/25"
+                aria-expanded={ecosystemOpen}
+              >
+                More
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition-transform duration-150 ${ecosystemOpen ? "rotate-180" : ""}`}
+                />
+              </button>
 
-                  {ecosystemOpen ? (
-                    <div className="absolute right-0 top-full mt-2 w-64 rounded-lg border bg-popover shadow-md py-1 z-50">
-                      {navVentures.map((venture) => (
-                        <a
-                          key={venture.key}
-                          href={venture.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => setEcosystemOpen(false)}
-                          className="flex items-start gap-3 px-4 py-3 hover:bg-muted/60 transition-colors group"
-                        >
-                          <span className="flex-1 min-w-0">
-                            <span className="block text-sm font-medium text-foreground">{venture.label}</span>
-                            {venture.description ? (
-                              <span className="block text-xs text-muted-foreground mt-0.5 leading-snug">
-                                {venture.description}
-                              </span>
-                            ) : null}
+              {ecosystemOpen ? (
+                <div className="absolute right-0 top-full mt-2 w-64 rounded-lg border bg-popover shadow-md py-1 z-50">
+                  {navVentures.map((venture) => (
+                    <a
+                      key={venture.key}
+                      href={venture.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setEcosystemOpen(false)}
+                      className="flex items-start gap-3 px-4 py-3 hover:bg-muted/60 transition-colors group"
+                    >
+                      <span className="flex-1 min-w-0">
+                        <span className="block text-sm font-medium text-foreground">{venture.label}</span>
+                        {venture.description ? (
+                          <span className="block text-xs text-muted-foreground mt-0.5 leading-snug">
+                            {venture.description}
                           </span>
-                          <ExternalLink className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground group-hover:text-foreground transition-colors" />
-                        </a>
-                      ))}
-                    </div>
-                  ) : null}
+                        ) : null}
+                      </span>
+                      <ExternalLink className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    </a>
+                  ))}
                 </div>
-              </>
-            ) : null}
-          </div>
+              ) : null}
+            </div>
+          ) : null}
 
           <ThemeToggle />
 
@@ -164,24 +178,37 @@ export function Navigation({ navVentures }: Props) {
             </SheetTrigger>
             <SheetContent side="right" className="w-64 pt-14">
               <nav className="flex flex-col gap-1 px-2">
-                {links.map((link) => (
-                  <SheetClose asChild key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`rounded-md px-4 py-3 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${
-                        pathname === link.href ? "text-foreground bg-accent/50" : "text-muted-foreground"
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  </SheetClose>
-                ))}
+                {links.map((link) =>
+                  link.external ? (
+                    <SheetClose asChild key={link.href}>
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-md px-4 py-3 text-base font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        {link.label}
+                      </a>
+                    </SheetClose>
+                  ) : (
+                    <SheetClose asChild key={link.href}>
+                      <Link
+                        href={link.href}
+                        className={`rounded-md px-4 py-3 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${
+                          pathname === link.href ? "text-foreground bg-accent/50" : "text-muted-foreground"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    </SheetClose>
+                  )
+                )}
 
                 {navVentures.length > 0 ? (
                   <>
                     <div className="my-2 h-px bg-border" />
                     <p className="px-4 pb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                      Ecosystem
+                      More
                     </p>
                     {navVentures.map((venture) => (
                       <SheetClose asChild key={venture.key}>

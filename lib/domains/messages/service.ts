@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb"
 
+import { randomLandPoint } from "@/lib/geo/random-land-point"
 import { collectionNames, getDb } from "@/lib/mongodb"
 
 import { type Message, type MessageInput, type MessageUpdateInput } from "./types"
@@ -23,10 +24,13 @@ export async function getMessageById(id: string) {
 export async function createMessage(input: MessageInput) {
   const collection = await messagesCollection()
   const now = new Date()
+  const { lat, lng } = randomLandPoint()
   const doc = {
     ...input,
     read: input.read ?? false,
     createdAt: now,
+    lat,
+    lng,
   }
   const result = await collection.insertOne(doc as Omit<Message, "_id">)
   return { _id: result.insertedId, ...doc }
@@ -54,4 +58,20 @@ export async function countMessages() {
 export async function countNewMessages() {
   const collection = await messagesCollection()
   return collection.countDocuments({ read: false })
+}
+
+// Public, unauthenticated path: only owner-reviewed (read) messages are eligible,
+// and the submitter's full name never leaves this function — only a first name.
+export async function listPublicPins(): Promise<{ lat: number; lng: number; label: string }[]> {
+  const collection = await messagesCollection()
+  const pins = await collection
+    .find(
+      { lat: { $exists: true }, lng: { $exists: true }, read: true },
+      { projection: { name: 1, lat: 1, lng: 1 } }
+    )
+    .toArray()
+
+  return pins
+    .filter((pin) => typeof pin.lat === "number" && typeof pin.lng === "number")
+    .map((pin) => ({ lat: pin.lat!, lng: pin.lng!, label: pin.name.split(" ")[0] ?? "" }))
 }
