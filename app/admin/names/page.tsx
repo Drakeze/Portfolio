@@ -22,12 +22,13 @@ async function toggleApprovedAction(formData: FormData) {
 
   try {
     await updateMessage(id, { read: readValue === "true" })
-    revalidatePath("/admin/names")
-    revalidatePath("/")
-    redirect(`/admin/names?status=success&message=${readValue === "true" ? "Name+approved" : "Name+unapproved"}`)
   } catch {
     redirect("/admin/names?status=error&message=Failed+to+update+name")
   }
+
+  revalidatePath("/admin/names")
+  revalidatePath("/")
+  redirect(`/admin/names?status=success&message=${readValue === "true" ? "Name+approved" : "Name+unapproved"}`)
 }
 
 async function deleteNameAction(formData: FormData) {
@@ -40,11 +41,12 @@ async function deleteNameAction(formData: FormData) {
 
   try {
     await deleteMessage(id)
-    revalidatePath("/admin/names")
-    redirect("/admin/names?status=success&message=Submission+rejected")
   } catch {
     redirect("/admin/names?status=error&message=Failed+to+reject+submission")
   }
+
+  revalidatePath("/admin/names")
+  redirect("/admin/names?status=success&message=Submission+rejected")
 }
 
 export default async function AdminNamesPage({ searchParams }: PageProps) {

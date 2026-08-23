@@ -8,10 +8,10 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { SocialsGrid, VenturesGrid } from "@/components/sections/socials-workshop"
-import type { SocialLinks, VentureLink } from "@/lib/domains/links/types"
+import { SocialsGrid } from "@/components/sections/socials-workshop"
+import type { SocialLinks } from "@/lib/domains/links/types"
 
-export function GetInTouchCard({ socials, ventures }: { socials: SocialLinks; ventures: VentureLink[] }) {
+export function GetInTouchCard({ socials }: { socials: SocialLinks }) {
   const [name, setName] = React.useState("")
   const [email, setEmail] = React.useState("")
   const [message, setMessage] = React.useState("")
@@ -130,13 +130,6 @@ export function GetInTouchCard({ socials, ventures }: { socials: SocialLinks; ve
         <h2 className="mb-3 text-lg font-semibold">Socials</h2>
         <SocialsGrid socials={socials} />
       </div>
-
-      {ventures.length > 0 ? (
-        <div className="border-t pt-6">
-          <h2 className="mb-3 text-lg font-semibold">Ecosystem</h2>
-          <VenturesGrid ventures={ventures} />
-        </div>
-      ) : null}
     </Card>
   )
 }

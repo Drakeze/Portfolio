@@ -23,11 +23,12 @@ async function toggleMessageReadAction(formData: FormData) {
 
   try {
     await updateMessage(id, { read: readValue === "true" })
-    revalidatePath("/admin/messages")
-    redirect("/admin/messages?status=success&message=Message+updated")
   } catch {
     redirect("/admin/messages?status=error&message=Failed+to+update+message")
   }
+
+  revalidatePath("/admin/messages")
+  redirect("/admin/messages?status=success&message=Message+updated")
 }
 
 async function deleteMessageAction(formData: FormData) {
@@ -40,11 +41,12 @@ async function deleteMessageAction(formData: FormData) {
 
   try {
     await deleteMessage(id)
-    revalidatePath("/admin/messages")
-    redirect("/admin/messages?status=success&message=Message+deleted")
   } catch {
     redirect("/admin/messages?status=error&message=Failed+to+delete+message")
   }
+
+  revalidatePath("/admin/messages")
+  redirect("/admin/messages?status=success&message=Message+deleted")
 }
 
 export default async function AdminMessagesPage({ searchParams }: PageProps) {

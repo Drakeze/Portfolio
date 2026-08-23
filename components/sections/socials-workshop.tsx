@@ -5,9 +5,7 @@ import posthog from "posthog-js"
 import type { IconType } from "react-icons"
 import { SiDailydotdev, SiDiscord, SiGithub, SiLinktree, SiX } from "react-icons/si"
 
-import { ExternalLink } from "lucide-react"
-
-import type { SocialLinks, VentureLink } from "@/lib/domains/links/types"
+import type { SocialLinks } from "@/lib/domains/links/types"
 
 type SocialTile = {
   key: keyof SocialLinks
@@ -43,33 +41,6 @@ export function SocialsGrid({ socials }: { socials: SocialLinks }) {
             <Icon className="h-7 w-7 text-foreground" />
           </span>
           <span className="text-sm font-medium text-foreground">{label}</span>
-        </a>
-      ))}
-    </div>
-  )
-}
-
-export function VenturesGrid({ ventures }: { ventures: VentureLink[] }) {
-  if (ventures.length === 0) return null
-
-  return (
-    <div className="grid gap-3 sm:grid-cols-2">
-      {ventures.map((venture) => (
-        <a
-          key={venture.key}
-          href={venture.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-start gap-3 rounded-xl border border-transparent p-4 transition-all hover:border-foreground/30 hover:bg-muted/60"
-          onClick={() => posthog.capture("venture_link_clicked", { venture: venture.label, href: venture.url })}
-        >
-          <span className="min-w-0 flex-1">
-            <span className="block text-sm font-medium text-foreground">{venture.label}</span>
-            {venture.description ? (
-              <span className="mt-0.5 block text-xs text-muted-foreground leading-snug">{venture.description}</span>
-            ) : null}
-          </span>
-          <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
         </a>
       ))}
     </div>
