@@ -1,6 +1,7 @@
-import { BarChart3, TestTube, Webhook, Wrench } from "lucide-react"
+import { BarChart3, Bot, Image, PenTool, TestTube, Webhook, Wrench } from "lucide-react"
 import type { IconType } from "react-icons"
-import { FaAws, FaCss3, FaJava } from "react-icons/fa6"
+import { FaAws, FaCss3, FaDumbbell, FaFutbol, FaGamepad, FaJava, FaPersonSwimming } from "react-icons/fa6"
+import { GiBoxingGlove, GiCookingPot } from "react-icons/gi"
 import {
   SiBetterauth,
   SiC,
@@ -80,6 +81,15 @@ const TECH_ICONS: Record<string, IconType> = {
   rust: SiRust,
   c: SiC,
   sql: TbDatabase,
+  cooking: GiCookingPot,
+  gym: FaDumbbell,
+  "video games": FaGamepad,
+  boxing: GiBoxingGlove,
+  soccer: FaFutbol,
+  swimming: FaPersonSwimming,
+  chatgpt: Bot,
+  "adobe illustrator": PenTool,
+  "adobe photoshop": Image,
 }
 
 /** ponytail: covers common tech names; unmapped skills fall back to a generic icon. */
