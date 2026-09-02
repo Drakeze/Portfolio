@@ -78,9 +78,19 @@ export function GlobeRealistic({ contactPins = [] }: GlobeRealisticProps) {
           pointLat="lat"
           pointLng="lng"
           pointLabel="label"
-          pointColor={(d) => ((d as GlobePoint).source === "contact" ? "#facc15" : "#ec4899")}
-          pointAltitude={0.01}
-          pointRadius={0.35}
+          pointColor={(d) =>
+            (d as GlobePoint).source === "contact" ? "#facc15" : "rgba(236, 72, 153, 0.35)"
+          }
+          pointAltitude={(d) => ((d as GlobePoint).source === "contact" ? 0.12 : 0.004)}
+          pointRadius={(d) => ((d as GlobePoint).source === "contact" ? 0.5 : 0.22)}
+          ringsData={contactPins}
+          ringLat="lat"
+          ringLng="lng"
+          ringColor={() => (t: number) => `rgba(250, 204, 21, ${1 - t})`}
+          ringMaxRadius={4}
+          ringPropagationSpeed={2}
+          ringRepeatPeriod={1400}
+          ringAltitude={0.01}
         />
       )}
     </div>

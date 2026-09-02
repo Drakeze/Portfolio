@@ -3,7 +3,6 @@ import { Navigation } from "@/components/navigation"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { siteConfig } from "@/lib/seo"
-import { getPublicLinks } from "@/lib/public-content"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata } from "next"
@@ -40,14 +39,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const { ventures } = await getPublicLinks()
-  const navVentures = ventures.filter((v) => v.showInNav)
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistMono.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navigation navVentures={navVentures} />
+          <Navigation />
           {children}
           <Footer />
           <Toaster richColors closeButton />
