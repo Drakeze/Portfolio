@@ -26,7 +26,7 @@ export default async function CompanyProjectsPage() {
         </p>
       </section>
 
-      <section className="grid gap-6 md:grid-cols-2">
+      <section className="grid gap-6 lg:grid-cols-2">
         {companies.length === 0 ? (
           <Card className="p-8 text-center text-muted-foreground md:col-span-2">No companies published yet.</Card>
         ) : companies.map((company) => (

@@ -1,3 +1,7 @@
+import { existsSync } from "node:fs"
+import path from "node:path"
+
+import Image from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next"
 
@@ -34,6 +38,10 @@ export default async function AboutPage() {
 
   const projectSummaries = projects.map((project) => ({ title: project.title, tags: project.tags }))
 
+  // Drop the photo file at public/anthony.jpg to fill the slot; until then, show the plain muted panel.
+  const bioPhoto = "/anthony.jpg"
+  const hasBioPhoto = existsSync(path.join(process.cwd(), "public", bioPhoto))
+
   return (
     <main className="min-h-screen py-12 md:py-24 px-6">
       <div className="container mx-auto max-w-6xl">
@@ -43,8 +51,23 @@ export default async function AboutPage() {
         <div className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">Who I Am</h2>
           <Card className="bg-muted/40 border-border p-6">
-            <div>
-              <div className="float-right ml-6 mb-4 h-80 w-64 rounded-lg bg-muted-foreground/20" aria-hidden="true" />
+            <div className="flex flex-col gap-6 md:flex-row-reverse md:items-start">
+              {hasBioPhoto ? (
+                <div className="relative w-full h-64 overflow-hidden rounded-lg bg-muted-foreground/20 md:h-80 md:w-64 md:shrink-0">
+                  <Image
+                    src={bioPhoto}
+                    alt="Anthony Shead"
+                    fill
+                    sizes="(min-width: 768px) 16rem, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              ) : (
+                <div
+                  className="w-full h-40 rounded-lg bg-muted-foreground/20 md:h-80 md:w-64 md:shrink-0"
+                  aria-hidden="true"
+                />
+              )}
               <ul className="space-y-3">
                 {bioParagraphs.map((paragraph) => (
                   <li key={paragraph.id} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
@@ -54,7 +77,7 @@ export default async function AboutPage() {
                 ))}
               </ul>
             </div>
-            <div className="clear-both mt-6">
+            <div className="mt-6">
               <Button variant="outline" className="bg-transparent" asChild>
                 <Link href="/contact">Want my full resume? Contact me</Link>
               </Button>

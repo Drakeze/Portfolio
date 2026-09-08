@@ -62,21 +62,21 @@ export function ProjectCard({ project, variant = "detailed" }: ProjectCardProps)
                 </span>
               ))}
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               {project.liveUrl ? (
-                <Button size="sm" asChild>
+                <Button size="sm" className="w-full sm:w-auto" asChild>
                   <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="mr-2 h-4 w-4" />
                     Visit Live Website
                   </Link>
                 </Button>
               ) : (
-                <Button size="sm" variant="outline" disabled className="cursor-not-allowed opacity-70">
+                <Button size="sm" variant="outline" disabled className="w-full cursor-not-allowed opacity-70 sm:w-auto">
                   Coming Soon
                 </Button>
               )}
               {project.githubUrl ? (
-                <Button variant="outline" size="sm" asChild>
+                <Button variant="outline" size="sm" className="w-full sm:w-auto" asChild>
                   <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                     <GitHubMark className="mr-2 h-4 w-4" />
                     GitHub Repo
