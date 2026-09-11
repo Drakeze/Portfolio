@@ -17,7 +17,7 @@ export default async function ProjectsPage() {
   return (
     <>
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8">My Work</h1>
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {projects.length === 0 ? (
           <div className="rounded-lg border border-dashed p-10 text-center text-muted-foreground md:col-span-2">
             No projects published yet.

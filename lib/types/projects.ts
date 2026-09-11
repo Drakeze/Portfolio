@@ -7,6 +7,7 @@ import DevLogBanner from "@/components/banners/DevLogBanner"
 import CreatorStoreBanner from "@/components/banners/CreatorStoreBanner"
 import StreamHubBanner from "@/components/banners/StreamHubBanner"
 import StudyVaultBanner from "@/components/banners/StudyVaultBanner"
+import TranslatorBanner from "@/components/banners/TranslatorBanner"
 
 export type Project = {
   _id?: string
@@ -70,6 +71,16 @@ export const projects: Project[] = [
     tags: ["React", "TypeScript", "Bun", "Vercel"],
     liveUrl: "https://anakonis.drakeze.com",
     githubUrl: "https://github.com/Drakeze/Anakonis",
+  },
+  {
+    title: "Translator",
+    description:
+      "A lightweight local translation tool built in Python with NiceGUI — type or speak, translate instantly across a dozen languages, and keep a running history of recent conversations.",
+    Banner: TranslatorBanner,
+    accentColor: "#D6336C",
+    tags: ["Python", "NiceGUI", "Fly.io", "deep-translator", "Web Speech API"],
+    liveUrl: "https://translator.drakeze.com",
+    githubUrl: "https://github.com/DrakezeWind/Translator",
   },
   {
     title: "GrowthVault",

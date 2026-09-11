@@ -4,6 +4,14 @@ All notable changes to the Drakeze Portfolio (`drakeze.com`) are documented here
 
 ---
 
+## September 2026
+
+### Translator Project Added *(2026-09-11)*
+- Added the **Translator** local translation app project card
+  (`TranslatorBanner`, pink accent `#D6336C`)
+
+---
+
 ## June 2026
 
 ### My Work Section Fixes *(2026-06-18)*
@@ -177,6 +185,7 @@ Initial commit. Next.js 15 + React 19 + TypeScript + Tailwind CSS v4 + Bun. Basi
 | Blogging Platform | blog.drakeze.com | Drakeze/Blog | DevLogBanner (scroll) |
 | Creator Tools | store.drakeze.com | — (private) | CreatorStoreBanner (store) |
 | Anakonis | anakonis.drakeze.com | Drakeze/Anakonis | StreamHubBanner (waveform) |
+| Translator | translator.drakeze.com | DrakezeWind/Translator | TranslatorBanner (phrase list) |
 | GrowthVault | Coming Soon | DrakezeWind/NotesStudy | StudyVaultBanner |
 
 ## Company Initiatives
