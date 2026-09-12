@@ -27,3 +27,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env.local
+
+# claude-flow / ruflo local runtime state
+.claude-flow/
+.claude/proven-config.json
+.claude/.proven-config-version
