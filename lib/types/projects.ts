@@ -7,6 +7,7 @@ import DevLogBanner from "@/components/banners/DevLogBanner"
 import CreatorStoreBanner from "@/components/banners/CreatorStoreBanner"
 import StreamHubBanner from "@/components/banners/StreamHubBanner"
 import StudyVaultBanner from "@/components/banners/StudyVaultBanner"
+import TodoBanner from "@/components/banners/TodoBanner"
 import TranslatorBanner from "@/components/banners/TranslatorBanner"
 
 export type Project = {
@@ -81,6 +82,15 @@ export const projects: Project[] = [
     tags: ["Python", "NiceGUI", "Fly.io", "deep-translator", "Web Speech API"],
     liveUrl: "https://translator.drakeze.com",
     githubUrl: "https://github.com/DrakezeWind/Translator",
+  },
+  {
+    title: "Todo List",
+    description:
+      "A C++ todo app compiled to WebAssembly, running client-side in the browser, backed by a Cloudflare Worker + D1 for per-visitor persistence.",
+    Banner: TodoBanner,
+    accentColor: "#2F9E44",
+    tags: ["C++", "WebAssembly", "Emscripten", "Cloudflare Workers", "D1"],
+    liveUrl: "https://todo.drakeze.com",
   },
   {
     title: "GrowthVault",
