@@ -41,6 +41,14 @@ function toProjectViewModel(project: {
     githubUrl: project.githubUrl,
     Banner: local?.Banner,
     accentColor: local?.accentColor,
+    discipline: local?.discipline ?? "dev",
+    dot: local?.dot,
+    meta: local?.meta ?? "",
+    kind: local?.kind ?? "project",
+    year: local?.year ?? new Date().getFullYear(),
+    cover: project.image || local?.cover,
+    summary: local?.summary ?? project.description,
+    role: local?.role ?? "Developer",
   }
 }
 

@@ -68,7 +68,8 @@ export function GlobeRealistic({ contactPins = [] }: GlobeRealisticProps) {
             if (!globe) return
             globe.pointOfView({ altitude: 1.8 })
             const controls = globe.controls()
-            controls.autoRotate = true
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            controls.autoRotate = !reduceMotion
             controls.autoRotateSpeed = 0.6
             controls.enableZoom = false
           }}

@@ -8,6 +8,13 @@ const nextConfig = {
     "xml-crypto",
     "node-rsa",
   ],
+  async redirects() {
+    return [
+      { source: "/projects", destination: "/work", permanent: true },
+      { source: "/projects/company", destination: "/work", permanent: true },
+      { source: "/case-studies", destination: "/architecture", permanent: true },
+    ]
+  },
   async rewrites() {
     return [
       {

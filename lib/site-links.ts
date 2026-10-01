@@ -8,6 +8,8 @@ export const externalLinks = {
     patreon: "https://www.patreon.com/cw/Drakeze",
     dailydotdev: "https://daily.dev/drakeze",
     linktree: "https://linktr.ee/Drakeze",
+    twitch: "https://www.twitch.tv/anakonis", // TODO: verify handle
+    youtube: "", // TODO: add YouTube channel URL
   },
   ventures: {
     sorenTech: "https://SorenLab.com",

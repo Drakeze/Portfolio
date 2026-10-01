@@ -6,16 +6,28 @@ import { siteConfig } from "@/lib/seo"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata } from "next"
-import { Geist_Mono } from "next/font/google"
+import { Instrument_Serif, JetBrains_Mono, Lexend } from "next/font/google"
 import type React from "react"
 
 import "./globals.css"
-import "@fontsource/opendyslexic/400.css"
-import "@fontsource/opendyslexic/700.css"
 
-const geistMono = Geist_Mono({
-  variable: "--font-mono",
+const lexend = Lexend({
+  variable: "--font-lexend",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+})
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
 })
 
 export const metadata: Metadata = {
@@ -41,10 +53,12 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistMono.variable} font-sans antialiased`}>
+      <body
+        className={`${lexend.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased flex flex-col min-h-svh`}
+      >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navigation />
-          {children}
+          <div className="flex-1 flex flex-col">{children}</div>
           <Footer />
           <Toaster richColors closeButton />
           <Analytics />
