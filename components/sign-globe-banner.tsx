@@ -74,7 +74,7 @@ export function SignGlobeBanner() {
   }
 
   return (
-    <section className="w-full bg-ink px-5 sm:px-20 py-9">
+    <section className="w-full bg-[#2C1331] px-5 sm:px-20 py-9">
       <div className="mx-auto max-w-[1440px] flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
         {/* Globe mark */}
         <div className="shrink-0">
