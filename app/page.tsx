@@ -1,5 +1,6 @@
 import { AccentHeading } from "@/components/accent-heading"
 import { DeferredGlobe } from "@/components/deferred-globe"
+import { Dot } from "@/components/dot"
 import { type GlobePoint } from "@/components/globe-realistic"
 import { listPublicPins } from "@/lib/domains/messages/service"
 import Link from "next/link"
@@ -24,9 +25,16 @@ export default async function Page() {
       <section className="relative flex-1 flex items-center px-5 sm:px-10 lg:px-20 py-16 lg:py-0 overflow-hidden">
         {/* Left content — capped so it doesn't reach the globe at lg */}
         <div className="relative z-10 flex flex-col gap-7 w-full max-w-[440px] lg:max-w-[500px] xl:max-w-[580px]">
-          <p className="font-mono text-[12px] tracking-[0.1em] text-muted-foreground uppercase">
-            Developer / Architectural Designer / Los Angeles
-          </p>
+          <div className="flex items-center gap-2 flex-wrap font-mono text-[12px] tracking-[0.1em] text-muted-foreground uppercase">
+            <Dot variant="product" />
+            <span>Developer</span>
+            <span>/</span>
+            <Dot variant="client" />
+            <span>Architectural Designer</span>
+            <span>/</span>
+            <Dot variant="tool" />
+            <span>Los Angeles</span>
+          </div>
 
           <AccentHeading
             plain={
@@ -69,8 +77,8 @@ export default async function Page() {
           </Link>
         </div>
 
-        {/* Globe — absolutely positioned at right edge, cropped by section overflow:hidden */}
-        <div className="hidden lg:block absolute right-[-80px] xl:right-[-60px] top-1/2 -translate-y-[52%] lg:w-[580px] lg:h-[580px] xl:w-[700px] xl:h-[700px]">
+        {/* Globe — shifted up so upper portion clips off-screen */}
+        <div className="hidden lg:block absolute right-[-80px] xl:right-[-60px] top-0 -translate-y-[40%] lg:w-[580px] lg:h-[580px] xl:w-[700px] xl:h-[700px]">
           <DeferredGlobe contactPins={contactPins} />
         </div>
       </section>

@@ -26,7 +26,7 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
         <SegmentedToggle options={KIND_OPTIONS} value={kind} onChange={setKind} />
       </div>
 
-      <div className={kind === "company" ? "grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[880px]" : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"}>
+      <div className={kind === "company" ? "grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[880px] mx-auto w-full" : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"}>
         {visible.length === 0 ? (
           <p className="font-mono text-sm text-muted-foreground col-span-full py-10">
             Nothing here yet.

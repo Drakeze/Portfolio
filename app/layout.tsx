@@ -1,4 +1,3 @@
-import { BackgroundDots } from "@/components/background-dots"
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -59,10 +58,7 @@ export default async function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navigation />
-          <div className="flex-1 flex flex-col relative">
-            <BackgroundDots />
-            {children}
-          </div>
+          <div className="flex-1 flex flex-col">{children}</div>
           <Footer />
           <Toaster richColors closeButton />
           <Analytics />

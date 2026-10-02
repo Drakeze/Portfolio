@@ -2,15 +2,33 @@
 
 import { Dot } from "@/components/dot"
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
+import { Menu, Moon, Sun } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useTheme } from "next-themes"
 
 const NAV_LINKS = [
   { href: "/work", label: "Work" },
   { href: "/architecture", label: "Architecture" },
   { href: "/about", label: "About" },
 ]
+
+function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return <div className="w-8 h-8" />
+  return (
+    <button
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      className="flex items-center justify-center w-8 h-8 rounded-full text-muted-foreground hover:text-foreground transition-colors"
+      aria-label="Toggle theme"
+    >
+      {resolvedTheme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+    </button>
+  )
+}
 
 export function Navigation() {
   const pathname = usePathname()
@@ -43,12 +61,13 @@ export function Navigation() {
           ))}
         </div>
 
-        {/* Right: availability chip + CTA */}
+        {/* Right: availability chip + theme toggle + CTA */}
         <div className="hidden md:flex items-center gap-4 shrink-0">
           <div className="flex items-center gap-2">
             <Dot variant="status" />
             <span className="font-mono text-[12px] text-muted-foreground">Available · Los Angeles</span>
           </div>
+          <ThemeToggle />
           <Link
             href="/contact"
             className="rounded-full bg-foreground text-background px-5 py-2 text-sm font-medium hover:opacity-90 transition-opacity"
@@ -59,6 +78,7 @@ export function Navigation() {
 
         {/* Mobile */}
         <div className="flex md:hidden items-center gap-3">
+          <ThemeToggle />
           <Link
             href="/contact"
             className="rounded-full bg-foreground text-background px-4 py-1.5 text-sm font-medium"
