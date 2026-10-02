@@ -102,6 +102,11 @@
   --chart-4: var(--amber-500);
   --chart-5: var(--green-500);
 
+  /* Globe face */
+  --globe-face: #F6EFF7;
+  --globe-border: rgba(88, 58, 152, 0.18);
+  --globe-grid: rgba(60, 45, 80, 0.45);
+
   /* Brand aliases (admin nav uses these) */
   --brand-purple: var(--purple-500);
   --brand-purple-foreground: var(--neutral-0);
@@ -159,6 +164,11 @@
   --brand-pink-foreground: var(--neutral-0);
   --brand-blue: var(--blue-500);
   --brand-blue-foreground: var(--neutral-0);
+
+  /* Globe face — dark mode */
+  --globe-face: var(--purple-800);
+  --globe-border: rgba(200, 160, 220, 0.25);
+  --globe-grid: rgba(200, 160, 220, 0.35);
 }
 
 @theme inline {

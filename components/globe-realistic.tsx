@@ -37,13 +37,20 @@ const CX = 250
 const CY = 250
 const R = 240
 
+const TILT = (20 * PI) / 180
+const COS_T = Math.cos(TILT)
+const SIN_T = Math.sin(TILT)
+
 function project(lat: number, lng: number, rotLng: number) {
   const latR = (lat * PI) / 180
   const lngR = ((lng + rotLng) * PI) / 180
-  const x = CX + R * Math.cos(latR) * Math.sin(lngR)
-  const y = CY - R * Math.sin(latR)
-  const z = Math.cos(latR) * Math.cos(lngR)
-  return { x, y, z }
+  const x3 = Math.cos(latR) * Math.sin(lngR)
+  const y3 = -Math.sin(latR)
+  const z3 = Math.cos(latR) * Math.cos(lngR)
+  // Axial tilt: rotate around X axis
+  const y3t = y3 * COS_T - z3 * SIN_T
+  const z3t = y3 * SIN_T + z3 * COS_T
+  return { x: CX + R * x3, y: CY + R * y3t, z: z3t }
 }
 
 function buildPath(points: Array<{ x: number; y: number; z: number }>): string {
@@ -106,8 +113,8 @@ export function GlobeRealistic({ contactPins = [] }: GlobeRealisticProps) {
           cx={CX}
           cy={CY}
           r={R}
-          fill="#F6EFF7"
-          stroke="rgba(88, 58, 152, 0.18)"
+          fill="var(--globe-face)"
+          stroke="var(--globe-border)"
           strokeWidth="1"
         />
 
@@ -115,7 +122,7 @@ export function GlobeRealistic({ contactPins = [] }: GlobeRealisticProps) {
         <clipPath id="globe-clip">
           <circle cx={CX} cy={CY} r={R} />
         </clipPath>
-        <g clipPath="url(#globe-clip)" fill="none" stroke="rgba(60, 45, 80, 0.45)" strokeWidth="0.8" opacity="1">
+        <g clipPath="url(#globe-clip)" fill="none" stroke="var(--globe-grid)" strokeWidth="0.8" opacity="1">
           {PARALLELS.map((lat) => (
             <path key={`p${lat}`} d={parallelPath(lat, rotLng)} />
           ))}

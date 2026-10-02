@@ -19,7 +19,7 @@ export default function ArchitecturePage() {
       </div>
 
       <p className="text-[19px] text-muted-foreground max-w-[640px] leading-relaxed mb-12">
-        Design studies and planning exercises from my architectural engineering training. These are process-focused — drawings, iterations, and what I&apos;d change.
+        Design studies and planning exercises from my architectural engineering training. These are process-focused: drawings, iterations, and what I&apos;d change.
       </p>
 
       <div className="flex flex-col gap-4 py-16">

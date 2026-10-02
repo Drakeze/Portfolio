@@ -20,16 +20,6 @@ export default async function Page() {
 
   return (
     <main className="relative flex flex-col flex-1">
-      {/* Purple radial glow — sits behind the globe */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-[5%] top-1/2 -translate-y-1/2 w-[720px] h-[720px] rounded-full opacity-80"
-        style={{
-          background:
-            "radial-gradient(circle at center, var(--color-purple-100) 0%, var(--color-purple-50) 45%, transparent 70%)",
-        }}
-      />
-
       {/* Hero */}
       <section className="relative flex-1 flex items-center px-5 sm:px-10 lg:px-20 py-16 lg:py-0 overflow-hidden">
         {/* Left content — capped so it doesn't reach the globe at lg */}
@@ -53,7 +43,7 @@ export default async function Page() {
 
           <p className="text-[19px] text-muted-foreground max-w-[520px] leading-relaxed">
             Full-stack developer, training to become an architectural engineer. I care about how things are
-            structured — whether it&apos;s a codebase or a floor plan.
+            structured, whether it&apos;s a codebase or a floor plan.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
