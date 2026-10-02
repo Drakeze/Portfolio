@@ -13,7 +13,7 @@ export function Eyebrow({ number, label, dot, className }: EyebrowProps) {
     <div className={cn("flex items-center gap-2", className)}>
       {dot && <Dot variant={dot} />}
       <span className="font-mono text-[12px] tracking-[0.1em] text-muted-foreground uppercase">
-        {number} — {label}
+        {number} / {label}
       </span>
     </div>
   )

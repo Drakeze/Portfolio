@@ -6,7 +6,7 @@ export const siteConfig = {
   description:
     "Full-stack developer portfolio featuring Anthony Shead's projects, experience, and services across the modern web stack.",
   url: "https://www.anthonyshead.com",
-  email: "asheadworking@gmail.com",
+  email: "contact@drakeze.com",
   socials: externalLinks.socials,
 }
 

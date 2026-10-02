@@ -39,9 +39,14 @@ export function ProjectCard({ project }: Props) {
             {project.meta}
           </span>
         </div>
-        <h3 className="text-[22px] font-medium text-foreground leading-snug mb-3">
+        <h3 className="text-[22px] font-medium text-foreground leading-snug mb-2">
           {project.title}
         </h3>
+        {project.summary && (
+          <p className="text-[14px] text-muted-foreground leading-relaxed mb-3 line-clamp-3">
+            {project.summary}
+          </p>
+        )}
         <div className="flex items-center gap-2">
           {project.liveUrl && (
             <a

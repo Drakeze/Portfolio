@@ -106,8 +106,8 @@ export function GlobeRealistic({ contactPins = [] }: GlobeRealisticProps) {
           cx={CX}
           cy={CY}
           r={R}
-          fill="var(--color-purple-50)"
-          stroke="var(--color-purple-200)"
+          fill="#F6EFF7"
+          stroke="rgba(88, 58, 152, 0.18)"
           strokeWidth="1"
         />
 
@@ -115,7 +115,7 @@ export function GlobeRealistic({ contactPins = [] }: GlobeRealisticProps) {
         <clipPath id="globe-clip">
           <circle cx={CX} cy={CY} r={R} />
         </clipPath>
-        <g clipPath="url(#globe-clip)" fill="none" stroke="var(--color-purple-200)" strokeWidth="0.6" opacity="0.6">
+        <g clipPath="url(#globe-clip)" fill="none" stroke="rgba(60, 45, 80, 0.45)" strokeWidth="0.8" opacity="1">
           {PARALLELS.map((lat) => (
             <path key={`p${lat}`} d={parallelPath(lat, rotLng)} />
           ))}
