@@ -1,87 +1,14 @@
+import { Hero } from "@/components/hero/Hero"
 import { AccentHeading } from "@/components/accent-heading"
-import { DeferredGlobe } from "@/components/deferred-globe"
-import { Dot } from "@/components/dot"
-import { type GlobePoint } from "@/components/globe-realistic"
-import { listPublicPins } from "@/lib/domains/messages/service"
 import Link from "next/link"
+// AccentHeading and Link remain used in the workshop band below
 
 export const revalidate = 3600
 
-async function getContactPins(): Promise<GlobePoint[]> {
-  try {
-    const pins = await listPublicPins()
-    return pins.map((pin) => ({ ...pin, source: "contact" }))
-  } catch {
-    return []
-  }
-}
-
 export default async function Page() {
-  const contactPins = await getContactPins()
-
   return (
     <main className="relative flex flex-col flex-1">
-      {/* Hero */}
-      <section className="relative flex-1 flex items-center px-5 sm:px-10 lg:px-20 py-16 lg:py-0 overflow-hidden">
-        {/* Left content — capped so it doesn't reach the globe at lg */}
-        <div className="relative z-10 flex flex-col gap-7 w-full max-w-[440px] lg:max-w-[500px] xl:max-w-[580px]">
-          <div className="flex items-center gap-2 flex-wrap font-mono text-[12px] tracking-[0.1em] text-muted-foreground uppercase">
-            <Dot variant="product" />
-            <span>Developer</span>
-            <span>/</span>
-            <Dot variant="client" />
-            <span>Architectural Designer</span>
-            <span>/</span>
-            <Dot variant="tool" />
-            <span>Los Angeles</span>
-          </div>
-
-          <AccentHeading
-            plain={
-              <>
-                I build software
-                <br />
-                and design{" "}
-              </>
-            }
-            accent="buildings."
-            as="h1"
-            size="hero"
-          />
-
-          <p className="text-[19px] text-muted-foreground max-w-[520px] leading-relaxed">
-            Full-stack developer, training to become an architectural engineer. I care about how things are
-            structured, whether it&apos;s a codebase or a floor plan.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              href="/work"
-              className="rounded-full bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-opacity"
-            >
-              View work →
-            </Link>
-            <Link
-              href="/architecture"
-              className="rounded-full border border-border-strong text-foreground px-6 py-3 text-sm font-medium hover:bg-muted transition-colors"
-            >
-              Read a case study
-            </Link>
-          </div>
-
-          <Link
-            href="/contact"
-            className="font-mono text-[13px] underline underline-offset-4 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            or + add your name to the globe →
-          </Link>
-        </div>
-
-        {/* Globe — shifted up so upper portion clips off-screen */}
-        <div className="hidden lg:block absolute right-[-80px] xl:right-[-60px] top-0 -translate-y-[40%] lg:w-[580px] lg:h-[580px] xl:w-[700px] xl:h-[700px]">
-          <DeferredGlobe contactPins={contactPins} />
-        </div>
-      </section>
+      <Hero />
 
       {/* Workshop band */}
       <section className="bg-[#0E0E10]">

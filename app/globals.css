@@ -84,6 +84,7 @@
   --input: var(--neutral-100);
   --ring: var(--accent-primary);
   --radius: 0.625rem;
+  --nav-h: 65px; /* nav h-16 (64px) + 1px border-b */
 
   /* Sidebar */
   --sidebar: var(--neutral-0);
