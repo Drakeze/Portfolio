@@ -109,7 +109,21 @@ All live in `components/`:
 | `/contact` | Contact form + social links |
 
 Old routes `/projects` and `/case-studies` redirect to the new ones.
-Admin lives at `/admin/*` — untouched by the redesign.
+
+Public routes live in the `app/(site)/` route group, which owns `<Navigation />` and `<Footer />`. Admin and the auth pages are siblings and deliberately do not inherit them. Route groups do not appear in URLs.
+
+## Admin
+
+`/admin/*` is **on this design system** as of October 2026. Build on the shared primitives in `components/admin/` rather than hand-rolling:
+
+- `<DataTable>` — a **Server Component**; its `cell`/`values`/`confirm` callbacks run on the server and only serializable props cross into the client `<RowAction>`. Passing render functions into a client component is a build error
+- `<EntityForm>` — driven by a `FieldConfig[]` in each domain's `form.ts`, not by zod introspection
+- `<StatusPill>` — built on `<Dot>`, so a pill cannot introduce a colour outside the system
+- `<AdminShell>` / `<PageHeader>` — uses `<Container>`, the same eyebrow + one-serif-word heading as the public site
+
+Every mutation is a Server Action wrapped in `adminAction()` (`lib/admin/action.ts`), which calls `guardAdmin()` first. It returns a branded type that `EntityForm`/`DataTable` alone accept, so an unguarded action fails typecheck. `proxy.ts` only checks that a cookie *exists* and is never authentication.
+
+**An ESLint rule errors on raw Tailwind palette classes** (`bg-green-500`, `text-emerald-600`, …) anywhere under `app/admin/**` and `components/admin/**`. Use semantic tokens.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
