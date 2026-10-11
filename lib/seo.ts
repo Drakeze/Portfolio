@@ -5,7 +5,8 @@ export const siteConfig = {
   title: "Anthony Shead | Full-Stack Developer",
   description:
     "Full-stack developer portfolio featuring Anthony Shead's projects, experience, and services across the modern web stack.",
-  url: "https://www.anthonyshead.com",
+  // www is canonical: drakeze.com 307s to www.drakeze.com.
+  url: "https://www.drakeze.com",
   email: "contact@drakeze.com",
   socials: externalLinks.socials,
 }

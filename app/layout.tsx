@@ -29,18 +29,32 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
+  // Without metadataBase, relative OG/twitter image paths resolve wrongly and
+  // Next warns on every build.
+  metadataBase: new URL(siteConfig.url),
   title: siteConfig.title,
   description: siteConfig.description,
   generator: "Soren Technologies",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+  },
+  // Renamed from "Minecraft Pfp 2.png": a space in a favicon path needs
+  // percent-encoding and is fragile across CDNs.
   icons: {
-    icon: [
-      {
-        url: "/Minecraft Pfp 2.png",
-        type: "image/png",
-      },
-    ],
-    shortcut: "/Minecraft Pfp 2.png",
-    apple: "/Minecraft Pfp 2.png",
+    icon: [{ url: "/icon.png", type: "image/png" }],
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
 }
 
