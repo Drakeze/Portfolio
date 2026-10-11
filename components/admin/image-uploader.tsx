@@ -76,7 +76,7 @@ export function ImageUploader({ name, defaultValue = "", folder = "images", labe
         ) : null}
       </div>
 
-      {error ? <p className="text-sm text-red-500">{error}</p> : null}
+      {error ? <p className="text-sm text-destructive">{error}</p> : null}
 
       <input
         ref={inputRef}

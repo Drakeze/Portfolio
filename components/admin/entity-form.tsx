@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useActionState, useId } from "react"
 import { useFormStatus } from "react-dom"
 
+import { GalleryUploader } from "@/components/admin/gallery-uploader"
 import { ImageUploader } from "@/components/admin/image-uploader"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -136,11 +137,27 @@ function Field({
         </select>
       ) : field.kind === "image" ? (
         <ImageUploader name={field.name} defaultValue={text} folder={field.folder} label="" />
+      ) : field.kind === "gallery" ? (
+        <GalleryUploader
+          name={field.name}
+          defaultValue={Array.isArray(defaultValue) ? (defaultValue as string[]) : []}
+          folder={field.folder}
+        />
       ) : (
         <Input
           id={inputId}
           name={field.name}
-          type={field.kind === "number" ? "number" : field.kind === "url" ? "url" : field.kind === "email" ? "email" : "text"}
+          type={
+            field.kind === "number"
+              ? "number"
+              : field.kind === "url"
+                ? "url"
+                : field.kind === "email"
+                  ? "email"
+                  : field.kind === "date"
+                    ? "date"
+                    : "text"
+          }
           defaultValue={text}
           placeholder={"placeholder" in field ? field.placeholder : undefined}
           required={"required" in field ? field.required : undefined}

@@ -1,107 +1,69 @@
-import { revalidatePath } from "next/cache"
 import Link from "next/link"
-import { notFound, redirect } from "next/navigation"
+import { notFound } from "next/navigation"
 
-import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
-import { guardAdmin } from "@/lib/auth/admin"
-import { deleteMessage, getMessageById, updateMessage } from "@/lib/domains/messages/service"
+import { RowAction } from "@/components/admin/row-action"
+import { PageHeader } from "@/components/admin/shell"
+import { StatusPill } from "@/components/admin/status-pill"
+import { getMessageById } from "@/lib/domains/messages/service"
 
-export const dynamic = "force-dynamic"
+import { deleteMessageAction, toggleMessageReadAction } from "../../actions"
 
-type EditMessagePageProps = { params: Promise<{ id: string }> }
-
-export default async function EditMessagePage({ params }: EditMessagePageProps) {
+/**
+ * Read-only detail. Inbound mail is not editable content, so there is no
+ * EntityForm here - only the read toggle and delete.
+ */
+export default async function MessageDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-
   const message = await getMessageById(id)
+  if (!message) notFound()
 
-  if (!message) {
-    notFound()
-  }
-
-  async function toggleReadAction(formData: FormData) {
-    "use server"
-
-    await guardAdmin()
-    const nextRead = String(formData.get("read") ?? "")
-    if (nextRead !== "true" && nextRead !== "false") {
-      return
-    }
-
-    await updateMessage(id, { read: nextRead === "true" })
-
-    revalidatePath("/admin/messages")
-    revalidatePath(`/admin/messages/${id}/edit`)
-    redirect(`/admin/messages/${id}/edit`)
-  }
-
-  async function deleteMessageAction() {
-    "use server"
-
-    await guardAdmin()
-    await deleteMessage(id)
-    revalidatePath("/admin/messages")
-    redirect("/admin/messages")
-  }
+  const received = new Date(message.createdAt).toLocaleString("en-US", {
+    dateStyle: "long",
+    timeStyle: "short",
+  })
 
   return (
-    <main className="space-y-8">
-      <section className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Message Details</h1>
-        <p className="text-sm text-muted-foreground">Read and manage this contact message.</p>
-      </section>
+    <>
+      <PageHeader number="05" eyebrow="MESSAGES / DETAIL" dot="status" plain="A " accent="message" />
 
-      <section className="rounded-lg border bg-background p-6 space-y-6">
-        <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">Name</p>
-            <p className="mt-1 text-sm font-medium">{message.name}</p>
-          </div>
-
-          <div>
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">Email</p>
-            <a className="mt-1 inline-block text-sm font-medium text-primary hover:underline" href={`mailto:${message.email}`}>
+      <article className="flex flex-col gap-6 rounded-[14px] border border-border bg-card p-8">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="flex flex-col gap-2">
+            <p className="text-[17px] font-medium text-foreground">{message.name}</p>
+            <Link href={`mailto:${message.email}`} className="font-mono text-[13px] text-primary underline-offset-4 hover:underline">
               {message.email}
-            </a>
+            </Link>
           </div>
-
-          <div>
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">Date</p>
-            <p className="mt-1 text-sm font-medium">{new Date(message.createdAt).toLocaleString()}</p>
-          </div>
-
-          <div>
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">Status</p>
-            <span
-              className={`mt-1 inline-flex rounded-full px-2 py-1 text-xs font-medium ${
-                message.read ? "bg-gray-100 text-gray-700" : "bg-blue-100 text-blue-700"
-              }`}
-            >
-              {message.read ? "Read" : "Unread"}
-            </span>
-          </div>
+          <StatusPill tone={message.read ? "neutral" : "status"} label={message.read ? "Read" : "New"} />
         </div>
 
-        <div>
-          <p className="text-xs uppercase tracking-wide text-muted-foreground">Message</p>
-          <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed">{message.message}</p>
-        </div>
+        <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-muted-foreground">{received}</p>
 
-        <div className="flex items-center justify-end gap-3">
-          <Link href="/admin/messages" className="rounded-md border px-4 py-2 text-sm hover:bg-muted/40">
-            Back
-          </Link>
+        <hr className="border-border" />
 
-          <form action={toggleReadAction}>
-            <input type="hidden" name="read" value={message.read ? "false" : "true"} />
-            <SubmitButton label={message.read ? "Mark Unread" : "Mark Read"} pendingLabel="Updating..." className="rounded-md border border-yellow-500 px-4 py-2 text-sm text-yellow-700 hover:bg-yellow-50 disabled:opacity-60" />
-          </form>
+        <p className="whitespace-pre-wrap text-[17px] leading-relaxed text-foreground">{message.message}</p>
+      </article>
 
-          <form action={deleteMessageAction}>
-            <ConfirmSubmitButton label="Delete" pendingLabel="Deleting..." confirmMessage="Delete this message? This cannot be undone." className="rounded-md border border-red-600 px-4 py-2 text-sm text-red-700 hover:bg-red-50 disabled:opacity-60" />
-          </form>
-        </div>
-      </section>
-    </main>
+      <div className="mt-8 flex items-center gap-6">
+        <RowAction
+          label={message.read ? "Mark unread" : "Mark read"}
+          action={toggleMessageReadAction}
+          values={{ id: message._id!.toString(), read: String(!message.read) }}
+        />
+        <RowAction
+          label="Delete"
+          tone="danger"
+          action={deleteMessageAction}
+          values={{ id: message._id!.toString() }}
+          confirm={{ title: `Delete the message from ${message.name}?`, description: "This cannot be undone." }}
+        />
+        <Link
+          href="/admin/messages"
+          className="font-mono text-[12px] uppercase tracking-[0.1em] text-muted-foreground underline underline-offset-4 hover:text-foreground"
+        >
+          Back to inbox
+        </Link>
+      </div>
+    </>
   )
 }

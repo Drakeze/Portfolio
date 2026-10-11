@@ -2,8 +2,8 @@ import Link from "next/link"
 
 import { AccentHeading } from "@/components/accent-heading"
 import { Container } from "@/components/container"
-import { Eyebrow } from "@/components/eyebrow"
 import type { DotVariant } from "@/components/dot"
+import { Eyebrow } from "@/components/eyebrow"
 
 /** Admin chrome. Uses the design system's <Container>, not its own max-width. */
 export function AdminShell({ children }: { children: React.ReactNode }) {

@@ -25,6 +25,8 @@ export type FieldConfig =
   | { kind: "select"; name: string; label: string; options: readonly { value: string; label: string }[]; required?: boolean; help?: string; span?: 1 | 2 }
   | { kind: "tags"; name: string; label: string; placeholder?: string; required?: boolean; help?: string; span?: 1 | 2 }
   | { kind: "image"; name: string; label: string; folder?: string; help?: string; span?: 1 | 2 }
+  | { kind: "gallery"; name: string; label: string; folder?: string; help?: string; span?: 1 | 2 }
+  | { kind: "date"; name: string; label: string; required?: boolean; help?: string; span?: 1 | 2 }
 
 /**
  * The one FormData parser.
@@ -50,6 +52,16 @@ export function valuesFrom(fields: readonly FieldConfig[], formData: FormData): 
       case "tags": {
         const list = String(raw ?? "")
           .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean)
+        values[field.name] = list.length > 0 ? list : undefined
+        break
+      }
+
+      case "gallery": {
+        // GalleryUploader serializes its list as newline-separated URLs.
+        const list = String(raw ?? "")
+          .split("\n")
           .map((item) => item.trim())
           .filter(Boolean)
         values[field.name] = list.length > 0 ? list : undefined

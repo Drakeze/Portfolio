@@ -8,11 +8,12 @@ import { cn } from "@/lib/utils"
 
 export const adminNav = [
   { href: "/admin", label: "Dashboard" },
-  { href: "/admin/projects", label: "My Work" },
+  { href: "/admin/projects", label: "Projects" },
   { href: "/admin/companies", label: "Companies" },
-  { href: "/admin/workshop", label: "Workshop" },
+  { href: "/admin/skills", label: "Skills" },
+  { href: "/admin/certifications", label: "Certifications" },
   { href: "/admin/messages", label: "Messages" },
-  { href: "/admin/names", label: "Names" },
+  { href: "/admin/names", label: "Globe" },
   { href: "/admin/bio", label: "Bio" },
   { href: "/admin/links", label: "Links" },
   { href: "/admin/resume", label: "Resume" },
@@ -29,23 +30,32 @@ export function AdminNavbar() {
   }
 
   return (
-    <nav className="mb-8 flex flex-wrap items-center gap-2 rounded-xl border bg-accent p-3 text-sm">
-      <Link href="/" className="mr-2 font-semibold text-lg hover:text-muted-foreground transition-colors">
-        AS
+    <nav
+      aria-label="Admin"
+      className="mb-12 flex flex-wrap items-center gap-2 border-b border-border pb-6 font-mono text-[12px] uppercase tracking-[0.1em]"
+    >
+      <Link
+        href="/"
+        className="mr-4 font-sans text-[15px] font-medium normal-case tracking-normal text-foreground transition-colors hover:text-muted-foreground"
+      >
+        Drakeze
       </Link>
 
       {adminNav.map((item) => {
-        const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
+        // /admin must not light up for every child route.
+        const isActive =
+          item.href === "/admin" ? pathname === "/admin" : pathname === item.href || pathname.startsWith(`${item.href}/`)
 
         return (
           <Link
             key={item.href}
             href={item.href}
+            aria-current={isActive ? "page" : undefined}
             className={cn(
-              "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+              "rounded-full px-3 py-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               isActive
-                ? "bg-brand-purple text-brand-purple-foreground"
-                : "bg-brand-purple/15 text-brand-purple hover:bg-brand-purple/25"
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:bg-accent hover:text-foreground",
             )}
           >
             {item.label}
@@ -56,9 +66,9 @@ export function AdminNavbar() {
       <button
         type="button"
         onClick={handleLogout}
-        className="ml-auto rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        className="ml-auto rounded-full px-3 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        Logout
+        Sign out
       </button>
     </nav>
   )

@@ -26,6 +26,8 @@ const nextConfig = {
       { source: "/projects", destination: "/work", permanent: true },
       { source: "/projects/company", destination: "/work", permanent: true },
       { source: "/case-studies", destination: "/architecture", permanent: true },
+      // /admin/workshop split into /admin/skills + /admin/certifications.
+      { source: "/admin/workshop", destination: "/admin/skills", permanent: false },
     ]
   },
   async rewrites() {

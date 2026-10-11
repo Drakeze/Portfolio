@@ -83,7 +83,7 @@ export function GalleryUploader({ name, defaultValue = [], folder = "gallery" }:
         {uploading ? "Uploading…" : "Add images"}
       </button>
 
-      {error ? <p className="text-sm text-red-500">{error}</p> : null}
+      {error ? <p className="text-sm text-destructive">{error}</p> : null}
 
       <input
         ref={inputRef}

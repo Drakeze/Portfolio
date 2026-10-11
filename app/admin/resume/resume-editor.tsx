@@ -85,8 +85,8 @@ export function ResumeEditor({ currentLabel, currentUrl }: Props) {
         <div
           className={`rounded-md px-4 py-3 text-sm ${
             feedback.type === "success"
-              ? "bg-green-500/10 text-green-700 dark:text-green-400"
-              : "bg-red-500/10 text-red-700 dark:text-red-400"
+              ? "bg-dot-status/10 text-dot-status"
+              : "bg-destructive/10 text-destructive"
           }`}
         >
           {feedback.message}
@@ -94,7 +94,7 @@ export function ResumeEditor({ currentLabel, currentUrl }: Props) {
       ) : null}
 
       {uploadProgress ? (
-        <div className="rounded-md bg-blue-500/10 px-4 py-3 text-sm text-blue-700 dark:text-blue-400">
+        <div className="rounded-[8px] bg-dot-client/10 px-4 py-3 text-sm text-dot-client">
           {uploadProgress}
         </div>
       ) : null}

@@ -7,7 +7,6 @@ import { Instrument_Serif, JetBrains_Mono, Lexend } from "next/font/google"
 import type React from "react"
 
 import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/sonner"
 import { siteConfig } from "@/lib/seo"
 
 const lexend = Lexend({
@@ -57,7 +56,6 @@ export default async function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
-          <Toaster richColors closeButton />
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>

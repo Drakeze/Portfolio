@@ -2,8 +2,6 @@ import { AdminNavbar } from "@/components/admin/navbar"
 import { AdminShell } from "@/components/admin/shell"
 import { guardAdmin } from "@/lib/auth/admin"
 
-import { AdminProviders } from "./providers"
-
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   // Real read-path gate. proxy.ts only checks the cookie exists, it cannot verify it.
   await guardAdmin()
@@ -11,7 +9,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <AdminShell>
       <AdminNavbar />
-      <AdminProviders>{children}</AdminProviders>
+      {children}
     </AdminShell>
   )
 }

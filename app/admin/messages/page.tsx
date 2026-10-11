@@ -1,140 +1,68 @@
-import { revalidatePath } from "next/cache"
 import Link from "next/link"
-import { redirect } from "next/navigation"
 
-import { ActionToast } from "@/components/admin/action-toast"
-import { FeedbackBanner } from "@/components/admin/feedback-banner"
-import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
-import { guardAdmin } from "@/lib/auth/admin"
-import { deleteMessage, listMessages, updateMessage } from "@/lib/domains/messages/service"
+import { DataTable } from "@/components/admin/data-table"
+import { PageHeader } from "@/components/admin/shell"
+import { StatusPill } from "@/components/admin/status-pill"
+import { listMessages } from "@/lib/domains/messages/service"
 
-export const dynamic = "force-dynamic"
+import { toggleMessageReadAction } from "./actions"
 
-type PageProps = { searchParams: Promise<{ status?: string; message?: string }> }
-
-async function toggleMessageReadAction(formData: FormData) {
-  "use server"
-
-  await guardAdmin()
-  const id = String(formData.get("id") ?? "")
-  const readValue = String(formData.get("read") ?? "")
-
-  if (!id || (readValue !== "true" && readValue !== "false")) {
-    redirect("/admin/messages?status=error&message=Invalid+message+action")
-  }
-
-  try {
-    await updateMessage(id, { read: readValue === "true" })
-  } catch {
-    redirect("/admin/messages?status=error&message=Failed+to+update+message")
-  }
-
-  revalidatePath("/admin/messages")
-  redirect("/admin/messages?status=success&message=Message+updated")
-}
-
-async function deleteMessageAction(formData: FormData) {
-  "use server"
-
-  await guardAdmin()
-  const id = String(formData.get("id") ?? "")
-  if (!id) {
-    redirect("/admin/messages?status=error&message=Missing+message+id")
-  }
-
-  try {
-    await deleteMessage(id)
-  } catch {
-    redirect("/admin/messages?status=error&message=Failed+to+delete+message")
-  }
-
-  revalidatePath("/admin/messages")
-  redirect("/admin/messages?status=success&message=Message+deleted")
-}
-
-export default async function AdminMessagesPage({ searchParams }: PageProps) {
+export default async function AdminMessagesPage() {
   const messages = await listMessages()
-  const { status, message } = await searchParams
+
+  const rows = messages.map((message) => ({
+    id: message._id!.toString(),
+    name: message.name,
+    email: message.email,
+    received: new Date(message.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }),
+    read: message.read,
+  }))
+
+  const unread = rows.filter((row) => !row.read).length
 
   return (
-    <div className="space-y-8">
-      <section className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Messages</h1>
-        <p className="text-sm text-muted-foreground">View and manage incoming emails.</p>
-      </section>
+    <>
+      <PageHeader
+        number="05"
+        eyebrow="MESSAGES"
+        dot="status"
+        plain="Your "
+        accent="inbox"
+        description={unread > 0 ? `${unread} unread of ${rows.length}.` : `${rows.length} messages, all read.`}
+      />
 
-      <ActionToast status={status} message={message} />
-      {status && message ? <FeedbackBanner type={status === "success" ? "success" : "error"} message={decodeURIComponent(message)} /> : null}
-
-      <section className="rounded-lg border bg-background">
-        <div className="border-b p-6">
-          <h2 className="text-sm font-medium">Inbox</h2>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead className="bg-muted/40 text-left text-xs uppercase tracking-wide text-muted-foreground">
-              <tr>
-                <th className="px-6 py-3">Read</th>
-                <th className="px-6 py-3">Name</th>
-                <th className="px-6 py-3">Email</th>
-                <th className="px-6 py-3">Message</th>
-                <th className="px-6 py-3">Date</th>
-                <th className="px-6 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {messages.map((msg) => (
-                <tr key={msg._id.toString()} className={`border-t hover:bg-muted/30 ${msg.read ? "opacity-60" : ""}`}>
-                  <td className="px-6 py-4">
-                    <span className={`rounded-full px-2 py-1 text-xs font-medium ${msg.read ? "bg-gray-100 text-gray-700" : "bg-blue-100 text-blue-700"}`}>
-                      {msg.read ? "Read" : "Unread"}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 font-medium">{msg.name}</td>
-                  <td className="px-6 py-4">{msg.email}</td>
-                  <td className="max-w-xs truncate px-6 py-4">{msg.message}</td>
-                  <td className="px-6 py-4">{new Date(msg.createdAt).toLocaleDateString()}</td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center justify-end gap-4">
-                      <Link href={`/admin/messages/${msg._id.toString()}/edit`} className="text-sm font-medium text-primary hover:underline">
-                        View
-                      </Link>
-
-                      <form action={toggleMessageReadAction}>
-                        <input type="hidden" name="id" value={msg._id.toString()} />
-                        <input type="hidden" name="read" value={msg.read ? "false" : "true"} />
-                        <SubmitButton
-                          label={msg.read ? "Mark Unread" : "Mark Read"}
-                          pendingLabel="Updating..."
-                          className="text-sm font-medium text-yellow-600 hover:underline disabled:opacity-60"
-                        />
-                      </form>
-
-                      <form action={deleteMessageAction}>
-                        <input type="hidden" name="id" value={msg._id.toString()} />
-                        <ConfirmSubmitButton
-                          label="Delete"
-                          pendingLabel="Deleting..."
-                          confirmMessage="Delete this message? This cannot be undone."
-                          className="text-sm font-medium text-red-600 hover:underline disabled:opacity-60"
-                        />
-                      </form>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {messages.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-6 py-10 text-center text-muted-foreground">
-                    No messages yet. New contact submissions will appear here once someone reaches out.
-                  </td>
-                </tr>
-              ) : null}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
+      <DataTable
+        rows={rows}
+        editHref={(row) => `/admin/messages/${row.id}/edit`}
+        columns={[
+          { header: "From", cell: (row) => <span className="font-medium text-foreground">{row.name}</span> },
+          {
+            header: "Email",
+            cell: (row) => (
+              <Link href={`mailto:${row.email}`} className="text-primary underline-offset-4 hover:underline">
+                {row.email}
+              </Link>
+            ),
+          },
+          { header: "Received", cell: (row) => row.received, mono: true },
+          {
+            header: "Status",
+            cell: (row) => (row.read ? <StatusPill tone="neutral" label="Read" /> : <StatusPill tone="status" label="New" />),
+          },
+        ]}
+        actions={[
+          {
+            label: "Toggle read",
+            action: toggleMessageReadAction,
+            values: (row) => ({ id: row.id, read: String(!row.read) }),
+          },
+        ]}
+        empty={{ message: "No messages yet. The contact form will fill this in." }}
+      />
+    </>
   )
 }

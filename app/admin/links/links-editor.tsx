@@ -98,8 +98,8 @@ export function LinksEditor({ initialSocials, initialVentures }: Props) {
         <div
           className={`rounded-md px-4 py-3 text-sm ${
             feedback.type === "success"
-              ? "bg-green-500/10 text-green-700 dark:text-green-400"
-              : "bg-red-500/10 text-red-700 dark:text-red-400"
+              ? "bg-dot-status/10 text-dot-status"
+              : "bg-destructive/10 text-destructive"
           }`}
         >
           {feedback.message}
@@ -159,7 +159,7 @@ export function LinksEditor({ initialSocials, initialVentures }: Props) {
                   <button
                     type="button"
                     onClick={() => removeVenture(index)}
-                    className="rounded px-2 py-1 text-xs text-red-500 hover:bg-red-500/10"
+                    className="rounded-[8px] px-2 py-1 text-xs text-destructive hover:bg-destructive/10"
                   >
                     Remove
                   </button>

@@ -42,9 +42,8 @@ export default tseslint.config(
   {
     files: ["app/admin/**/*.tsx", "components/admin/**/*.tsx"],
     rules: {
-      // TODO(admin-rebuild): flip to "error" once app/admin is on semantic tokens.
       "no-restricted-syntax": [
-        "warn",
+        "error",
         {
           selector:
             "Literal[value=/\\b(bg|text|border|ring|from|to|via)-(red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|slate|gray|zinc|neutral|stone)-[0-9]{2,3}\\b/]",
