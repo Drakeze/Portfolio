@@ -51,6 +51,7 @@ All notable changes to the Drakeze Portfolio (`drakeze.com`) are documented here
 - First run found 129 problems; 78 were import ordering (autofixed) and the rest were real, including an `eslint-disable` attached to the wrong line that the stub could never have reported
 - The ESLint glob did not include `.jsx`, so the 10 banner components had never been checked
 - Moved `cl.yml` → `.github/workflows/ci.yml`; at the repo root GitHub never ran it
+- CI now also runs `check-admin.ts` and `check-globe.ts`, both of which deliberately avoid importing the mongodb driver so they need no secrets. The **build** step is gated behind a `DATABASE_URL` repository secret: `lib/auth.ts` builds the better-auth MongoDB adapter at module scope, so every route importing it throws during Next's page-data collection without one. Add the secret to enable the build in CI; lint, typecheck and the two check scripts run either way
 
 ### Dead Code and Dependency Removal *(2026-10-10)*
 - **7,761 lines deleted.** Dependencies 71 → 43
