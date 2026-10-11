@@ -40,7 +40,7 @@ export function Hero() {
           } as React.CSSProperties}
         >
           I build software and design{" "}
-          <em style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontStyle: "italic", fontWeight: 400, display: "inline" }}>buildings.</em>
+          <em className="font-serif" style={{ fontStyle: "italic", fontWeight: 400, display: "inline" }}>buildings.</em>
         </h1>
 
         {/* Sub */}

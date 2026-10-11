@@ -15,7 +15,7 @@ export function ProjectCard({ project }: Props) {
   return (
     <article className="rounded-2xl overflow-hidden border border-border hover:border-border-strong transition-colors">
       {/* Cover: 16:9 */}
-      <div className="h-[120px] overflow-hidden bg-muted/40">
+      <div className="relative h-[120px] overflow-hidden bg-muted/40">
         {BannerComponent ? (
           <BannerComponent href={project.liveUrl} bare />
         ) : project.image ? (

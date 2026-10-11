@@ -1,5 +1,18 @@
 /** @type {import('next').NextConfig} */
+// next/image refuses any host not listed here. Project images are served from
+// R2 via R2_PUBLIC_URL, so without this the first uploaded image throws on /work.
+const r2Host = (() => {
+  try {
+    return new URL(process.env.R2_PUBLIC_URL ?? "").hostname
+  } catch {
+    return "resume.drakeze.com"
+  }
+})()
+
 const nextConfig = {
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: r2Host }],
+  },
   serverExternalPackages: [
     "@better-auth/infra",
     "@better-auth/sso",

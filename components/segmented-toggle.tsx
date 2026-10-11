@@ -52,7 +52,7 @@ export function SegmentedToggle({ options, value, onChange, className }: Segment
           className={cn(
             "px-4 py-1.5 rounded-full text-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             value === opt.value
-              ? "bg-white shadow-sm font-medium text-foreground"
+              ? "bg-card shadow-sm font-medium text-foreground"
               : "text-muted-foreground hover:text-foreground",
           )}
         >

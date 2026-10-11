@@ -409,7 +409,7 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
     whiteSpace: "nowrap",
     borderRadius: "999px",
     padding: "6px 13px",
-    fontFamily: "'JetBrains Mono', monospace",
+    fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace",
     fontSize: "11px",
     boxShadow: "0 3px 14px rgba(0,0,0,.07)",
     border: "1px solid",
