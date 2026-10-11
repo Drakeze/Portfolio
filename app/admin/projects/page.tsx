@@ -6,6 +6,7 @@ import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { ConfirmSubmitButton } from "@/components/admin/form-actions"
 import { deleteProject, listProjects } from "@/lib/domains/projects/service"
+import { guardAdmin } from "@/lib/auth/admin"
 
 export const dynamic = "force-dynamic"
 
@@ -14,6 +15,7 @@ type PageProps = { searchParams: Promise<{ status?: string; message?: string }> 
 async function deleteProjectAction(formData: FormData) {
   "use server"
 
+  await guardAdmin()
   const id = String(formData.get("id") ?? "")
   if (!id) {
     redirect("/admin/projects?status=error&message=Missing+project+id")

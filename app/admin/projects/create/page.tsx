@@ -7,6 +7,7 @@ import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { SubmitButton } from "@/components/admin/form-actions"
 import { ImageUploader } from "@/components/admin/image-uploader"
 import { createProject } from "@/lib/domains/projects/service"
+import { guardAdmin } from "@/lib/auth/admin"
 
 function slugify(value: string) {
   return value
@@ -24,6 +25,7 @@ export default async function CreateProjectPage({ searchParams }: PageProps) {
   async function createProjectAction(formData: FormData) {
     "use server"
 
+    await guardAdmin()
     const title = String(formData.get("title") ?? "").trim()
     const description = String(formData.get("description") ?? "").trim()
     const image = String(formData.get("image") ?? "").trim()

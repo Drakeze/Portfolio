@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 
 import { SubmitButton } from "@/components/admin/form-actions"
 import { getCertificationById, updateCertification } from "@/lib/domains/certifications/service"
+import { guardAdmin } from "@/lib/auth/admin"
 
 export const dynamic = "force-dynamic"
 
@@ -20,6 +21,7 @@ export default async function EditCertificationPage({ params }: EditCertificatio
   async function updateCertificationAction(formData: FormData) {
     "use server"
 
+    await guardAdmin()
     const title = String(formData.get("title") ?? "").trim()
     const grade = String(formData.get("grade") ?? "").trim()
     const completedValue = String(formData.get("completed") ?? "true")

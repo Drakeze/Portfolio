@@ -21,7 +21,9 @@ export function AdminSignInForm() {
     setLoading(true)
 
     const nextPath = searchParams.get("next") ?? "/admin"
-    const redirectPath = nextPath.startsWith("/admin") ? nextPath : "/admin"
+    // Reject "//evil.com", which is protocol-relative and also startsWith("/admin")-safe looking.
+    const isSafeNext = nextPath.startsWith("/admin") && !nextPath.startsWith("//")
+    const redirectPath = isSafeNext ? nextPath : "/admin"
 
     try {
       const { error: signInError } = await authClient.signIn.email({ email, password })

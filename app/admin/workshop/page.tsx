@@ -13,6 +13,7 @@ import {
 } from "@/lib/domains/certifications/service"
 import { createSkill, deleteSkill, listSkills, updateSkill } from "@/lib/domains/skills/service"
 import type { SkillStatus } from "@/lib/domains/skills/types"
+import { guardAdmin } from "@/lib/auth/admin"
 
 export const dynamic = "force-dynamic"
 
@@ -21,6 +22,7 @@ type PageProps = { searchParams: Promise<{ status?: string; message?: string }> 
 async function createSkillAction(formData: FormData) {
   "use server"
 
+  await guardAdmin()
   const name = String(formData.get("name") ?? "").trim()
   const statusValue = String(formData.get("status") ?? "active") as SkillStatus
   const category = String(formData.get("category") ?? "").trim()
@@ -51,6 +53,7 @@ async function createSkillAction(formData: FormData) {
 async function archiveSkillAction(formData: FormData) {
   "use server"
 
+  await guardAdmin()
   const id = String(formData.get("id") ?? "")
   if (!id) {
     redirect("/admin/workshop?status=error&message=Missing+skill+id")
@@ -66,6 +69,7 @@ async function archiveSkillAction(formData: FormData) {
 async function deleteSkillAction(formData: FormData) {
   "use server"
 
+  await guardAdmin()
   const id = String(formData.get("id") ?? "")
   if (!id) {
     redirect("/admin/workshop?status=error&message=Missing+skill+id")
@@ -81,6 +85,7 @@ async function deleteSkillAction(formData: FormData) {
 async function createCertificationAction(formData: FormData) {
   "use server"
 
+  await guardAdmin()
   const title = String(formData.get("title") ?? "").trim()
   const completedValue = String(formData.get("completed") ?? "true")
   const grade = String(formData.get("grade") ?? "").trim()
@@ -103,6 +108,7 @@ async function createCertificationAction(formData: FormData) {
 async function toggleCertificationAction(formData: FormData) {
   "use server"
 
+  await guardAdmin()
   const id = String(formData.get("id") ?? "")
   const completedValue = String(formData.get("completed") ?? "")
 
@@ -120,6 +126,7 @@ async function toggleCertificationAction(formData: FormData) {
 async function deleteCertificationAction(formData: FormData) {
   "use server"
 
+  await guardAdmin()
   const id = String(formData.get("id") ?? "")
   if (!id) {
     redirect("/admin/workshop?status=error&message=Missing+certification+id")

@@ -6,6 +6,7 @@ import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { ConfirmSubmitButton } from "@/components/admin/form-actions"
 import { deleteCompany, listCompanies } from "@/lib/domains/companies/service"
+import { guardAdmin } from "@/lib/auth/admin"
 
 export const dynamic = "force-dynamic"
 
@@ -14,6 +15,7 @@ type PageProps = { searchParams: Promise<{ status?: string; message?: string }> 
 async function deleteCompanyAction(formData: FormData) {
   "use server"
 
+  await guardAdmin()
   const id = String(formData.get("id") ?? "")
   if (!id) {
     redirect("/admin/companies?status=error&message=Missing+company+id")

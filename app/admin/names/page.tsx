@@ -5,6 +5,7 @@ import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
 import { deleteMessage, listNameSubmissions, updateMessage } from "@/lib/domains/messages/service"
+import { guardAdmin } from "@/lib/auth/admin"
 
 export const dynamic = "force-dynamic"
 
@@ -13,6 +14,7 @@ type PageProps = { searchParams: Promise<{ status?: string; message?: string }> 
 async function toggleApprovedAction(formData: FormData) {
   "use server"
 
+  await guardAdmin()
   const id = String(formData.get("id") ?? "")
   const readValue = String(formData.get("read") ?? "")
 
@@ -34,6 +36,7 @@ async function toggleApprovedAction(formData: FormData) {
 async function deleteNameAction(formData: FormData) {
   "use server"
 
+  await guardAdmin()
   const id = String(formData.get("id") ?? "")
   if (!id) {
     redirect("/admin/names?status=error&message=Missing+submission+id")

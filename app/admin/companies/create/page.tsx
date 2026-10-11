@@ -7,6 +7,7 @@ import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { SubmitButton } from "@/components/admin/form-actions"
 import { GalleryUploader } from "@/components/admin/gallery-uploader"
 import { createCompany } from "@/lib/domains/companies/service"
+import { guardAdmin } from "@/lib/auth/admin"
 
 function slugify(value: string) {
   return value
@@ -24,6 +25,7 @@ export default async function CreateCompanyPage({ searchParams }: PageProps) {
   async function createCompanyAction(formData: FormData) {
     "use server"
 
+    await guardAdmin()
     const title = String(formData.get("title") ?? "").trim()
     const tagline = String(formData.get("tagline") ?? "").trim()
     const longDescription = String(formData.get("longDescription") ?? "").trim()

@@ -2,7 +2,9 @@ import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
 import { uploadToR2 } from "@/lib/r2"
 
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml"]
+// No SVG: file.type is client-controlled and R2 serves assets inline from a public
+// domain, so an SVG carrying <script> would be stored XSS on the asset origin.
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"]
 const MAX_BYTES = 5 * 1024 * 1024
 
 export async function POST(request: Request) {
@@ -22,7 +24,7 @@ export async function POST(request: Request) {
     }
 
     if (!ALLOWED_TYPES.includes(file.type)) {
-      return errorResponse("Only JPEG, PNG, GIF, WebP, and SVG files are allowed")
+      return errorResponse("Only JPEG, PNG, GIF, and WebP files are allowed")
     }
 
     if (file.size > MAX_BYTES) {

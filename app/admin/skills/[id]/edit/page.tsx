@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache"
 import { SubmitButton, ConfirmSubmitButton } from "@/components/admin/form-actions"
 import { getSkillById, updateSkill } from "@/lib/domains/skills/service"
 import type { SkillStatus } from "@/lib/domains/skills/types"
+import { guardAdmin } from "@/lib/auth/admin"
 
 export const dynamic = "force-dynamic"
 
@@ -23,6 +24,7 @@ export default async function EditSkillPage({ params }: EditSkillPageProps) {
   async function updateSkillAction(formData: FormData) {
     "use server"
 
+    await guardAdmin()
     const name = String(formData.get("name") ?? "").trim()
     const statusValue = String(formData.get("status") ?? currentSkill.status ?? "active") as SkillStatus
     const category = String(formData.get("category") ?? "").trim()

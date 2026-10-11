@@ -5,6 +5,7 @@ import { notFound, redirect } from "next/navigation"
 
 import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
 import { deleteMessage, getMessageById, updateMessage } from "@/lib/domains/messages/service"
+import { guardAdmin } from "@/lib/auth/admin"
 
 export const dynamic = "force-dynamic"
 
@@ -26,6 +27,7 @@ export default async function EditMessagePage({ params }: EditMessagePageProps) 
   async function toggleReadAction(formData: FormData) {
     "use server"
 
+    await guardAdmin()
     const nextRead = String(formData.get("read") ?? "")
     if (nextRead !== "true" && nextRead !== "false") {
       return
@@ -41,6 +43,7 @@ export default async function EditMessagePage({ params }: EditMessagePageProps) 
   async function deleteMessageAction() {
     "use server"
 
+    await guardAdmin()
     await deleteMessage(id)
     revalidatePath("/admin/messages")
     redirect("/admin/messages")
