@@ -3,23 +3,41 @@
  * Fails loudly if a security invariant is broken.
  */
 import assert from "node:assert/strict"
-import { readFileSync } from "node:fs"
-import { globSync } from "node:fs"
+import { globSync, readFileSync } from "node:fs"
 
 import { setUnset } from "../lib/update-doc"
 
-const files = globSync("app/admin/**/*.tsx")
-let actions = 0
+// --- every mutation path is admin-guarded --------------------------------
+// Two shapes exist while the rebuild is in progress:
+//   1. a migrated domain: file-level "use server", every export wrapped in
+//      adminAction(), which calls guardAdmin() before the handler runs;
+//   2. a legacy page: inline "use server" inside the function, with
+//      `await guardAdmin()` as the first statement.
+let guarded = 0
 
-for (const file of files) {
-  const lines = readFileSync(file, "utf8").split("\n")
+for (const file of [...globSync("app/admin/**/*.tsx"), ...globSync("app/admin/**/*.ts")]) {
+  const source = readFileSync(file, "utf8")
+  const lines = source.split("\n")
+  const fileLevelDirective = /^\s*["']use server["']\s*$/.test(lines[0] ?? "")
+
+  if (fileLevelDirective) {
+    // Every exported binding in an action module must be an adminAction.
+    for (const [i, line] of lines.entries()) {
+      const match = line.match(/^export (?:const|async function) (\w+)/)
+      if (!match) continue
+      guarded++
+      assert.match(
+        line,
+        /= adminAction\(/,
+        `${file}:${i + 1} — "${match[1]}" is exported from a "use server" module but is not wrapped in adminAction(), so it runs unauthenticated.`,
+      )
+    }
+    continue
+  }
 
   lines.forEach((line, i) => {
-    if (!/^\s*"use server"\s*$/.test(line)) return
-    actions++
-
-    // The guard must be the first statement after the directive, before any
-    // await/DB call can run. A blank line between the two is fine.
+    if (!/^\s*["']use server["']\s*$/.test(line)) return
+    guarded++
     const next = lines.slice(i + 1, i + 4).find((l) => l.trim() !== "")
     assert.match(
       next ?? "",
@@ -29,8 +47,8 @@ for (const file of files) {
   })
 }
 
-assert.ok(actions >= 16, `expected at least 16 Server Actions, found ${actions}`)
-console.log(`✓ all ${actions} Server Actions call guardAdmin() first`)
+assert.ok(guarded >= 16, `expected at least 16 guarded mutation paths, found ${guarded}`)
+console.log(`✓ all ${guarded} admin mutation paths are guarded`)
 
 // --- setUnset(): undefined clears a field, it does not write null --------
 assert.deepEqual(setUnset({ a: 1, b: undefined }), { $set: { a: 1 }, $unset: { b: "" } })

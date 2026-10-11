@@ -1,108 +1,19 @@
-import { revalidatePath } from "next/cache"
-import Link from "next/link"
-import { redirect } from "next/navigation"
+import { EntityForm } from "@/components/admin/entity-form"
+import { PageHeader } from "@/components/admin/shell"
 
-import { ActionToast } from "@/components/admin/action-toast"
-import { FeedbackBanner } from "@/components/admin/feedback-banner"
-import { SubmitButton } from "@/components/admin/form-actions"
-import { ImageUploader } from "@/components/admin/image-uploader"
-import { guardAdmin } from "@/lib/auth/admin"
-import { createProject } from "@/lib/domains/projects/service"
-import { slugify } from "@/lib/utils"
+import { createProjectAction } from "../actions"
+import { projectFields } from "../form"
 
-type PageProps = { searchParams: Promise<{ status?: string; message?: string }> }
-
-export default async function CreateProjectPage({ searchParams }: PageProps) {
-  const { status, message } = await searchParams
-
-  async function createProjectAction(formData: FormData) {
-    "use server"
-
-    await guardAdmin()
-    const title = String(formData.get("title") ?? "").trim()
-    const description = String(formData.get("description") ?? "").trim()
-    const image = String(formData.get("image") ?? "").trim()
-
-    if (!title || !description || !image) {
-      redirect("/admin/projects/create?status=error&message=Title%2C+description+and+image+are+required")
-    }
-
-    try {
-      await createProject({
-        title,
-        slug: slugify(String(formData.get("slug") ?? "").trim() || title),
-        description,
-        image,
-        techStack: String(formData.get("techStack") ?? "")
-          .split(",")
-          .map((item) => item.trim())
-          .filter(Boolean),
-        liveUrl: String(formData.get("liveUrl") ?? "").trim() || undefined,
-        githubUrl: String(formData.get("githubUrl") ?? "").trim() || undefined,
-        featured: String(formData.get("featured") ?? "") === "on",
-      })
-
-      revalidatePath("/admin/projects")
-      revalidatePath("/work")
-      redirect("/admin/projects?status=success&message=Project+created")
-    } catch {
-      redirect("/admin/projects/create?status=error&message=Failed+to+create+project")
-    }
-  }
-
+export default function CreateProjectPage() {
   return (
-    <main className="space-y-8">
-      <section className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Create Project</h1>
-        <p className="text-sm text-muted-foreground">Add a portfolio project card.</p>
-      </section>
-
-      <ActionToast status={status} message={message} />
-      {status && message ? <FeedbackBanner type={status === "success" ? "success" : "error"} message={decodeURIComponent(message)} /> : null}
-
-      <form action={createProjectAction} className="grid gap-4 rounded-lg border bg-card p-6 md:grid-cols-2">
-        <div className="space-y-2">
-          <label htmlFor="title" className="text-sm">Title</label>
-          <input id="title" name="title" autoFocus required placeholder="Project title" className="w-full rounded-md border bg-background px-3 py-2" />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="slug" className="text-sm">Slug</label>
-          <input id="slug" name="slug" placeholder="project-slug (optional)" className="w-full rounded-md border bg-background px-3 py-2" />
-        </div>
-        <div className="space-y-2 md:col-span-2">
-          <ImageUploader name="image" folder="projects" label="Project image" />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="techStack" className="text-sm">Tech stack (comma separated)</label>
-          <input id="techStack" name="techStack" placeholder="Next.js, TypeScript, MongoDB" className="w-full rounded-md border bg-background px-3 py-2" />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="liveUrl" className="text-sm">Live URL</label>
-          <input id="liveUrl" name="liveUrl" type="url" placeholder="https://example.com" className="w-full rounded-md border bg-background px-3 py-2" />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="githubUrl" className="text-sm">GitHub URL</label>
-          <input id="githubUrl" name="githubUrl" type="url" placeholder="https://github.com/user/repo" className="w-full rounded-md border bg-background px-3 py-2" />
-        </div>
-        <label className="md:col-span-2 flex items-center gap-2 text-sm text-muted-foreground">
-          <input name="featured" type="checkbox" /> Featured project
-        </label>
-        <div className="space-y-2 md:col-span-2">
-          <label htmlFor="description" className="text-sm">Description</label>
-          <textarea id="description" name="description" required rows={5} placeholder="Project description" className="w-full rounded-md border bg-background px-3 py-2" />
-        </div>
-
-        <div className="md:col-span-2 flex justify-end gap-3">
-          <Link href="/admin/projects" className="rounded-md border px-4 py-2 text-sm">
-            Cancel
-          </Link>
-          <SubmitButton
-            label="Save project"
-            pendingLabel="Saving..."
-            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-60"
-          />
-        </div>
-      </form>
-    </main>
+    <>
+      <PageHeader number="01" eyebrow="PROJECTS / NEW" dot="product" plain="Add a " accent="project" />
+      <EntityForm
+        fields={projectFields}
+        action={createProjectAction}
+        cancelHref="/admin/projects"
+        submitLabel="Create project"
+      />
+    </>
   )
 }
