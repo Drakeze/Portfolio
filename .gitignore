@@ -32,3 +32,6 @@ next-env.d.ts
 .claude-flow/
 .claude/proven-config.json
 .claude/.proven-config-version
+
+# tool runtime caches
+.impeccable/

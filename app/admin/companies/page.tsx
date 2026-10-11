@@ -24,7 +24,7 @@ async function deleteCompanyAction(formData: FormData) {
   try {
     await deleteCompany(id)
     revalidatePath("/admin/companies")
-    revalidatePath("/projects/company")
+    revalidatePath("/work")
     redirect("/admin/companies?status=success&message=Company+deleted")
   } catch {
     redirect("/admin/companies?status=error&message=Failed+to+delete+company")

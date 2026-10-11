@@ -43,7 +43,7 @@ export default async function CreateProjectPage({ searchParams }: PageProps) {
       })
 
       revalidatePath("/admin/projects")
-      revalidatePath("/projects")
+      revalidatePath("/work")
       redirect("/admin/projects?status=success&message=Project+created")
     } catch {
       redirect("/admin/projects/create?status=error&message=Failed+to+create+project")

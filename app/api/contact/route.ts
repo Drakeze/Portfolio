@@ -4,7 +4,7 @@ import { errorResponse, successResponse } from "@/lib/api/responses"
 import { createMessage } from "@/lib/domains/messages/service"
 import { getPostHogClient } from "@/lib/posthog-server"
 import { createRateLimiter } from "@/lib/rate-limit"
-import { getContactRecipientEmail, getMailFrom, resend } from "@/src/lib/resend"
+import { getContactRecipientEmail, getMailFrom, resend } from "@/lib/resend"
 
 const contactSchema = z.object({
   name: z.string().min(1),

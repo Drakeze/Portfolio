@@ -46,7 +46,7 @@ export default async function EditProjectPage({ params, searchParams }: PageProp
       })
 
       revalidatePath("/admin/projects")
-      revalidatePath("/projects")
+      revalidatePath("/work")
       redirect("/admin/projects?status=success&message=Project+updated")
     } catch {
       redirect(`/admin/projects/${id}/edit?status=error&message=Failed+to+update+project`)

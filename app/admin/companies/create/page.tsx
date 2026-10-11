@@ -46,7 +46,7 @@ export default async function CreateCompanyPage({ searchParams }: PageProps) {
       })
 
       revalidatePath("/admin/companies")
-      revalidatePath("/projects/company")
+      revalidatePath("/work")
       redirect("/admin/companies?status=success&message=Company+created")
     } catch {
       redirect("/admin/companies/create?status=error&message=Failed+to+create+company")

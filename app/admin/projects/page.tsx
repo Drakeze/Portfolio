@@ -24,7 +24,7 @@ async function deleteProjectAction(formData: FormData) {
   try {
     await deleteProject(id)
     revalidatePath("/admin/projects")
-    revalidatePath("/projects")
+    revalidatePath("/work")
     redirect("/admin/projects?status=success&message=Project+deleted")
   } catch {
     redirect("/admin/projects?status=error&message=Failed+to+delete+project")

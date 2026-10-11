@@ -1,6 +1,7 @@
 "use client"
 
 import { SegmentedToggle } from "@/components/segmented-toggle"
+import posthog from "posthog-js"
 import { useState } from "react"
 
 const SOURCE_OPTIONS = [
@@ -32,6 +33,7 @@ export function ContactForm() {
 
     if (!name.trim() || !email.trim() || !message.trim()) {
       setErrorMsg("Please fill in all fields.")
+      setState("error")
       return
     }
 
@@ -55,13 +57,17 @@ export function ContactForm() {
         throw new Error(data?.error ?? "Something went wrong. Please try again.")
       }
 
+      posthog.capture("contact_form_submitted", { source })
       setState("success")
       setName("")
       setEmail("")
       setMessage("")
       setSource("hi")
     } catch (err) {
-      setErrorMsg(err instanceof Error ? err.message : "Something went wrong.")
+      const errMsg = err instanceof Error ? err.message : "Something went wrong."
+      posthog.capture("contact_form_error", { error_message: errMsg })
+      posthog.captureException(err)
+      setErrorMsg(errMsg)
       setState("error")
     }
   }

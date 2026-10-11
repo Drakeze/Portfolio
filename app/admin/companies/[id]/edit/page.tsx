@@ -52,7 +52,7 @@ export default async function EditCompanyPage({ params, searchParams }: PageProp
       })
 
       revalidatePath("/admin/companies")
-      revalidatePath("/projects/company")
+      revalidatePath("/work")
       revalidatePath(`/projects/company/${currentCompany.slug}`)
       redirect("/admin/companies?status=success&message=Company+updated")
     } catch {
