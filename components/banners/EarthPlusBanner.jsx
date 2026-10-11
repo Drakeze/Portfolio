@@ -129,18 +129,19 @@ export default function EarthPlusBanner({ onClick, href, bare }) {
 
   // Tagline cycling
   useEffect(() => {
+    let swap;
     const id = setInterval(() => {
       setTaglineFade(false);
-      setTimeout(() => {
+      swap = setTimeout(() => {
         setTaglineIdx(i => (i + 1) % TAGLINES.length);
         setTaglineFade(true);
       }, 400);
     }, 3500);
-    return () => clearInterval(id);
+    return () => { clearInterval(id); clearTimeout(swap); };
   }, []);
 
   const Wrapper = href ? 'a' : 'div';
-  const wrapperProps = href ? { href } : {};
+  const wrapperProps = href ? { href, target: '_blank', rel: 'noopener noreferrer' } : {};
 
   return (
     <Wrapper

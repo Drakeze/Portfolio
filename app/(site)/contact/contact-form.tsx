@@ -97,7 +97,13 @@ export function ContactForm() {
         <label className="font-mono text-[12px] tracking-[0.08em] text-muted-foreground uppercase">
           This is about
         </label>
-        <SegmentedToggle options={SOURCE_OPTIONS} value={source} onChange={setSource} />
+        <SegmentedToggle
+          options={SOURCE_OPTIONS}
+          value={source}
+          onChange={setSource}
+          as="radiogroup"
+          label="This is about"
+        />
       </div>
 
       {/* Name + email */}

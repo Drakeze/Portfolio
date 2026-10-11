@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 
+import { Container } from "@/components/container"
 import { Dot } from "@/components/dot"
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
@@ -50,7 +51,7 @@ export function Navigation() {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-background">
-      <div className="mx-auto max-w-[1440px] px-5 sm:px-10 lg:px-20 h-16 flex items-center justify-between">
+      <Container className="h-16 flex items-center justify-between">
         {/* Branding */}
         <Link href="/" className="flex items-baseline gap-2 shrink-0">
           <span className="font-semibold text-[17px] text-foreground">Anthony Shead</span>
@@ -119,7 +120,7 @@ export function Navigation() {
             </SheetContent>
           </Sheet>
         </div>
-      </div>
+      </Container>
     </nav>
   )
 }

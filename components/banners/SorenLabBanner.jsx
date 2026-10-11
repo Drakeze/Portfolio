@@ -125,14 +125,15 @@ export default function SorenLabBanner({ onClick, href, bare }) {
 
   // Tagline cycling
   useEffect(() => {
+    let swap;
     const id = setInterval(() => {
       setTaglineFade(false);
-      setTimeout(() => {
+      swap = setTimeout(() => {
         setTaglineIdx(i => (i + 1) % TAGLINES.length);
         setTaglineFade(true);
       }, 400);
     }, 4000);
-    return () => clearInterval(id);
+    return () => { clearInterval(id); clearTimeout(swap); };
   }, []);
 
   const Wrapper      = href ? 'a' : 'div';

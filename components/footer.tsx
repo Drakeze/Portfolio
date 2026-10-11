@@ -2,6 +2,7 @@ import { Mail } from "lucide-react"
 import type { ElementType } from "react"
 import { SiGithub, SiTwitch, SiYoutube } from "react-icons/si"
 
+import { Container } from "@/components/container"
 import { siteConfig } from "@/lib/seo"
 import { externalLinks } from "@/lib/site-links"
 
@@ -41,7 +42,7 @@ const SOCIAL_LINKS: SocialLink[] = [
 export function Footer() {
   return (
     <footer className="border-t border-border bg-background">
-      <div className="mx-auto max-w-[1440px] px-5 sm:px-10 lg:px-20 py-7 flex items-center justify-between gap-4 flex-wrap">
+      <Container className="py-7 flex items-center justify-between gap-4 flex-wrap">
         {/* Left: name + copyright */}
         <div className="flex items-baseline gap-2">
           <span className="font-medium text-[14px] text-foreground">Anthony Shead</span>
@@ -65,7 +66,7 @@ export function Footer() {
             </a>
           ))}
         </div>
-      </div>
+      </Container>
     </footer>
   )
 }

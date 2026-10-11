@@ -24,15 +24,18 @@ export default function DevLogBanner({ onClick, href, bare }) {
     el.style.animation='devlogScroll 14s linear infinite';
   }, []);
   useEffect(() => {
-    const id = setInterval(() => { setTlFade(false); setTimeout(()=>{setTlIdx(i=>(i+1)%TAGLINES.length);setTlFade(true)},400); }, 3600);
-    return () => clearInterval(id);
+    let swap;
+    const id = setInterval(() => { setTlFade(false); swap = setTimeout(()=>{setTlIdx(i=>(i+1)%TAGLINES.length);setTlFade(true)}, 400); }, 3600);
+    return () => { clearInterval(id); clearTimeout(swap); };
   }, []);
   const W = href ? 'a' : 'div';
   return (
     <W href={href} onClick={onClick}
+      target={href ? '_blank' : undefined}
+      rel={href ? 'noopener noreferrer' : undefined}
       style={bare
-        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',overflow:'hidden',width:'100%',cursor:'pointer',textDecoration:'none'}
-        : {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #0A8060',borderRadius:'12px',overflow:'hidden',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
+        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',overflow:'hidden',width:'100%',cursor:href?'pointer':'default',textDecoration:'none'}
+        : {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #0A8060',borderRadius:'12px',overflow:'hidden',cursor:href?'pointer':'default',textDecoration:'none',transition:'border-left-color .2s'}}
       onMouseEnter={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#1D9E75'}
       onMouseLeave={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#0A8060'}>
       <div style={{flexShrink:0,width:'80px',height:'78px',overflow:'hidden'}}>

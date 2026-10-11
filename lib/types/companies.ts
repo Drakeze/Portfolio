@@ -54,7 +54,7 @@ SorenLab is run by one person, operating as EarthPlus LLC. AI is part of how the
     title: "Earth Plus",
     tagline: "For-profit by design, so it can fund environmental work on its own terms.",
     shortDescription:
-      "A for-profit venture that reinvests its own revenue into sustainability — recycled goods, environmental tooling, and on-the-ground foundations — instead of relying on donation cycles.",
+      "A for-profit venture that reinvests its own revenue into sustainability: recycled goods, environmental tooling, and on-the-ground foundations, instead of relying on donation cycles.",
     longDescription: `EarthPlus is a long-term venture centered on the belief that technological progress shouldn't come at the cost of the planet it depends on. The goal isn't to reject technology; it's to build with it deliberately, and to route what it earns back toward sustainability and environmental preservation.
 
 The model is for-profit by design. Nonprofits depend on donation cycles; a business that sells something people want can fund environmental work from its own operations and scale that funding as it grows. EarthPlus is structured so that reinvestment is part of the operating model rather than a line item that gets cut in a bad quarter.

@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { AccentHeading } from "@/components/accent-heading"
+import { Container } from "@/components/container"
 import { Hero } from "@/components/hero/Hero"
 import { listGlobeSignatures } from "@/lib/domains/messages/service"
 import { SIGNATURE_FIXTURE } from "@/lib/globe/fixture"
@@ -19,10 +20,10 @@ export default async function Page() {
       <Hero signatures={signatures} />
 
       {/* Workshop band */}
-      <section className="bg-[#0E0E10]">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 px-5 sm:px-10 lg:px-20 py-14">
+      <section className="bg-ink">
+        <Container className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 py-14">
           <div className="flex flex-col gap-4 max-w-[560px]">
-            <span className="inline-flex w-fit rounded-full bg-amber-400 text-[#0E0E10] font-mono text-[11px] uppercase tracking-[0.1em] px-3 py-1">
+            <span className="inline-flex w-fit rounded-full bg-dot-tool text-ink font-mono text-[11px] uppercase tracking-[0.1em] px-3 py-1">
               The Workshop
             </span>
             <AccentHeading
@@ -42,7 +43,7 @@ export default async function Page() {
           >
             Open the workshop →
           </Link>
-        </div>
+        </Container>
       </section>
     </main>
   )

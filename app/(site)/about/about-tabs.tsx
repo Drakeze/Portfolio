@@ -1,12 +1,12 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 import { AccentHeading } from "@/components/accent-heading"
 import { Dot } from "@/components/dot"
 import { Eyebrow } from "@/components/eyebrow"
 import { Workshop } from "@/components/sections/workshop"
-import { SegmentedToggle } from "@/components/segmented-toggle"
+import { segmentedPanelId,SegmentedToggle } from "@/components/segmented-toggle"
 import type { BioParagraph } from "@/lib/domains/bio/types"
 import type { PublicCertification, PublicSkill } from "@/lib/types/about"
 
@@ -32,14 +32,10 @@ export function AboutTabs({
   initialTab,
   hasBioPhoto,
 }: Props) {
-  const router = useRouter()
-  const tab = initialTab
-
-  function handleTabChange(value: string) {
-    const params = new URLSearchParams()
-    if (value !== "about") params.set("tab", value)
-    router.push(`/about${params.size ? `?${params.toString()}` : ""}`, { scroll: false })
-  }
+  // Local state, not router.push: every tab click used to be a server round
+  // trip that re-ran the page's four-way Promise.all for data this component
+  // already holds. ?tab= still seeds the initial tab, so links keep working.
+  const [tab, setTab] = useState(initialTab)
 
   const lead = bioParagraphs[0]
   const body = bioParagraphs.slice(1)
@@ -52,19 +48,27 @@ export function AboutTabs({
           <Eyebrow number="03" label="ABOUT" />
           <AccentHeading plain="Who is " accent="Anthony" as="h1" size="lg" />
         </div>
-        <SegmentedToggle options={TAB_OPTIONS} value={tab} onChange={handleTabChange} />
+        <SegmentedToggle
+          options={TAB_OPTIONS}
+          value={tab}
+          onChange={setTab}
+          label="About sections"
+          panelId={(value) => segmentedPanelId("about", value)}
+        />
       </div>
 
-      {tab === "about" ? (
-        <AboutTab
-          lead={lead}
-          body={body}
-          hasBioPhoto={hasBioPhoto}
-          onWorkshopClick={() => handleTabChange("workshop")}
-        />
-      ) : (
-        <Workshop skills={skills} certifications={certifications} projects={projects} />
-      )}
+      <div id={segmentedPanelId("about", tab)} role="tabpanel">
+        {tab === "about" ? (
+          <AboutTab
+            lead={lead}
+            body={body}
+            hasBioPhoto={hasBioPhoto}
+            onWorkshopClick={() => setTab("workshop")}
+          />
+        ) : (
+          <Workshop skills={skills} certifications={certifications} projects={projects} />
+        )}
+      </div>
     </>
   )
 }

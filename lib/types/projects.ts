@@ -104,7 +104,7 @@ export const projects: Project[] = [
   {
     title: "Translator",
     description:
-      "A lightweight local translation tool built in Python with NiceGUI — type or speak, translate instantly across a dozen languages, and keep a running history of recent conversations.",
+      "A lightweight local translation tool built in Python with NiceGUI: type or speak, translate instantly across a dozen languages, and keep a running history of recent conversations.",
     Banner: TranslatorBanner,
     accentColor: "#D6336C",
     tags: ["Python", "NiceGUI", "Fly.io", "deep-translator", "Web Speech API"],

@@ -3,6 +3,8 @@
 import posthog from "posthog-js"
 import { useRef, useState } from "react"
 
+import { Container } from "@/components/container"
+
 function GlobeMark() {
   return (
     <svg
@@ -74,8 +76,8 @@ export function SignGlobeBanner() {
   }
 
   return (
-    <section className="w-full bg-[#2C1331] px-5 sm:px-20 py-9">
-      <div className="mx-auto max-w-[1440px] flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+    <section className="w-full bg-purple-900 py-9">
+      <Container className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
         {/* Globe mark */}
         <div className="shrink-0">
           <GlobeMark />
@@ -84,7 +86,7 @@ export function SignGlobeBanner() {
         {/* Copy */}
         <div className="flex-1 text-center sm:text-left">
           <p className="font-medium text-[26px] text-white leading-tight">Sign the globe</p>
-          <p className="mt-1 font-mono text-[13px] text-dim">
+          <p className="mt-1 font-mono text-[13px] text-purple-200">
             Add your name and it shows up as a dot on the globe on the home page. No email needed.
           </p>
         </div>
@@ -123,7 +125,7 @@ export function SignGlobeBanner() {
             </>
           )}
         </form>
-      </div>
+      </Container>
     </section>
   )
 }

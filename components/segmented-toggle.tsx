@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useId, useRef } from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -13,53 +13,91 @@ interface SegmentedToggleProps {
   options: SegmentedOption[]
   value: string
   onChange: (value: string) => void
+  /** Announced name. Every instance used to announce "View options". */
+  label: string
+  /**
+   * "tabs" shows and hides panels; "radiogroup" picks a value without
+   * revealing anything. /contact uses this to choose a message topic, which
+   * is a radio group - calling it a tablist promised a panel that never
+   * existed.
+   */
+  as?: "tabs" | "radiogroup"
+  /** Maps a value to the id of the element it controls. Tabs mode only. */
+  panelId?: (value: string) => string
   className?: string
 }
 
-export function SegmentedToggle({ options, value, onChange, className }: SegmentedToggleProps) {
-  const tabsRef = useRef<(HTMLButtonElement | null)[]>([])
+export function SegmentedToggle({
+  options,
+  value,
+  onChange,
+  label,
+  as = "tabs",
+  panelId,
+  className,
+}: SegmentedToggleProps) {
+  const itemsRef = useRef<(HTMLButtonElement | null)[]>([])
+  const generatedId = useId()
+  const isTabs = as === "tabs"
+
+  function focusAndSelect(index: number) {
+    itemsRef.current[index]?.focus()
+    onChange(options[index].value)
+  }
 
   function handleKeyDown(e: React.KeyboardEvent, index: number) {
-    if (e.key === "ArrowRight") {
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
       e.preventDefault()
-      const next = (index + 1) % options.length
-      tabsRef.current[next]?.focus()
-      onChange(options[next].value)
-    } else if (e.key === "ArrowLeft") {
+      focusAndSelect((index + 1) % options.length)
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
       e.preventDefault()
-      const prev = (index - 1 + options.length) % options.length
-      tabsRef.current[prev]?.focus()
-      onChange(options[prev].value)
+      focusAndSelect((index - 1 + options.length) % options.length)
+    } else if (e.key === "Home") {
+      e.preventDefault()
+      focusAndSelect(0)
+    } else if (e.key === "End") {
+      e.preventDefault()
+      focusAndSelect(options.length - 1)
     }
   }
 
   return (
     <div
-      role="tablist"
-      aria-label="View options"
+      role={isTabs ? "tablist" : "radiogroup"}
+      aria-label={label}
       className={cn("inline-flex rounded-full bg-muted p-1 gap-0.5", className)}
     >
-      {options.map((opt, i) => (
-        <button
-          key={opt.value}
-          role="tab"
-          aria-selected={value === opt.value}
-          tabIndex={value === opt.value ? 0 : -1}
-          ref={(el) => {
-            tabsRef.current[i] = el
-          }}
-          onClick={() => onChange(opt.value)}
-          onKeyDown={(e) => handleKeyDown(e, i)}
-          className={cn(
-            "px-4 py-1.5 rounded-full text-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-            value === opt.value
-              ? "bg-card shadow-sm font-medium text-foreground"
-              : "text-muted-foreground hover:text-foreground",
-          )}
-        >
-          {opt.label}
-        </button>
-      ))}
+      {options.map((opt, i) => {
+        const selected = value === opt.value
+        return (
+          <button
+            key={opt.value}
+            type="button"
+            role={isTabs ? "tab" : "radio"}
+            id={isTabs ? `${generatedId}-${opt.value}` : undefined}
+            aria-selected={isTabs ? selected : undefined}
+            aria-checked={isTabs ? undefined : selected}
+            aria-controls={isTabs ? panelId?.(opt.value) : undefined}
+            tabIndex={selected ? 0 : -1}
+            ref={(el) => {
+              itemsRef.current[i] = el
+            }}
+            onClick={() => onChange(opt.value)}
+            onKeyDown={(e) => handleKeyDown(e, i)}
+            className={cn(
+              "px-4 py-1.5 rounded-full text-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              selected ? "bg-card shadow-sm font-medium text-foreground" : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {opt.label}
+          </button>
+        )
+      })}
     </div>
   )
+}
+
+/** Id helper so a tab and its panel agree without hand-written strings. */
+export function segmentedPanelId(scope: string, value: string) {
+  return `${scope}-panel-${value}`
 }

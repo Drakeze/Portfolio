@@ -63,6 +63,23 @@
   --dot-tool: var(--amber-500);
   --dot-architecture: var(--purple-500);
 
+  /* ─── Banner compat aliases ───
+     components/banners/*.jsx reference these nine names in inline styles,
+     64 times across 10 files. None of them were ever defined, so where a
+     literal fallback was given it always won - which is why banner body text
+     rendered #111 and #666 on a dark card on /work. Aliasing them here is one
+     edit instead of sixty-four, and they now follow the theme, because custom
+     properties resolve at use time. */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-muted);
+  --color-text-info: var(--dot-client);
+  --color-background-primary: var(--surface-page);
+  --color-background-secondary: var(--surface-sunken);
+  --color-background-info: color-mix(in srgb, var(--dot-client) 12%, transparent);
+  --color-border-secondary: var(--border-strong);
+  --color-border-tertiary: var(--border-subtle);
+  --color-border-info: color-mix(in srgb, var(--dot-client) 40%, transparent);
+
   /* ─── shadcn/ui vars (remapped to semantic layer) ─── */
   --background: var(--surface-page);
   --foreground: var(--text-primary);
@@ -264,6 +281,19 @@
   @media (prefers-reduced-motion: no-preference) {
     html {
       scroll-behavior: smooth;
+    }
+  }
+
+  /* The nine banners animate perpetually with CSS keyframes and the globe
+     particles float; honour the OS setting site-wide rather than per
+     component. JS-driven text swaps are content, not motion, so they stay. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { AccentHeading } from "@/components/accent-heading"
+import { Container } from "@/components/container"
 import { Dot } from "@/components/dot"
 import { Eyebrow } from "@/components/eyebrow"
 import { SignGlobeBanner } from "@/components/sign-globe-banner"
@@ -26,7 +27,7 @@ const SOCIAL_ROWS = [
 export default function ContactPage() {
   return (
     <>
-      <main className="flex-1 px-5 sm:px-10 lg:px-20 py-16 lg:py-20">
+      <Container as="main" className="flex-1 py-16 lg:py-20">
         {/* Header */}
         <div className="flex flex-col gap-2 mb-10">
           <Eyebrow number="04" label="CONTACT" />
@@ -70,7 +71,7 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-      </main>
+      </Container>
 
       <SignGlobeBanner />
     </>

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
+import { Container } from "@/components/container"
 import { Dot } from "@/components/dot"
 import { SectionDivider } from "@/components/section-divider"
 import { siteConfig } from "@/lib/seo"
@@ -37,7 +38,7 @@ export default async function CaseStudyPage({ params }: Props) {
   if (!cs) notFound()
 
   return (
-    <main className="flex-1 px-5 sm:px-10 lg:px-20 py-16 lg:py-20">
+    <Container as="main" className="flex-1 py-16 lg:py-20">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 font-mono text-[12px] text-muted-foreground mb-8">
         <Link href="/architecture" className="hover:text-foreground transition-colors">Architecture</Link>
@@ -152,8 +153,8 @@ export default async function CaseStudyPage({ params }: Props) {
 
       {/* Planning study card — always shown when isPlanningStudy */}
       {cs.isPlanningStudy ? (
-        <div className="rounded-2xl border-2 border-amber-400/60 bg-amber-50/60 dark:bg-amber-950/20 p-6 mt-8">
-          <p className="font-mono text-[11px] tracking-[0.12em] text-amber-700 dark:text-amber-400 uppercase font-medium mb-2">
+        <div className="rounded-2xl border-2 border-dot-tool/50 bg-dot-tool/10 p-6 mt-8">
+          <p className="font-mono text-[11px] tracking-[0.12em] text-foreground uppercase font-medium mb-2">
             PLANNING STUDY · SIMULATION, NOT BUILT WORK
           </p>
           <p className="text-[15px] text-muted-foreground leading-relaxed">
@@ -161,6 +162,6 @@ export default async function CaseStudyPage({ params }: Props) {
           </p>
         </div>
       ) : null}
-    </main>
+    </Container>
   )
 }

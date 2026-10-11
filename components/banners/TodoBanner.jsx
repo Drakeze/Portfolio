@@ -5,9 +5,11 @@ export default function TodoBanner({ onClick, href, bare }) {
   const W = href ? 'a' : 'div';
   return (
     <W href={href} onClick={onClick}
+      target={href ? '_blank' : undefined}
+      rel={href ? 'noopener noreferrer' : undefined}
       style={bare
-        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',width:'100%',cursor:'pointer',textDecoration:'none'}
-        : {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #2F9E44',borderRadius:'12px',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
+        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',width:'100%',cursor:href?'pointer':'default',textDecoration:'none'}
+        : {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #2F9E44',borderRadius:'12px',cursor:href?'pointer':'default',textDecoration:'none',transition:'border-left-color .2s'}}
       onMouseEnter={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#40C057'}
       onMouseLeave={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#2F9E44'}>
       <div style={{flex:1,minWidth:0}}>

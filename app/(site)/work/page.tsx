@@ -1,16 +1,20 @@
 import type { Metadata } from "next"
 
+import { Container } from "@/components/container"
 import { getPublicCompanies, getPublicProjects } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
 import type { Project } from "@/lib/types/projects"
 
 import { WorkGrid } from "./work-grid"
 
-export const dynamic = "force-dynamic"
+// Was force-dynamic: TTFB on the main content page waited on Mongo every
+// request. Admin mutations call revalidatePath("/work"), so edits are still
+// immediate.
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: `Work - ${siteConfig.name}`,
-  description: "Selected projects and work by Anthony Shead — full-stack development across web, systems, and tooling.",
+  description: "Selected projects and work by Anthony Shead: full-stack development across web, systems, and tooling.",
 }
 
 export default async function WorkPage() {
@@ -37,8 +41,8 @@ export default async function WorkPage() {
     .map(({ Banner: _b, ...rest }) => rest)
 
   return (
-    <main className="flex-1 px-5 sm:px-10 lg:px-20 py-16 lg:py-20">
+    <Container as="main" className="flex-1 py-16 lg:py-20">
       <WorkGrid projects={serializable} />
-    </main>
+    </Container>
   )
 }

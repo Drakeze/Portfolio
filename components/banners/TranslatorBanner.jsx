@@ -6,17 +6,20 @@ export default function TranslatorBanner({ onClick, href, bare }) {
   const [tlIdx, setTlIdx] = useState(0);
   const [tlFade, setTlFade] = useState(true);
   useEffect(() => {
+    let swap;
     const id = setInterval(() => {
       setTlFade(false);
-      setTimeout(() => { setTlIdx(i=>(i+1)%TAGLINES.length); setTlFade(true); }, 400);
+      swap = setTimeout(() => { setTlIdx(i=>(i+1)%TAGLINES.length); setTlFade(true); }, 400);
     }, 3600);
-    return () => clearInterval(id);
+    return () => { clearInterval(id); clearTimeout(swap); };
   }, []);
   const W = href ? 'a' : 'div';
   return (
     <W href={href} onClick={onClick}
+      target={href ? '_blank' : undefined}
+      rel={href ? 'noopener noreferrer' : undefined}
       style={bare
-        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',overflow:'hidden',position:'relative',width:'100%',cursor:'pointer',textDecoration:'none'}
+        ? {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',overflow:'hidden',position:'relative',width:'100%',cursor:href?'pointer':'default',textDecoration:'none'}
         : {display:'flex',alignItems:'center',gap:'14px',padding:'1rem 1.25rem',background:'var(--color-background-primary)',border:'.5px solid var(--color-border-tertiary)',borderLeft:'3px solid #D6336C',borderRadius:'12px',overflow:'hidden',position:'relative',cursor:'pointer',textDecoration:'none',transition:'border-left-color .2s'}}
       onMouseEnter={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#F0568C'}
       onMouseLeave={bare ? undefined : e=>e.currentTarget.style.borderLeftColor='#D6336C'}>

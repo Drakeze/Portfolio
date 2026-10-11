@@ -5,7 +5,7 @@ import { useState } from "react"
 import { AccentHeading } from "@/components/accent-heading"
 import { Eyebrow } from "@/components/eyebrow"
 import { ProjectCard } from "@/components/sections/project-card"
-import { SegmentedToggle } from "@/components/segmented-toggle"
+import { segmentedPanelId,SegmentedToggle } from "@/components/segmented-toggle"
 import type { Project } from "@/lib/types/projects"
 
 const KIND_OPTIONS = [
@@ -24,10 +24,19 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
           <Eyebrow number="01" label="WORK" dot="product" />
           <AccentHeading plain="Selected " accent="work" as="h1" size="lg" />
         </div>
-        <SegmentedToggle options={KIND_OPTIONS} value={kind} onChange={setKind} />
+        <SegmentedToggle
+          options={KIND_OPTIONS}
+          value={kind}
+          onChange={setKind}
+          label="Filter work"
+          panelId={(value) => segmentedPanelId("work", value)}
+        />
       </div>
 
-      <div className={kind === "company" ? "grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[880px] mx-auto w-full" : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"}>
+      <div
+        id={segmentedPanelId("work", kind)}
+        role="tabpanel"
+        className={kind === "company" ? "grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[880px] mx-auto w-full" : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"}>
         {visible.length === 0 ? (
           <p className="font-mono text-sm text-muted-foreground col-span-full py-10">
             Nothing here yet.

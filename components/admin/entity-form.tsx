@@ -128,7 +128,7 @@ function Field({
           aria-describedby={describedBy}
           className="h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive dark:bg-input/30"
         >
-          {field.required ? null : <option value="">—</option>}
+          {field.required ? null : <option value="">None</option>}
           {field.options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

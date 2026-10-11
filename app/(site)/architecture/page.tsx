@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { AccentHeading } from "@/components/accent-heading"
+import { Container } from "@/components/container"
 import { Dot } from "@/components/dot"
 import { Eyebrow } from "@/components/eyebrow"
 import { siteConfig } from "@/lib/seo"
@@ -8,12 +9,12 @@ import { siteConfig } from "@/lib/seo"
 export const metadata: Metadata = {
   title: `Architecture - ${siteConfig.name}`,
   description:
-    "Architectural design work and planning studies by Anthony Shead — case studies with drawings, iterations, and process notes.",
+    "Architectural design work and planning studies by Anthony Shead: case studies with drawings, iterations, and process notes.",
 }
 
 export default function ArchitecturePage() {
   return (
-    <main className="flex-1 px-5 sm:px-10 lg:px-20 py-16 lg:py-20">
+    <Container as="main" className="flex-1 py-16 lg:py-20">
       <div className="flex flex-col gap-2 mb-10">
         <Eyebrow number="02" label="ARCHITECTURE" dot="architecture" />
         <AccentHeading plain="Architectural " accent="work." as="h1" size="lg" />
@@ -32,6 +33,6 @@ export default function ArchitecturePage() {
           Case studies are being documented. Check back soon.
         </p>
       </div>
-    </main>
+    </Container>
   )
 }

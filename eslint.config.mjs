@@ -14,7 +14,7 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
 
   {
-    files: ["**/*.{ts,tsx,mjs,js}"],
+    files: ["**/*.{ts,tsx,mjs,js,jsx}"],
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
       parserOptions: { ecmaFeatures: { jsx: true } },

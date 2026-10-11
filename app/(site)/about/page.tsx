@@ -3,6 +3,7 @@ import path from "node:path"
 
 import type { Metadata } from "next"
 
+import { Container } from "@/components/container"
 import { getPublicBio, getPublicCertifications, getPublicProjects, getPublicSkills } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
 
@@ -10,7 +11,7 @@ import { AboutTabs } from "./about-tabs"
 
 export const metadata: Metadata = {
   title: `About - ${siteConfig.name}`,
-  description: "Learn more about Anthony Shead — developer, architectural engineer in training, Los Angeles.",
+  description: "Learn more about Anthony Shead: developer, architectural engineer in training, Los Angeles.",
 }
 
 export const revalidate = 3600
@@ -44,7 +45,7 @@ export default async function AboutPage({
   const hasBioPhoto = existsSync(path.join(process.cwd(), "public", "anthony.jpg"))
 
   return (
-    <main className="flex-1 px-5 sm:px-10 lg:px-20 py-16 lg:py-20">
+    <Container as="main" className="flex-1 py-16 lg:py-20">
       <AboutTabs
         bioParagraphs={bioParagraphs}
         skills={skills}
@@ -53,6 +54,6 @@ export default async function AboutPage({
         initialTab={tab}
         hasBioPhoto={hasBioPhoto}
       />
-    </main>
+    </Container>
   )
 }
