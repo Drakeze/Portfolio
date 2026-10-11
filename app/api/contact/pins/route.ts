@@ -1,6 +1,6 @@
 import { successResponse } from "@/lib/api/responses"
-import { listPublicPins } from "@/lib/domains/messages/service"
+import { listGlobeSignatures } from "@/lib/domains/messages/service"
 
 export async function GET() {
-  return successResponse(await listPublicPins())
+  return successResponse(await listGlobeSignatures())
 }

@@ -18,10 +18,6 @@ export default async function AdminNamesPage() {
       day: "numeric",
     }),
     approved: submission.read,
-    coords:
-      typeof submission.lat === "number" && typeof submission.lng === "number"
-        ? `${submission.lat.toFixed(1)}, ${submission.lng.toFixed(1)}`
-        : "—",
   }))
 
   const pending = rows.filter((row) => !row.approved).length
@@ -46,7 +42,6 @@ export default async function AdminNamesPage() {
         columns={[
           { header: "Name", cell: (row) => <span className="font-medium text-foreground">{row.name}</span> },
           { header: "Email", cell: (row) => <span className="text-muted-foreground">{row.email}</span> },
-          { header: "Position", cell: (row) => row.coords, mono: true },
           { header: "Submitted", cell: (row) => row.submitted, mono: true },
           {
             header: "Status",

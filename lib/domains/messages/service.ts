@@ -1,4 +1,4 @@
-import { randomLandPoint } from "@/lib/geo/random-land-point"
+import { cityFor } from "@/lib/globe/cities"
 import { collectionNames, getDb, oid, setUnset } from "@/lib/mongodb"
 import type { Signature } from "@/lib/types/signature"
 
@@ -40,7 +40,6 @@ export async function createMessage(input: MessageInput) {
     ...input,
     read: input.read ?? false,
     createdAt: now,
-    ...(input.source === "globe" ? randomLandPoint() : {}),
   }
   const result = await collection.insertOne(doc as Omit<Message, "_id">)
   return { _id: result.insertedId, ...doc }
@@ -73,40 +72,38 @@ export async function countNewMessages() {
   return collection.countDocuments({ read: false })
 }
 
-// Public, unauthenticated path: only owner-reviewed (read) messages are eligible,
-// and the submitter's full name never leaves this function, only a first name.
-export async function listPublicPins(): Promise<{ lat: number; lng: number; label: string }[]> {
-  const collection = await messagesCollection()
-  const pins = await collection
-    .find(
-      { source: "globe", read: true, lat: { $exists: true }, lng: { $exists: true } },
-      { projection: { name: 1, lat: 1, lng: 1 } }
-    )
-    .toArray()
-
-  return pins
-    .filter((pin) => typeof pin.lat === "number" && typeof pin.lng === "number")
-    .map((pin) => ({ lat: pin.lat!, lng: pin.lng!, label: pin.name.split(" ")[0] ?? "" }))
-}
-
 /**
  * Approved globe signatures, in the shape the hero canvas wants.
  *
- * listPublicPins() returns { lat, lng, label }; the canvas wants
- * { id, name, lat, lon }. Both are decimal degrees - randomLandPoint()
- * generates degrees and d3-geo consumes degrees, despite an old comment on
- * the Signature type claiming radians.
+ * The only public, unauthenticated read of this collection, so both privacy
+ * properties live here and nowhere else: approved rows only (read: true), and
+ * only a first name ever leaves this function. The projection fetches nothing
+ * but the name.
  *
- * Inherits listPublicPins' two privacy properties: approved submissions only,
- * and first names only.
+ * Dot positions are decorative - the globe form collects a name and nothing
+ * else - so each row is assigned a recognisable city derived from its _id
+ * rather than stored. Sorting by _id keeps that assignment stable as new
+ * signatures are approved.
  */
 export async function listGlobeSignatures(): Promise<Signature[]> {
-  const pins = await listPublicPins()
+  const collection = await messagesCollection()
+  const rows = await collection
+    .find({ source: "globe", read: true }, { projection: { name: 1 } })
+    .sort({ _id: 1 })
+    .toArray()
 
-  return pins.map((pin, index) => ({
-    id: `pin-${index}`,
-    name: pin.label,
-    lat: pin.lat,
-    lon: pin.lng,
-  }))
+  const taken = new Set<number>()
+
+  return rows.map((row, index) => {
+    const city = cityFor(row._id!.toHexString(), taken)
+    return {
+      // Not the ObjectId: it encodes a creation timestamp, and a React key is
+      // all the client needs.
+      id: `pin-${index}`,
+      name: row.name.split(" ")[0] ?? "",
+      location: city.name,
+      lat: city.lat,
+      lon: city.lon,
+    }
+  })
 }

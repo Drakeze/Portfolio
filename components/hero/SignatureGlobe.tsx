@@ -5,6 +5,8 @@ import { useEffect, useRef } from "react"
 
 import type { Signature } from "@/lib/types/signature"
 
+import { HERO_PEEK } from "./constants"
+
 export type SignatureGlobeProps = {
   signatures: Signature[]
 }
@@ -17,19 +19,33 @@ type GlobeColors = {
   limb:            string
   grid:            string
   dotFill:         (f: number) => string
-  dotFillFeatured: string
   dotHover:        string
   shadowFill:      string
-  tagBg:           string
-  tagBorder:       string
-  tagDot:          string
+  labelFont:       string
+  labelText:       string
+  labelHalo:       string
   gradOriginFactor: { x: number; y: number }
 }
 
-function resolveGlobeColors(): GlobeColors {
+/**
+ * Canvas cannot use CSS classes, so label colours and the font come from
+ * computed style. Read off the canvas element specifically: the --font-* vars
+ * live on <body> while the semantic tokens live on :root, and the canvas
+ * inherits both.
+ */
+function resolveGlobeColors(el: Element): GlobeColors {
   const isDark = document.documentElement.classList.contains("dark")
+  const css    = getComputedStyle(el)
+  const mono   = css.getPropertyValue("--font-jetbrains-mono").trim()
+  const label  = {
+    labelFont: `11px ${mono ? `${mono}, ` : ""}ui-monospace, monospace`,
+    labelText: css.getPropertyValue("--text-primary").trim() || "#0E0E10",
+    labelHalo: css.getPropertyValue("--surface-page").trim() || "#FFFFFF",
+  }
+
   return isDark
     ? {
+        ...label,
         faceOuter:       "rgba(68,29,76,1)",
         faceMid1:        "rgba(56,24,64,0.9)",
         faceMid2:        "rgba(44,19,49,0.6)",
@@ -37,15 +53,12 @@ function resolveGlobeColors(): GlobeColors {
         limb:            "rgba(200,160,220,0.42)",
         grid:            "rgba(160,140,180,0.72)",
         dotFill:         (f) => `rgba(180,120,210,${(0.12 + f * 0.68).toFixed(3)})`,
-        dotFillFeatured: "rgba(180,120,210,0.95)",
         dotHover:        "rgba(200,150,230,1)",
         shadowFill:      "rgba(40,20,50,0.30)",
-        tagBg:           "#2c1331",
-        tagBorder:       "rgba(200,160,220,0.2)",
-        tagDot:          "#b478d2",
         gradOriginFactor: { x: -0.245, y: -0.327 },
       }
     : {
+        ...label,
         faceOuter:       "rgba(217,185,229,1)",
         faceMid1:        "rgba(234,216,239,1)",
         faceMid2:        "rgba(247,239,249,1)",
@@ -53,27 +66,21 @@ function resolveGlobeColors(): GlobeColors {
         limb:            "rgba(23,21,26,0.85)",
         grid:            "rgba(201,196,204,0.72)",
         dotFill:         (f) => `rgba(110,70,150,${(0.12 + f * 0.68).toFixed(3)})`,
-        dotFillFeatured: "rgba(139,63,180,1)",
         dotHover:        "rgba(139,63,180,1)",
         shadowFill:      "rgba(185,167,192,0.22)",
-        tagBg:           "#fff",
-        tagBorder:       "#e6e6e6",
-        tagDot:          "#8b3fb4",
         gradOriginFactor: { x: -0.245, y: -0.327 },
       }
 }
 
 const TILT      = -12
 const ROLL      = -24
-const ROT_SPEED =   2   // °/s
+const ROT_SPEED =   8   // °/s - one revolution every 45s. 6-10 is the usable band;
+                        // above ~12 the labels smear.
 
 const GRATICULE = geoGraticule().step([20, 20])()
 
 export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
   const canvasRef    = useRef<HTMLCanvasElement>(null)
-  const tagRef       = useRef<HTMLDivElement>(null)
-  const tagTextRef   = useRef<HTMLSpanElement>(null)
-  const tagDotRef    = useRef<HTMLSpanElement>(null)
   const hoverTagRef  = useRef<HTMLDivElement>(null)
   const hoverTextRef = useRef<HTMLSpanElement>(null)
 
@@ -85,8 +92,6 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
     h:            0,
     dpr:          1,
     colors:       null as GlobeColors | null,
-    featuredIdx:  0,
-    featuredTimer: 0,
     visible:      true,
     docVisible:   true,
     running:      false,
@@ -95,20 +100,16 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
 
   useEffect(() => {
     const canvas   = canvasRef.current
-    const tag      = tagRef.current
-    const tagText  = tagTextRef.current
-    const tagDot   = tagDotRef.current
     const hoverTag = hoverTagRef.current
     const hoverTxt = hoverTextRef.current
-    if (!canvas || !tag || !tagText || !tagDot || !hoverTag || !hoverTxt) return
+    if (!canvas || !hoverTag || !hoverTxt) return
 
     const state  = stateRef.current
-    state.colors = resolveGlobeColors()
+    state.colors = resolveGlobeColors(canvas)
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
     const hero = canvas.parentElement!
-    let tagW   = 0
 
     const ro = new ResizeObserver((entries) => {
       const entry = entries[0]
@@ -121,14 +122,13 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       canvas.height = Math.round(height * state.dpr)
       const ctx = canvas.getContext("2d")!
       ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0)
-      tagW = tag.offsetWidth || 120
       if (!state.running) drawFrame(0)
     })
     ro.observe(hero)
 
     const mq = window.matchMedia("(prefers-color-scheme: dark)")
     const onThemeChange = () => {
-      state.colors = resolveGlobeColors()
+      state.colors = resolveGlobeColors(canvas)
       // The loop is the only other thing that paints, and it is stopped
       // under reduced motion or when the hero is out of view.
       if (!state.running) drawFrame(0)
@@ -160,11 +160,16 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
     function computeGeometry() {
       const { w, h } = state
       const PAD     = 24
+      // The hero is HERO_PEEK shorter than the viewport so the band below
+      // shows. Size from the height it would have had, so the globe keeps its
+      // full-height radius and centre and is simply cropped at the bottom by
+      // the hero's overflow-hidden.
+      const hFull   = h + HERO_PEEK
       const rWanted = w * 0.253
-      const rMax    = h / 2 - PAD
+      const rMax    = hFull / 2 - PAD
       const r       = Math.min(rWanted, rMax)
       const cx      = w * 0.80
-      const cy      = h / 2
+      const cy      = hFull / 2
       return { cx, cy, r }
     }
 
@@ -201,10 +206,7 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       const hit  = dotAt(mx, my)
       state.hoverSig = hit ? hit.sig : null
       if (hit && hoverTag && hoverTxt) {
-        const label = hit.sig.location
-          ? `${hit.sig.name} · ${hit.sig.location}`
-          : hit.sig.name
-        hoverTxt.textContent = label
+        hoverTxt.textContent = `${hit.sig.name} · ${hit.sig.location}`
         const tx = Math.min(hit.pt[0] + 14, (state.w || 800) - 160)
         const ty = hit.pt[1] - 16
         hoverTag.style.transform = `translate(${tx}px, ${ty}px)`
@@ -278,12 +280,9 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       ctx.stroke()
 
       // 4 & 5. Signature dots
-      let featuredPt  = null as [number, number] | null
-      let featuredSig = null as Signature | null
+      const labels: { sig: Signature; x: number; y: number; f: number }[] = []
 
-      for (let i = 0; i < sigs.length; i++) {
-        const sig = sigs[i]
-        if (state.hoverSig === sig) continue  // draw hovered last
+      for (const sig of sigs) {
         const pt = proj([sig.lon, sig.lat])
         if (!pt) continue
 
@@ -291,27 +290,14 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
         const f    = 1 - dist
         if (f < 0.12) continue
 
-        if (i === state.featuredIdx) {
-          featuredPt  = pt as [number, number]
-          featuredSig = sig
-          continue
-        }
+        labels.push({ sig, x: pt[0], y: pt[1], f })
+
+        if (state.hoverSig === sig) continue  // drawn last, on top
 
         ctx.beginPath()
         ctx.arc(pt[0], pt[1], 1.1 + f * 1.9, 0, Math.PI * 2)
         ctx.fillStyle = colors.dotFill(f)
         ctx.fill()
-      }
-
-      // Featured cycling dot
-      if (featuredPt) {
-        const dist = Math.sqrt((featuredPt[0] - cx) ** 2 + (featuredPt[1] - cy) ** 2) / r
-        if (1 - dist >= 0.12) {
-          ctx.beginPath()
-          ctx.arc(featuredPt[0], featuredPt[1], 4, 0, Math.PI * 2)
-          ctx.fillStyle = colors.dotFillFeatured
-          ctx.fill()
-        }
       }
 
       // Hovered dot — on top, with ring
@@ -330,52 +316,58 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
         }
       }
 
-      // 6. Cycling name tag (suppress when hovering another dot)
-      const showCycling = !state.hoverSig || state.hoverSig === featuredSig
-      if (tag && tagText && tagDot && featuredPt && featuredSig && showCycling) {
-        const dist    = Math.sqrt((featuredPt[0] - cx) ** 2 + (featuredPt[1] - cy) ** 2) / r
-        const f       = 1 - dist
-        const opacity = f < 0.55 ? 0 : Math.min((f - 0.55) / 0.2, 1)
-        tagText.textContent = featuredSig.location
-          ? `${featuredSig.name} · ${featuredSig.location}`
-          : featuredSig.name
-        const tx = Math.min(featuredPt[0] + 14, (w || 800) - (tagW || 120) - 8)
-        const ty = featuredPt[1] - 16
-        tag.style.transform       = `translate(${tx}px, ${ty}px)`
-        tag.style.opacity         = String(opacity)
-        tag.style.background      = colors.tagBg
-        tag.style.borderColor     = colors.tagBorder
-        tagDot.style.backgroundColor = colors.tagDot
-      } else if (tag && !showCycling) {
-        tag.style.opacity = "0"
-      } else if (tag) {
-        tag.style.opacity = "0"
+      // 6. One label per front-facing dot, fading out before the dot does.
+      // Replaces a single tag that cycled one name every 8s and, with only a
+      // handful of signatures, usually had no eligible dot to label at all.
+      const MAX_LABELS = 12
+
+      ctx.save()
+      ctx.font         = colors.labelFont
+      ctx.textBaseline = "middle"
+      ctx.lineJoin     = "round"
+      ctx.miterLimit   = 2
+      ctx.lineWidth    = 3
+      ctx.strokeStyle  = colors.labelHalo
+      ctx.fillStyle    = colors.labelText
+
+      labels.sort((a, b) => b.f - a.f)  // front-most wins a contested slot
+
+      // ponytail: O(n²) overlap scan, bounded by MAX_LABELS. Bucket it if the cap rises.
+      const placed: { x0: number; x1: number; y: number }[] = []
+
+      for (const l of labels) {
+        if (placed.length >= MAX_LABELS) break
+        if (l.sig === state.hoverSig) continue  // the DOM tooltip shows this one
+
+        // Floor sits above the dot cull threshold (0.12), so a label always
+        // reaches zero alpha before its dot vanishes at the limb.
+        const alpha = Math.min((l.f - 0.18) / 0.22, 1)
+        if (alpha <= 0) continue
+
+        const text = `${l.sig.name} · ${l.sig.location}`
+        const tw   = ctx.measureText(text).width
+        // The globe overhangs the right edge, so flip rather than clip.
+        const flip = l.x + 10 + tw > w - 8
+        const x    = flip ? l.x - 10 : l.x + 10
+        const x0   = flip ? x - tw : x
+        const y    = l.y
+
+        if (placed.some((q) => q.x0 < x0 + tw && x0 < q.x1 && Math.abs(q.y - y) < 14)) continue
+
+        ctx.globalAlpha = alpha * 0.9  // stays subordinate to the headline
+        ctx.textAlign   = flip ? "right" : "left"
+        ctx.strokeText(text, x, y)
+        ctx.fillText(text, x, y)
+        placed.push({ x0, x1: x0 + tw, y })
       }
+      ctx.restore()
     }
 
     function tick(ts: number) {
       const s  = stateRef.current
       const dt = Math.min(ts - (s.lastTs || ts), 50) / 1000
-      s.lastTs  = ts
-      s.lon    += dt * ROT_SPEED
-      s.featuredTimer += dt
-
-      if (s.featuredTimer > 8) {
-        s.featuredTimer = 0
-        for (let tries = 0; tries < sigs.length; tries++) {
-          const next = (s.featuredIdx + 1 + tries) % sigs.length
-          const pt = geoOrthographic()
-            .translate([0, 0])
-            .scale(1)
-            .rotate([s.lon, TILT, ROLL])
-            .clipAngle(90)([sigs[next].lon, sigs[next].lat])
-          if (pt) {
-            const dist = Math.sqrt(pt[0] ** 2 + pt[1] ** 2)
-            if (dist < 0.88) { s.featuredIdx = next; break }
-          }
-        }
-      }
-
+      s.lastTs = ts
+      s.lon   += dt * ROT_SPEED
       drawFrame(ts)
       s.frameId = requestAnimationFrame(tick)
     }
@@ -391,7 +383,6 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       cancelAnimationFrame(state.frameId)
     }
 
-    tagW = tag.offsetWidth || 120
     if (!reduced) startLoop()
 
     return () => {
@@ -432,12 +423,6 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
         style={{ zIndex: 0 }}
       />
 
-      {/* Cycling featured name tag */}
-      <div ref={tagRef} aria-hidden="true" className="absolute pointer-events-none" style={tagStyle}>
-        <span ref={tagDotRef} className="inline-block rounded-full align-middle" style={{ width: 5, height: 5, marginRight: 6 }} />
-        <span ref={tagTextRef} />
-      </div>
-
       {/* Hover tooltip */}
       <div ref={hoverTagRef} aria-hidden="true" className="absolute pointer-events-none" style={{ ...tagStyle, background: "var(--card)", borderColor: "var(--border-subtle)", color: "var(--text-primary)" }}>
         <span className="inline-block rounded-full align-middle" style={{ width: 7, height: 7, marginRight: 8, backgroundColor: "var(--dot-architecture)" }} />
@@ -446,7 +431,7 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
 
       <ul className="sr-only">
         {signatures.map((sig) => (
-          <li key={sig.id}>{sig.location ? `${sig.name} · ${sig.location}` : sig.name}</li>
+          <li key={sig.id}>{`${sig.name} · ${sig.location}`}</li>
         ))}
       </ul>
     </>

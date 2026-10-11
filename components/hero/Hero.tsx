@@ -6,6 +6,8 @@ import type React from "react"
 
 import type { Signature } from "@/lib/types/signature"
 
+import { HERO_PEEK } from "./constants"
+
 const DeferredSignatureGlobe = dynamic(
   () => import("@/components/hero/SignatureGlobe").then((m) => m.SignatureGlobe),
   { ssr: false },
@@ -15,7 +17,7 @@ export function Hero({ signatures }: { signatures: Signature[] }) {
   return (
     <section
       className="relative flex flex-1 items-center overflow-hidden"
-      style={{ minHeight: "max(620px, calc(100svh - var(--nav-h)))" }}
+      style={{ minHeight: `max(620px, calc(100svh - var(--nav-h) - ${HERO_PEEK}px))` }}
     >
       {/* Canvas globe — absolutely positioned, fills section, sits behind copy */}
       <DeferredSignatureGlobe signatures={signatures} />

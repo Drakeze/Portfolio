@@ -10,11 +10,9 @@ export type Message = {
   read: boolean
   createdAt: Date
   source: MessageSource
-  lat?: number
-  lng?: number
 }
 
-export type MessageInput = Omit<Message, "_id" | "createdAt" | "read" | "lat" | "lng"> & {
+export type MessageInput = Omit<Message, "_id" | "createdAt" | "read"> & {
   read?: boolean
 }
 export type MessageUpdateInput = Partial<MessageInput>

@@ -47,11 +47,6 @@ const nextConfig = {
     ]
   },
   skipTrailingSlashRedirect: true,
-  outputFileTracingIncludes: {
-    // Both routes reach randomLandPoint(), which readFileSync's this at runtime.
-    "/api/contact": ["./lib/data/land-110m.geojson"],
-    "/api/admin/messages": ["./lib/data/land-110m.geojson"],
-  },
 }
 
 export default nextConfig
