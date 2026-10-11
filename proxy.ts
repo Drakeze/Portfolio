@@ -1,6 +1,6 @@
+import { getSessionCookie } from "better-auth/cookies"
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
-import { getSessionCookie } from "better-auth/cookies"
 
 /**
  * Optimistic UX redirect ONLY. getSessionCookie reads the cookie header and

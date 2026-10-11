@@ -1,7 +1,8 @@
 "use client"
 
-import { cn } from "@/lib/utils"
 import { useRef } from "react"
+
+import { cn } from "@/lib/utils"
 
 export interface SegmentedOption {
   label: string

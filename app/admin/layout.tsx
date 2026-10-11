@@ -1,5 +1,6 @@
 import { AdminNavbar } from "@/components/admin/navbar"
 import { guardAdmin } from "@/lib/auth/admin"
+
 import { AdminProviders } from "./providers"
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {

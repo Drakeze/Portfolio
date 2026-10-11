@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
+import { useState } from "react"
 
 export function CompanyGallery({ images }: { images: string[] }) {
   const [index, setIndex] = useState(0)

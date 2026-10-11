@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useRef } from "react"
 import { geoGraticule, geoOrthographic, geoPath } from "d3-geo"
+import { useEffect, useRef } from "react"
 
 import type { Signature } from "@/lib/types/signature"
 
@@ -223,7 +223,7 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       const ctx = canvas2.getContext("2d")
       if (!ctx) return
 
-      const { w, h, lon, colors } = state
+      const { w, h, colors } = state
       if (!colors || w === 0 || h === 0) return
 
       const { cx, cy, r } = computeGeometry()

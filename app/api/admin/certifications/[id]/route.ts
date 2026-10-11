@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb"
 import { ZodError } from "zod"
 
-import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
+import { requireAdmin } from "@/lib/auth/admin"
 import { deleteCertification, getCertificationById, updateCertification } from "@/lib/domains/certifications/service"
 import { certificationUpdateSchema } from "@/lib/domains/certifications/validators"
 

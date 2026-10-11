@@ -1,7 +1,7 @@
 import { ZodError } from "zod"
 
-import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
+import { requireAdmin } from "@/lib/auth/admin"
 import { createMessage, listMessages } from "@/lib/domains/messages/service"
 import { messageInputSchema } from "@/lib/domains/messages/validators"
 

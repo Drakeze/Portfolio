@@ -1,12 +1,13 @@
 "use client"
 
-import { Dot } from "@/components/dot"
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu, Moon, Sun } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
+
+import { Dot } from "@/components/dot"
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 const NAV_LINKS = [
   { href: "/work", label: "Work" },
@@ -17,6 +18,10 @@ const NAV_LINKS = [
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  // resolvedTheme is unknowable on the server, so the icon must not render until
+  // after hydration. This is next-themes' documented pattern; the one extra
+  // mount render is the point, not an accident.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), [])
   if (!mounted) return <div className="w-8 h-8" />
   return (

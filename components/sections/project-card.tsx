@@ -1,7 +1,8 @@
+import Image from "next/image"
+
 import { Dot } from "@/components/dot"
 import { BANNER_MAP } from "@/lib/banner-map"
 import type { Project } from "@/lib/types/projects"
-import Image from "next/image"
 
 type Props = {
   project: Project

@@ -1,10 +1,12 @@
+import type { Metadata } from "next"
+import Link from "next/link"
+import { notFound } from "next/navigation"
+
 import { Dot } from "@/components/dot"
 import { SectionDivider } from "@/components/section-divider"
 import { siteConfig } from "@/lib/seo"
 import { caseStudies } from "@/lib/types/projects"
-import type { Metadata } from "next"
-import Link from "next/link"
-import { notFound } from "next/navigation"
+
 import { SvgViewer } from "./svg-viewer"
 
 type Props = { params: Promise<{ slug: string }> }

@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb"
 import { ZodError } from "zod"
 
-import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
+import { requireAdmin } from "@/lib/auth/admin"
 import { deleteMessage, getMessageById, updateMessage } from "@/lib/domains/messages/service"
 import { messageUpdateSchema } from "@/lib/domains/messages/validators"
 

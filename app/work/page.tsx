@@ -1,7 +1,9 @@
+import type { Metadata } from "next"
+
 import { getPublicCompanies, getPublicProjects } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
 import type { Project } from "@/lib/types/projects"
-import type { Metadata } from "next"
+
 import { WorkGrid } from "./work-grid"
 
 export const dynamic = "force-dynamic"
@@ -31,7 +33,7 @@ export default async function WorkPage() {
 
   const devProjects = all.filter((p) => (p.discipline ?? "dev") === "dev")
   const serializable = [...devProjects, ...companyProjects]
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+     
     .map(({ Banner: _b, ...rest }) => rest)
 
   return (

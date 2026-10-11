@@ -1,9 +1,9 @@
 import { ZodError } from "zod"
 
-import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
-import { companyInputSchema } from "@/lib/domains/companies/validators"
+import { requireAdmin } from "@/lib/auth/admin"
 import { createCompany, listCompanies } from "@/lib/domains/companies/service"
+import { companyInputSchema } from "@/lib/domains/companies/validators"
 
 async function authGuard() {
   try {

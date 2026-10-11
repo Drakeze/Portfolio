@@ -1,11 +1,12 @@
 "use client"
 
+import { useState } from "react"
+
 import { AccentHeading } from "@/components/accent-heading"
 import { Eyebrow } from "@/components/eyebrow"
-import { SegmentedToggle } from "@/components/segmented-toggle"
 import { ProjectCard } from "@/components/sections/project-card"
+import { SegmentedToggle } from "@/components/segmented-toggle"
 import type { Project } from "@/lib/types/projects"
-import { useState } from "react"
 
 const KIND_OPTIONS = [
   { label: "Projects", value: "project" },

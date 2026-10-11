@@ -1,8 +1,9 @@
+import type { Metadata } from "next"
+
 import { AccentHeading } from "@/components/accent-heading"
 import { Dot } from "@/components/dot"
 import { Eyebrow } from "@/components/eyebrow"
 import { siteConfig } from "@/lib/seo"
-import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: `Architecture - ${siteConfig.name}`,

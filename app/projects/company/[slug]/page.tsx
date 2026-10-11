@@ -1,7 +1,8 @@
+import { notFound } from "next/navigation"
+
 import { CompanyGallery } from "@/components/company/company-gallery"
 import { Button } from "@/components/ui/button"
 import { getPublicCompanies } from "@/lib/public-content"
-import { notFound } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 

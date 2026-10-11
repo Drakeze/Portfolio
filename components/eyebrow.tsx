@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+
 import { Dot, type DotVariant } from "./dot"
 
 interface EyebrowProps {

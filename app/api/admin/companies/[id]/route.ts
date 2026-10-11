@@ -1,10 +1,10 @@
 import { ObjectId } from "mongodb"
 import { ZodError } from "zod"
 
-import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
-import { companyUpdateSchema } from "@/lib/domains/companies/validators"
+import { requireAdmin } from "@/lib/auth/admin"
 import { deleteCompany, getCompanyById, updateCompany } from "@/lib/domains/companies/service"
+import { companyUpdateSchema } from "@/lib/domains/companies/validators"
 
 type RouteContext = { params: Promise<{ id: string }> }
 

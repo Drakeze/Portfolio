@@ -1,12 +1,12 @@
-import Link from "next/link"
 import { revalidatePath } from "next/cache"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
-import { deleteMessage, listMessages, updateMessage } from "@/lib/domains/messages/service"
 import { guardAdmin } from "@/lib/auth/admin"
+import { deleteMessage, listMessages, updateMessage } from "@/lib/domains/messages/service"
 
 export const dynamic = "force-dynamic"
 

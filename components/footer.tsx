@@ -1,8 +1,9 @@
-import { siteConfig } from "@/lib/seo"
-import { externalLinks } from "@/lib/site-links"
 import { Mail } from "lucide-react"
 import type { ElementType } from "react"
 import { SiGithub, SiTwitch, SiYoutube } from "react-icons/si"
+
+import { siteConfig } from "@/lib/seo"
+import { externalLinks } from "@/lib/site-links"
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (

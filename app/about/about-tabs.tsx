@@ -1,14 +1,14 @@
 "use client"
 
+import { useRouter } from "next/navigation"
+
 import { AccentHeading } from "@/components/accent-heading"
 import { Dot } from "@/components/dot"
 import { Eyebrow } from "@/components/eyebrow"
-import { SegmentedToggle } from "@/components/segmented-toggle"
 import { Workshop } from "@/components/sections/workshop"
+import { SegmentedToggle } from "@/components/segmented-toggle"
 import type { BioParagraph } from "@/lib/domains/bio/types"
 import type { PublicCertification, PublicSkill } from "@/lib/types/about"
-import type { Project } from "@/lib/types/projects"
-import { useRouter, useSearchParams } from "next/navigation"
 
 const TAB_OPTIONS = [
   { label: "About", value: "about" },

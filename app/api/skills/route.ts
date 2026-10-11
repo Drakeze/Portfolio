@@ -1,4 +1,4 @@
-import { methodNotAllowedResponse, errorResponse, successResponse } from "@/lib/api/responses"
+import { errorResponse, methodNotAllowedResponse, successResponse } from "@/lib/api/responses"
 import { listSkills } from "@/lib/domains/skills/service"
 
 export async function GET() {

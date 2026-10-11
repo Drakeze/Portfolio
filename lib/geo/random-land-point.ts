@@ -1,7 +1,8 @@
-import booleanPointInPolygon from "@turf/boolean-point-in-polygon"
-import { point } from "@turf/helpers"
 import { readFileSync } from "node:fs"
 import path from "node:path"
+
+import booleanPointInPolygon from "@turf/boolean-point-in-polygon"
+import { point } from "@turf/helpers"
 
 // ponytail: Natural Earth 110m country polygons doubling as a land mask.
 // Not precise on small islands/coastlines, good enough for pin placement.
@@ -21,7 +22,7 @@ export function randomLandPoint(): { lat: number; lng: number } {
     const candidate = point([lng, lat])
 
     const onLand = landGeojson.features.some((feature) =>
-      booleanPointInPolygon(candidate, feature as any)
+      booleanPointInPolygon(candidate, feature as Parameters<typeof booleanPointInPolygon>[1])
     )
     if (onLand) return { lat, lng }
   }

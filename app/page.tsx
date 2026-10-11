@@ -1,6 +1,7 @@
-import { Hero } from "@/components/hero/Hero"
-import { AccentHeading } from "@/components/accent-heading"
 import Link from "next/link"
+
+import { AccentHeading } from "@/components/accent-heading"
+import { Hero } from "@/components/hero/Hero"
 // AccentHeading and Link remain used in the workshop band below
 
 export const revalidate = 3600

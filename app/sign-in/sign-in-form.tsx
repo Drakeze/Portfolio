@@ -1,9 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { FormEvent, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import posthog from "posthog-js"
+import { FormEvent, useState } from "react"
 
 import { authClient } from "@/lib/auth-client"
 

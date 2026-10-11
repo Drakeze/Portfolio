@@ -1,10 +1,13 @@
-import { listCompanies } from "@/lib/domains/companies/service"
-import { listCertifications } from "@/lib/domains/certifications/service"
 import { getBio } from "@/lib/domains/bio/service"
+import type { BioParagraph } from "@/lib/domains/bio/types"
+import { listCertifications } from "@/lib/domains/certifications/service"
+import { listCompanies } from "@/lib/domains/companies/service"
 import { getLinks } from "@/lib/domains/links/service"
-import { getResume } from "@/lib/domains/resume/service"
+import type { SocialLinks, VentureLink } from "@/lib/domains/links/types"
 import { listProjects } from "@/lib/domains/projects/service"
+import { getResume } from "@/lib/domains/resume/service"
 import { listSkills } from "@/lib/domains/skills/service"
+import { externalLinks } from "@/lib/site-links"
 import {
   fallbackCertifications,
   fallbackSkills,
@@ -12,10 +15,7 @@ import {
   type PublicSkill,
 } from "@/lib/types/about"
 import { companies as fallbackCompanies, type Company as PublicCompany } from "@/lib/types/companies"
-import { projects as fallbackProjects, type Project as PublicProject } from "@/lib/types/projects"
-import { externalLinks } from "@/lib/site-links"
-import type { BioParagraph } from "@/lib/domains/bio/types"
-import type { SocialLinks, VentureLink } from "@/lib/domains/links/types"
+import { type Project as PublicProject,projects as fallbackProjects } from "@/lib/types/projects"
 
 function toProjectViewModel(project: {
   _id?: { toString(): string }

@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
 import { Award, Package } from "lucide-react"
+import { useState } from "react"
 
 import { Card } from "@/components/ui/card"
 import { getTechIcon } from "@/lib/icons/tech-icons"

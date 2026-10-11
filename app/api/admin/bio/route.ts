@@ -1,7 +1,7 @@
 import { ZodError } from "zod"
 
-import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
+import { requireAdmin } from "@/lib/auth/admin"
 import { getBio, upsertBio } from "@/lib/domains/bio/service"
 import { bioInputSchema } from "@/lib/domains/bio/validators"
 

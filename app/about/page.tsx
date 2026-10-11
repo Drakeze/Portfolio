@@ -1,9 +1,11 @@
 import { existsSync } from "node:fs"
 import path from "node:path"
 
+import type { Metadata } from "next"
+
 import { getPublicBio, getPublicCertifications, getPublicProjects, getPublicSkills } from "@/lib/public-content"
 import { siteConfig } from "@/lib/seo"
-import type { Metadata } from "next"
+
 import { AboutTabs } from "./about-tabs"
 
 export const metadata: Metadata = {

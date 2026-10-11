@@ -1,7 +1,7 @@
 import { ZodError } from "zod"
 
-import { requireAdmin } from "@/lib/auth/admin"
 import { errorResponse, successResponse } from "@/lib/api/responses"
+import { requireAdmin } from "@/lib/auth/admin"
 import { createSkill, listSkills } from "@/lib/domains/skills/service"
 import { skillInputSchema } from "@/lib/domains/skills/validators"
 

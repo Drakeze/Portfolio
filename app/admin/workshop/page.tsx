@@ -1,10 +1,11 @@
-import Link from "next/link"
 import { revalidatePath } from "next/cache"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
+import { guardAdmin } from "@/lib/auth/admin"
 import {
   createCertification,
   deleteCertification,
@@ -13,7 +14,6 @@ import {
 } from "@/lib/domains/certifications/service"
 import { createSkill, deleteSkill, listSkills, updateSkill } from "@/lib/domains/skills/service"
 import type { SkillStatus } from "@/lib/domains/skills/types"
-import { guardAdmin } from "@/lib/auth/admin"
 
 export const dynamic = "force-dynamic"
 

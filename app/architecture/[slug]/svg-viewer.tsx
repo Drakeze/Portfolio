@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { TransformComponent, TransformWrapper, type ReactZoomPanPinchRef } from "react-zoom-pan-pinch"
+import { type ReactZoomPanPinchRef,TransformComponent, TransformWrapper } from "react-zoom-pan-pinch"
 
 type Sheet = { label: string; svgPath: string }
 

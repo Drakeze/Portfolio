@@ -1,13 +1,13 @@
-import Link from "next/link"
 import { revalidatePath } from "next/cache"
+import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 
 import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { SubmitButton } from "@/components/admin/form-actions"
 import { ImageUploader } from "@/components/admin/image-uploader"
-import { getProjectById, updateProject } from "@/lib/domains/projects/service"
 import { guardAdmin } from "@/lib/auth/admin"
+import { getProjectById, updateProject } from "@/lib/domains/projects/service"
 import { slugify } from "@/lib/utils"
 
 type PageProps = {

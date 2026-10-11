@@ -1,10 +1,10 @@
+import { revalidatePath } from "next/cache"
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
-import { revalidatePath } from "next/cache"
 
 import { SubmitButton } from "@/components/admin/form-actions"
-import { getCertificationById, updateCertification } from "@/lib/domains/certifications/service"
 import { guardAdmin } from "@/lib/auth/admin"
+import { getCertificationById, updateCertification } from "@/lib/domains/certifications/service"
 
 export const dynamic = "force-dynamic"
 

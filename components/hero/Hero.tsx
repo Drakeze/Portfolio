@@ -1,9 +1,8 @@
 "use client"
 
-import type React from "react"
-
 import dynamic from "next/dynamic"
 import Link from "next/link"
+import type React from "react"
 
 import { SIGNATURE_FIXTURE } from "@/lib/globe/fixture"
 

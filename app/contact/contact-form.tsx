@@ -1,8 +1,9 @@
 "use client"
 
-import { SegmentedToggle } from "@/components/segmented-toggle"
 import posthog from "posthog-js"
 import { useState } from "react"
+
+import { SegmentedToggle } from "@/components/segmented-toggle"
 
 const SOURCE_OPTIONS = [
   { label: "A role", value: "role" },

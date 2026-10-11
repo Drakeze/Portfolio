@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils"
 import type React from "react"
+
+import { cn } from "@/lib/utils"
 
 type Size = "sm" | "lg" | "xl" | "hero"
 type Tag = "h1" | "h2" | "h3" | "h4" | "p"

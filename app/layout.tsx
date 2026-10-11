@@ -1,15 +1,16 @@
-import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/sonner"
-import { siteConfig } from "@/lib/seo"
+import "./globals.css"
+
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata } from "next"
 import { Instrument_Serif, JetBrains_Mono, Lexend } from "next/font/google"
 import type React from "react"
 
-import "./globals.css"
+import { Footer } from "@/components/footer"
+import { Navigation } from "@/components/navigation"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/sonner"
+import { siteConfig } from "@/lib/seo"
 
 const lexend = Lexend({
   variable: "--font-lexend",

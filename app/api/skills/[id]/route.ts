@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb"
 
-import { methodNotAllowedResponse, errorResponse, successResponse } from "@/lib/api/responses"
+import { errorResponse, methodNotAllowedResponse, successResponse } from "@/lib/api/responses"
 import { getSkillById } from "@/lib/domains/skills/service"
 
 type RouteContext = { params: Promise<{ id: string }> }

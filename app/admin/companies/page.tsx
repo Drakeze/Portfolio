@@ -1,12 +1,12 @@
-import Link from "next/link"
 import { revalidatePath } from "next/cache"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { ActionToast } from "@/components/admin/action-toast"
 import { FeedbackBanner } from "@/components/admin/feedback-banner"
 import { ConfirmSubmitButton } from "@/components/admin/form-actions"
-import { deleteCompany, listCompanies } from "@/lib/domains/companies/service"
 import { guardAdmin } from "@/lib/auth/admin"
+import { deleteCompany, listCompanies } from "@/lib/domains/companies/service"
 
 export const dynamic = "force-dynamic"
 
@@ -82,7 +82,7 @@ export default async function AdminCompaniesPage({ searchParams }: PageProps) {
                         <ConfirmSubmitButton
                           label="Delete"
                           pendingLabel="Deleting..."
-                          confirmMessage={`Delete company \"${company.title}\"? This cannot be undone.`}
+                          confirmMessage={`Delete company “${company.title}”? This cannot be undone.`}
                           className="text-red-500 hover:underline disabled:opacity-60"
                         />
                       </form>

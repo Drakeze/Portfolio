@@ -1,10 +1,12 @@
+import type { Metadata } from "next"
+
 import { AccentHeading } from "@/components/accent-heading"
 import { Dot } from "@/components/dot"
 import { Eyebrow } from "@/components/eyebrow"
 import { SignGlobeBanner } from "@/components/sign-globe-banner"
 import { siteConfig } from "@/lib/seo"
 import { externalLinks } from "@/lib/site-links"
-import type { Metadata } from "next"
+
 import { ContactForm } from "./contact-form"
 
 export const metadata: Metadata = {
