@@ -1,6 +1,4 @@
-import { ObjectId } from "mongodb"
-
-import { collectionNames, getDb } from "@/lib/mongodb"
+import { collectionNames, getDb, oid, setUnset } from "@/lib/mongodb"
 
 import { type Skill, type SkillInput, type SkillUpdateInput } from "./types"
 
@@ -16,8 +14,11 @@ export async function listSkills() {
 }
 
 export async function getSkillById(id: string) {
+  const _id = oid(id)
+  if (!_id) return null
+
   const collection = await skillsCollection()
-  return collection.findOne({ _id: new ObjectId(id) })
+  return collection.findOne({ _id })
 }
 
 export async function createSkill(input: SkillInput) {
@@ -28,15 +29,18 @@ export async function createSkill(input: SkillInput) {
 }
 
 export async function updateSkill(id: string, input: SkillUpdateInput) {
+  const _id = oid(id)
+  const update = setUnset(input)
+  if (!_id || !update) return null
+
   const collection = await skillsCollection()
-  return collection.findOneAndUpdate(
-    { _id: new ObjectId(id) },
-    { $set: input },
-    { returnDocument: "after" }
-  )
+  return collection.findOneAndUpdate({ _id }, update, { returnDocument: "after" })
 }
 
 export async function deleteSkill(id: string) {
+  const _id = oid(id)
+  if (!_id) return null
+
   const collection = await skillsCollection()
-  return collection.findOneAndDelete({ _id: new ObjectId(id) })
+  return collection.findOneAndDelete({ _id })
 }

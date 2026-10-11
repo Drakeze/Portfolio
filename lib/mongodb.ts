@@ -1,4 +1,6 @@
-import { Db, MongoClient, MongoClientOptions } from "mongodb"
+import { Db, MongoClient, MongoClientOptions, ObjectId } from "mongodb"
+
+export { setUnset } from "./update-doc"
 
 export const DEFAULT_DB_NAME = "portfolio_db"
 export const collectionNames = {
@@ -34,15 +36,13 @@ function getMongoUri(): string {
 export function getMongoClient(): MongoClient {
   const globalWithMongo = global as GlobalWithMongo
 
-  if (process.env.NODE_ENV === "development") {
-    if (!globalWithMongo._mongoClient) {
-      globalWithMongo._mongoClient = new MongoClient(getMongoUri(), options)
-    }
-
-    return globalWithMongo._mongoClient
+  // Cached in every environment. This used to return a fresh MongoClient in
+  // production, so each call opened its own connection pool.
+  if (!globalWithMongo._mongoClient) {
+    globalWithMongo._mongoClient = new MongoClient(getMongoUri(), options)
   }
 
-  return new MongoClient(getMongoUri(), options)
+  return globalWithMongo._mongoClient
 }
 
 export function getMongoDb(dbName = DEFAULT_DB_NAME): Db {
@@ -55,19 +55,13 @@ function getClientPromise(): Promise<MongoClient> {
   }
 
   const client = getMongoClient()
+  const globalWithMongo = global as GlobalWithMongo
 
-  if (process.env.NODE_ENV === "development") {
-    const globalWithMongo = global as GlobalWithMongo
-
-    if (!globalWithMongo._mongoClientPromise) {
-      globalWithMongo._mongoClientPromise = client.connect()
-    }
-
-    clientPromise = globalWithMongo._mongoClientPromise
-    return clientPromise
+  if (!globalWithMongo._mongoClientPromise) {
+    globalWithMongo._mongoClientPromise = client.connect()
   }
 
-  clientPromise = client.connect()
+  clientPromise = globalWithMongo._mongoClientPromise
   return clientPromise
 }
 
@@ -77,3 +71,12 @@ export async function getDb(dbName = DEFAULT_DB_NAME): Promise<Db> {
 }
 
 export default getClientPromise
+
+/**
+ * Parse a user-supplied id. Returns null instead of throwing, because
+ * `new ObjectId("abc")` raises BSONError, which surfaced as the error boundary
+ * on any malformed id in a URL (e.g. /admin/projects/abc/edit) instead of a 404.
+ */
+export function oid(id: string): ObjectId | null {
+  return ObjectId.isValid(id) ? new ObjectId(id) : null
+}

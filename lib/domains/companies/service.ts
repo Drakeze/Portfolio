@@ -1,6 +1,4 @@
-import { ObjectId } from "mongodb"
-
-import { collectionNames, getDb } from "@/lib/mongodb"
+import { collectionNames, getDb, oid, setUnset } from "@/lib/mongodb"
 
 import { type Company, type CompanyInput, type CompanyUpdateInput } from "./types"
 
@@ -16,8 +14,11 @@ export async function listCompanies() {
 }
 
 export async function getCompanyById(id: string) {
+  const _id = oid(id)
+  if (!_id) return null
+
   const collection = await companiesCollection()
-  return collection.findOne({ _id: new ObjectId(id) })
+  return collection.findOne({ _id })
 }
 
 export async function getCompanyBySlug(slug: string) {
@@ -34,17 +35,20 @@ export async function createCompany(input: CompanyInput) {
 }
 
 export async function updateCompany(id: string, input: CompanyUpdateInput) {
+  const _id = oid(id)
+  const update = setUnset({ ...input, updatedAt: new Date() })
+  if (!_id || !update) return null
+
   const collection = await companiesCollection()
-  return collection.findOneAndUpdate(
-    { _id: new ObjectId(id) },
-    { $set: { ...input, updatedAt: new Date() } },
-    { returnDocument: "after" }
-  )
+  return collection.findOneAndUpdate({ _id }, update, { returnDocument: "after" })
 }
 
 export async function deleteCompany(id: string) {
+  const _id = oid(id)
+  if (!_id) return null
+
   const collection = await companiesCollection()
-  return collection.findOneAndDelete({ _id: new ObjectId(id) })
+  return collection.findOneAndDelete({ _id })
 }
 
 export async function countCompanies() {

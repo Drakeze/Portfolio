@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { revalidatePath } from "next/cache"
-import { ObjectId } from "mongodb"
 import { notFound, redirect } from "next/navigation"
 
 import { ConfirmSubmitButton, SubmitButton } from "@/components/admin/form-actions"
@@ -13,10 +12,6 @@ type EditMessagePageProps = { params: Promise<{ id: string }> }
 
 export default async function EditMessagePage({ params }: EditMessagePageProps) {
   const { id } = await params
-
-  if (!ObjectId.isValid(id)) {
-    notFound()
-  }
 
   const message = await getMessageById(id)
 

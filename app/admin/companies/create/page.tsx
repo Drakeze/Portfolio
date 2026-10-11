@@ -8,14 +8,7 @@ import { SubmitButton } from "@/components/admin/form-actions"
 import { GalleryUploader } from "@/components/admin/gallery-uploader"
 import { createCompany } from "@/lib/domains/companies/service"
 import { guardAdmin } from "@/lib/auth/admin"
-
-function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-}
+import { slugify } from "@/lib/utils"
 
 type PageProps = { searchParams: Promise<{ status?: string; message?: string }> }
 

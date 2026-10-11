@@ -1,6 +1,4 @@
-import { ObjectId } from "mongodb"
-
-import { collectionNames, getDb } from "@/lib/mongodb"
+import { collectionNames, getDb, oid, setUnset } from "@/lib/mongodb"
 
 import { type Certification, type CertificationInput, type CertificationUpdateInput } from "./types"
 
@@ -16,8 +14,11 @@ export async function listCertifications() {
 }
 
 export async function getCertificationById(id: string) {
+  const _id = oid(id)
+  if (!_id) return null
+
   const collection = await certificationsCollection()
-  return collection.findOne({ _id: new ObjectId(id) })
+  return collection.findOne({ _id })
 }
 
 export async function createCertification(input: CertificationInput) {
@@ -28,15 +29,18 @@ export async function createCertification(input: CertificationInput) {
 }
 
 export async function updateCertification(id: string, input: CertificationUpdateInput) {
+  const _id = oid(id)
+  const update = setUnset(input)
+  if (!_id || !update) return null
+
   const collection = await certificationsCollection()
-  return collection.findOneAndUpdate(
-    { _id: new ObjectId(id) },
-    { $set: input },
-    { returnDocument: "after" }
-  )
+  return collection.findOneAndUpdate({ _id }, update, { returnDocument: "after" })
 }
 
 export async function deleteCertification(id: string) {
+  const _id = oid(id)
+  if (!_id) return null
+
   const collection = await certificationsCollection()
-  return collection.findOneAndDelete({ _id: new ObjectId(id) })
+  return collection.findOneAndDelete({ _id })
 }

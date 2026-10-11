@@ -1,7 +1,5 @@
-import { ObjectId } from "mongodb"
-
 import { randomLandPoint } from "@/lib/geo/random-land-point"
-import { collectionNames, getDb } from "@/lib/mongodb"
+import { collectionNames, getDb, oid, setUnset } from "@/lib/mongodb"
 
 import { type Message, type MessageInput, type MessageUpdateInput } from "./types"
 
@@ -27,8 +25,11 @@ export async function countPendingNameSubmissions() {
 }
 
 export async function getMessageById(id: string) {
+  const _id = oid(id)
+  if (!_id) return null
+
   const collection = await messagesCollection()
-  return collection.findOne({ _id: new ObjectId(id) })
+  return collection.findOne({ _id })
 }
 
 export async function createMessage(input: MessageInput) {
@@ -45,17 +46,20 @@ export async function createMessage(input: MessageInput) {
 }
 
 export async function updateMessage(id: string, input: MessageUpdateInput) {
+  const _id = oid(id)
+  const update = setUnset(input)
+  if (!_id || !update) return null
+
   const collection = await messagesCollection()
-  return collection.findOneAndUpdate(
-    { _id: new ObjectId(id) },
-    { $set: input },
-    { returnDocument: "after" }
-  )
+  return collection.findOneAndUpdate({ _id }, update, { returnDocument: "after" })
 }
 
 export async function deleteMessage(id: string) {
+  const _id = oid(id)
+  if (!_id) return null
+
   const collection = await messagesCollection()
-  return collection.findOneAndDelete({ _id: new ObjectId(id) })
+  return collection.findOneAndDelete({ _id })
 }
 
 export async function countMessages() {
