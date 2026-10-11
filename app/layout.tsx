@@ -6,8 +6,6 @@ import type { Metadata } from "next"
 import { Instrument_Serif, JetBrains_Mono, Lexend } from "next/font/google"
 import type React from "react"
 
-import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { siteConfig } from "@/lib/seo"
@@ -58,9 +56,7 @@ export default async function RootLayout({
         className={`${lexend.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased flex flex-col min-h-svh`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navigation />
-          <div className="flex-1 flex flex-col">{children}</div>
-          <Footer />
+          {children}
           <Toaster richColors closeButton />
           <Analytics />
           <SpeedInsights />
