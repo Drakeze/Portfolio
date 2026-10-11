@@ -2,6 +2,8 @@ export type Signature = {
   id: string
   name: string
   location?: string
-  lat: number // radians, -π/2..π/2
-  lon: number // radians, 0..2π
+  /** Decimal degrees, -90..90. d3-geo projections take degrees, not radians. */
+  lat: number
+  /** Decimal degrees, -180..180. */
+  lon: number
 }

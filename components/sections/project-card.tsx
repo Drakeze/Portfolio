@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 import { Dot } from "@/components/dot"
 import { BANNER_MAP } from "@/lib/banner-map"
@@ -6,12 +7,13 @@ import type { Project } from "@/lib/types/projects"
 
 type Props = {
   project: Project
-  /** @deprecated kept for legacy callers, ignored */
-  variant?: string
 }
 
 export function ProjectCard({ project }: Props) {
   const BannerComponent = BANNER_MAP[project.title]
+  // Company entries have a detail page; nothing linked to them before, so the
+  // Companies tab on /work was a dead end.
+  const detailHref = project.kind === "company" && project.slug ? `/projects/company/${project.slug}` : null
 
   return (
     <article className="rounded-2xl overflow-hidden border border-border hover:border-border-strong transition-colors">
@@ -41,7 +43,13 @@ export function ProjectCard({ project }: Props) {
           </span>
         </div>
         <h3 className="text-[22px] font-medium text-foreground leading-snug mb-2">
-          {project.title}
+          {detailHref ? (
+            <Link href={detailHref} className="underline-offset-4 hover:underline">
+              {project.title}
+            </Link>
+          ) : (
+            project.title
+          )}
         </h3>
         {project.summary && (
           <p className="text-[14px] text-muted-foreground leading-relaxed mb-3 line-clamp-3">
@@ -49,6 +57,14 @@ export function ProjectCard({ project }: Props) {
           </p>
         )}
         <div className="flex items-center gap-2">
+          {detailHref && (
+            <Link
+              href={detailHref}
+              className="rounded-full border border-border text-[12px] font-mono px-3 py-1 text-foreground hover:bg-muted transition-colors"
+            >
+              Read more →
+            </Link>
+          )}
           {project.liveUrl && (
             <a
               href={project.liveUrl}

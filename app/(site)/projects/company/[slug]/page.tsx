@@ -1,154 +1,161 @@
+import type { Metadata } from "next"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 
+import { AccentHeading } from "@/components/accent-heading"
 import { CompanyGallery } from "@/components/company/company-gallery"
-import { Button } from "@/components/ui/button"
+import { Container } from "@/components/container"
+import { Eyebrow } from "@/components/eyebrow"
+import { SectionDivider } from "@/components/section-divider"
 import { getPublicCompanies } from "@/lib/public-content"
+import { absoluteUrl, siteConfig } from "@/lib/seo"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 3600
 
-type CompanyPageProps = {
-  params: Promise<{
-    slug: string
-  }>
+type CompanyPageProps = { params: Promise<{ slug: string }> }
+
+/** listCompanies() has no stable tiebreak, so prev/next could reorder between requests. */
+async function orderedCompanies() {
+  const companies = await getPublicCompanies()
+  return [...companies].sort((a, b) => a.slug.localeCompare(b.slug))
+}
+
+export async function generateStaticParams() {
+  const companies = await orderedCompanies().catch(() => [])
+  return companies.map((company) => ({ slug: company.slug }))
+}
+
+export async function generateMetadata({ params }: CompanyPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const company = (await orderedCompanies()).find((entry) => entry.slug === slug)
+  if (!company) return {}
+
+  // Without this every company page inherited the root title, so they all
+  // shared one title and competed with each other.
+  const title = `${company.title} | ${siteConfig.name}`
+  return {
+    title,
+    description: company.tagline,
+    alternates: { canonical: `/projects/company/${company.slug}` },
+    openGraph: { title, description: company.tagline, url: absoluteUrl(`/projects/company/${company.slug}`) },
+  }
 }
 
 export default async function CompanyPage({ params }: CompanyPageProps) {
   const { slug } = await params
-  const companies = await getPublicCompanies()
-
+  const companies = await orderedCompanies()
   const index = companies.findIndex((company) => company.slug === slug)
-
-  if (index === -1) {
-    notFound()
-  }
+  if (index === -1) notFound()
 
   const company = companies[index]
-
-  const prevCompany = companies[index - 1]
-  const nextCompany = companies[index + 1]
-
-  const prevSlug = prevCompany ? prevCompany.slug : null
-  const nextSlug = nextCompany ? nextCompany.slug : null
-
-  const allSlugs = companies.map((c) => c.slug)
+  const previous = companies[index - 1]
+  const next = companies[index + 1]
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10 md:py-20 space-y-12 md:space-y-24">
-      <section className="text-center space-y-6 pt-8">
-        <h1 className="text-4xl md:text-5xl font-semibold">
-          {company.title}
-        </h1>
-        {company.tagline && (
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {company.tagline}
-          </p>
-        )}
-      </section>
+    <Container as="article" className="flex flex-col gap-16 py-16">
+      <header className="flex flex-col gap-4">
+        <Eyebrow number="01" label="COMPANY" dot="client" />
+        <AccentHeading plain={`${company.title} `} accent="work" as="h1" size="lg" />
+        {company.tagline ? <p className="max-w-[60ch] text-[17px] text-muted-foreground">{company.tagline}</p> : null}
+      </header>
 
-      <section className="max-w-3xl mx-auto space-y-8 text-lg leading-relaxed">
-        {company.longDescription
-          .split("\n\n")
-          .map((paragraph, i) => (
-            <p key={i} className="text-muted-foreground leading-relaxed">
-              {paragraph}
-            </p>
-          ))}
-      </section>
-
-      <section className="max-w-5xl mx-auto">
+      <section className="overflow-hidden rounded-[20px] border border-border">
         {company.Banner ? (
-          <div className="rounded-2xl overflow-hidden border shadow-md">
-            <company.Banner href={company.liveUrl} />
-          </div>
+          <company.Banner href={company.liveUrl} />
         ) : company.gallery && company.gallery.length > 0 ? (
-          <div className="rounded-2xl overflow-hidden border shadow-md">
-            <CompanyGallery images={company.gallery} />
-          </div>
+          <CompanyGallery images={company.gallery} />
         ) : (
-          <div className="rounded-2xl border border-dashed border-muted-foreground/30 bg-muted/20 h-[420px] flex items-center justify-center">
-            <p className="text-sm text-muted-foreground">
-              Gallery space - visuals coming soon
-            </p>
+          <div className="flex h-[400px] items-center justify-center bg-surface-sunken">
+            <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-muted-foreground">Visuals coming soon</p>
           </div>
         )}
       </section>
 
-      <section className="rounded-2xl border p-6 md:p-12 space-y-8 md:space-y-12 bg-background shadow-sm">
-        <h2 className="text-2xl font-semibold text-center">
-          Architecture & Technology
-        </h2>
-        <div className="flex flex-wrap gap-3 justify-center">
+      <SectionDivider number="02" />
+
+      <section className="flex max-w-[68ch] flex-col gap-6">
+        {company.longDescription.split("\n\n").map((paragraph, i) => (
+          <p key={i} className="text-[17px] leading-relaxed text-muted-foreground">
+            {paragraph}
+          </p>
+        ))}
+      </section>
+
+      <SectionDivider number="03" />
+
+      <section className="flex flex-col gap-8">
+        <Eyebrow number="03" label="STACK" dot="architecture" />
+        <div className="flex flex-wrap gap-2">
           {company.tags.map((tag) => (
             <span
               key={tag}
-              className="px-3 py-1 text-sm rounded-md bg-muted/60 border border-muted-foreground/20"
+              className="rounded-full border border-border px-3 py-1 font-mono text-[12px] text-muted-foreground"
             >
               {tag}
             </span>
           ))}
         </div>
 
-        <div className="flex justify-center gap-6">
-          <Button variant="secondary" disabled>
-            Still in development
-          </Button>
-
-          {company.githubUrl && (
-            <Button variant="outline" asChild>
-              <a href={company.githubUrl} target="_blank" rel="noopener noreferrer">
-                GitHub Organization
-              </a>
-            </Button>
+        <div className="flex flex-wrap items-center gap-6">
+          {/* Was hardcoded `disabled` with "Still in development", even when a live URL existed. */}
+          {company.liveUrl ? (
+            <a
+              href={company.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-primary px-6 py-2 font-mono text-[12px] uppercase tracking-[0.1em] text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              Visit site
+            </a>
+          ) : (
+            <span className="rounded-full border border-border px-6 py-2 font-mono text-[12px] uppercase tracking-[0.1em] text-muted-foreground">
+              In development
+            </span>
           )}
+
+          {company.githubUrl ? (
+            <a
+              href={company.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[12px] uppercase tracking-[0.1em] text-muted-foreground underline underline-offset-4 hover:text-foreground"
+            >
+              GitHub
+            </a>
+          ) : null}
         </div>
       </section>
 
-      <nav className="flex justify-center" aria-label="Company pagination">
-        <div className="inline-flex items-center gap-6 rounded-lg border border-muted px-6 py-3 text-sm text-muted-foreground">
-          {prevSlug ? (
-            <a
-              href={`/projects/company/${prevSlug}`}
-              className="hover:text-foreground transition"
-              aria-label="Previous company"
-            >
-              &lt;
-            </a>
-          ) : (
-            <span className="opacity-40">&lt;</span>
-          )}
+      <nav aria-label="Companies" className="flex items-center justify-between gap-6 border-t border-border pt-8">
+        {previous ? (
+          <Link
+            href={`/projects/company/${previous.slug}`}
+            className="font-mono text-[12px] uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground"
+          >
+            ← {previous.title}
+          </Link>
+        ) : (
+          <span />
+        )}
 
-          {allSlugs.map((companySlug, i) => {
-            const isActive = companySlug === slug
+        <Link
+          href="/work"
+          className="font-mono text-[12px] uppercase tracking-[0.1em] text-muted-foreground underline underline-offset-4 hover:text-foreground"
+        >
+          All work
+        </Link>
 
-            return (
-              <a
-                key={companySlug}
-                href={`/projects/company/${companySlug}`}
-                aria-current={isActive ? "page" : undefined}
-                className={`transition ${
-                  isActive
-                    ? "text-foreground font-medium"
-                    : "hover:text-foreground"
-                }`}
-              >
-                {i + 1}
-              </a>
-            )
-          })}
-
-          {nextSlug ? (
-            <a
-              href={`/projects/company/${nextSlug}`}
-              className="hover:text-foreground transition"
-              aria-label="Next company"
-            >
-              &gt;
-            </a>
-          ) : (
-            <span className="opacity-40">&gt;</span>
-          )}
-        </div>
+        {next ? (
+          <Link
+            href={`/projects/company/${next.slug}`}
+            className="text-right font-mono text-[12px] uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground"
+          >
+            {next.title} →
+          </Link>
+        ) : (
+          <span />
+        )}
       </nav>
-    </div>
+    </Container>
   )
 }

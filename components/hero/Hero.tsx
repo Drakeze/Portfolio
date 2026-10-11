@@ -4,27 +4,27 @@ import dynamic from "next/dynamic"
 import Link from "next/link"
 import type React from "react"
 
-import { SIGNATURE_FIXTURE } from "@/lib/globe/fixture"
+import type { Signature } from "@/lib/types/signature"
 
 const DeferredSignatureGlobe = dynamic(
   () => import("@/components/hero/SignatureGlobe").then((m) => m.SignatureGlobe),
   { ssr: false },
 )
 
-export function Hero() {
+export function Hero({ signatures }: { signatures: Signature[] }) {
   return (
     <section
       className="relative flex flex-1 items-center overflow-hidden"
-      style={{ minHeight: "max(620px, calc(100vh - var(--nav-h)))" }}
+      style={{ minHeight: "max(620px, calc(100svh - var(--nav-h)))" }}
     >
       {/* Canvas globe — absolutely positioned, fills section, sits behind copy */}
-      <DeferredSignatureGlobe signatures={SIGNATURE_FIXTURE} />
+      <DeferredSignatureGlobe signatures={signatures} />
 
       {/* Copy block — above canvas */}
       <div className="relative z-10 flex flex-col gap-7 px-10 w-full max-w-[760px]">
         {/* Eyebrow — plain mono, no dots */}
         <p className="font-mono text-[12px] tracking-[0.14em] text-muted-foreground uppercase">
-          Developer / Architectural Designer — Los Angeles
+          Developer / Architectural Designer · Los Angeles
         </p>
 
         {/* Headline — balanced 2-line wrap, no manual break */}

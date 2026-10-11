@@ -2,14 +2,21 @@ import Link from "next/link"
 
 import { AccentHeading } from "@/components/accent-heading"
 import { Hero } from "@/components/hero/Hero"
-// AccentHeading and Link remain used in the workshop band below
+import { listGlobeSignatures } from "@/lib/domains/messages/service"
+import { SIGNATURE_FIXTURE } from "@/lib/globe/fixture"
 
 export const revalidate = 3600
 
 export default async function Page() {
+  // Real approved signatures, falling back to the fixture so the globe is
+  // never empty. /contact and the sign-globe banner both promise that a
+  // submitted name appears here; until now nothing read them back.
+  const signed = await listGlobeSignatures().catch(() => [])
+  const signatures = signed.length > 0 ? signed : SIGNATURE_FIXTURE
+
   return (
     <main className="relative flex flex-col flex-1">
-      <Hero />
+      <Hero signatures={signatures} />
 
       {/* Workshop band */}
       <section className="bg-[#0E0E10]">

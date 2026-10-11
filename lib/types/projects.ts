@@ -153,7 +153,7 @@ export type CaseStudy = {
   meta: string
   brief: string
   role: string
-  isPlanningStufy?: boolean
+  isPlanningStudy?: boolean
   titleBlock: {
     sheet: string
     project: string
@@ -171,6 +171,11 @@ export type CaseStudy = {
   whatIdChange?: string
 }
 
+/** A case study whose copy is still placeholder. Not prerendered, not indexed. */
+export function isDraftCaseStudy(study: { brief: string }) {
+  return study.brief.trimStart().startsWith("TODO")
+}
+
 export const caseStudies: CaseStudy[] = [
   {
     slug: "riverside-transit-pavilion",
@@ -179,7 +184,7 @@ export const caseStudies: CaseStudy[] = [
     brief:
       "TODO: Brief describing the design challenge — a transit shelter concept for Riverside, CA integrating shade, wayfinding, and recycled materials.",
     role: "Architectural Designer",
-    isPlanningStufy: true,
+    isPlanningStudy: true,
     titleBlock: {
       sheet: "A-001",
       project: "Riverside Transit Pavilion",

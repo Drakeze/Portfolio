@@ -1,5 +1,6 @@
 import { randomLandPoint } from "@/lib/geo/random-land-point"
 import { collectionNames, getDb, oid, setUnset } from "@/lib/mongodb"
+import type { Signature } from "@/lib/types/signature"
 
 import { type Message, type MessageInput, type MessageUpdateInput } from "./types"
 
@@ -73,7 +74,7 @@ export async function countNewMessages() {
 }
 
 // Public, unauthenticated path: only owner-reviewed (read) messages are eligible,
-// and the submitter's full name never leaves this function — only a first name.
+// and the submitter's full name never leaves this function, only a first name.
 export async function listPublicPins(): Promise<{ lat: number; lng: number; label: string }[]> {
   const collection = await messagesCollection()
   const pins = await collection
@@ -86,4 +87,26 @@ export async function listPublicPins(): Promise<{ lat: number; lng: number; labe
   return pins
     .filter((pin) => typeof pin.lat === "number" && typeof pin.lng === "number")
     .map((pin) => ({ lat: pin.lat!, lng: pin.lng!, label: pin.name.split(" ")[0] ?? "" }))
+}
+
+/**
+ * Approved globe signatures, in the shape the hero canvas wants.
+ *
+ * listPublicPins() returns { lat, lng, label }; the canvas wants
+ * { id, name, lat, lon }. Both are decimal degrees - randomLandPoint()
+ * generates degrees and d3-geo consumes degrees, despite an old comment on
+ * the Signature type claiming radians.
+ *
+ * Inherits listPublicPins' two privacy properties: approved submissions only,
+ * and first names only.
+ */
+export async function listGlobeSignatures(): Promise<Signature[]> {
+  const pins = await listPublicPins()
+
+  return pins.map((pin, index) => ({
+    id: `pin-${index}`,
+    name: pin.label,
+    lat: pin.lat,
+    lon: pin.lng,
+  }))
 }

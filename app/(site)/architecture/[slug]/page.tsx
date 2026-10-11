@@ -5,23 +5,29 @@ import { notFound } from "next/navigation"
 import { Dot } from "@/components/dot"
 import { SectionDivider } from "@/components/section-divider"
 import { siteConfig } from "@/lib/seo"
-import { caseStudies } from "@/lib/types/projects"
+import { caseStudies, isDraftCaseStudy } from "@/lib/types/projects"
 
 import { SvgViewer } from "./svg-viewer"
 
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
-  return caseStudies.map((cs) => ({ slug: cs.slug }))
+  // Drafts stay reachable by direct URL for preview, but are not prerendered
+  // and not indexed - this one still renders 11 literal "TODO:" placeholders.
+  return caseStudies.filter((cs) => !isDraftCaseStudy(cs)).map((cs) => ({ slug: cs.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const cs = caseStudies.find((c) => c.slug === slug)
   if (!cs) return {}
+  const draft = isDraftCaseStudy(cs)
   return {
     title: `${cs.title} - ${siteConfig.name}`,
-    description: cs.brief,
+    // A draft's brief starts with "TODO:", which must never become a meta
+    // description in search results.
+    description: draft ? siteConfig.description : cs.brief,
+    robots: draft ? { index: false, follow: false } : undefined,
   }
 }
 
@@ -144,8 +150,8 @@ export default async function CaseStudyPage({ params }: Props) {
         )}
       </div>
 
-      {/* Planning study card — always shown when isPlanningStufy */}
-      {cs.isPlanningStufy ? (
+      {/* Planning study card — always shown when isPlanningStudy */}
+      {cs.isPlanningStudy ? (
         <div className="rounded-2xl border-2 border-amber-400/60 bg-amber-50/60 dark:bg-amber-950/20 p-6 mt-8">
           <p className="font-mono text-[11px] tracking-[0.12em] text-amber-700 dark:text-amber-400 uppercase font-medium mb-2">
             PLANNING STUDY · SIMULATION, NOT BUILT WORK

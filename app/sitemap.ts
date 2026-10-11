@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next"
 
 import { absoluteUrl } from "@/lib/seo"
-import { caseStudies } from "@/lib/types/projects"
+import { caseStudies, isDraftCaseStudy } from "@/lib/types/projects"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date()
@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = ["/", "/work", "/architecture", "/about", "/contact"]
 
   const caseStudyRoutes = caseStudies
-    .filter((study) => !study.brief.startsWith("TODO"))
+    .filter((study) => !isDraftCaseStudy(study))
     .map((study) => `/architecture/${study.slug}`)
 
   return [...routes, ...caseStudyRoutes].map((route) => ({

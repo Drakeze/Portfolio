@@ -127,7 +127,12 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
     ro.observe(hero)
 
     const mq = window.matchMedia("(prefers-color-scheme: dark)")
-    const onThemeChange = () => { state.colors = resolveGlobeColors() }
+    const onThemeChange = () => {
+      state.colors = resolveGlobeColors()
+      // The loop is the only other thing that paints, and it is stopped
+      // under reduced motion or when the hero is out of view.
+      if (!state.running) drawFrame(0)
+    }
     mq.addEventListener("change", onThemeChange)
     const mo = new MutationObserver(onThemeChange)
     mo.observe(document.documentElement, { attributeFilter: ["class"] })
@@ -149,6 +154,7 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
     }
     document.addEventListener("visibilitychange", onVisChange)
 
+    // Capped for frame budget. The sr-only list below renders all of them.
     const sigs = signatures.length > 150 ? signatures.slice(0, 150) : signatures
 
     function computeGeometry() {
@@ -196,7 +202,7 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       state.hoverSig = hit ? hit.sig : null
       if (hit && hoverTag && hoverTxt) {
         const label = hit.sig.location
-          ? `${hit.sig.name} — ${hit.sig.location}`
+          ? `${hit.sig.name} · ${hit.sig.location}`
           : hit.sig.name
         hoverTxt.textContent = label
         const tx = Math.min(hit.pt[0] + 14, (state.w || 800) - 160)
@@ -206,7 +212,7 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       } else if (hoverTag) {
         hoverTag.style.opacity = "0"
       }
-      canvas.style.cursor = hit ? "default" : ""
+      canvas.style.cursor = hit ? "pointer" : ""
     }
 
     const onMouseLeave = () => {
@@ -331,7 +337,7 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
         const f       = 1 - dist
         const opacity = f < 0.55 ? 0 : Math.min((f - 0.55) / 0.2, 1)
         tagText.textContent = featuredSig.location
-          ? `${featuredSig.name} — ${featuredSig.location}`
+          ? `${featuredSig.name} · ${featuredSig.location}`
           : featuredSig.name
         const tx = Math.min(featuredPt[0] + 14, (w || 800) - (tagW || 120) - 8)
         const ty = featuredPt[1] - 16
@@ -398,8 +404,10 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       canvas.removeEventListener("mousemove", onMouseMove)
       canvas.removeEventListener("mouseleave", onMouseLeave)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // signatures is a dependency: it used to be a module-level fixture, so an
+    // empty array was harmless, but it is real data now and the canvas would
+    // otherwise keep drawing whatever arrived on first render.
+  }, [signatures])
 
   const tagStyle: React.CSSProperties = {
     zIndex: 1,
@@ -408,7 +416,7 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
     opacity: 0,
     whiteSpace: "nowrap",
     borderRadius: "999px",
-    padding: "6px 13px",
+    padding: "6px 12px",
     fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace",
     fontSize: "11px",
     boxShadow: "0 3px 14px rgba(0,0,0,.07)",
@@ -431,14 +439,14 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       </div>
 
       {/* Hover tooltip */}
-      <div ref={hoverTagRef} aria-hidden="true" className="absolute pointer-events-none" style={{ ...tagStyle, background: "#fff", borderColor: "#e6e6e6" }}>
-        <span className="inline-block rounded-full align-middle" style={{ width: 5, height: 5, marginRight: 6, backgroundColor: "#8b3fb4" }} />
+      <div ref={hoverTagRef} aria-hidden="true" className="absolute pointer-events-none" style={{ ...tagStyle, background: "var(--card)", borderColor: "var(--border-subtle)", color: "var(--text-primary)" }}>
+        <span className="inline-block rounded-full align-middle" style={{ width: 7, height: 7, marginRight: 8, backgroundColor: "var(--dot-architecture)" }} />
         <span ref={hoverTextRef} />
       </div>
 
       <ul className="sr-only">
         {signatures.map((sig) => (
-          <li key={sig.id}>{sig.location ? `${sig.name} — ${sig.location}` : sig.name}</li>
+          <li key={sig.id}>{sig.location ? `${sig.name} · ${sig.location}` : sig.name}</li>
         ))}
       </ul>
     </>
