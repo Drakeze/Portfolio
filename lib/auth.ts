@@ -1,11 +1,9 @@
 import { dash } from "@better-auth/infra"
 import { betterAuth } from "better-auth"
 import { mongodbAdapter } from "better-auth/adapters/mongodb"
-import { Resend } from "resend"
 
 import { getMongoDb } from "@/lib/mongodb"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { resend } from "@/lib/resend"
 
 export const auth = betterAuth({
   database: mongodbAdapter(getMongoDb()),
@@ -19,6 +17,14 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url }) => {
+      // Reuses the guarded client in lib/resend.ts. This used to be its own
+      // `new Resend(process.env.RESEND_API_KEY)` at module scope, and Resend's
+      // constructor throws on an undefined key - so a missing RESEND_API_KEY
+      // broke `next build` entirely, not just password resets.
+      if (!resend) {
+        throw new Error("RESEND_API_KEY is not set, so the reset email cannot be sent.")
+      }
+
       await resend.emails.send({
         from: "Drakeze Admin <noreply@drakeze.com>",
         to: user.email,

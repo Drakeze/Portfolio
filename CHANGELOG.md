@@ -76,6 +76,10 @@ All notable changes to the Drakeze Portfolio (`drakeze.com`) are documented here
 - Wired the globe to real approved signatures, linked the Companies tab to its detail pages (nothing linked to them), and gated the placeholder case study out of indexing and the sitemap
 - Moved public routes into an `app/(site)/` route group so the admin no longer renders inside the marketing nav and footer
 
+### A Missing Email Key Broke the Build *(2026-10-10)*
+- `lib/auth.ts` constructed `new Resend(process.env.RESEND_API_KEY)` at module scope, and Resend's constructor throws on an undefined key — so **a missing `RESEND_API_KEY` failed `next build` outright**, not just password resets. Surfaced by the first real CI run: *"Failed to collect configuration for /api/admin/resume"*
+- Now reuses the already-guarded client in `lib/resend.ts`, which returns `null` without a key, and throws only at the point a reset email is actually sent. The build no longer needs the key
+
 ### Seed Scripts Repaired *(2026-10-10)*
 - All five `seed:*` scripts were broken: **bun 1.3.13 cannot import `mongodb@7.7.0`** (bson hits an unimplemented `node:v8 isBuildingSnapshot`), so every one failed at import. Plain node resolves neither the `@/` alias nor the JSX that `lib/types/projects.ts` pulls in, so the scripts now run under `tsx`
 
