@@ -157,6 +157,11 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
     // Capped for frame budget. The sr-only list below renders all of them.
     const sigs = signatures.length > 150 ? signatures.slice(0, 150) : signatures
 
+    // Label slot bookkeeping: which fixed slot each visible signature holds.
+    const LABEL_SLOTS = 12
+    const slots       = new Map<Signature, number>()
+    const slotUsed: boolean[] = Array(LABEL_SLOTS).fill(false)
+
     function computeGeometry() {
       const { w, h } = state
       const PAD     = 24
@@ -316,49 +321,68 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
         }
       }
 
-      // 6. One label per front-facing dot, fading out before the dot does.
-      // Replaces a single tag that cycled one name every 8s and, with only a
-      // handful of signatures, usually had no eligible dot to label at all.
-      const MAX_LABELS = 12
-
+      // 6. Labels sit in fixed screen slots; only the leader line to the dot
+      // moves. A label keeps its slot from the moment its dot comes into view
+      // until the dot fades at the limb, so the text never travels with the
+      // rotation. Slots form a column on the globe's left face, clear of the
+      // hero copy.
       ctx.save()
       ctx.font         = colors.labelFont
       ctx.textBaseline = "middle"
+      ctx.textAlign    = "left"
       ctx.lineJoin     = "round"
       ctx.miterLimit   = 2
-      ctx.lineWidth    = 3
-      ctx.strokeStyle  = colors.labelHalo
-      ctx.fillStyle    = colors.labelText
 
-      labels.sort((a, b) => b.f - a.f)  // front-most wins a contested slot
+      const slotX = cx - r * 0.62
+      const slotY = (i: number) => cy + (i - (LABEL_SLOTS - 1) / 2) * ((r * 1.5) / (LABEL_SLOTS - 1))
 
-      // ponytail: O(n²) overlap scan, bounded by MAX_LABELS. Bucket it if the cap rises.
-      const placed: { x0: number; x1: number; y: number }[] = []
+      // Floor sits above the dot cull threshold (0.12), so a label always
+      // reaches zero alpha before its dot vanishes at the limb.
+      const alphaOf = (f: number) => Math.min((f - 0.18) / 0.22, 1)
+
+      // Free the slots of dots that left view, then give each newly visible
+      // dot (front-most first) the free slot nearest its own height.
+      const visible = new Set<Signature>()
+      for (const l of labels) if (alphaOf(l.f) > 0) visible.add(l.sig)
+      for (const [sig, i] of slots) {
+        if (!visible.has(sig)) { slots.delete(sig); slotUsed[i] = false }
+      }
+
+      labels.sort((a, b) => b.f - a.f)
+      for (const l of labels) {
+        if (slots.has(l.sig) || alphaOf(l.f) <= 0) continue
+        let best = -1
+        for (let i = 0; i < LABEL_SLOTS; i++) {
+          if (slotUsed[i]) continue
+          if (best < 0 || Math.abs(slotY(i) - l.y) < Math.abs(slotY(best) - l.y)) best = i
+        }
+        if (best < 0) break
+        slots.set(l.sig, best)
+        slotUsed[best] = true
+      }
 
       for (const l of labels) {
-        if (placed.length >= MAX_LABELS) break
-        if (l.sig === state.hoverSig) continue  // the DOM tooltip shows this one
+        const i = slots.get(l.sig)
+        if (i === undefined || l.sig === state.hoverSig) continue  // the DOM tooltip shows the hovered one
 
-        // Floor sits above the dot cull threshold (0.12), so a label always
-        // reaches zero alpha before its dot vanishes at the limb.
-        const alpha = Math.min((l.f - 0.18) / 0.22, 1)
-        if (alpha <= 0) continue
+        const alpha = alphaOf(l.f)
+        const y     = slotY(i)
+
+        ctx.globalAlpha = alpha * 0.35
+        ctx.strokeStyle = colors.labelText
+        ctx.lineWidth   = 1
+        ctx.beginPath()
+        ctx.moveTo(slotX - 6, y)
+        ctx.lineTo(l.x, l.y)
+        ctx.stroke()
 
         const text = `${l.sig.name} · ${l.sig.location}`
-        const tw   = ctx.measureText(text).width
-        // The globe overhangs the right edge, so flip rather than clip.
-        const flip = l.x + 10 + tw > w - 8
-        const x    = flip ? l.x - 10 : l.x + 10
-        const x0   = flip ? x - tw : x
-        const y    = l.y
-
-        if (placed.some((q) => q.x0 < x0 + tw && x0 < q.x1 && Math.abs(q.y - y) < 14)) continue
-
         ctx.globalAlpha = alpha * 0.9  // stays subordinate to the headline
-        ctx.textAlign   = flip ? "right" : "left"
-        ctx.strokeText(text, x, y)
-        ctx.fillText(text, x, y)
-        placed.push({ x0, x1: x0 + tw, y })
+        ctx.lineWidth   = 3
+        ctx.strokeStyle = colors.labelHalo
+        ctx.fillStyle   = colors.labelText
+        ctx.strokeText(text, slotX, y)
+        ctx.fillText(text, slotX, y)
       }
       ctx.restore()
     }
