@@ -107,7 +107,16 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
     const state  = stateRef.current
     state.colors = resolveGlobeColors(canvas)
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    // Honour the OS "reduce motion" setting, live, unless overridden with ?spin=1
+    // (or localStorage["globe-spin"] = "1") so the rotation can be checked on a
+    // machine that has animations turned off.
+    const mqReduced = window.matchMedia("(prefers-reduced-motion: reduce)")
+    let forceSpin = false
+    try {
+      forceSpin = new URLSearchParams(window.location.search).get("spin") === "1"
+        || window.localStorage.getItem("globe-spin") === "1"
+    } catch { /* storage blocked: query param still works */ }
+    const isReduced = () => mqReduced.matches && !forceSpin
 
     const hero = canvas.parentElement!
 
@@ -140,7 +149,7 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
     const io = new IntersectionObserver(
       ([entry]) => {
         state.visible = entry.isIntersecting
-        if (state.visible && state.docVisible && !state.running && !reduced) startLoop()
+        if (state.visible && state.docVisible && !state.running && !isReduced()) startLoop()
         if (!state.visible) stopLoop()
       },
       { threshold: 0.01 },
@@ -149,18 +158,13 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
 
     const onVisChange = () => {
       state.docVisible = !document.hidden
-      if (state.docVisible && state.visible && !state.running && !reduced) startLoop()
+      if (state.docVisible && state.visible && !state.running && !isReduced()) startLoop()
       if (!state.docVisible) stopLoop()
     }
     document.addEventListener("visibilitychange", onVisChange)
 
     // Capped for frame budget. The sr-only list below renders all of them.
     const sigs = signatures.length > 150 ? signatures.slice(0, 150) : signatures
-
-    // Label slot bookkeeping: which fixed slot each visible signature holds.
-    const LABEL_SLOTS = 12
-    const slots       = new Map<Signature, number>()
-    const slotUsed: boolean[] = Array(LABEL_SLOTS).fill(false)
 
     function computeGeometry() {
       const { w, h } = state
@@ -318,71 +322,56 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
           ctx.strokeStyle = colors.dotHover.replace(",1)", ",0.3)")
           ctx.lineWidth = 1.5
           ctx.stroke()
+          // Keep the DOM tooltip on the dot while the globe turns.
+          if (hoverTag) {
+            const tx = Math.min(hpt[0] + 14, (state.w || 800) - 160)
+            hoverTag.style.transform = `translate(${tx}px, ${hpt[1] - 16}px)`
+          }
+        } else if (hoverTag) {
+          hoverTag.style.opacity = "0"  // rotated behind the limb
         }
       }
 
-      // 6. Labels sit in fixed screen slots; only the leader line to the dot
-      // moves. A label keeps its slot from the moment its dot comes into view
-      // until the dot fades at the limb, so the text never travels with the
-      // rotation. Slots form a column on the globe's left face, clear of the
-      // hero copy.
+      // 6. Labels are anchored to their dot: the text sits a fixed offset from
+      // the projected position, so it travels with the globe and stays beside
+      // its place. Front-most dots claim space first; a label that would
+      // overlap one already placed is skipped (it is still in the sr-only list
+      // and the hover tooltip).
       ctx.save()
       ctx.font         = colors.labelFont
       ctx.textBaseline = "middle"
-      ctx.textAlign    = "left"
       ctx.lineJoin     = "round"
       ctx.miterLimit   = 2
-
-      const slotX = cx - r * 0.62
-      const slotY = (i: number) => cy + (i - (LABEL_SLOTS - 1) / 2) * ((r * 1.5) / (LABEL_SLOTS - 1))
 
       // Floor sits above the dot cull threshold (0.12), so a label always
       // reaches zero alpha before its dot vanishes at the limb.
       const alphaOf = (f: number) => Math.min((f - 0.18) / 0.22, 1)
 
-      // Free the slots of dots that left view, then give each newly visible
-      // dot (front-most first) the free slot nearest its own height.
-      const visible = new Set<Signature>()
-      for (const l of labels) if (alphaOf(l.f) > 0) visible.add(l.sig)
-      for (const [sig, i] of slots) {
-        if (!visible.has(sig)) { slots.delete(sig); slotUsed[i] = false }
-      }
+      const GAP    = 8
+      const LINE_H = 14
+      const placed: { x0: number; x1: number; y0: number; y1: number }[] = []
 
       labels.sort((a, b) => b.f - a.f)
       for (const l of labels) {
-        if (slots.has(l.sig) || alphaOf(l.f) <= 0) continue
-        let best = -1
-        for (let i = 0; i < LABEL_SLOTS; i++) {
-          if (slotUsed[i]) continue
-          if (best < 0 || Math.abs(slotY(i) - l.y) < Math.abs(slotY(best) - l.y)) best = i
-        }
-        if (best < 0) break
-        slots.set(l.sig, best)
-        slotUsed[best] = true
-      }
-
-      for (const l of labels) {
-        const i = slots.get(l.sig)
-        if (i === undefined || l.sig === state.hoverSig) continue  // the DOM tooltip shows the hovered one
-
         const alpha = alphaOf(l.f)
-        const y     = slotY(i)
+        if (alpha <= 0 || l.sig === state.hoverSig) continue  // the DOM tooltip shows the hovered one
 
-        ctx.globalAlpha = alpha * 0.35
-        ctx.strokeStyle = colors.labelText
-        ctx.lineWidth   = 1
-        ctx.beginPath()
-        ctx.moveTo(slotX - 6, y)
-        ctx.lineTo(l.x, l.y)
-        ctx.stroke()
+        const text  = `${l.sig.name} · ${l.sig.location}`
+        const tw    = ctx.measureText(text).width
+        // Dots on the right half of the face label leftwards, so text stays on the globe.
+        const left  = l.x > cx
+        const x0    = left ? l.x - GAP - tw : l.x + GAP
+        const box   = { x0, x1: x0 + tw, y0: l.y - LINE_H / 2, y1: l.y + LINE_H / 2 }
+        if (placed.some((p) => box.x0 < p.x1 && box.x1 > p.x0 && box.y0 < p.y1 && box.y1 > p.y0)) continue
+        placed.push(box)
 
-        const text = `${l.sig.name} · ${l.sig.location}`
+        ctx.textAlign   = "left"
         ctx.globalAlpha = alpha * 0.9  // stays subordinate to the headline
         ctx.lineWidth   = 3
         ctx.strokeStyle = colors.labelHalo
         ctx.fillStyle   = colors.labelText
-        ctx.strokeText(text, slotX, y)
-        ctx.fillText(text, slotX, y)
+        ctx.strokeText(text, x0, l.y)
+        ctx.fillText(text, x0, l.y)
       }
       ctx.restore()
     }
@@ -407,10 +396,17 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       cancelAnimationFrame(state.frameId)
     }
 
-    if (!reduced) startLoop()
+    const onMotionChange = () => {
+      if (isReduced()) { stopLoop(); drawFrame(0) }
+      else if (state.visible && state.docVisible) startLoop()
+    }
+    mqReduced.addEventListener("change", onMotionChange)
+
+    if (!isReduced()) startLoop()
 
     return () => {
       stopLoop()
+      mqReduced.removeEventListener("change", onMotionChange)
       ro.disconnect()
       io.disconnect()
       mo.disconnect()
