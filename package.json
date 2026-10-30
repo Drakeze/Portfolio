@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "npm run typecheck && next build",
+    "build": "bun run typecheck && next build",
     "dev": "next dev",
     "lint": "eslint .",
     "seed:content": "tsx --env-file-if-exists=.env.local --env-file-if-exists=.env scripts/seed-content.ts",
