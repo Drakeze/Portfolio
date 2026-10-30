@@ -42,7 +42,7 @@ export default async function AboutPage({
   }))
 
   const projects = projectsData.map((p) => ({ title: p.title, tags: p.tags }))
-  const hasBioPhoto = existsSync(path.join(process.cwd(), "public", "anthony.jpg"))
+  const hasBioPhoto = existsSync(path.join(process.cwd(), "public", "anthony-headshot.png"))
 
   return (
     <Container as="main" className="flex-1 py-16 lg:py-20">

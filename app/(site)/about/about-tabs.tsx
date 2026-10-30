@@ -114,7 +114,7 @@ function AboutTab({
             {hasBioPhoto ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src="/anthony.jpg"
+                src="/anthony-headshot.png"
                 alt="Anthony Shead"
                 className="absolute inset-0 w-full h-full object-cover"
               />
