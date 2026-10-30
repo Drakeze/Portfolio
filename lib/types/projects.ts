@@ -121,10 +121,9 @@ export const projects: Project[] = [
     Banner: TodoBanner,
     accentColor: "#2F9E44",
     tags: ["C++", "WebAssembly", "Emscripten", "Cloudflare Workers", "D1"],
-    liveUrl: "https://todo.drakeze.com",
     discipline: "dev", dot: "tool", kind: "project", year: 2025, role: "Systems Developer",
-    meta: "C++ · WASM · CLOUDFLARE D1 · 2025",
-    summary: "C++ compiled to WebAssembly, backed by Cloudflare Workers and D1 for persistence.",
+    meta: "COMING SOON · C++ · WASM · CLOUDFLARE D1",
+    summary: "Coming soon: C++ compiled to WebAssembly, backed by Cloudflare Workers and D1 for persistence.",
   },
   {
     title: "GrowthVault",
