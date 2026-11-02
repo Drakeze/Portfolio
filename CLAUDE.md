@@ -92,7 +92,7 @@ All live in `components/`:
 - `<Eyebrow number="01" label="WORK" dot?: DotVariant />` — mono section label
 - `<AccentHeading plain="Selected " accent="work" as="h2" size="sm|lg|xl|hero" />` — mixed heading
 - `<SegmentedToggle options={[...]} value onChange />` — pill toggle with a11y
-- `<Container>` — max-w-[1440px], 80px horizontal padding
+- `<Container>` — max-w-[1440px], 20px / 40px / 80px horizontal padding (mobile / sm / lg)
 - `<SectionDivider number="03" />` — hairline with ticks and mono number
 
 ---

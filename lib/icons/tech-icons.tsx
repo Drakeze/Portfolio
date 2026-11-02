@@ -4,6 +4,7 @@ import { FaAws, FaCss3, FaDumbbell, FaFutbol, FaGamepad, FaJava, FaPersonSwimmin
 import { GiBoxingGlove, GiCookingPot } from "react-icons/gi"
 import {
   SiBetterauth,
+  SiBlender,
   SiC,
   SiClaude,
   SiCloudflare,
@@ -88,6 +89,7 @@ const TECH_ICONS: Record<string, IconType> = {
   soccer: FaFutbol,
   swimming: FaPersonSwimming,
   chatgpt: Bot,
+  blender: SiBlender,
   "adobe illustrator": PenTool,
   "adobe photoshop": Image,
 }

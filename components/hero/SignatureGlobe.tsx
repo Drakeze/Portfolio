@@ -3,9 +3,10 @@
 import { geoGraticule, geoOrthographic, geoPath } from "d3-geo"
 import { useEffect, useRef } from "react"
 
+import { permanentSlots } from "@/lib/globe/label-slots"
 import type { Signature } from "@/lib/types/signature"
 
-import { HERO_PEEK } from "./constants"
+import { HERO_PEEK, MOBILE_BREAKPOINT, MOBILE_GLOBE_H } from "./constants"
 
 export type SignatureGlobeProps = {
   signatures: Signature[]
@@ -18,9 +19,17 @@ type GlobeColors = {
   faceInner:       string
   limb:            string
   grid:            string
-  dotFill:         (f: number) => string
+  dotCore:         (f: number) => string
+  dotHalo:         (f: number) => string
+  dotRing:         (f: number) => string
+  /** Thin outline round the core; only needed where the core sits on a pale face. */
+  dotEdge:         string | null
   dotHover:        string
   shadowFill:      string
+  /** Outer glow (dark only): purple fading to nothing between r and 1.18r. */
+  glow:            { inner: string; outer: string } | null
+  /** Inner rim light (dark only): transparent at 0.78r up to this colour at the limb. */
+  rim:             string | null
   labelFont:       string
   labelText:       string
   labelHalo:       string
@@ -46,15 +55,22 @@ function resolveGlobeColors(el: Element): GlobeColors {
   return isDark
     ? {
         ...label,
-        faceOuter:       "rgba(68,29,76,1)",
-        faceMid1:        "rgba(56,24,64,0.9)",
-        faceMid2:        "rgba(44,19,49,0.6)",
-        faceInner:       "rgba(30,10,40,0.2)",
-        limb:            "rgba(200,160,220,0.42)",
-        grid:            "rgba(160,140,180,0.72)",
-        dotFill:         (f) => `rgba(180,120,210,${(0.12 + f * 0.68).toFixed(3)})`,
-        dotHover:        "rgba(200,150,230,1)",
-        shadowFill:      "rgba(40,20,50,0.30)",
+        // Midnight: a near-black indigo sphere that reads against the page by its
+        // glowing violet rim, with a faint grid, instead of a flat purple disc.
+        faceOuter:       "rgba(52,34,92,1)",
+        faceMid1:        "rgba(24,16,52,1)",
+        faceMid2:        "rgba(10,7,26,1)",
+        faceInner:       "rgba(6,4,16,1)",
+        limb:            "rgba(176,120,230,0.85)",
+        grid:            "rgba(150,110,220,0.28)",
+        dotCore:         () => "rgba(255,246,255,1)",
+        dotHalo:         (f) => `rgba(190,130,255,${(0.1 + f * 0.28).toFixed(3)})`,
+        dotRing:         (f) => `rgba(225,185,255,${(0.2 + f * 0.6).toFixed(3)})`,
+        dotEdge:         null,
+        dotHover:        "rgba(255,240,255,1)",
+        shadowFill:      "rgba(0,0,0,0.25)",
+        glow:            { inner: "rgba(136,58,152,0.35)", outer: "rgba(136,58,152,0)" },
+        rim:             "rgba(136,58,152,0.35)",
         gradOriginFactor: { x: -0.245, y: -0.327 },
       }
     : {
@@ -65,9 +81,14 @@ function resolveGlobeColors(el: Element): GlobeColors {
         faceInner:       "rgba(255,255,255,1)",
         limb:            "rgba(23,21,26,0.85)",
         grid:            "rgba(201,196,204,0.72)",
-        dotFill:         (f) => `rgba(110,70,150,${(0.12 + f * 0.68).toFixed(3)})`,
+        dotCore:         () => "rgba(88,36,140,1)",
+        dotHalo:         (f) => `rgba(110,70,150,${(0.1 + f * 0.2).toFixed(3)})`,
+        dotRing:         (f) => `rgba(110,70,150,${(0.2 + f * 0.5).toFixed(3)})`,
+        dotEdge:         "rgba(255,255,255,0.95)",
         dotHover:        "rgba(139,63,180,1)",
         shadowFill:      "rgba(185,167,192,0.22)",
+        glow:            null,
+        rim:             null,
         gradOriginFactor: { x: -0.245, y: -0.327 },
       }
 }
@@ -166,9 +187,23 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
     // Capped for frame budget. The sr-only list below renders all of them.
     const sigs = signatures.length > 150 ? signatures.slice(0, 150) : signatures
 
+    // Each signature's permanent label slot, per slot count (desktop 12, phone 6).
+    const slotMaps = new Map<number, Map<string, number>>()
+    const slotsFor = (n: number) => {
+      let m = slotMaps.get(n)
+      if (!m) { m = permanentSlots(sigs, n); slotMaps.set(n, m) }
+      return m
+    }
+
     function computeGeometry() {
       const { w, h } = state
       const PAD     = 24
+      // Phones: the globe sits centred in the band the hero reserves under the
+      // copy (MOBILE_GLOBE_H), not beside it.
+      if (w < MOBILE_BREAKPOINT) {
+        const r = Math.min(w * 0.42, MOBILE_GLOBE_H / 2 - 8)
+        return { cx: w / 2, cy: h - MOBILE_GLOBE_H / 2, r }
+      }
       // The hero is HERO_PEEK shorter than the viewport so the band below
       // shows. Size from the height it would have had, so the globe keeps its
       // full-height radius and centre and is simply cropped at the bottom by
@@ -249,7 +284,18 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
 
       ctx.clearRect(0, 0, w, h)
 
-      // 0. Drop shadow
+      // 0a. Outer glow (dark): purple halo just outside the limb
+      if (colors.glow) {
+        const g = ctx.createRadialGradient(cx, cy, r, cx, cy, r * 1.18)
+        g.addColorStop(0, colors.glow.inner)
+        g.addColorStop(1, colors.glow.outer)
+        ctx.beginPath()
+        ctx.arc(cx, cy, r * 1.18, 0, Math.PI * 2)
+        ctx.fillStyle = g
+        ctx.fill()
+      }
+
+      // 0b. Drop shadow
       ctx.save()
       ctx.filter = `blur(${Math.round(r * 0.035)}px)`
       ctx.beginPath()
@@ -273,6 +319,20 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
       pathFn({ type: "Sphere" })
       ctx.fillStyle = grad
       ctx.fill()
+
+      // 1b. Rim light (dark): brightens the edge of the sphere from inside
+      if (colors.rim) {
+        ctx.save()
+        ctx.beginPath()
+        pathFn({ type: "Sphere" })
+        ctx.clip()
+        const rg = ctx.createRadialGradient(cx, cy, r * 0.78, cx, cy, r)
+        rg.addColorStop(0, "rgba(136,58,152,0)")
+        rg.addColorStop(1, colors.rim)
+        ctx.fillStyle = rg
+        ctx.fillRect(cx - r, cy - r, r * 2, r * 2)
+        ctx.restore()
+      }
 
       // 2. Limb stroke
       ctx.beginPath()
@@ -303,10 +363,26 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
 
         if (state.hoverSig === sig) continue  // drawn last, on top
 
+        // Halo, ring, then a bright core, so a dot reads at a glance.
+        const core = 2.4 + f * 2.6
         ctx.beginPath()
-        ctx.arc(pt[0], pt[1], 1.1 + f * 1.9, 0, Math.PI * 2)
-        ctx.fillStyle = colors.dotFill(f)
+        ctx.arc(pt[0], pt[1], core * 2.8, 0, Math.PI * 2)
+        ctx.fillStyle = colors.dotHalo(f)
         ctx.fill()
+        ctx.beginPath()
+        ctx.arc(pt[0], pt[1], core + 3, 0, Math.PI * 2)
+        ctx.strokeStyle = colors.dotRing(f)
+        ctx.lineWidth   = 1
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.arc(pt[0], pt[1], core, 0, Math.PI * 2)
+        ctx.fillStyle = colors.dotCore(f)
+        ctx.fill()
+        if (colors.dotEdge) {
+          ctx.strokeStyle = colors.dotEdge
+          ctx.lineWidth   = 1.25
+          ctx.stroke()
+        }
       }
 
       // Hovered dot — on top, with ring
@@ -332,46 +408,63 @@ export function SignatureGlobe({ signatures }: SignatureGlobeProps) {
         }
       }
 
-      // 6. Labels are anchored to their dot: the text sits a fixed offset from
-      // the projected position, so it travels with the globe and stays beside
-      // its place. Front-most dots claim space first; a label that would
-      // overlap one already placed is skipped (it is still in the sr-only list
-      // and the hover tooltip).
+      // 6. Every name has one permanent slot on the globe's left face, so its
+      // text never moves. The tilt sends dots across the face in different
+      // directions on different passes, so a label fades by how close its dot
+      // is to the slot (either direction) and by how squarely it faces us. Only
+      // the thin leader line moves. The hovered dot is shown by the DOM tooltip.
       ctx.save()
       ctx.font         = colors.labelFont
       ctx.textBaseline = "middle"
+      ctx.textAlign    = "left"
       ctx.lineJoin     = "round"
       ctx.miterLimit   = 2
 
+      const slotCount = w < MOBILE_BREAKPOINT ? 6 : 12
+      const slotX = cx - r * 0.62
+      // The hero is cropped HERO_PEEK short of the globe's full height, so keep the lowest slot above the crop.
+      const slotTop    = cy - r * 0.75
+      const slotBottom = Math.min(cy + r * 0.75, h - 28)
+      const slotY = (i: number) => slotTop + (i * (slotBottom - slotTop)) / (slotCount - 1)
+      const slotOf = slotsFor(slotCount)
+      const claimed = new Set<number>()
+
       // Floor sits above the dot cull threshold (0.12), so a label always
       // reaches zero alpha before its dot vanishes at the limb.
-      const alphaOf = (f: number) => Math.min((f - 0.18) / 0.22, 1)
+      const facing = (f: number) => Math.max(0, Math.min((f - 0.18) / 0.22, 1))
 
-      const GAP    = 8
-      const LINE_H = 14
-      const placed: { x0: number; x1: number; y0: number; y1: number }[] = []
-
-      labels.sort((a, b) => b.f - a.f)
+      labels.sort((a, b) => b.f - a.f)  // front-most first when two names share a slot
       for (const l of labels) {
-        const alpha = alphaOf(l.f)
-        if (alpha <= 0 || l.sig === state.hoverSig) continue  // the DOM tooltip shows the hovered one
+        if (l.sig === state.hoverSig) continue
+        const i = slotOf.get(l.sig.id)
+        if (i === undefined || claimed.has(i)) continue
 
-        const text  = `${l.sig.name} · ${l.sig.location}`
-        const tw    = ctx.measureText(text).width
-        // Dots on the right half of the face label leftwards, so text stays on the globe.
-        const left  = l.x > cx
-        const x0    = left ? l.x - GAP - tw : l.x + GAP
-        const box   = { x0, x1: x0 + tw, y0: l.y - LINE_H / 2, y1: l.y + LINE_H / 2 }
-        if (placed.some((p) => box.x0 < p.x1 && box.x1 > p.x0 && box.y0 < p.y1 && box.y1 > p.y0)) continue
-        placed.push(box)
+        const y     = slotY(i)
+        const d     = Math.hypot(l.x - (slotX + 40), l.y - y)
+        const alpha = facing(l.f) * Math.max(0, Math.min((1.1 * r - d) / (0.5 * r), 1))
+        if (alpha <= 0) continue
+        claimed.add(i)
 
-        ctx.textAlign   = "left"
+        const text = `${l.sig.name} · ${l.sig.location}`
+        const tw   = ctx.measureText(text).width
+
+        // Leave from the nearest point of the text box, so the line never jumps.
+        const startX = Math.max(slotX - 6, Math.min(l.x, slotX + tw + 6))
+        const startY = y + Math.max(-8, Math.min(l.y - y, 8))
+        ctx.globalAlpha = alpha * 0.45
+        ctx.strokeStyle = colors.labelText
+        ctx.lineWidth   = 1
+        ctx.beginPath()
+        ctx.moveTo(startX, startY)
+        ctx.lineTo(l.x, l.y)
+        ctx.stroke()
+
         ctx.globalAlpha = alpha * 0.9  // stays subordinate to the headline
         ctx.lineWidth   = 3
         ctx.strokeStyle = colors.labelHalo
         ctx.fillStyle   = colors.labelText
-        ctx.strokeText(text, x0, l.y)
-        ctx.fillText(text, x0, l.y)
+        ctx.strokeText(text, slotX, y)
+        ctx.fillText(text, slotX, y)
       }
       ctx.restore()
     }

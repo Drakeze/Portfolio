@@ -59,9 +59,9 @@ export default function ContactPage() {
                   rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
                   className="flex items-center justify-between rounded-xl border border-border px-5 py-4 hover:border-border-strong transition-colors group"
                 >
-                  <div className="flex flex-col gap-0.5">
+                  <div className="flex min-w-0 flex-col gap-0.5">
                     <span className="text-sm font-medium text-foreground">{label}</span>
-                    <span className="font-mono text-[12px] text-muted-foreground">{handle}</span>
+                    <span className="break-all font-mono text-[12px] text-muted-foreground">{handle}</span>
                   </div>
                   <span className="text-muted-foreground group-hover:text-foreground transition-colors" aria-hidden="true">
                     →

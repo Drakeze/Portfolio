@@ -6,7 +6,7 @@ import type React from "react"
 
 import type { Signature } from "@/lib/types/signature"
 
-import { HERO_PEEK } from "./constants"
+import { HERO_PEEK, MOBILE_GLOBE_H } from "./constants"
 
 const DeferredSignatureGlobe = dynamic(
   () => import("@/components/hero/SignatureGlobe").then((m) => m.SignatureGlobe),
@@ -16,14 +16,14 @@ const DeferredSignatureGlobe = dynamic(
 export function Hero({ signatures }: { signatures: Signature[] }) {
   return (
     <section
-      className="relative flex flex-1 items-center overflow-hidden"
-      style={{ minHeight: `max(620px, calc(100svh - var(--nav-h) - ${HERO_PEEK}px))` }}
+      className="relative flex flex-1 flex-col overflow-hidden md:min-h-(--hero-min) md:flex-row md:items-center"
+      style={{ "--hero-min": `max(620px, calc(100svh - var(--nav-h) - ${HERO_PEEK}px))` } as React.CSSProperties}
     >
       {/* Canvas globe — absolutely positioned, fills section, sits behind copy */}
       <DeferredSignatureGlobe signatures={signatures} />
 
       {/* Copy block — above canvas */}
-      <div className="relative z-10 flex flex-col gap-7 px-10 w-full max-w-[760px]">
+      <div className="relative z-10 flex flex-col gap-7 px-5 sm:px-10 pt-12 md:pt-0 w-full max-w-[760px]">
         {/* Eyebrow — plain mono, no dots */}
         <p className="font-mono text-[12px] tracking-[0.14em] text-muted-foreground uppercase">
           Developer / Architectural Designer · Los Angeles
@@ -73,6 +73,9 @@ export function Hero({ signatures }: { signatures: Signature[] }) {
           <span className="border-b border-current">or → add your name to the globe →</span>
         </Link>
       </div>
+
+      {/* Phones: reserve the band the canvas draws the globe in (MOBILE_GLOBE_H) */}
+      <div aria-hidden="true" className="md:hidden shrink-0" style={{ height: MOBILE_GLOBE_H }} />
     </section>
   )
 }

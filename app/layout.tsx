@@ -2,7 +2,7 @@ import "./globals.css"
 
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Instrument_Serif, JetBrains_Mono, Lexend } from "next/font/google"
 import type React from "react"
 
@@ -27,6 +27,16 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
 })
+
+// colorScheme lets scrollbars and form controls follow the theme; themeColor
+// tints the mobile browser chrome (surface-page: white / neutral-900).
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#212429" },
+  ],
+}
 
 export const metadata: Metadata = {
   // Without metadataBase, relative OG/twitter image paths resolve wrongly and

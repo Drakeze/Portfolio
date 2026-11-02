@@ -90,6 +90,27 @@ function AboutTab({
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10 lg:gap-16 items-start">
         {/* Bio */}
         <div className="flex flex-col gap-5">
+          {/* Phones: the portrait below the bio is a long scroll away, so show a compact one up top */}
+          <div className="flex items-center gap-4 lg:hidden">
+            <div className="relative size-24 shrink-0 overflow-hidden rounded-[14px] bg-muted">
+              {hasBioPhoto ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src="/anthony-headshot.png"
+                  alt="Anthony Shead"
+                  className="absolute inset-0 h-full w-full object-cover object-top"
+                />
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-2 min-w-0">
+              <p className="font-mono text-[12px] text-muted-foreground">Anthony Shead · Los Angeles, CA</p>
+              <div className="flex w-fit items-center gap-2 rounded-full border border-border px-3 py-1">
+                <Dot variant="status" />
+                <span className="font-mono text-[12px] text-muted-foreground">Available</span>
+              </div>
+            </div>
+          </div>
+
           {lead ? (
             <p className="text-[23px] leading-relaxed text-foreground">{lead.text}</p>
           ) : null}
@@ -100,7 +121,7 @@ function AboutTab({
           ))}
 
           {/* Status chips */}
-          <div className="flex flex-wrap items-center gap-3 mt-2">
+          <div className="hidden lg:flex flex-wrap items-center gap-3 mt-2">
             <div className="flex items-center gap-2 rounded-full border border-border px-4 py-1.5">
               <Dot variant="status" />
               <span className="font-mono text-[12px] text-muted-foreground">Available · Los Angeles</span>
@@ -108,8 +129,8 @@ function AboutTab({
           </div>
         </div>
 
-        {/* Portrait */}
-        <div className="flex flex-col gap-3">
+        {/* Portrait (desktop; phones get the compact one above) */}
+        <div className="hidden lg:flex flex-col gap-3">
           <div className="relative w-full aspect-[440/560] rounded-[20px] overflow-hidden bg-muted">
             {hasBioPhoto ? (
               // eslint-disable-next-line @next/next/no-img-element

@@ -65,7 +65,7 @@ export function SegmentedToggle({
     <div
       role={isTabs ? "tablist" : "radiogroup"}
       aria-label={label}
-      className={cn("inline-flex rounded-full bg-muted p-1 gap-0.5", className)}
+      className={cn("inline-flex max-w-full overflow-x-auto rounded-full bg-muted p-1 gap-0.5", className)}
     >
       {options.map((opt, i) => {
         const selected = value === opt.value
@@ -85,7 +85,7 @@ export function SegmentedToggle({
             onClick={() => onChange(opt.value)}
             onKeyDown={(e) => handleKeyDown(e, i)}
             className={cn(
-              "px-4 py-1.5 rounded-full text-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "px-3 sm:px-4 py-1.5 rounded-full text-sm whitespace-nowrap transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               selected ? "bg-card shadow-sm font-medium text-foreground" : "text-muted-foreground hover:text-foreground",
             )}
           >

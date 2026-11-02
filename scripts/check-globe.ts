@@ -61,3 +61,25 @@ assert.match(globe, /hFull\s*=\s*h \+ HERO_PEEK/, "globe must size from the unsh
 assert.match(globe, /rMax\s*=\s*hFull \/ 2 - PAD/, "radius must derive from hFull, not h")
 assert.match(globe, /cy\s*=\s*hFull \/ 2/, "centre must derive from hFull, not h")
 console.log("✓ globe geometry stays peek-independent")
+
+// --- label slots: every name has one permanent slot ----------------------
+import { permanentSlots } from "../lib/globe/label-slots"
+
+const named = [
+  { id: "jack", lat: 30.3 },
+  { id: "dwij", lat: 19.1 },
+  { id: "anthony", lat: -31.9 },
+]
+const a = permanentSlots(named, 12)
+assert.deepEqual([...a], [...permanentSlots([...named].reverse(), 12)], "slots depend on input order")
+assert.ok(a.get("jack")! < a.get("dwij")! && a.get("dwij")! < a.get("anthony")!, "slots must run north to south")
+assert.equal(new Set(a.values()).size, 3, "names shared a slot while slots were free")
+
+const crowd = Array.from({ length: 30 }, (_, i) => ({ id: `s${i}`, lat: 80 - i * 5 }))
+for (const n of [6, 12]) {
+  const m = permanentSlots(crowd, n)
+  assert.equal(m.size, 30, "a signature got no slot")
+  for (const slot of m.values()) assert.ok(slot >= 0 && slot < n, `slot ${slot} outside 0..${n - 1}`)
+}
+assert.equal(permanentSlots([{ id: "solo", lat: 0 }], 12).get("solo"), 0, "a lone name should take the first slot")
+console.log("✓ label slots: permanent, north-to-south, distinct while free, in range when crowded")

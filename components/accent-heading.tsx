@@ -6,10 +6,10 @@ type Size = "sm" | "lg" | "xl" | "hero"
 type Tag = "h1" | "h2" | "h3" | "h4" | "p"
 
 const SIZE_MAP: Record<Size, { plain: string; accent: string }> = {
-  sm: { plain: "text-[34px]", accent: "text-[42px]" },
-  lg: { plain: "text-[44px]", accent: "text-[52px]" },
-  xl: { plain: "text-[56px]", accent: "text-[66px]" },
-  hero: { plain: "text-[76px]", accent: "text-[88px]" },
+  sm: { plain: "text-[30px] sm:text-[34px]", accent: "text-[36px] sm:text-[42px]" },
+  lg: { plain: "text-[36px] sm:text-[44px]", accent: "text-[44px] sm:text-[52px]" },
+  xl: { plain: "text-[40px] sm:text-[56px]", accent: "text-[48px] sm:text-[66px]" },
+  hero: { plain: "text-[48px] sm:text-[76px]", accent: "text-[58px] sm:text-[88px]" },
 }
 
 interface AccentHeadingProps {

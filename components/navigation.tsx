@@ -51,11 +51,11 @@ export function Navigation() {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-background">
-      <Container className="h-16 flex items-center justify-between">
+      <Container className="h-16 flex items-center justify-between gap-4">
         {/* Branding */}
-        <Link href="/" className="flex items-baseline gap-2 shrink-0">
-          <span className="font-semibold text-[17px] text-foreground">Anthony Shead</span>
-          <span className="font-mono text-[13px] text-muted-foreground">/ drakeze</span>
+        <Link href="/" className="flex items-baseline gap-2 min-w-0">
+          <span className="font-semibold text-[17px] text-foreground whitespace-nowrap">Anthony Shead</span>
+          <span className="hidden sm:inline font-mono text-[13px] text-muted-foreground whitespace-nowrap">/ drakeze</span>
         </Link>
 
         {/* Center links — absolutely centred so they don't shift with right-side content */}
@@ -76,20 +76,20 @@ export function Navigation() {
           <ThemeToggle />
           <Link
             href="/contact"
-            className="rounded-full bg-foreground text-background px-5 py-2 text-sm font-medium hover:opacity-90 transition-opacity"
+            className="rounded-full bg-foreground text-background px-5 py-2 text-sm font-medium whitespace-nowrap hover:opacity-90 transition-opacity"
           >
             Let&apos;s talk →
           </Link>
         </div>
 
         {/* Mobile */}
-        <div className="flex md:hidden items-center gap-3">
+        <div className="flex md:hidden items-center gap-2 shrink-0">
           <ThemeToggle />
           <Link
             href="/contact"
-            className="rounded-full bg-foreground text-background px-4 py-1.5 text-sm font-medium"
+            className="rounded-full bg-foreground text-background px-3 py-1.5 text-[13px] font-medium whitespace-nowrap shrink-0"
           >
-            Let&apos;s talk →
+            Let&apos;s talk<span className="hidden sm:inline"> →</span>
           </Link>
           <Sheet>
             <SheetTrigger asChild>
@@ -102,7 +102,7 @@ export function Navigation() {
             </SheetTrigger>
             <SheetContent side="right" className="w-64 pt-14">
               <nav className="flex flex-col gap-1 px-2">
-                {NAV_LINKS.map((link) => (
+                {[...NAV_LINKS, { href: "/contact", label: "Contact" }].map((link) => (
                   <SheetClose asChild key={link.href}>
                     <Link
                       href={link.href}
